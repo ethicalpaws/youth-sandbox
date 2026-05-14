@@ -1,0 +1,149 @@
+/* 极简检测表样式 */
+.test-card {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #e9ecef;
+}
+
+.test-score {
+    background: #e9ecef;
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 14px;
+}
+
+.test-score span:first-child {
+    font-weight: 500;
+    color: #495057;
+}
+
+.test-score span:last-child {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1864ab;
+    margin-left: 8px;
+}
+
+.test-reset {
+    background: #fa5252;
+    color: white;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.test-reset:hover {
+    background: #e03131;
+}
+
+/* 表格 */
+.test-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    margin-bottom: 20px;
+}
+
+.test-table th,
+.test-table td {
+    border: 1px solid #dee2e6;
+    padding: 10px 6px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.test-table th {
+    background: #f1f3f5;
+    font-weight: 600;
+}
+
+.test-input {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+}
+
+.test-summary {
+    background: #fff9db;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 20px 0;
+    border: 1px solid #ffe066;
+}
+
+.test-summary h4 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    color: #5c3e00;
+}
+
+.test-summary textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ffd43b;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    resize: vertical;
+}
+
+/* 折叠答案样式 */
+.answer-fold {
+    margin: 12px 0 20px 0;
+}
+
+.answer-btn {
+    background: #4a6f8f;
+    color: white;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.answer-btn:hover {
+    background: #2c5282;
+}
+
+.answer-content {
+    display: none;
+    background: #f8f9fa;
+    border-left: 4px solid #f59e0b;
+    padding: 12px 16px;
+    margin-top: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.answer-content.show {
+    display: block;
+}
+
+.answer-content p {
+    margin: 6px 0;
+}
+
+.answer-content ul {
+    margin: 6px 0;
+    padding-left: 20px;
+}
+
+.answer-content pre {
+    background: #e9ecef;
+    padding: 8px;
+    border-radius: 6px;
+    overflow-x: auto;
+}

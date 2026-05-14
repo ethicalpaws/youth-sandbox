@@ -1,0 +1,83 @@
+site_name: 'Ethicalpaws-Youth Notes'
+site_description: 'Java反序列化 | Web安全 | CTF'
+site_author: 'ethicalpaws'
+site_url: 'https://ethicalpaws.github.io/security-study-notes/'
+
+repo_name: 'ethicalpaws/security-study-notes'
+repo_url: 'https://github.com/ethicalpaws/security-study-notes'
+
+copyright: 'Copyright &copy; 2026 ethicalpaws'
+
+# 主题配置
+theme:
+  name: 'material'
+  language: 'zh'
+  palette:
+    - scheme: 'default'
+      primary: 'indigo'
+      accent: 'indigo'
+      toggle:
+        icon: 'material/brightness-7'
+        name: '切换深色模式'
+    - scheme: 'slate'
+      primary: 'indigo'
+      accent: 'indigo'
+      toggle:
+        icon: 'material/brightness-4'
+        name: '切换浅色模式'
+  features:
+    - navigation.tabs        # 顶部标签式导航
+    - navigation.sections    # 左侧导航显示章节
+    - navigation.top         # 返回顶部按钮
+    - search.highlight       # 搜索高亮
+    - search.share           # 搜索分享
+    - content.code.copy      # 代码块复制按钮
+
+# 引入自定义CSS和JS
+extra_css:
+  - css/extra.css
+  - css/test-style.css
+extra_javascript:
+  - js/extra.js
+  - js/test-script.js
+# 扩展插件
+plugins:
+  - search
+  - tags                    # 文章标签
+
+# Markdown扩展配置
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      use_pygments: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition              # 提示框（Note, Warning等）
+  - pymdownx.details        # 可折叠块
+  - attr_list               # 给Markdown元素添加属性（如图片大小）
+  - md_in_html              # 在HTML中嵌入Markdown
+  - tables                  # 表格支持
+
+
+strict: false
+# 导航结构（这是最重要的部分！）
+nav:
+  - 首页: index.md
+#  - 学习计划: 
+#    - 四周学习计划: study-plan/README.md
+ #   - 第一周: study-plan/week1.md
+  - 每周复盘:
+    - Week 1:
+      - 收获: weekly/week1/outcome.md
+      - 检测: weekly/week1/detection.md
+  - Java反序列化: java-deserialization/java-deserialization(ing).md
+  - Web漏洞笔记:
+#    - XSS: web-vulns/xss/xss.md
+    - CSRF&&XSS: web-vulns/csrf&xss/csrf&xss.md
+    - SSRF: web-vulns/ssrf/ssrf.md
+    - 访问控制: web-vulns/access-control/access-control.md
+    - XXE: web-vulns/xxe/xxe.md
+#    - CSRF: web-vulns/csrf/csrf.md
