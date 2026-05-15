@@ -1,0 +1,33 @@
+/* 自定义链接颜色 */
+.md-typeset a {
+    color: #7c3aed;
+}
+
+/* 代码块优化 */
+.md-typeset code {
+    font-size: 0.85em;
+    background-color: var(--md-code-bg-color);
+}
+
+/* 自定义提示框样式 */
+.custom-tip {
+    background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+    border-left: 4px solid #7c3aed;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+/* 动态推送卡片样式 */
+.post-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.post-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* 页脚美化 */
+.md-footer-meta {
+    background-color: #1a1a2e;
+}
