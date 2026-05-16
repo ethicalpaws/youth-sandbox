@@ -79,6 +79,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#gadget" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -1703,18 +1708,11 @@
   <span class="md-ellipsis">
     
   
-    [Protected] 📔 随笔日记
+    📔 随笔日记
   
 
     
   </span>
-  
-    
-  
-  
-    <span class="md-status md-status--encrypted"></span>
-  
-
   
   
 
@@ -2473,6 +2471,53 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#gadget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gadget 库对比笔记
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gadget 库对比笔记">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        各维度说明
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cc6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CC6链调用链路图
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2493,7 +2538,191 @@
 
   <h1>Outcome</h1>
 
-<p>xx</p>
+<h2 id="gadget">Gadget 库对比笔记<a class="headerlink" href="#gadget" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>对比维度：入口方法、入口类、数据格式、类型信息、多态开启、对象创建、私有字段填充、危险方法触发、核心利用类、依赖库、利用条件、JDK限制、利用难度、通用性</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>对比维度</th>
+<th>Commons Collections</th>
+<th>Spring Core</th>
+<th>Jackson</th>
+<th>fastjson</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>入口方法</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>入口类</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>数据格式</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>类型信息</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>多态开启</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>对象创建</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>私有字段填充</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>危险方法触发</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>核心利用类</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>依赖库</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>利用条件</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>JDK限制</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>利用难度</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>通用性</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="_1">各维度说明<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>入口方法</strong></td>
+<td>反序列化时自动调用的方法（通常为 readObject）</td>
+</tr>
+<tr>
+<td><strong>入口类</strong></td>
+<td>在反序列化时被触发、启动整个调用链的类</td>
+</tr>
+<tr>
+<td><strong>数据格式</strong></td>
+<td>序列化数据的组织方式（字节流/JSON/XML等）</td>
+</tr>
+<tr>
+<td><strong>类型信息</strong></td>
+<td>序列化格式中是否包含完整的类类型信息</td>
+</tr>
+<tr>
+<td><strong>多态开启</strong></td>
+<td>是否支持多态反序列化（<code>@type</code> / <code>enableDefaultTyping</code>）</td>
+</tr>
+<tr>
+<td><strong>对象创建</strong></td>
+<td>反序列化时对象的创建方式（构造器/Unsafe/反序列化专有机制）</td>
+</tr>
+<tr>
+<td><strong>私有字段填充</strong></td>
+<td>反序列化时能否绕过构造器直接填充私有字段</td>
+</tr>
+<tr>
+<td><strong>危险方法触发</strong></td>
+<td>最终触发命令执行/反射调用的关键方法</td>
+</tr>
+<tr>
+<td><strong>核心利用类</strong></td>
+<td>Gadget链中起关键作用的类</td>
+</tr>
+<tr>
+<td><strong>依赖库</strong></td>
+<td>利用链依赖的第三方库及版本范围</td>
+</tr>
+<tr>
+<td><strong>利用条件</strong></td>
+<td>成功利用需要满足的条件</td>
+</tr>
+<tr>
+<td><strong>JDK限制</strong></td>
+<td>不同JDK版本对利用链的影响</td>
+</tr>
+<tr>
+<td><strong>利用难度</strong></td>
+<td>构造POC的复杂度、对环境的依赖程度</td>
+</tr>
+<tr>
+<td><strong>通用性</strong></td>
+<td>该Gadget库在不同Java应用中的普及程度</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="cc6">CC6链调用链路图<a class="headerlink" href="#cc6" title="Permanent link">&para;</a></h2>
 
 
 
@@ -2516,7 +2745,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 16, 2026 05:00:23 UTC"><span class="timeago" datetime="2026-05-16T05:00:23+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 16, 2026 05:00:23 UTC">2026-05-16</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 16, 2026 09:22:43 UTC"><span class="timeago" datetime="2026-05-16T09:22:43+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 16, 2026 09:22:43 UTC">2026-05-16</span>
   </span>
 
     
@@ -2526,7 +2755,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 16, 2026 05:00:23 UTC"><span class="timeago" datetime="2026-05-16T05:00:23+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 16, 2026 05:00:23 UTC">2026-05-16</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 16, 2026 09:22:43 UTC"><span class="timeago" datetime="2026-05-16T09:22:43+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 16, 2026 09:22:43 UTC">2026-05-16</span>
   </span>
 
     
