@@ -1,0 +1,88 @@
+/* 周计划页面样式 */
+.weekly-card {
+    background: linear-gradient(135deg, var(--md-surface-2) 0%, var(--md-surface-1) 100%);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin: 1rem 0 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.weekly-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+}
+
+.progress-bar {
+    background: var(--md-default-fg-color--lighter);
+    border-radius: 20px;
+    height: 12px;
+    overflow: hidden;
+    margin: 0.8rem 0;
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, #7c3aed, #a855f7);
+    height: 100%;
+    width: 0%;
+    border-radius: 20px;
+    transition: width 0.3s ease;
+}
+
+.weekly-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.8rem;
+    font-size: 0.85rem;
+    color: var(--md-default-fg-color--light);
+}
+
+table input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #7c3aed;
+}
+
+.weekly-summary {
+    margin: 2rem 0;
+    padding: 1rem;
+    background: var(--md-surface-2);
+    border-radius: 16px;
+}
+
+.weekly-summary textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--md-default-fg-color--lighter);
+    border-radius: 12px;
+    background: var(--md-surface-1);
+    color: var(--md-typeset-color);
+    font-family: inherit;
+    resize: vertical;
+    margin: 0.5rem 0;
+}
+
+.weekly-save {
+    background: #7c3aed;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.weekly-save:hover {
+    opacity: 0.8;
+}
+
+.weekly-tips {
+    background: linear-gradient(135deg, #7c3aed15 0%, #a855f715 100%);
+    border-left: 4px solid #7c3aed;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    margin-top: 2rem;
+}
