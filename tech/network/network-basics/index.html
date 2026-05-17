@@ -12,19 +12,19 @@
         <meta name="author" content="ethicalpaws">
       
       
-        <link rel="canonical" href="https://ethicalpaws.github.io/youth-sandbox/tech/network-attack/">
+        <link rel="canonical" href="https://ethicalpaws.github.io/youth-sandbox/tech/network/network-basics/">
       
       
-        <link rel="prev" href="../java-deserialization/java-deserialization%28ing%29/">
+        <link rel="prev" href="../network-attack/tcp-attack/">
       
       
-        <link rel="next" href="arp-attack/">
+        <link rel="next" href="data-link-layer/">
       
       
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
@@ -33,10 +33,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -55,11 +55,11 @@
       
     
     
-      <link rel="stylesheet" href="../../css/timeago.css">
+      <link rel="stylesheet" href="../../../css/timeago.css">
     
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -98,7 +98,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="青春沙盒" class="md-header__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+    <a href="../../.." title="青春沙盒" class="md-header__button md-logo" aria-label="青春沙盒" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
@@ -236,7 +236,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   
@@ -259,7 +259,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+        <a href="../../" class="md-tabs__link">
           
   
   
@@ -281,7 +281,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../life/" class="md-tabs__link">
+        <a href="../../../life/" class="md-tabs__link">
           
   
   
@@ -303,7 +303,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../updates/" class="md-tabs__link">
+        <a href="../../../updates/" class="md-tabs__link">
           
   
   
@@ -325,7 +325,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../spiritual/" class="md-tabs__link">
+        <a href="../../../spiritual/" class="md-tabs__link">
           
   
   
@@ -347,7 +347,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../about/" class="md-tabs__link">
+        <a href="../../../about/" class="md-tabs__link">
           
   
   
@@ -383,7 +383,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="青春沙盒" class="md-nav__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+    <a href="../../.." title="青春沙盒" class="md-nav__button md-logo" aria-label="青春沙盒" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
@@ -413,7 +413,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -484,7 +484,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../" class="md-nav__link ">
               
   
   
@@ -566,7 +566,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../web-vulns/" class="md-nav__link ">
+            <a href="../../web-vulns/" class="md-nav__link ">
               
   
   
@@ -610,7 +610,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../web-vulns/access-control/access-control/" class="md-nav__link">
+      <a href="../../web-vulns/access-control/access-control/" class="md-nav__link">
         
   
   
@@ -638,7 +638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../web-vulns/csrf%26xss/csrf%26xss/" class="md-nav__link">
+      <a href="../../web-vulns/csrf%26xss/csrf%26xss/" class="md-nav__link">
         
   
   
@@ -666,7 +666,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../web-vulns/ssrf/ssrf/" class="md-nav__link">
+      <a href="../../web-vulns/ssrf/ssrf/" class="md-nav__link">
         
   
   
@@ -694,7 +694,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../web-vulns/xss/xss.md" class="md-nav__link">
+      <a href="../../web-vulns/xss/xss.md" class="md-nav__link">
         
   
   
@@ -722,7 +722,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../web-vulns/xxe/xxe/" class="md-nav__link">
+      <a href="../../web-vulns/xxe/xxe/" class="md-nav__link">
         
   
   
@@ -819,7 +819,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../java-deserialization/java-deserialization%28ing%29/" class="md-nav__link">
+      <a href="../../java-deserialization/java-deserialization%28ing%29/" class="md-nav__link">
         
   
   
@@ -867,10 +867,6 @@
       
         
       
-        
-      
-        
-      
     
     
     
@@ -891,14 +887,14 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
+            <a href="../" class="md-nav__link ">
               
   
   
   <span class="md-ellipsis">
     
   
-    网络攻击
+    网络实验
   
 
     
@@ -909,7 +905,7 @@
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_2_4" id="__nav_2_4_label" tabindex="">
+              <label class="md-nav__link " for="__nav_2_4" id="__nav_2_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -920,7 +916,84 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    网络攻击
+    网络实验
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../network-attack/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    网络攻击实验
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_4_2" id="__nav_2_4_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    网络攻击实验
   
 
           </label>
@@ -935,7 +1008,7 @@
   
   
     <li class="md-nav__item">
-      <a href="arp-attack/" class="md-nav__link">
+      <a href="../network-attack/arp-attack/" class="md-nav__link">
         
   
   
@@ -963,7 +1036,7 @@
   
   
     <li class="md-nav__item">
-      <a href="icmp-attack/" class="md-nav__link">
+      <a href="../network-attack/icmp-attack/" class="md-nav__link">
         
   
   
@@ -991,7 +1064,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sniffing%26%26spoofing/" class="md-nav__link">
+      <a href="../network-attack/sniffing%26%26spoofing/" class="md-nav__link">
         
   
   
@@ -1019,7 +1092,7 @@
   
   
     <li class="md-nav__item">
-      <a href="tcp-attack/" class="md-nav__link">
+      <a href="../network-attack/tcp-attack/" class="md-nav__link">
         
   
   
@@ -1035,6 +1108,181 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="./" class="md-nav__link md-nav__link--active">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    网络基础实验
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link md-nav__link--active" for="__nav_2_4_3" id="__nav_2_4_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    网络基础实验
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="data-link-layer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数据链路层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="network-layer.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    网络层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="transport-layer.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    传输层
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1087,7 +1335,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../practice-on-labs/" class="md-nav__link ">
+            <a href="../../practice-on-labs/" class="md-nav__link ">
               
   
   
@@ -1131,7 +1379,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../practice-on-labs/java-deserialization-lab/java-deserialization-lab/" class="md-nav__link">
+      <a href="../../practice-on-labs/java-deserialization-lab/java-deserialization-lab/" class="md-nav__link">
         
   
   
@@ -1159,7 +1407,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../practice-on-labs/xss-lab/xss-lab/" class="md-nav__link">
+      <a href="../../practice-on-labs/xss-lab/xss-lab/" class="md-nav__link">
         
   
   
@@ -1195,7 +1443,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ctf/" class="md-nav__link">
+      <a href="../../ctf/" class="md-nav__link">
         
   
   
@@ -1223,7 +1471,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cve/" class="md-nav__link">
+      <a href="../../cve/" class="md-nav__link">
         
   
   
@@ -1251,7 +1499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../pwn/" class="md-nav__link">
+      <a href="../../pwn/" class="md-nav__link">
         
   
   
@@ -1344,7 +1592,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../weekly-check/index.md" class="md-nav__link">
+      <a href="../../weekly-check/index.md" class="md-nav__link">
         
   
   
@@ -1432,7 +1680,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../weekly-check/week1/outcome/" class="md-nav__link">
+      <a href="../../weekly-check/week1/outcome/" class="md-nav__link">
         
   
   
@@ -1460,7 +1708,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../weekly-check/week1/detection/" class="md-nav__link">
+      <a href="../../weekly-check/week1/detection/" class="md-nav__link">
         
   
   
@@ -1556,7 +1804,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../weekly-check/week2/outcome/" class="md-nav__link">
+      <a href="../../weekly-check/week2/outcome/" class="md-nav__link">
         
   
   
@@ -1584,7 +1832,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../weekly-check/week2/detection/" class="md-nav__link">
+      <a href="../../weekly-check/week2/detection/" class="md-nav__link">
         
   
   
@@ -1670,7 +1918,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../life/" class="md-nav__link ">
+            <a href="../../../life/" class="md-nav__link ">
               
   
   
@@ -1743,7 +1991,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../life/study-plan/" class="md-nav__link ">
+            <a href="../../../life/study-plan/" class="md-nav__link ">
               
   
   
@@ -1787,7 +2035,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../life/study-plan/week1/" class="md-nav__link">
+      <a href="../../../life/study-plan/week1/" class="md-nav__link">
         
   
   
@@ -1815,7 +2063,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../life/study-plan/week2/" class="md-nav__link">
+      <a href="../../../life/study-plan/week2/" class="md-nav__link">
         
   
   
@@ -1851,7 +2099,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../life/journal/" class="md-nav__link">
+      <a href="../../../life/journal/" class="md-nav__link">
         
   
   
@@ -1879,7 +2127,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../life/struggles/" class="md-nav__link">
+      <a href="../../../life/struggles/" class="md-nav__link">
         
   
   
@@ -1939,7 +2187,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../life/wins/" class="md-nav__link ">
+            <a href="../../../life/wins/" class="md-nav__link ">
               
   
   
@@ -2013,7 +2261,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../life/reflections/" class="md-nav__link ">
+            <a href="../../../life/reflections/" class="md-nav__link ">
               
   
   
@@ -2057,7 +2305,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../life/reflections/%E7%A0%B4%E9%A2%98%E4%B9%8B%E4%BD%99-%E4%BA%A6%E7%A0%B4%E5%BF%83%E9%9A%9C/" class="md-nav__link">
+      <a href="../../../life/reflections/%E7%A0%B4%E9%A2%98%E4%B9%8B%E4%BD%99-%E4%BA%A6%E7%A0%B4%E5%BF%83%E9%9A%9C/" class="md-nav__link">
         
   
   
@@ -2127,7 +2375,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../updates/" class="md-nav__link ">
+            <a href="../../../updates/" class="md-nav__link ">
               
   
   
@@ -2171,7 +2419,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -2237,7 +2485,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../spiritual/" class="md-nav__link ">
+            <a href="../../../spiritual/" class="md-nav__link ">
               
   
   
@@ -2306,7 +2554,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../spiritual/images/" class="md-nav__link ">
+            <a href="../../../spiritual/images/" class="md-nav__link ">
               
   
   
@@ -2378,7 +2626,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../spiritual/music/" class="md-nav__link ">
+            <a href="../../../spiritual/music/" class="md-nav__link ">
               
   
   
@@ -2450,7 +2698,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../spiritual/sentences/" class="md-nav__link ">
+            <a href="../../../spiritual/sentences/" class="md-nav__link ">
               
   
   
@@ -2531,7 +2779,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../about/" class="md-nav__link ">
+            <a href="../../../about/" class="md-nav__link ">
               
   
   
@@ -2575,7 +2823,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/why/" class="md-nav__link">
+      <a href="../../../about/why/" class="md-nav__link">
         
   
   
@@ -2640,6 +2888,50 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛠️ 实验环境
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 学习目标
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 快速链接
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 实验记录
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2660,18 +2952,83 @@
   
 
 
-<h1 id="_1">网络攻击笔记<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h1 id="_1">📡 网络基础实验<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p>网络攻击原理与实验记录。</p>
+<p>从数据包到协议栈，理解网络通信的本质</p>
 </blockquote>
 <h2 id="_2">📖 内容列表<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">层级</th>
+<th>协议</th>
+<th>笔记</th>
+<th style="text-align: center;">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">2</td>
+<td>数据链路层</td>
+<td><a href="data-link-layer/">data-link-layer.md</a></td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>网络层（IP/ICMP）</td>
+<td><a href="network-layer.md">network-layer.md</a></td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>传输层（TCP/UDP）</td>
+<td><a href="transport-layer.md">transport-layer.md</a></td>
+<td style="text-align: center;">⬜</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_3">🛠️ 实验环境<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="arp-attack/">ARP攻击</a></li>
-<li><a href="icmp-attack/">ICMP攻击</a></li>
-<li><a href="sniffing%26%26spoofing/">嗅探与欺骗</a></li>
-<li><a href="tcp-attack/">TCP攻击</a></li>
+<li><strong>在线实验平台</strong>：北航计算机网络在线实验平台（支持抓包、协议分析）</li>
+<li><strong>本地工具</strong>：Wireshark、Cisco Packet Tracer</li>
 </ul>
 <hr />
+<h2 id="_4">📝 学习目标<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<ol>
+<li>理解数据链路层的帧结构与MAC地址</li>
+<li>掌握IP分片、路由原理与ICMP协议</li>
+<li>分析TCP三次握手、流量控制与拥塞控制</li>
+<li>能够用Wireshark分析常见网络协议</li>
+</ol>
+<hr />
+<h2 id="_5">🔗 快速链接<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://www.icourse163.org/course/BUAA-1002744004">课程主页</a></li>
+<li><a href="http://network-lab.mooc.buaa.edu.cn/">实验平台入口</a></li>
+</ul>
+<hr />
+<h2 id="_6">📊 实验记录<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>日期</th>
+<th>实验内容</th>
+<th>笔记</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p>💡 <strong>提示</strong>：基础不牢，地动山摇。网络基础是网络攻击的根基。</p>
+</blockquote>
 
 
 
@@ -2694,7 +3051,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 17, 2026 05:14:45 UTC"><span class="timeago" datetime="2026-05-17T05:14:45+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 17, 2026 05:14:45 UTC">2026-05-17</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 17, 2026 05:57:53 UTC"><span class="timeago" datetime="2026-05-17T05:57:53+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 17, 2026 05:57:53 UTC">2026-05-17</span>
   </span>
 
     
@@ -2704,7 +3061,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 17, 2026 05:14:45 UTC"><span class="timeago" datetime="2026-05-17T05:14:45+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 17, 2026 05:14:45 UTC">2026-05-17</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 17, 2026 05:57:53 UTC"><span class="timeago" datetime="2026-05-17T05:57:53+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 17, 2026 05:57:53 UTC">2026-05-17</span>
   </span>
 
     
@@ -2810,14 +3167,14 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.tracking", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.tracking", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="../../js/timeago.min.js"></script>
+        <script src="../../../js/timeago.min.js"></script>
       
-        <script src="../../js/timeago_mkdocs_material.js"></script>
+        <script src="../../../js/timeago_mkdocs_material.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
       
