@@ -3554,18 +3554,53 @@
 </ol>
 </li>
 <li>利用条件竞争（Race Condition）<ol>
-<li></li>
+<li>现代框架对这类攻击的防护能力更强。它们通常不会直接将文件上传到文件系统中预设的目标位置，而是采取一些预防措施，例如先将文件上传至临时的、沙箱化的目录，并随机化文件名以避免覆盖现有文件。随后，框架会对该临时文件执行验证，仅在确认其安全后，才将其转移至最终目标位置</li>
+<li>话虽如此，开发人员有时会脱离任何框架，自行实现文件上传处理。这不仅实现起来相当复杂，还可能引入危险的竞争条件，使攻击者能够完全绕过即使是最严格的验证措施</li>
+<li>例如，某些网站会直接将文件上传至主文件系统，然后在文件未通过验证时再次将其删除。这种行为常见于依赖杀毒软件等工具来检测恶意软件的网站。整个过程可能仅需几毫秒，但在文件短暂存在于服务器上的这段时间内，攻击者仍有可能执行该文件</li>
+<li>实战演练：<img alt="" src="2026-05-19-16-27-49.png" /><ol>
+<li>试了很多绕过发现过滤很严格<img alt="" src="2026-05-19-16-38-53.png" /></li>
+<li>尝试条件竞争，抓一个上传文件的数据包放入intruder中并进行如下配置<img alt="" src="2026-05-19-16-40-53.png" /><img alt="" src="2026-05-19-16-40-41.png" /></li>
+<li>抓一个访问文件的数据包放入intruder中并进行如上配置，然后先开始上传文件的数据包重发接着快速开始访问文件的数据包重发</li>
+<li>然后查看结果发现有可以成功访问的<img alt="" src="2026-05-19-16-38-21.png" /></li>
+<li>提交<img alt="" src="2026-05-19-16-38-33.png" /></li>
 </ol>
 </li>
-<li>基于 URL 的文件上传竞争条件</li>
+</ol>
+</li>
+<li>基于 URL 的文件上传竞争条件<ol>
+<li>类似的竞态条件也可能出现在允许通过提供URL上传文件的函数中。在这种情况下，服务器必须先通过互联网获取该文件，并创建一个本地副本，然后才能执行任何验证操作。</li>
+<li>由于文件是通过HTTP加载的，开发人员无法使用其框架内置的安全文件验证机制。相反，他们可能需要手动创建临时存储和验证文件的流程，而这种方式的安全性可能略显不足。</li>
+<li>例如，如果文件被加载到一个具有随机名称的临时目录中，理论上攻击者将无法利用任何竞争条件进行攻击。由于他们不知道该目录的名称，因此无法请求该文件以触发其执行。但另一方面，如果该随机目录名是使用诸如 PHP 的 uniqid() 这类伪随机函数生成的，则有可能被暴力破解。</li>
+<li>为使此类攻击更容易实施，您可以尝试延长文件处理所需的时间，从而扩大暴力破解目录名的时间窗口。一种方法是上传一个更大的文件。如果该文件以分块方式处理，您可借此机会构造一个恶意文件：将有效载荷置于文件开头，其后紧跟大量任意填充字节。</li>
+</ol>
+</li>
 </ol>
 <h2 id="rce">无RCE时的其他利用方式<a class="headerlink" href="#rce" title="Permanent link">&para;</a></h2>
 <ol>
 <li>客户端攻击（XSS）</li>
-<li>利用文件解析漏洞</li>
-<li>使用 PUT 方法上传</li>
+<li>尽管您可能无法在服务器上执行脚本，但仍有可能上传用于客户端攻击的脚本。例如，如果您能够上传 HTML 文件或 SVG 图像，则可能利用 <code>&lt;script&gt;</code> 标签构造存储型跨站脚本（XSS）攻击载荷。</li>
+<li>如果上传的文件随后出现在其他用户访问的网页上，当其浏览器尝试渲染该页面时，便会执行该脚本。请注意，由于同源策略的限制，此类攻击仅在上传的文件由与上传目标相同的源提供服务时才有效。</li>
+<li>利用文件解析漏洞
+   如果上传的文件看似既被安全存储又被安全提供服务，那么最后的手段便是尝试利用针对不同文件格式解析或处理过程中的特定漏洞。例如，若已知服务器会解析基于XML的文件（如Microsoft Office的.doc或.xls文件），这可能成为XXE注入攻击的潜在攻击向量。 </li>
+<li>使用 PUT 方法上传
+   值得注意的是，某些Web服务器可能被配置为支持PUT请求。如果未采取适当的安全防护措施，即使Web界面未提供文件上传功能，攻击者仍可能利用此方式上传恶意文件。
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>PUT /images/exploit.php HTTP/1.1
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>Host: vulnerable-website.com
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>Content-Type: application/x-httpd-php
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>Content-Length: 49
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>&lt;?php echo file_get_contents(&#39;/path/to/file&#39;); ?&gt;
+</span></code></pre></div>
+   <strong>可以尝试向不同的端点发送 OPTIONS 请求，以测试哪些端点声明支持 PUT 方法。</strong></li>
 </ol>
 <h2 id="_5">如何防御文件上传漏洞<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<ol>
+<li>用白名单不用黑名单</li>
+<li>确保文件名不包含任何可能被解释为目录或遍历序列（如“../”）的子字符串。</li>
+<li>重命名已上传的文件，以避免发生文件名冲突，防止现有文件被覆盖</li>
+<li>在文件经过完整验证之前，请勿将其上传至服务器的永久文件系统。</li>
+<li>尽可能使用已有的文件上传预处理框架，而不是尝试自行编写验证机制。</li>
+</ol>
 
 
 
@@ -3588,7 +3623,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 19, 2026 08:09:21 UTC"><span class="timeago" datetime="2026-05-19T08:09:21+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 19, 2026 08:09:21 UTC">2026-05-19</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 19, 2026 08:58:33 UTC"><span class="timeago" datetime="2026-05-19T08:58:33+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 19, 2026 08:58:33 UTC">2026-05-19</span>
   </span>
 
     
@@ -3598,7 +3633,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 19, 2026 08:09:21 UTC"><span class="timeago" datetime="2026-05-19T08:09:21+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 19, 2026 08:09:21 UTC">2026-05-19</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 19, 2026 08:58:33 UTC"><span class="timeago" datetime="2026-05-19T08:58:33+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 19, 2026 08:58:33 UTC">2026-05-19</span>
   </span>
 
     
