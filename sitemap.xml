@@ -145,6 +145,10 @@
          <lastmod>2026-05-19</lastmod>
     </url>
     <url>
+         <loc>https://ethicalpaws.github.io/youth-sandbox/tech/web-vulns/command_injection/command_injection/</loc>
+         <lastmod>2026-05-19</lastmod>
+    </url>
+    <url>
          <loc>https://ethicalpaws.github.io/youth-sandbox/tech/web-vulns/csrf%26xss/csrf%26xss/</loc>
          <lastmod>2026-05-19</lastmod>
     </url>
@@ -153,11 +157,19 @@
          <lastmod>2026-05-19</lastmod>
     </url>
     <url>
-         <loc>https://ethicalpaws.github.io/youth-sandbox/tech/web-vulns/information_disclosure/</loc>
+         <loc>https://ethicalpaws.github.io/youth-sandbox/tech/web-vulns/info_leak/info_leak/</loc>
+         <lastmod>2026-05-19</lastmod>
+    </url>
+    <url>
+         <loc>https://ethicalpaws.github.io/youth-sandbox/tech/web-vulns/sqli/sqli/</loc>
          <lastmod>2026-05-19</lastmod>
     </url>
     <url>
          <loc>https://ethicalpaws.github.io/youth-sandbox/tech/web-vulns/ssrf/ssrf/</loc>
+         <lastmod>2026-05-19</lastmod>
+    </url>
+    <url>
+         <loc>https://ethicalpaws.github.io/youth-sandbox/tech/web-vulns/ssti/ssti/</loc>
          <lastmod>2026-05-19</lastmod>
     </url>
     <url>
