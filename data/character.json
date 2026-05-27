@@ -9,14 +9,14 @@
   },
   "auto": {
     "level": 3,
-    "current_exp": 198,
+    "current_exp": 68,
     "next_exp": 288,
-    "total_exp": 638,
+    "total_exp": 508,
     "stats": {
-      "notes_count": 29,
+      "notes_count": 31,
       "ctf_count": 4,
       "cve_count": 2,
-      "src_count": 1,
+      "src_count": 0,
       "weekly_scores": [
         95,
         93
@@ -25,11 +25,15 @@
     "skills": {
       "web_security": 9,
       "web_advanced": 2,
-      "java_security": 3,
-      "ctf_ability": 2,
-      "cve_analysis": 4
+      "java_security": 4,
+      "ctf_ability": 1,
+      "cve_analysis": 2,
+      "src": 0,
+      "programming": 5,
+      "bypass_waf": 2,
+      "code_review": 7
     },
-    "last_update": "2026-05-27 20:23:11",
-    "first_bug_awarded": false
+    "last_update": "2026-05-27 22:37:09",
+    "first_bug_awarded": true
   }
 }
