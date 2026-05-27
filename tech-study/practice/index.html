@@ -12,27 +12,31 @@
         <meta name="author" content="ethicalpaws">
       
       
-        <link rel="canonical" href="https://ethicalpaws.github.io/youth-sandbox/tech-study/practice/cve/WebLogic-CVE-2017-10271/WebLogic-CVE-2017-10271/">
+        <link rel="canonical" href="https://ethicalpaws.github.io/youth-sandbox/tech-study/practice/">
       
       
+        <link rel="prev" href="../knowledge/05-java-security/">
+      
+      
+        <link rel="next" href="ctf/">
       
       
         
       
       
-      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>🐞 CVE 漏洞分析 - 青春沙盒</title>
+        <title>实战总览 - 青春沙盒</title>
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,11 +55,11 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../css/timeago.css">
+      <link rel="stylesheet" href="../../css/timeago.css">
     
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -80,7 +84,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#cve" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -94,7 +98,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../../.." title="青春沙盒" class="md-header__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+    <a href="../.." title="青春沙盒" class="md-header__button md-logo" aria-label="青春沙盒" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
@@ -114,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              🐞 CVE 漏洞分析
+              实战总览
             
           </span>
         </div>
@@ -232,7 +236,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../.." class="md-tabs__link">
+      <a href="../.." class="md-tabs__link">
         
   
   
@@ -249,11 +253,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../../../" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
   
@@ -275,7 +281,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../life/" class="md-tabs__link">
+        <a href="../../life/" class="md-tabs__link">
           
   
   
@@ -297,7 +303,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../updates/" class="md-tabs__link">
+        <a href="../../updates/" class="md-tabs__link">
           
   
   
@@ -319,7 +325,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../spiritual/" class="md-tabs__link">
+        <a href="../../spiritual/" class="md-tabs__link">
           
   
   
@@ -341,7 +347,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../about/" class="md-tabs__link">
+        <a href="../../about/" class="md-tabs__link">
           
   
   
@@ -361,7 +367,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../role-panel/" class="md-tabs__link">
+      <a href="../../role-panel/" class="md-tabs__link">
         
   
   
@@ -396,7 +402,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../../.." title="青春沙盒" class="md-nav__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+    <a href="../.." title="青春沙盒" class="md-nav__button md-logo" aria-label="青春沙盒" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
@@ -426,7 +432,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -450,6 +456,8 @@
       
   
   
+    
+  
   
   
     
@@ -469,22 +477,23 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -502,13 +511,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -552,10 +561,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -565,7 +577,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../knowledge/" class="md-nav__link ">
+            <a href="../knowledge/" class="md-nav__link ">
               
   
   
@@ -583,7 +595,7 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
@@ -609,7 +621,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../knowledge/01-foundation/" class="md-nav__link">
+      <a href="../knowledge/01-foundation/" class="md-nav__link">
         
   
   
@@ -637,7 +649,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../knowledge/02-network-protocol-security/" class="md-nav__link">
+      <a href="../knowledge/02-network-protocol-security/" class="md-nav__link">
         
   
   
@@ -665,7 +677,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../knowledge/03-web-basics/" class="md-nav__link">
+      <a href="../knowledge/03-web-basics/" class="md-nav__link">
         
   
   
@@ -693,7 +705,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../knowledge/04-web-advanced/" class="md-nav__link">
+      <a href="../knowledge/04-web-advanced/" class="md-nav__link">
         
   
   
@@ -721,7 +733,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../knowledge/05-java-security/" class="md-nav__link">
+      <a href="../knowledge/05-java-security/" class="md-nav__link">
         
   
   
@@ -749,7 +761,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../knowledge/06-red-blue-confrontation/index.md" class="md-nav__link">
+      <a href="../knowledge/06-red-blue-confrontation/index.md" class="md-nav__link">
         
   
   
@@ -782,6 +794,8 @@
                 
   
   
+    
+  
   
   
     
@@ -803,20 +817,21 @@
       
       
         
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
+          
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3" >
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../" class="md-nav__link ">
+            <a href="./" class="md-nav__link md-nav__link--active">
               
   
   
@@ -834,13 +849,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+              <label class="md-nav__link md-nav__link--active" for="__nav_2_3" id="__nav_2_3_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -860,7 +875,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ctf/" class="md-nav__link">
+      <a href="ctf/" class="md-nav__link">
         
   
   
@@ -888,7 +903,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
+      <a href="cve/" class="md-nav__link">
         
   
   
@@ -916,7 +931,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../src/" class="md-nav__link">
+      <a href="src/" class="md-nav__link">
         
   
   
@@ -964,10 +979,13 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
@@ -977,7 +995,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../weekly-check/" class="md-nav__link ">
+            <a href="../weekly-check/" class="md-nav__link ">
               
   
   
@@ -1066,7 +1084,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../life/" class="md-nav__link ">
+            <a href="../../life/" class="md-nav__link ">
               
   
   
@@ -1141,7 +1159,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../life/study-plan/" class="md-nav__link ">
+            <a href="../../life/study-plan/" class="md-nav__link ">
               
   
   
@@ -1185,7 +1203,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/study-plan/week1/" class="md-nav__link">
+      <a href="../../life/study-plan/week1/" class="md-nav__link">
         
   
   
@@ -1213,7 +1231,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/study-plan/week2/" class="md-nav__link">
+      <a href="../../life/study-plan/week2/" class="md-nav__link">
         
   
   
@@ -1241,7 +1259,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/study-plan/week3/" class="md-nav__link">
+      <a href="../../life/study-plan/week3/" class="md-nav__link">
         
   
   
@@ -1277,7 +1295,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/journal/" class="md-nav__link">
+      <a href="../../life/journal/" class="md-nav__link">
         
   
   
@@ -1305,7 +1323,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/struggles/" class="md-nav__link">
+      <a href="../../life/struggles/" class="md-nav__link">
         
   
   
@@ -1365,7 +1383,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../life/wins/" class="md-nav__link ">
+            <a href="../../life/wins/" class="md-nav__link ">
               
   
   
@@ -1439,7 +1457,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../life/reflections/" class="md-nav__link ">
+            <a href="../../life/reflections/" class="md-nav__link ">
               
   
   
@@ -1483,7 +1501,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/reflections/%E7%A0%B4%E9%A2%98%E4%B9%8B%E4%BD%99-%E4%BA%A6%E7%A0%B4%E5%BF%83%E9%9A%9C/" class="md-nav__link">
+      <a href="../../life/reflections/%E7%A0%B4%E9%A2%98%E4%B9%8B%E4%BD%99-%E4%BA%A6%E7%A0%B4%E5%BF%83%E9%9A%9C/" class="md-nav__link">
         
   
   
@@ -1553,7 +1571,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../updates/" class="md-nav__link ">
+            <a href="../../updates/" class="md-nav__link ">
               
   
   
@@ -1597,7 +1615,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -1663,7 +1681,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../spiritual/" class="md-nav__link ">
+            <a href="../../spiritual/" class="md-nav__link ">
               
   
   
@@ -1732,7 +1750,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../spiritual/images/" class="md-nav__link ">
+            <a href="../../spiritual/images/" class="md-nav__link ">
               
   
   
@@ -1804,7 +1822,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../spiritual/music/" class="md-nav__link ">
+            <a href="../../spiritual/music/" class="md-nav__link ">
               
   
   
@@ -1876,7 +1894,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../spiritual/sentences/" class="md-nav__link ">
+            <a href="../../spiritual/sentences/" class="md-nav__link ">
               
   
   
@@ -1957,7 +1975,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../about/" class="md-nav__link ">
+            <a href="../../about/" class="md-nav__link ">
               
   
   
@@ -2001,7 +2019,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../about/why/" class="md-nav__link">
+      <a href="../../about/why/" class="md-nav__link">
         
   
   
@@ -2036,7 +2054,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../role-panel/" class="md-nav__link">
+      <a href="../../role-panel/" class="md-nav__link">
         
   
   
@@ -2083,10 +2101,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📝 内容
+        📖 实战板块
       
     </span>
   </a>
@@ -2094,10 +2112,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📌 快速导航
+        📊 统计
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 学习建议
       
     </span>
   </a>
@@ -2124,17 +2153,76 @@
   
 
 
-<h1 id="cve">🐞 CVE 漏洞分析<a class="headerlink" href="#cve" title="Permanent link">&para;</a></h1>
+<h1 id="_1">🎯 实战练习<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p>历史漏洞复现与分析笔记</p>
+<p>从理论到实践，CTF、CVE分析、SRC漏洞挖掘。</p>
 </blockquote>
-<h2 id="_1">📝 内容<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>待补充...</p>
-<hr />
-<h2 id="_2">📌 快速导航<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h2 id="_2">📖 实战板块<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>板块</th>
+<th>说明</th>
+<th style="text-align: center;">数量</th>
+<th style="text-align: center;">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🏴 <a href="ctf/">🏴 CTF</a></td>
+<td>CTF比赛WriteUp与解题思路</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>🐞 <a href="cve/">🐞 CVE分析</a></td>
+<td>真实CVE漏洞复现与分析</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>💰 <a href="src/">💰 SRC实战</a></td>
+<td>实战漏洞挖掘记录</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">✅</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3">📊 统计<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th style="text-align: center;">数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🏴 CTF题目</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr>
+<td>🐞 CVE分析</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr>
+<td>💰 SRC漏洞</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td><strong>总计</strong></td>
+<td style="text-align: center;"><strong>7</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_4">🎯 学习建议<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>返回</strong> <a href="../../">技术总览</a></li>
+<li><strong>CTF</strong>：从简单题目入手，积累解题技巧</li>
+<li><strong>CVE分析</strong>：理解漏洞原理，学会复现</li>
+<li><strong>SRC</strong>：实战挖掘，积累经验</li>
 </ul>
+<hr />
+<p><em>最后更新：2026-05-27 20:01:02</em></p>
 
 
 
@@ -2273,14 +2361,14 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.tracking", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.tracking", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="../../../../../js/timeago.min.js"></script>
+        <script src="../../js/timeago.min.js"></script>
       
-        <script src="../../../../../js/timeago_mkdocs_material.js"></script>
+        <script src="../../js/timeago_mkdocs_material.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
       
