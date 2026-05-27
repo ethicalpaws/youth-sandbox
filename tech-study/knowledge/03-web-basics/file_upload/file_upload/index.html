@@ -1,0 +1,2738 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="安全学习笔记 × 青春记录 | 一个可以安全试错的环境">
+      
+      
+        <meta name="author" content="ethicalpaws">
+      
+      
+        <link rel="canonical" href="https://ethicalpaws.github.io/youth-sandbox/tech-study/knowledge/03-web-basics/file_upload/file_upload/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>File upload - 青春沙盒</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../css/timeago.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="青春沙盒" class="md-header__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            青春沙盒
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              File upload
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ethicalpaws/youth-sandbox" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    youth-sandbox
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  🏠 首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  📚 技术学习
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../life/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🌱 青春记录
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../updates/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🔔 动态推送
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../spiritual/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🔋 精神食粮
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../about/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  📄 关于本站
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../role-panel/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  🎮 角色档案
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="青春沙盒" class="md-nav__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
+
+    </a>
+    青春沙盒
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ethicalpaws/youth-sandbox" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    youth-sandbox
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🏠 首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📚 技术学习
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📚 技术学习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📖 知识笔记
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📖 知识笔记
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01-foundation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01-基础知识
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../02-network-protocol-security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02-网络协议安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03-Web基础漏洞
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../04-web-advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04-Web高级漏洞
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../05-java-security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05-Java安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../06-red-blue-confrontation/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06-红蓝对抗
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../practice/ctf/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎯 实战练习
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🎯 实战练习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../practice/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    实战总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../practice/cve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVE分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../practice/labs/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    靶场练习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../practice/src/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SRC实战
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../weekly-check/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📋 每周检测
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📋 每周检测
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../life/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🌱 青春记录
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🌱 青春记录
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../life/study-plan/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 每周计划
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📝 每周计划
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/study-plan/week1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第1周
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/study-plan/week2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第2周
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/study-plan/week3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第3周
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/journal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📔 随笔日记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/struggles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    [Protected] 💭 烦恼记录
+  
+
+    
+  </span>
+  
+    
+  
+  
+    <span class="md-status md-status--encrypted"></span>
+  
+
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../life/wins/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎉 成就时刻
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🎉 成就时刻
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../life/reflections/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔄 复盘反思
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🔄 复盘反思
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/reflections/%E7%A0%B4%E9%A2%98%E4%B9%8B%E4%BD%99-%E4%BA%A6%E7%A0%B4%E5%BF%83%E9%9A%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一次ctf赛后复盘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../updates/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔔 动态推送
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🔔 动态推送
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📦 全部动态
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../spiritual/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔋 精神食粮
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🔋 精神食粮
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../spiritual/images/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🖼️ 照片
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🖼️ 照片
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../spiritual/music/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎵 音乐
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🎵 音乐
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../spiritual/sentences/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💬 句子
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    💬 句子
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../about/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📄 关于本站
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📄 关于本站
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/why/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    为什么建这个站
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../role-panel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎮 角色档案
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        什么是文件上传漏洞
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        有什么影响
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        产生该漏洞的原因
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#web" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Web服务器如何处理静态文件
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文件上传漏洞的常见利用技术
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rce" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        无RCE时的其他利用方式
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何防御文件上传漏洞
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>File upload</h1>
+
+<h2 id="_1">什么是文件上传漏洞<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>Web服务器允许用户上传文件，但未充分校验文件的属性【文件名、文件类型、文件内容、文件大小】导致用户可以上传可执行脚本文件，从而导致远程任意代码执行。（某些情况下，上传的文件无法自动触发，需要配合其他操作触发【如http请求】才能完成攻击）</p>
+<h2 id="_2">有什么影响<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ol>
+<li>影响程度取决于两大因素</li>
+<li>验证缺陷：未对文件名称、类型、内容、大小进行验证</li>
+<li>上传后的限制：文件存储位置、是否可执行、是否可访问</li>
+<li>严重后果：上传服务端脚本（如 .php）并被服务器执行 → 获得 Web Shell → 完全控制服务器</li>
+<li>其他后果：</li>
+<li>文件名未验证 → 覆盖关键文件</li>
+<li>存在路径遍历 → 上传到非预期目录</li>
+<li>文件大小未验证 → DoS 攻击（填满磁盘空间）</li>
+</ol>
+<h2 id="_3">产生该漏洞的原因<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ol>
+<li>依赖客户端控制的数据：仅检查 Content-Type 头部，可被轻松篡改
+    服务器信任了客户端可以完全控制的一个数据字段，没有对它进行独立核实。
+    攻击者用 Burp Suite 可以把 Content-Type 从 text/plain 改成 image/jpeg，服务器就信了。</li>
+<li>黑名单过滤：禁止危险扩展名，但容易遗漏（如 .php5、.phtml）</li>
+<li>验证逻辑不一致：不同目录、不同服务器组件的验证逻辑存在差异</li>
+</ol>
+<h2 id="web">Web服务器如何处理静态文件<a class="headerlink" href="#web" title="Permanent link">&para;</a></h2>
+<ol>
+<li>处理流程
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>收到HTTP请求
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>|
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>解析URL路径      ---&gt;/images/logo.jpg
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>|
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>映射到文件系统路径 ---&gt;/var/www/html/images/logo.jpg
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>|
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>提取后缀名        ---&gt;.jpg
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>|
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>查询MIME类型映射表    ---&gt;image/jpeg
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>     |
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>     判断是否可执行
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>             |
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>             |---否————&gt;读取并返回原文件
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>             |---是————&gt;检查是否配置了执行处理器
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>                             |
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>                             |-----否————&gt;返回源码或报错
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>                             |-----是————&gt;执行文件
+</span></code></pre></div></li>
+<li>MIME 类型映射机制</li>
+<li>Apache 的 MIME 映射【配置文件 mime.types 或 httpd.conf】
+      <div class="language-apache highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="w">  </span><span class="c"># 扩展名 → MIME 类型的映射</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nb">AddType</span><span class="w"> </span>text/html<span class="w"> </span>.html<span class="w"> </span>.htm
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nb">AddType</span><span class="w"> </span>image/jpeg<span class="w"> </span>.jpg<span class="w"> </span>.jpeg
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nb">AddType</span><span class="w"> </span>application/x-httpd-php<span class="w"> </span>.php
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="nb">AddType</span><span class="w"> </span>text/plain<span class="w"> </span>.txt<span class="w">      </span>
+</span></code></pre></div></li>
+<li>Nginx 的 MIME 映射
+       <div class="language-nginx highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="w"> </span><span class="k">types</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">     </span><span class="kn">text/html</span><span class="w">    </span><span class="s">html</span><span class="w"> </span><span class="s">htm</span><span class="p">;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">     </span><span class="kn">image/jpeg</span><span class="w">   </span><span class="s">jpg</span><span class="w"> </span><span class="s">jpeg</span><span class="p">;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">     </span><span class="kn">application/x-httpd-php</span><span class="w"> </span><span class="s">php</span><span class="p">;</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w"> </span><span class="p">}</span>
+</span></code></pre></div></li>
+<li>IIS 的 MIME 映射
+      <div class="language-xml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="w">  </span><span class="nt">&lt;staticContent&gt;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">      </span><span class="nt">&lt;mimeMap</span><span class="w"> </span><span class="na">fileExtension=</span><span class="s">&quot;.jpg&quot;</span><span class="w"> </span><span class="na">mimeType=</span><span class="s">&quot;image/jpeg&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">      </span><span class="nt">&lt;mimeMap</span><span class="w"> </span><span class="na">fileExtension=</span><span class="s">&quot;.php&quot;</span><span class="w"> </span><span class="na">mimeType=</span><span class="s">&quot;application/x-httpd-php&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">&lt;/staticContent&gt;</span>
+</span></code></pre></div></li>
+<li>三种执行行为分析</li>
+<li>非可执行文件 → 直接返回内容<ol>
+<li>条件：<ol>
+<li>扩展名不在可执行列表</li>
+<li>或 MIME 类型不属于 application/x-httpd-<em>、text/x-</em> 等</li>
+</ol>
+</li>
+<li>处理过程：
+     <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>   客户端请求：GET /images/photo.jpg HTTP/1.1
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>   服务器处理：
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>   1. 读取 /var/www/images/photo.jpg
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>   2. 添加响应头：Content-Type: image/jpeg
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>   3. 发送二进制内容（不解析、不执行）
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>   响应：
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>   HTTP/1.1 200 OK
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>   Content-Type: image/jpeg
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>   Content-Length: 45678
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>   [图片二进制数据]
+</span></code></pre></div></li>
+</ol>
+</li>
+<li>可执行文件 + 配置执行 → 解析执行<ol>
+<li>条件：<ol>
+<li>文件扩展名在可执行列表【被映射到脚本处理器（如 .php → PHP 模块）】</li>
+<li>服务器配置了对应的执行引擎</li>
+</ol>
+</li>
+<li>处理过程：
+     <div class="language-apache highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="w">   </span><span class="c"># 加载 PHP 模块</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">   </span><span class="nb">LoadModule</span><span class="w"> </span>php_module<span class="w"> </span>modules/libphp.so
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">   </span><span class="c"># 将 .php 文件交给 PHP 处理</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">   </span><span class="nb">AddHandler</span><span class="w"> </span>application/x-httpd-php<span class="w"> </span>.php<span class="w">         </span>
+</span></code></pre></div>
+     <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>   客户端请求：GET /shell.php?cmd=id HTTP/1.1
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>   服务器处理：
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>   1. 识别 .php 扩展名
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>   2. 将请求交给 PHP 模块/FPM
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>   3. PHP 解析 &lt;?php system($_GET[&#39;cmd&#39;]); ?&gt;
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>   4. 执行系统命令 &quot;id&quot;
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>   5. 返回输出
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>   响应：
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>   HTTP/1.1 200 OK
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>   Content-Type: text/html
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>   uid=33(www-data) gid=33(www-data)
+</span></code></pre></div></li>
+</ol>
+</li>
+<li>可执行文件 + 未配置执行 → 返回错误/明文<ol>
+<li>条件<ol>
+<li>上传了 .php 文件</li>
+<li>但服务器没有配置 PHP 处理器或者上传目录被明确禁止执行</li>
+</ol>
+</li>
+<li>返回场景
+     场景一：报错
+     <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>HTTP/1.1 403 Forbidden
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Content-Type: text/html
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>You don&#39;t have permission to access /uploads/shell.php on this server.
+</span></code></pre></div>
+     场景二：返回明文源码
+     <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>HTTP/1.1 200 OK
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Content-Type: text/plain
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Content-Length: 39
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>&lt;?php echo system($_GET[&#39;command&#39;]); ?&gt;
+</span></code></pre></div>
+     为什么会出现返回明文的情况？
+     某些 Web 服务器默认配置下，遇到不认识扩展名时：
+     Apache：可能当作 text/plain 返回
+     Nginx：可能下载文件而不是执行
+     IIS：可能返回 404</li>
+</ol>
+</li>
+<li>不同目录配置差异【这是文件上传漏洞中最重要的绕过思路。】<img alt="" src="2026-05-18-14-08-12.png" /></li>
+<li>全局 vs 目录级配置</li>
+<li>利用路径遍历更改上传目录</li>
+<li>利用场景</li>
+<li>上传目录禁止执行，但可以目录穿越</li>
+<li>上传自己的配置文件覆盖目录配置</li>
+<li>利用 CGI 或其他可执行扩展</li>
+</ol>
+<h2 id="_4">文件上传漏洞的常见利用技术<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<ol>
+<li>无任何限制的文件上传</li>
+<li>实战演练：<img alt="" src="2026-05-18-17-25-59.png" /></li>
+<li>找到上传点，上传一个正常照片测试一下<img alt="" src="2026-05-19-11-45-39.png" />发现会显示照片，说明在该页面上应该会有img标签请求访问了该照片</li>
+<li>开发者工具查找<img alt="" src="2026-05-19-11-47-12.png" />发现了照片存放的目录</li>
+<li>接下来上传php脚本文件<img alt="" src="2026-05-19-11-53-04.png" /></li>
+<li>然后访问<img alt="" src="2026-05-19-11-49-54.png" />成功输入目标文件的内容</li>
+<li>提交即可通过<img alt="" src="2026-05-19-11-52-49.png" /></li>
+<li>需要绕过的文件上传</li>
+<li>绕过有缺陷的文件类型验证（Content-Type）<ol>
+<li>提交 HTML 表单时，浏览器通常会以 POST 请求的形式发送所提供的数据，其内容类型（Content-Type）为 application/x-www-form-urlencoded。这种方式适用于传输姓名或地址等简单文本数据。然而，它并不适合传输大量二进制数据（例如整张图像文件或 PDF 文档）。此时，更推荐使用 multipart/form-data 内容类型</li>
+<li>考虑一个包含上传图片、提供图片描述以及输入用户名等字段的表单。提交此类表单可能会生成如下所示的请求
+     <div class="language-http highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nf">POST</span> <span class="nn">/images</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>   <span class="l">Host: normal-website.com</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>   <span class="l">Content-Length: 12345</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>   <span class="l">Content-Type: multipart/form-data; boundary=---------------------------012345678901234567890123456</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>   ---------------------------012345678901234567890123456
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>   Content-Disposition: form-data; name=&quot;image&quot;; filename=&quot;example.jpg&quot;
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>   Content-Type: image/jpeg
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>   [...binary content of example.jpg...]
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>   ---------------------------012345678901234567890123456
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>   Content-Disposition: form-data; name=&quot;description&quot;
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>   This is an interesting description of my image.
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>   ---------------------------012345678901234567890123456
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>   Content-Disposition: form-data; name=&quot;username&quot;
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>
+</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>   wiener
+</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>   ---------------------------012345678901234567890123456--
+</span></code></pre></div>
+     消息正文被分割成每个表单输入的不同部分。每个部分都包含一个Content-Dispositionheader,它提供了有关输入字段的一些基本信息。这些各个部分也可能包含它们自己的Content-Typeheader,它向服务器发送使用此输入提交的 MIME 类型数据。
+     网站可能尝试验证文件上传的一种方法是检查是否针对特定输入Content-Type头球匹配的是预期的MIME类型。例如,如果服务器只期望镜像文件,则可能只允许类似类型image/jpeg而且image/png</li>
+<li>当服务器隐式信任此请求头的值时，可能会引发问题。如果未进一步验证文件内容是否确实与所声称的 MIME 类型匹配，则攻击者可轻易借助 Burp Repeater 等工具绕过该防护措施。</li>
+<li>实战演练：<img alt="" src="2026-05-19-12-07-52.png" /><ol>
+<li>寻找上传点上传正常照片抓包查看<img alt="" src="2026-05-19-12-10-01.png" /></li>
+<li>在上传一个php脚本文件测试<img alt="" src="2026-05-19-12-11-21.png" />发现只允许上传image/jpeg 和 image/png类型的文件</li>
+<li>修改文件后缀为.jpg欺骗浏览器让它误以为上传的脚本文件是image/jpeg类型的<img alt="" src="2026-05-19-12-14-34.png" />成功上传</li>
+<li>但刚刚上传的文件后缀名是.jpg服务器并不会把它交给php解析器继续执行一个还需要抓包把后缀名改回.php再上传<img alt="" src="2026-05-19-12-16-54.png" /></li>
+<li>访问上传的脚本文件<img alt="" src="2026-05-19-12-17-37.png" /></li>
+<li>提交输出的内容即可通关<img alt="" src="2026-05-19-12-18-12.png" /></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>绕过黑/白名单扩展名限制<ol>
+<li>防止用户上传恶意脚本的一种较为明显的方法是将潜在危险的文件扩展名（例如 .php）加入黑名单。然而，黑名单机制本身存在固有缺陷，因为很难明确地屏蔽所有可能用于执行代码的文件扩展名。此类黑名单有时可通过使用较少为人知但依然可执行的替代文件扩展名（例如 .php5、.shtml 等）来绕过。</li>
+<li>绕过手法<ol>
+<li>覆盖服务器配置文件<ol>
+<li>服务器通常不会执行文件，除非已对其进行相应配置。例如，在 Apache 服务器执行客户端请求的 PHP 文件之前，开发人员可能需要在 <code>/etc/apache2/apache2.conf</code> 文件中添加以下指令。
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>LoadModule php_module /usr/lib/apache2/modules/libphp.so
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>   AddType application/x-httpd-php .php
+</span></code></pre></div></li>
+<li>开发人员可以使用 web.config 文件在 IIS 服务器上进行目录特定的配置。例如，以下指令允许向用户提供 JSON 文件
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>&lt;staticContent&gt;
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>   &lt;mimeMap fileExtension=&quot;.json&quot; mimeType=&quot;application/json&quot; /&gt;
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>   &lt;/staticContent&gt;
+</span></code></pre></div></li>
+<li>许多服务器还允许开发者在各个目录中创建特殊的配置文件，以覆盖或添加一项或多项全局设置。例如，Apache 服务器会在存在名为 .htaccess 的文件时，加载该目录特定的配置。 </li>
+<li>Web服务器在存在这类配置文件时会使用它们，但通常不允许攻击者通过HTTP请求访问这些文件。然而，攻击者偶尔可能会发现一些服务器未能阻止上传恶意的自定义配置文件。在这种情况下，即使所需的文件扩展名已被列入黑名单，仍可能诱使服务器将任意自定义文件扩展名映射到可执行的MIME类型。</li>
+<li>实战演练：<img alt="" src="2026-05-19-13-33-19.png" /></li>
+<li>后缀名.php在黑名单中<img alt="" src="2026-05-19-13-35-54.png" /></li>
+<li>尝试上层.htaccess文件发现没有在黑名单中<img alt="" src="2026-05-19-13-38-11.png" /></li>
+<li>上传配置文件，将.jpg映射为php脚本文件
+      <div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>&lt;FilesMatch &quot;shell.jpg&quot;&gt;
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>   SetHandler application/x-httpd-php
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>&lt;/FilesMatch&gt;
+</span></code></pre></div>
+      <img alt="" src="2026-05-19-13-50-15.png" /></li>
+<li>上传文件名为shell.jpg的脚本文件<img alt="" src="2026-05-19-13-51-16.png" /></li>
+<li>访问该文件<img alt="" src="2026-05-19-13-52-02.png" /></li>
+<li>提交<img alt="" src="2026-05-19-13-52-22.png" /></li>
+</ol>
+</li>
+<li>混淆文件扩展名:即使是最详尽的黑名单，也可能通过经典的混淆技术被绕过。【<strong>核心思想是：利用验证逻辑与实际存储/执行逻辑之间的解析差异。</strong>】<ol>
+<li>实战演练：<img alt="" src="2026-05-19-14-51-18.png" /></li>
+<li>大小写绕过双写绕过：
+假设验证代码区分大小写，因而无法识别“exploit.pHp”实际上是一个“.php”文件；而后续将文件扩展名映射为MIME类型的代码却不区分大小写。这种不一致性便使得恶意PHP文件得以绕过验证，最终可能被服务器执行。<img alt="" src="2026-05-19-15-01-33.png" />发现这是白名单过滤</li>
+<li>添加尾随字符
+   示例：<code>exploit.php. 或 exploit.php[空格]</code>
+   原理：
+   Windows 特性： 在 Windows 文件系统中，文件名末尾的点或空格通常会被自动忽略或去除<code>test.php.</code>实际上会被保存为<code>test.php</code>
+   字符串处理差异：验证代码可能使用了严格的字符串比较（例如 in_array 或 strpos），而文件系统在创建文件时会自动 trim 掉这些字符。
+   利用：如果黑名单有<code>.php</code>后端直接保存<code>exploit.php.</code>绕过了检查，但操作系统保存为<code>exploit.php</code>导致可以被执行。</li>
+<li>URL 编码（或双重编码）
+   示例：<code>exploit%2Ephp</code>
+   原理：输入与输出,当上传文件名 exploit%2Ephp 时，Web 应用防火墙（WAF）或验证逻辑会解码并检查 exploit.php，然后拦截。
+   绕过技巧：如果服务器在验证阶段不解码（即直接把 %2E 当作普通字符检查），而在存储阶段或打开文件时解码，就会产生差异。
+   双重编码：exploit%252Ephp（即 % 被编码为 %25）。验证逻辑解码一次变成 exploit%2Ephp，发现没有危险字符；后端处理再解码一次变成 exploit.php。 </li>
+<li>多字节 Unicode 字符
+   示例：特殊字符<code>xC0 x2E</code>（Unicode 规范化为<code>.</code>）
+   原理：
+   规范化攻击： 某些 Unicode 字符序列在视觉上是一个点，或者经过 Unicode 规范化（Normalization）后会被转换成 ASCII 的点（.）
+   绕过场景：假设黑名单过滤了<code>.php</code>
+   提交的文件名包含特殊字符，例如<code>xC0 xAE</code>（在某些编码下表示长音符或特殊符号）
+   验证代码检查时，没有将其识别为点，所以没匹配到 .php，允许上传。
+   服务器在处理路径时，执行了 Unicode 规范化（Normalization Form Canonical Decomposition，NFD，即标准分解化），将<code>xC0 xAE</code>转换成了普通的<code>ASCII</code>点<code>.</code>
+   原本<code>filexC0 xAEphp</code>变成了<code>file.php</code>从而被执行。</li>
+<li>提供多个扩展名
+   示例：<code>exploit.php.jpg</code>
+   原理：
+   黑名单/白名单检查中很多验证函数会用 substr($filename, -3) 或类似方法获取最后几个字符（即 .jpg）。如果只检查最后一个扩展名，它会通过图片检查。
+   服务器解析：针对 Apache 或某些配置不当的服务器，处理程序（Handler）可能会从左到右依次识别扩展名，或者特定的 mod_mime 配置可能会将 .php 识别为可执行文件。
+   结果： 验证阶段看到的是图片，执行阶段看到的是脚本。
+   <img alt="" src="2026-05-19-14-55-49.png" />上传成功尝试访问<img alt="" src="2026-05-19-14-57-08.png" />未被识别为php脚本文件，本题无法用该方法绕过</li>
+<li>使用分号或空字节（Null Byte）
+   这是旧版 PHP 中非常经典的绕过方式。
+   示例 A（分号）：<code>exploit.asp;.jpg</code>
+   解析逻辑：在 IIS（Internet Information Services，微软的 Web 服务器） 6.0 或特定配置中，服务器在处理文件路径时，可能会忽略分号及其后面的内容。
+   结果：验证逻辑看到<code>.jpg</code>放行，IIS 实际执行 <code>exploit.asp</code>
+   <img alt="" src="2026-05-19-15-03-54.png" />
+   尝试访问<img alt="" src="2026-05-19-15-06-28.png" />还是无法被解析
+   示例 B（空字节）：<code>exploit.asp%00.jpg</code>
+   漏洞背景： 在 PHP 5.3 版本之前，处理文件路径的底层函数是用 C 语言编写的。在 C 语言中，\0（空字节）代表字符串的终结符。
+   解析差异：
+   PHP 验证层：使用 $_FILES['name'] 获取文件名，此时 %00 可能还未被解析，或者被视为普通字符，读取整个字符串<code>exploit.asp[NULL].jpg</code>看到<code>.jpg</code>允许上传。
+   C 底层文件操作：当执行<code>fopen()</code>或<code>move_uploaded_file()</code>时，C 语言读到<code>\x00</code> 就认为字符串结束了。
+   结果：最终保存/执行的文件名是<code>exploit.asp</code> 
+   <img alt="" src="2026-05-19-15-07-41.png" />可以看到被保存为shell.php大概率是成功了。尝试访问<img alt="" src="2026-05-19-15-09-11.png" />成功输出文件内容</li>
+<li>提交文件内容<img alt="" src="2026-05-19-15-09-48.png" /> </li>
+<li>总结：
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>攻击者输入 --&gt; [ 验 证 逻 辑 ] --&gt; 判定为安全 --&gt; [ 文 件 系 统 / 解 析 器 ] --&gt; 执行恶意代码
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>               ( 看 不 懂 )                           ( 看 懂 了 )
+</span></code></pre></div>
+   验证逻辑：通常使用严格的字符串匹配、正则表达式或开发者写的黑名单数组。
+   执行逻辑：涉及操作系统的文件系统规则（如 Windows 去点）、Web 服务器的模块识别（如 Apache 的 AddHandler）、或底层编程语言（如 C 语言的 Null Byte 处理）。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>绕过内容验证（文件签名/魔术字节）<ol>
+<li>更安全的服务器不会隐式信任请求中指定的 Content-Type，而是会尝试验证文件内容是否确实符合预期。</li>
+<li>在图像上传功能中，服务器可能会尝试验证图像的某些固有属性，例如其尺寸。例如，如果尝试上传一个PHP脚本，该文件根本不存在任何尺寸信息，因此服务器便可推断它绝不可能是图像，从而相应地拒绝该上传请求。类似地，某些文件类型通常会在其文件头或文件尾包含特定的字节序列，这些序列可被用作“指纹”或“签名”，以判断文件内容是否符合预期的文件类型。例如，JPEG文件总是以字节序列FF D8 FF开头
+  这是一种更为可靠的文件类型验证方法，但即便如此，它也并非万无一失。借助ExifTool等专用工具，可以轻而易举地将恶意代码嵌入JPEG文件元数据中</li>
+<li>实战演练：<img alt="" src="2026-05-19-15-16-03.png" /><ol>
+<li>发现本题果然仅仅通过修改文件名无法通过校验<img alt="" src="2026-05-19-15-22-59.png" /></li>
+<li>简单制作一个图片马<img alt="" src="2026-05-19-15-28-51.png" /></li>
+<li>上传成功<img alt="" src="2026-05-19-15-32-13.png" /></li>
+<li>尝试访问<img alt="" src="2026-05-19-15-33-02.png" />成功输出目标文件内容【前面的乱码是图片马的前半部分图片内容，因为二进制数据所以输出为乱码】</li>
+<li>将后半部分文本提交即可<img alt="" src="2026-05-19-15-37-35.png" /></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>利用路径遍历更改上传目录<ol>
+<li>预防措施：服务器通常仅运行其 MIME 类型已被明确配置为可执行的脚本。否则，服务器可能会返回某种错误消息，或者在某些情况下，直接以纯文本形式提供该文件的内容：
+  <div class="language-http highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nf">GET</span> <span class="nn">/static/exploit.php?command=id</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>   <span class="l">Host: normal-website.com</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>   HTTP/1.1 200 OK
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>   Content-Type: text/plain
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>   Content-Length: 39
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>   &lt;?php echo system($_GET[&#39;command&#39;]); ?&gt;      
+</span></code></pre></div>
+  这种行为本身可能颇具研究价值，因为它可能导致源代码泄露；但与此同时，它也会使任何构建Web Shell的尝试失效。</li>
+<li>绕过手法：此类配置在不同目录之间往往存在差异。用户上传文件的目录通常比文件系统中其他被假定为终端用户无法访问的位置具有更为严格的控制措施。如果能找到一种方法，将脚本上传至本不应存放用户提交文件的其他目录，服务器最终仍可能执行脚本。</li>
+<li>实战演练<img alt="" src="2026-05-19-12-43-50.png" /><ol>
+<li>上传脚本文件到原目录下<img alt="" src="2026-05-19-12-53-43.png" /></li>
+<li>访问文件，发现服务器原样输出文件内容，并不会把它当做php脚本解析执行<img alt="" src="2026-05-19-12-54-23.png" /></li>
+<li>通过../遍历目录将脚本上传到别的目录下<img alt="" src="2026-05-19-12-59-44.png" />发现../应该是被过滤了</li>
+<li>将/进行url编码尝试绕过<img alt="" src="2026-05-19-13-16-42.png" /></li>
+<li>访问脚本文件<img alt="" src="2026-05-19-13-19-19.png" />成功获取文件内容</li>
+<li><img alt="" src="2026-05-19-13-19-54.png" /></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>利用条件竞争（Race Condition）<ol>
+<li>现代框架对这类攻击的防护能力更强。它们通常不会直接将文件上传到文件系统中预设的目标位置，而是采取一些预防措施，例如先将文件上传至临时的、沙箱化的目录，并随机化文件名以避免覆盖现有文件。随后，框架会对该临时文件执行验证，仅在确认其安全后，才将其转移至最终目标位置</li>
+<li>话虽如此，开发人员有时会脱离任何框架，自行实现文件上传处理。这不仅实现起来相当复杂，还可能引入危险的竞争条件，使攻击者能够完全绕过即使是最严格的验证措施</li>
+<li>例如，某些网站会直接将文件上传至主文件系统，然后在文件未通过验证时再次将其删除。这种行为常见于依赖杀毒软件等工具来检测恶意软件的网站。整个过程可能仅需几毫秒，但在文件短暂存在于服务器上的这段时间内，攻击者仍有可能执行该文件</li>
+<li>实战演练：<img alt="" src="2026-05-19-16-27-49.png" /><ol>
+<li>试了很多绕过发现过滤很严格<img alt="" src="2026-05-19-16-38-53.png" /></li>
+<li>尝试条件竞争，抓一个上传文件的数据包放入intruder中并进行如下配置<img alt="" src="2026-05-19-16-40-53.png" /><img alt="" src="2026-05-19-16-40-41.png" /></li>
+<li>抓一个访问文件的数据包放入intruder中并进行如上配置，然后先开始上传文件的数据包重发接着快速开始访问文件的数据包重发</li>
+<li>然后查看结果发现有可以成功访问的<img alt="" src="2026-05-19-16-38-21.png" /></li>
+<li>提交<img alt="" src="2026-05-19-16-38-33.png" /></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>基于 URL 的文件上传竞争条件<ol>
+<li>类似的竞态条件也可能出现在允许通过提供URL上传文件的函数中。在这种情况下，服务器必须先通过互联网获取该文件，并创建一个本地副本，然后才能执行任何验证操作。</li>
+<li>由于文件是通过HTTP加载的，开发人员无法使用其框架内置的安全文件验证机制。相反，他们可能需要手动创建临时存储和验证文件的流程，而这种方式的安全性可能略显不足。</li>
+<li>例如，如果文件被加载到一个具有随机名称的临时目录中，理论上攻击者将无法利用任何竞争条件进行攻击。由于他们不知道该目录的名称，因此无法请求该文件以触发其执行。但另一方面，如果该随机目录名是使用诸如 PHP 的 uniqid() 这类伪随机函数生成的，则有可能被暴力破解。</li>
+<li>为使此类攻击更容易实施，您可以尝试延长文件处理所需的时间，从而扩大暴力破解目录名的时间窗口。一种方法是上传一个更大的文件。如果该文件以分块方式处理，您可借此机会构造一个恶意文件：将有效载荷置于文件开头，其后紧跟大量任意填充字节。</li>
+</ol>
+</li>
+</ol>
+<h2 id="rce">无RCE时的其他利用方式<a class="headerlink" href="#rce" title="Permanent link">&para;</a></h2>
+<ol>
+<li>客户端攻击（XSS）</li>
+<li>尽管您可能无法在服务器上执行脚本，但仍有可能上传用于客户端攻击的脚本。例如，如果您能够上传 HTML 文件或 SVG 图像，则可能利用 <code>&lt;script&gt;</code> 标签构造存储型跨站脚本（XSS）攻击载荷。</li>
+<li>如果上传的文件随后出现在其他用户访问的网页上，当其浏览器尝试渲染该页面时，便会执行该脚本。请注意，由于同源策略的限制，此类攻击仅在上传的文件由与上传目标相同的源提供服务时才有效。</li>
+<li>利用文件解析漏洞
+   如果上传的文件看似既被安全存储又被安全提供服务，那么最后的手段便是尝试利用针对不同文件格式解析或处理过程中的特定漏洞。例如，若已知服务器会解析基于XML的文件（如Microsoft Office的.doc或.xls文件），这可能成为XXE注入攻击的潜在攻击向量。 </li>
+<li>使用 PUT 方法上传
+   值得注意的是，某些Web服务器可能被配置为支持PUT请求。如果未采取适当的安全防护措施，即使Web界面未提供文件上传功能，攻击者仍可能利用此方式上传恶意文件。
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>PUT /images/exploit.php HTTP/1.1
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>Host: vulnerable-website.com
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>Content-Type: application/x-httpd-php
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>Content-Length: 49
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>&lt;?php echo file_get_contents(&#39;/path/to/file&#39;); ?&gt;
+</span></code></pre></div>
+   <strong>可以尝试向不同的端点发送 OPTIONS 请求，以测试哪些端点声明支持 PUT 方法。</strong></li>
+</ol>
+<h2 id="_5">如何防御文件上传漏洞<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<ol>
+<li>用白名单不用黑名单</li>
+<li>确保文件名不包含任何可能被解释为目录或遍历序列（如“../”）的子字符串。</li>
+<li>重命名已上传的文件，以避免发生文件名冲突，防止现有文件被覆盖</li>
+<li>在文件经过完整验证之前，请勿将其上传至服务器的永久文件系统。</li>
+<li>尽可能使用已有的文件上传预处理框架，而不是尝试自行编写验证机制。</li>
+</ol>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 11:32:30 UTC"><span class="timeago" datetime="2026-05-27T11:32:30+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 11:32:30 UTC">2026-05-27</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 11:32:30 UTC"><span class="timeago" datetime="2026-05-27T11:32:30+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 11:32:30 UTC">2026-05-27</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+<script src="https://giscus.app/client.js"
+        data-repo="ethicalpaws/youth-sandbox"
+        data-repo-id="R_kgDOSdu3Yw"
+        data-category="General"
+        data-category-id="DIC_kwDOSdu3Y84C9EfW"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+<!-- 可选：自动跟随深色/浅色模式 -->
+<script>
+    // 监听主题切换，同步 Giscus 主题
+    const giscusTheme = () => {
+        const isDark = document.querySelector('[data-md-color-scheme="slate"]') !== null;
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage(
+            { giscus: { setConfig: { theme: isDark ? 'dark' : 'light' } } },
+            'https://giscus.app'
+        );
+    };
+
+    // 当主题切换时触发
+    const observer = new MutationObserver(giscusTheme);
+    observer.observe(document.querySelector('[data-md-component="palette"]'), { attributes: true });
+</script>
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 青春沙盒 - 记录技术，也记录青春
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/ethicalpaws" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://twitter.com/ethicalpaws" target="_blank" rel="noopener" title="Twitter" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.tracking", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../js/timeago.min.js"></script>
+      
+        <script src="../../../../../js/timeago_mkdocs_material.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+      
+    
+  </body>
+</html>

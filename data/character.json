@@ -1,0 +1,35 @@
+{
+  "manual": {
+    "name": "ethicalpaws",
+    "avatar": "🐕",
+    "title": "安全学徒",
+    "motto": "路漫漫其修远兮",
+    "join_date": "2026-05-27",
+    "special_achievements": []
+  },
+  "auto": {
+    "level": 3,
+    "current_exp": 198,
+    "next_exp": 288,
+    "total_exp": 638,
+    "stats": {
+      "notes_count": 29,
+      "ctf_count": 4,
+      "cve_count": 2,
+      "src_count": 1,
+      "weekly_scores": [
+        95,
+        93
+      ]
+    },
+    "skills": {
+      "web_security": 9,
+      "web_advanced": 2,
+      "java_security": 3,
+      "ctf_ability": 2,
+      "cve_analysis": 4
+    },
+    "last_update": "2026-05-27 18:22:59",
+    "first_bug_awarded": false
+  }
+}

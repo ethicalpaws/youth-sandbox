@@ -1,0 +1,225 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #0a0a0f 0%, #1a0a0a 100%);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.loading {
+    text-align: center;
+    padding: 4rem;
+    color: #886666;
+}
+
+.game-panel {
+    max-width: 560px;
+    width: 100%;
+    margin: 2rem auto;
+    background: linear-gradient(145deg, #0d0d12 0%, #15151a 100%);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 170, 0, 0.3);
+    box-shadow: 0 0 30px rgba(255, 68, 68, 0.15);
+    overflow: hidden;
+}
+
+.game-header {
+    background: linear-gradient(135deg, #1a0a0a 0%, #0d0d12 100%);
+    padding: 1.5rem;
+    border-bottom: 2px solid #ffaa00;
+    text-align: center;
+    position: relative;
+}
+
+.level-badge {
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    background: linear-gradient(135deg, #ff4444, #cc0000);
+    color: #ffdd88;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    border: 1px solid #ffaa00;
+}
+
+.avatar {
+    font-size: 3rem;
+    background: linear-gradient(145deg, #2a1515, #1a0a0a);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.75rem;
+    border: 2px solid #ffaa00;
+    box-shadow: 0 0 15px rgba(255, 170, 0, 0.3);
+}
+
+.player-name {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #ffdd88;
+}
+
+.player-title {
+    font-size: 0.8rem;
+    color: #ff6666;
+    letter-spacing: 2px;
+}
+
+.motto {
+    font-size: 0.7rem;
+    color: #aa8866;
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+.game-content {
+    padding: 1.5rem;
+}
+
+.card {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 16px;
+    padding: 1rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid rgba(255, 68, 68, 0.3);
+}
+
+.card-title {
+    color: #ffaa00;
+    font-size: 0.8rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.exp-bar-container {
+    background: #2a1515;
+    border-radius: 20px;
+    height: 24px;
+    overflow: hidden;
+    margin: 0.5rem 0;
+}
+
+.exp-bar-fill {
+    background: linear-gradient(90deg, #ff4444, #ff8866);
+    width: 0%;
+    height: 100%;
+    border-radius: 20px;
+    transition: width 1s cubic-bezier(0.4, 1.2, 0.6, 1);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: bold;
+}
+
+.exp-stats {
+    display: flex;
+    justify-content: space-between;
+    color: #ffaa88;
+    font-size: 0.7rem;
+    margin-top: 0.5rem;
+}
+
+.attr-item {
+    margin-bottom: 0.75rem;
+}
+
+.attr-header {
+    display: flex;
+    justify-content: space-between;
+    color: #ffddaa;
+    font-size: 0.7rem;
+    margin-bottom: 0.25rem;
+}
+
+.attr-bar {
+    background: #1a0a0a;
+    border-radius: 10px;
+    height: 8px;
+    overflow: hidden;
+}
+
+.attr-fill {
+    background: linear-gradient(90deg, #ffaa00, #ffcc44);
+    width: 0%;
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.8s ease-out;
+}
+
+.skill-item {
+    margin-bottom: 0.75rem;
+}
+
+.skill-header {
+    display: flex;
+    justify-content: space-between;
+    color: #ffccaa;
+    font-size: 0.7rem;
+    margin-bottom: 0.25rem;
+}
+
+.skill-bar {
+    background: #1a0a0a;
+    border-radius: 6px;
+    height: 6px;
+    overflow: hidden;
+}
+
+.skill-fill {
+    background: linear-gradient(90deg, #ffaa00, #ffcc44);
+    width: 0%;
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.6s ease;
+}
+
+.achievement-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(255, 68, 68, 0.2);
+}
+
+.achievement-item:last-child {
+    border-bottom: none;
+}
+
+.achievement-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.achievement-name {
+    font-size: 0.75rem;
+    color: #ffccaa;
+}
+
+.achievement-xp {
+    font-size: 0.7rem;
+    color: #ffaa44;
+}
+
+.quote {
+    background: linear-gradient(135deg, rgba(255, 68, 68, 0.1), rgba(255, 170, 0, 0.05));
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    text-align: center;
+    color: #ffaa88;
+    font-size: 0.75rem;
+    font-style: italic;
+}

