@@ -3,13 +3,12 @@ async function loadRolePanel() {
     const container = document.getElementById('role-panel-root');
     
     try {
-        // 相对路径：从 asserts/js/ 向上两级到 docs/ 目录
-        const [charRes, quotesRes] = await Promise.all([
-            fetch('../../data/character.json'),
-            fetch('../../data/quotes.json')
-        ]);
+        // 使用相对路径：从 asserts/js/ 向上两级到 docs/，再进入 data/
+        const charRes = await fetch('../../data/character.json');
+        const quotesRes = await fetch('../../data/quotes.json');
         
-        if (!charRes.ok) throw new Error('角色数据加载失败');
+        if (!charRes.ok) throw new Error('角色数据加载失败: ' + charRes.status);
+        if (!quotesRes.ok) throw new Error('语录数据加载失败: ' + quotesRes.status);
         
         const charData = await charRes.json();
         const quotesData = await quotesRes.json();
@@ -20,7 +19,6 @@ async function loadRolePanel() {
         const expPercent = (auto.current_exp / auto.next_exp * 100).toFixed(1);
         const skills = auto.skills || {};
         
-        // RPG 属性
         const rpgAttrs = [
             { name: "⚔️ 攻击力", value: (skills.web_security || 0) * 8 + 20, max: 100 },
             { name: "🛡️ 防御力", value: (skills.java_security || 0) * 6 + 20, max: 100 },
@@ -28,7 +26,6 @@ async function loadRolePanel() {
             { name: "🔮 智慧", value: (skills.cve_analysis || 0) * 9 + 20, max: 100 }
         ];
         
-        // 技能树
         const termSkills = [
             { name: "WEB_SECURITY", level: skills.web_security || 0, max: 20 },
             { name: "WEB_ADVANCED", level: skills.web_advanced || 0, max: 20 },
@@ -38,7 +35,7 @@ async function loadRolePanel() {
         
         const achievements = manual.special_achievements || [];
         const tips = quotesData.weekly_tips || ['Flag 出来的那一刻，值了'];
-        const randomQuote = tips[Math.floor(Math.random() * tips.length)].replace('💡', '💬');
+        const randomQuote = tips[Math.floor(Math.random() * tips.length)];
         
         const rpgHtml = rpgAttrs.map(attr => {
             const percent = (attr.value / attr.max * 100).toFixed(1);
@@ -97,7 +94,7 @@ async function loadRolePanel() {
                     <div class="card">
                         <div class="card-title">📊 经验值</div>
                         <div class="exp-bar-container">
-                            <div class="exp-bar-fill" id="expFill" data-width="${expPercent}%"></div>
+                            <div class="exp-bar-fill" id="expFill" data-width="${expPercent}%">${expPercent}%</div>
                         </div>
                         <div class="exp-stats">
                             <span>${auto.current_exp} / ${auto.next_exp}</span>
@@ -131,15 +128,17 @@ async function loadRolePanel() {
         
         setTimeout(() => {
             const expFill = document.getElementById('expFill');
-            if (expFill) expFill.style.width = expFill.getAttribute('data-width');
+            if (expFill) {
+                expFill.style.width = expFill.getAttribute('data-width') + '%';
+            }
             document.querySelectorAll('.attr-fill, .skill-fill').forEach(fill => {
-                fill.style.width = fill.getAttribute('data-width');
+                fill.style.width = fill.getAttribute('data-width') + '%';
             });
         }, 100);
         
     } catch (error) {
         console.error('加载失败:', error);
-        container.innerHTML = '<div class="loading">⚠️ 加载失败，请刷新重试</div>';
+        container.innerHTML = '<div class="loading">⚠️ 加载失败<br><br>' + error.message + '</div>';
     }
 }
 
