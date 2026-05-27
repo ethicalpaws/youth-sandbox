@@ -2330,38 +2330,7 @@ fetch('/youth-sandbox/updates.json')
 
 
 
-<script src="https://giscus.app/client.js"
-        data-repo="ethicalpaws/youth-sandbox"
-        data-repo-id="R_kgDOSdu3Yw"
-        data-category="General"
-        data-category-id="DIC_kwDOSdu3Y84C9EfW"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="preferred_color_scheme"
-        data-lang="zh-CN"
-        crossorigin="anonymous"
-        async>
-</script>
-<!-- 可选：自动跟随深色/浅色模式 -->
-<script>
-    // 监听主题切换，同步 Giscus 主题
-    const giscusTheme = () => {
-        const isDark = document.querySelector('[data-md-color-scheme="slate"]') !== null;
-        const iframe = document.querySelector('iframe.giscus-frame');
-        if (!iframe) return;
-        iframe.contentWindow.postMessage(
-            { giscus: { setConfig: { theme: isDark ? 'dark' : 'light' } } },
-            'https://giscus.app'
-        );
-    };
 
-    // 当主题切换时触发
-    const observer = new MutationObserver(giscusTheme);
-    observer.observe(document.querySelector('[data-md-component="palette"]'), { attributes: true });
-</script>
                 
               </article>
             </div>

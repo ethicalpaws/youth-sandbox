@@ -2129,7 +2129,7 @@ body {
 }
 
 .game-panel {
-    max-width: 800px;
+    max-width: 900px;
     width: 100%;
     margin: 2rem auto;
     background: linear-gradient(145deg, #0d0d12 0%, #15151a 100%);
@@ -2276,7 +2276,6 @@ body {
     margin-top: 0.5rem;
 }
 
-/* 属性面板 */
 .attrs-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -2310,13 +2309,11 @@ body {
     transition: width 0.8s ease-out;
 }
 
-/* 雷达图容器 */
 .radar-container {
-    max-width: 300px;
+    max-width: 280px;
     margin: 0 auto;
 }
 
-/* 技能树 */
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -2350,29 +2347,26 @@ body {
     transition: width 0.6s ease;
 }
 
-/* 热力图 */
 .heatmap {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 3px;
     justify-content: center;
-    max-height: 120px;
+    max-height: 130px;
     overflow-y: auto;
+    padding: 0.25rem;
 }
 
 .heatmap-day {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     border-radius: 3px;
-    background: #1a0a0a;
 }
 
-.heatmap-day[data-level="1"] { background: #2a5a2a; }
-.heatmap-day[data-level="2"] { background: #3a8a3a; }
-.heatmap-day[data-level="3"] { background: #4aba4a; }
-.heatmap-day[data-level="4"] { background: #5aea5a; }
+.heatmap-day.high { background: #ff4444; }
+.heatmap-day.mid { background: #ffaa00; }
+.heatmap-day.low { background: #444444; }
 
-/* 成就 */
 .achievement-item {
     display: flex;
     justify-content: space-between;
@@ -2401,7 +2395,11 @@ body {
     color: #886666;
 }
 
-/* 语录 */
+.achievement-xp {
+    font-size: 0.7rem;
+    color: #ffaa44;
+}
+
 .quote {
     background: linear-gradient(135deg, rgba(255, 68, 68, 0.1), rgba(255, 170, 0, 0.05));
     border-radius: 12px;
@@ -2412,14 +2410,13 @@ body {
     font-style: italic;
 }
 
-/* 两列布局 */
 .two-columns {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
     .two-columns {
         grid-template-columns: 1fr;
     }
@@ -2442,11 +2439,12 @@ async function loadRolePanel() {
 
     try {
         const [charRes, quotesRes] = await Promise.all([
-            fetch('../../data/character.json'),
-            fetch('../../data/quotes.json')
+            fetch('/youth-sandbox/data/character.json'),
+            fetch('/youth-sandbox/data/quotes.json')
         ]);
 
-        if (!charRes.ok) throw new Error('角色数据加载失败');
+        if (!charRes.ok) throw new Error('角色数据加载失败: ' + charRes.status);
+        if (!quotesRes.ok) throw new Error('语录数据加载失败: ' + quotesRes.status);
 
         const charData = await charRes.json();
         const quotesData = await quotesRes.json();
@@ -2455,7 +2453,7 @@ async function loadRolePanel() {
         const manual = charData.manual;
         const skills = auto.skills || {};
 
-        // 计算等级头衔
+        // 头衔映射
         function getTitleByLevel(level) {
             if (level <= 10) return "安全萌新";
             if (level <= 15) return "脚本小子";
@@ -2467,20 +2465,6 @@ async function loadRolePanel() {
             if (level <= 45) return "守护者";
             return "传奇黑客";
         }
-
-        // 计算战力
-        const combatPower = Math.floor(
-            (skills.web_security || 0) * 100 +
-            (skills.web_advanced || 0) * 120 +
-            (skills.java_security || 0) * 150 +
-            (skills.ctf_ability || 0) * 80 +
-            (skills.cve_analysis || 0) * 90 +
-            (skills.programming || 0) * 70 +
-            (skills.bypass_waf || 0) * 110 +
-            (skills.code_review || 0) * 100
-        );
-
-        const currentTitle = getTitleByLevel(auto.level);
 
         // 头衔进阶路线
         const titleRoad = [
@@ -2495,7 +2479,6 @@ async function loadRolePanel() {
             { level: 50, name: "传奇黑客" }
         ];
 
-        // 找到当前头衔索引
         let currentIndex = 0;
         for (let i = 0; i < titleRoad.length; i++) {
             if (auto.level <= titleRoad[i].level) {
@@ -2504,7 +2487,6 @@ async function loadRolePanel() {
             }
         }
 
-        // 生成进阶路线显示
         let roadHtml = '';
         for (let i = 0; i < titleRoad.length; i++) {
             const isCurrent = i === currentIndex;
@@ -2513,10 +2495,22 @@ async function loadRolePanel() {
             if (i < titleRoad.length - 1) roadHtml += ' → ';
         }
 
-        // 计算经验百分比
+        // 战力计算
+        const combatPower = Math.floor(
+            (skills.web_security || 0) * 100 +
+            (skills.web_advanced || 0) * 120 +
+            (skills.java_security || 0) * 150 +
+            (skills.ctf_ability || 0) * 80 +
+            (skills.cve_analysis || 0) * 90 +
+            (skills.programming || 0) * 70 +
+            (skills.bypass_waf || 0) * 110 +
+            (skills.code_review || 0) * 100
+        );
+
+        const currentTitle = getTitleByLevel(auto.level);
         const expPercent = (auto.current_exp / auto.next_exp * 100).toFixed(1);
 
-        // 属性面板数据
+        // 属性面板
         const rpgAttrs = [
             { name: "🎯 信息收集", value: (skills.web_security || 0) * 8 + (skills.code_review || 0) * 6, max: 200 },
             { name: "🔓 漏洞挖掘", value: (skills.web_advanced || 0) * 10 + (skills.src || 0) * 8 + (skills.cve_analysis || 0) * 6, max: 200 },
@@ -2524,9 +2518,9 @@ async function loadRolePanel() {
             { name: "🛡️ 绕过技巧", value: (skills.web_security || 0) * 6 + (skills.ctf_ability || 0) * 6 + (skills.bypass_waf || 0) * 10, max: 200 }
         ];
 
-        // 雷达图数据（6项核心能力）
+        // 雷达图数据
         const radarLabels = ['Web基础', 'Java安全', 'CTF能力', 'CVE分析', '编程能力', '绕WAF'];
-        const radarData = [
+        const radarValues = [
             skills.web_security || 0,
             skills.java_security || 0,
             skills.ctf_ability || 0,
@@ -2535,7 +2529,17 @@ async function loadRolePanel() {
             skills.bypass_waf || 0
         ];
 
-        // 技能树数据
+        // 动态计算雷达图最大值
+        let maxValue = Math.max(...radarValues);
+        let radarMax = 50;
+        if (maxValue > 90) radarMax = 100;
+        else if (maxValue > 80) radarMax = 90;
+        else if (maxValue > 70) radarMax = 80;
+        else if (maxValue > 60) radarMax = 70;
+        else if (maxValue > 50) radarMax = 60;
+        else radarMax = 50;
+
+        // 技能树
         const skillTree = [
             { name: "Web基础", value: skills.web_security || 0, max: 100 },
             { name: "Web高级", value: skills.web_advanced || 0, max: 100 },
@@ -2547,12 +2551,36 @@ async function loadRolePanel() {
             { name: "代码审计", value: skills.code_review || 0, max: 100 }
         ];
 
-        // 热力图数据（模拟 - 从 weekly_scores 生成）
-        const heatmapData = auto.stats.weekly_scores || [];
+        // 热力图：综合笔记数 + 周测得分
+        const heatmap = auto.heatmap || { weeks: [], dailyNotes: {} };
+        const weeklyScores = auto.stats.weekly_scores || [];
+
+        function getActivityLevel(noteCount, weeklyScore) {
+            if (noteCount >= 3 || weeklyScore >= 80) return 2;      // 红色
+            if (noteCount >= 1 || weeklyScore >= 60) return 1;      // 橙黄
+            return 0;                                               // 灰色
+        }
+
         let heatmapHtml = '';
-        for (let i = 0; i < 52; i++) {
-            const level = heatmapData[i] ? Math.floor(heatmapData[i] / 25) + 1 : 0;
-            heatmapHtml += `<div class="heatmap-day" data-level="${level}"></div>`;
+        const today = new Date();
+        for (let i = 51; i >= 0; i--) {
+            const weekStart = new Date(today);
+            weekStart.setDate(today.getDate() - today.getDay() - i * 7);
+
+            let weekMaxLevel = 0;
+            for (let d = 0; d < 7; d++) {
+                const date = new Date(weekStart);
+                date.setDate(weekStart.getDate() + d);
+                const dateStr = date.toISOString().split('T')[0];
+                const noteCount = (heatmap.dailyNotes && heatmap.dailyNotes[dateStr]) || 0;
+                const weekNum = Math.floor((date - new Date(2026, 0, 1)) / (7 * 24 * 60 * 60 * 1000));
+                const weeklyScore = weeklyScores[weekNum] || 0;
+                const level = getActivityLevel(noteCount, weeklyScore);
+                if (level > weekMaxLevel) weekMaxLevel = level;
+            }
+
+            const colorClass = weekMaxLevel === 2 ? 'high' : (weekMaxLevel === 1 ? 'mid' : 'low');
+            heatmapHtml += `<div class="heatmap-day ${colorClass}"></div>`;
         }
 
         // 成就
@@ -2585,7 +2613,7 @@ async function loadRolePanel() {
                 <div class="skill-item">
                     <div class="skill-header">
                         <span>├─ ${skill.name}</span>
-                        <span>${skill.value}</span>
+                        <span>${skill.value} / ${skill.max}</span>
                     </div>
                     <div class="skill-bar">
                         <div class="skill-fill" data-width="${percent}%"></div>
@@ -2667,7 +2695,7 @@ async function loadRolePanel() {
 
                     <!-- 技能树 -->
                     <div class="card">
-                        <div class="card-title">📚 技能树</div>
+                        <div class="card-title">🔧 技能树</div>
                         <div class="skills-grid">
                             ${skillsHtml}
                         </div>
@@ -2676,11 +2704,11 @@ async function loadRolePanel() {
                     <!-- 学习热力图 -->
                     <div class="card">
                         <div class="card-title">🔥 学习热力图</div>
-                        <div class="heatmap" id="heatmap">
+                        <div class="heatmap">
                             ${heatmapHtml}
                         </div>
                         <div style="margin-top: 0.5rem; font-size: 0.6rem; color: #886666; text-align: center;">
-                            近52周学习活跃度
+                            近52周学习活跃度（🔴高 🟡中 ⚫低）
                         </div>
                     </div>
 
@@ -2708,7 +2736,7 @@ async function loadRolePanel() {
                 labels: radarLabels,
                 datasets: [{
                     label: '能力值',
-                    data: radarData,
+                    data: radarValues,
                     backgroundColor: 'rgba(255, 170, 0, 0.2)',
                     borderColor: '#ffaa00',
                     borderWidth: 2,
@@ -2723,9 +2751,9 @@ async function loadRolePanel() {
                 scales: {
                     r: {
                         beginAtZero: true,
-                        max: 100,
+                        max: radarMax,
                         ticks: {
-                            stepSize: 20,
+                            stepSize: radarMax / 5,
                             color: '#ffaa88'
                         },
                         grid: {
@@ -2785,7 +2813,7 @@ loadRolePanel();
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 15:03:53 UTC"><span class="timeago" datetime="2026-05-27T15:03:53+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 15:03:53 UTC">2026-05-27</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 15:21:48 UTC"><span class="timeago" datetime="2026-05-27T15:21:48+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 15:21:48 UTC">2026-05-27</span>
   </span>
 
     
@@ -2795,7 +2823,7 @@ loadRolePanel();
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 15:03:53 UTC"><span class="timeago" datetime="2026-05-27T15:03:53+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 15:03:53 UTC">2026-05-27</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 15:21:48 UTC"><span class="timeago" datetime="2026-05-27T15:21:48+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 15:21:48 UTC">2026-05-27</span>
   </span>
 
     
@@ -2808,38 +2836,7 @@ loadRolePanel();
   
 
 
-<script src="https://giscus.app/client.js"
-        data-repo="ethicalpaws/youth-sandbox"
-        data-repo-id="R_kgDOSdu3Yw"
-        data-category="General"
-        data-category-id="DIC_kwDOSdu3Y84C9EfW"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="preferred_color_scheme"
-        data-lang="zh-CN"
-        crossorigin="anonymous"
-        async>
-</script>
-<!-- 可选：自动跟随深色/浅色模式 -->
-<script>
-    // 监听主题切换，同步 Giscus 主题
-    const giscusTheme = () => {
-        const isDark = document.querySelector('[data-md-color-scheme="slate"]') !== null;
-        const iframe = document.querySelector('iframe.giscus-frame');
-        if (!iframe) return;
-        iframe.contentWindow.postMessage(
-            { giscus: { setConfig: { theme: isDark ? 'dark' : 'light' } } },
-            'https://giscus.app'
-        );
-    };
 
-    // 当主题切换时触发
-    const observer = new MutationObserver(giscusTheme);
-    observer.observe(document.querySelector('[data-md-component="palette"]'), { attributes: true });
-</script>
                 
               </article>
             </div>
