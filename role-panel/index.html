@@ -2363,9 +2363,11 @@ body {
     border-radius: 3px;
 }
 
-.heatmap-day.high { background: #ff4444; }
-.heatmap-day.mid { background: #ffaa00; }
-.heatmap-day.low { background: #444444; }
+.heatmap-day.level-0 { background: #c9c9c940; }  /* 深灰 - 无活跃度 */
+.heatmap-day.level-1 { background: #8B5A2B; }  /* 棕黄 - 低活跃度 */
+.heatmap-day.level-2 { background: #DAA520; }  /* 金黄 - 中活跃度 */
+.heatmap-day.level-3 { background: #FF6347; }  /* 番茄红 - 高活跃度 */
+.heatmap-day.level-4 { background: #FF0000; }  /* 红色 - 极高活跃度 */
 
 .achievement-item {
     display: flex;
@@ -2554,53 +2556,56 @@ async function loadRolePanel() {
             { name: "代码审计", value: skills.code_review || 0, max: 100 }
         ];
 
-        // ========== 热力图：从开始日期到今日 ==========
-        const heatmap = auto.heatmap || { weeks: [], dailyNotes: {} };
-        const weeklyScores = auto.stats.weekly_scores || [];
+       // 热力图：根据当周笔记数和周测得分综合判断
+const heatmapData = auto.heatmap || { weeks: [] };
+const weeksData = heatmapData.weeks || [];
+const weeklyScores = auto.stats.weekly_scores || [];
 
-        function getActivityLevel(noteCount, weeklyScore) {
-            if (noteCount >= 3 || weeklyScore >= 80) return 2;
-            if (noteCount >= 1 || weeklyScore >= 60) return 1;
-            return 0;
-        }
+function getWeekActivityLevel(weekDays, weekIndex) {
+    // 计算当周总笔记数
+    let totalNotes = 0;
+    for (let d = 0; d < 7; d++) {
+        totalNotes += weekDays[d] || 0;
+    }
 
-        const startDate = new Date(manual.join_date || '2025-01-01');
-        const today = new Date();
+    // 获取当周周测得分
+    const weeklyScore = weeklyScores[weekIndex] || 0;
 
-        const totalDays = Math.floor((today - startDate) / (24 * 60 * 60 * 1000));
-        const totalWeeks = Math.ceil(totalDays / 7);
-        const displayWeeks = Math.min(totalWeeks, 52);
+    // 笔记数评分（0-2分）
+    let noteScore = 0;
+    if (totalNotes >= 10) noteScore = 2;
+    else if (totalNotes >= 7) noteScore = 1.8;
+    else if (totalNotes >= 5) noteScore = 1.5;
+    else if (totalNotes >= 3) noteScore = 1.0;
+    else if (totalNotes >= 1) noteScore = 0.5;
 
-        let heatmapHtml = '';
-        for (let w = 0; w < displayWeeks; w++) {
-            const weekStart = new Date(startDate);
-            weekStart.setDate(startDate.getDate() + w * 7);
+    // 周测评分（0-2分）
+    let testScore = 0;
+    if (weeklyScore >= 95) testScore = 2;
+    else if (weeklyScore >= 90) testScore = 1.8;
+    else if (weeklyScore >= 85) testScore = 1.5;
+    else if (weeklyScore >= 80) testScore = 1.2;
+    else if (weeklyScore >= 75) testScore = 1.0;
+    else if (weeklyScore >= 70) testScore = 0.8;
+    else if (weeklyScore >= 65) testScore = 0.5;
+    else if (weeklyScore >= 60) testScore = 0.3;
 
-            let weekMaxLevel = 0;
-            for (let d = 0; d < 7; d++) {
-                const date = new Date(weekStart);
-                date.setDate(weekStart.getDate() + d);
-                if (date > today) continue;
+    // 总分 0-4
+    const totalScore = noteScore + testScore;
 
-                const dateStr = date.toISOString().split('T')[0];
-                const noteCount = (heatmap.dailyNotes && heatmap.dailyNotes[dateStr]) || 0;
-                const weekNum = Math.floor((date - new Date(2026, 0, 1)) / (7 * 24 * 60 * 60 * 1000));
-                const weeklyScore = weeklyScores[weekNum] || 0;
-                const level = getActivityLevel(noteCount, weeklyScore);
-                if (level > weekMaxLevel) weekMaxLevel = level;
-            }
+    if (totalScore >= 3.5) return 4;
+    if (totalScore >= 2.5) return 3;
+    if (totalScore >= 1.5) return 2;
+    if (totalScore >= 0.5) return 1;
+    return 0;
+}
 
-            const colorClass = weekMaxLevel === 2 ? 'high' : (weekMaxLevel === 1 ? 'mid' : 'low');
-            heatmapHtml += `<div class="heatmap-day ${colorClass}"></div>`;
-        }
-
-        // 如果不足52周，补全灰色格子
-        if (displayWeeks < 52) {
-            for (let i = 0; i < 52 - displayWeeks; i++) {
-                heatmapHtml += `<div class="heatmap-day low"></div>`;
-            }
-        }
-
+let heatmapHtml = '';
+for (let i = 0; i < weeksData.length; i++) {
+    const week = weeksData[i];
+    const level = getWeekActivityLevel(week.days, i);
+    heatmapHtml += `<div class="heatmap-day level-${level}" title="第${i+1}周"></div>`;
+}
         // 成就
         const achievements = manual.special_achievements || [];
 
@@ -2720,9 +2725,12 @@ async function loadRolePanel() {
                         <div class="heatmap">
                             ${heatmapHtml}
                         </div>
-                        <div style="margin-top: 0.5rem; font-size: 0.6rem; color: #886666; text-align: center;">
-                            近52周学习活跃度（🔴高 🟡中 ⚫低）
-                        </div>
+                        <div style="margin-top: 0.5rem; font-size: 0.6rem; color: #886666; text-align: center; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+    <span><span style="display: inline-block; width: 12px; height: 12px; background: #bdb5b5c6; border-radius: 2px;"></span> 低</span>
+    <span><span style="display: inline-block; width: 12px; height: 12px; background: #DAA520; border-radius: 2px;"></span> 中</span>
+    <span><span style="display: inline-block; width: 12px; height: 12px; background: #FF6347; border-radius: 2px;"></span> 高</span>
+    <span><span style="display: inline-block; width: 12px; height: 12px; background: #FF0000; border-radius: 2px;"></span> 极高</span>
+</div>
                     </div>
 
                     <div class="card">
@@ -2824,7 +2832,7 @@ loadRolePanel();
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 16:15:26 UTC"><span class="timeago" datetime="2026-05-27T16:15:26+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 16:15:26 UTC">2026-05-27</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 16:53:34 UTC"><span class="timeago" datetime="2026-05-27T16:53:34+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 16:53:34 UTC">2026-05-27</span>
   </span>
 
     
@@ -2834,7 +2842,7 @@ loadRolePanel();
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 16:15:26 UTC"><span class="timeago" datetime="2026-05-27T16:15:26+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 16:15:26 UTC">2026-05-27</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 16:53:34 UTC"><span class="timeago" datetime="2026-05-27T16:53:34+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 16:53:34 UTC">2026-05-27</span>
   </span>
 
     
