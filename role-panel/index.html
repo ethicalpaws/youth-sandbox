@@ -2553,62 +2553,34 @@ async function loadRolePanel() {
             { name: "代码审计", value: skills.code_review || 0, max: 100 }
         ];
 
-      // 热力图：从开始日期到今日
-const heatmap = auto.heatmap || { weeks: [], dailyNotes: {} };
-const weeklyScores = auto.stats.weekly_scores || [];
+        // ========== 热力图：从开始日期到今日 ==========
+        const heatmap = auto.heatmap || { weeks: [], dailyNotes: {} };
+        const weeklyScores = auto.stats.weekly_scores || [];
 
-function getActivityLevel(noteCount, weeklyScore) {
-    if (noteCount >= 3 || weeklyScore >= 80) return 2;      // 红色
-    if (noteCount >= 1 || weeklyScore >= 60) return 1;      // 橙黄
-    return 0;                                               // 灰色
-}
+        function getActivityLevel(noteCount, weeklyScore) {
+            if (noteCount >= 3 || weeklyScore >= 80) return 2;
+            if (noteCount >= 1 || weeklyScore >= 60) return 1;
+            return 0;
+        }
 
-// 获取开始日期
-const startDate = new Date(manual.join_date || '2025-01-01');
-const today = new Date();
+        const startDate = new Date(manual.join_date || '2025-01-01');
+        const today = new Date();
 
-// 计算总天数
-const totalDays = Math.floor((today - startDate) / (24 * 60 * 60 * 1000));
-const totalWeeks = Math.ceil(totalDays / 7);
-const displayWeeks = Math.min(totalWeeks, 52);
+        const totalDays = Math.floor((today - startDate) / (24 * 60 * 60 * 1000));
+        const totalWeeks = Math.ceil(totalDays / 7);
+        const displayWeeks = Math.min(totalWeeks, 52);
 
-let heatmapHtml = '';
-for (let w = 0; w < displayWeeks; w++) {
-    const weekStart = new Date(startDate);
-    weekStart.setDate(startDate.getDate() + w * 7);
-
-    let weekMaxLevel = 0;
-    for (let d = 0; d < 7; d++) {
-        const date = new Date(weekStart);
-        date.setDate(weekStart.getDate() + d);
-        if (date > today) continue;
-
-        const dateStr = date.toISOString().split('T')[0];
-        const noteCount = (heatmap.dailyNotes && heatmap.dailyNotes[dateStr]) || 0;
-
-        // 计算对应的周测得分
-        const weekNum = Math.floor((date - new Date(2026, 0, 1)) / (7 * 24 * 60 * 60 * 1000));
-        const weeklyScore = weeklyScores[weekNum] || 0;
-
-        const level = getActivityLevel(noteCount, weeklyScore);
-        if (level > weekMaxLevel) weekMaxLevel = level;
-    }
-
-    const colorClass = weekMaxLevel === 2 ? 'high' : (weekMaxLevel === 1 ? 'mid' : 'low');
-    heatmapHtml += `<div class="heatmap-day ${colorClass}"></div>`;
-}
-
-// 如果不足52周，补全灰色格子
-if (displayWeeks < 52) {
-    for (let i = 0; i < 52 - displayWeeks; i++) {
-        heatmapHtml += `<div class="heatmap-day low"></div>`;
-    }
-}
+        let heatmapHtml = '';
+        for (let w = 0; w < displayWeeks; w++) {
+            const weekStart = new Date(startDate);
+            weekStart.setDate(startDate.getDate() + w * 7);
 
             let weekMaxLevel = 0;
             for (let d = 0; d < 7; d++) {
                 const date = new Date(weekStart);
                 date.setDate(weekStart.getDate() + d);
+                if (date > today) continue;
+
                 const dateStr = date.toISOString().split('T')[0];
                 const noteCount = (heatmap.dailyNotes && heatmap.dailyNotes[dateStr]) || 0;
                 const weekNum = Math.floor((date - new Date(2026, 0, 1)) / (7 * 24 * 60 * 60 * 1000));
@@ -2619,6 +2591,13 @@ if (displayWeeks < 52) {
 
             const colorClass = weekMaxLevel === 2 ? 'high' : (weekMaxLevel === 1 ? 'mid' : 'low');
             heatmapHtml += `<div class="heatmap-day ${colorClass}"></div>`;
+        }
+
+        // 如果不足52周，补全灰色格子
+        if (displayWeeks < 52) {
+            for (let i = 0; i < 52 - displayWeeks; i++) {
+                heatmapHtml += `<div class="heatmap-day low"></div>`;
+            }
         }
 
         // 成就
@@ -2701,7 +2680,6 @@ if (displayWeeks < 52) {
                     </div>
                 </div>
                 <div class="game-content">
-                    <!-- 经验值 -->
                     <div class="card">
                         <div class="card-title">📊 经验值</div>
                         <div class="exp-bar-container">
@@ -2714,7 +2692,6 @@ if (displayWeeks < 52) {
                     </div>
 
                     <div class="two-columns">
-                        <!-- 属性面板 -->
                         <div class="card">
                             <div class="card-title">⚔️ 属性面板</div>
                             <div class="attrs-grid">
@@ -2722,7 +2699,6 @@ if (displayWeeks < 52) {
                             </div>
                         </div>
 
-                        <!-- 技能雷达图 -->
                         <div class="card">
                             <div class="card-title">📡 能力雷达</div>
                             <div class="radar-container">
@@ -2731,7 +2707,6 @@ if (displayWeeks < 52) {
                         </div>
                     </div>
 
-                    <!-- 技能树 -->
                     <div class="card">
                         <div class="card-title">🔧 技能树</div>
                         <div class="skills-grid">
@@ -2739,7 +2714,6 @@ if (displayWeeks < 52) {
                         </div>
                     </div>
 
-                    <!-- 学习热力图 -->
                     <div class="card">
                         <div class="card-title">🔥 学习热力图</div>
                         <div class="heatmap">
@@ -2750,13 +2724,11 @@ if (displayWeeks < 52) {
                         </div>
                     </div>
 
-                    <!-- 成就殿堂 -->
                     <div class="card">
                         <div class="card-title">🏆 成就殿堂</div>
                         ${achievementsHtml}
                     </div>
 
-                    <!-- 语录 -->
                     <div class="quote">
                         💬 "${randomQuote}"
                     </div>
@@ -2851,7 +2823,7 @@ loadRolePanel();
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 15:35:48 UTC"><span class="timeago" datetime="2026-05-27T15:35:48+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 15:35:48 UTC">2026-05-27</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 15:53:09 UTC"><span class="timeago" datetime="2026-05-27T15:53:09+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 15:53:09 UTC">2026-05-27</span>
   </span>
 
     
@@ -2861,7 +2833,7 @@ loadRolePanel();
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 15:35:48 UTC"><span class="timeago" datetime="2026-05-27T15:35:48+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 15:35:48 UTC">2026-05-27</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 15:53:09 UTC"><span class="timeago" datetime="2026-05-27T15:53:09+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 15:53:09 UTC">2026-05-27</span>
   </span>
 
     

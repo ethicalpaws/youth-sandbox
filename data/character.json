@@ -716,7 +716,8 @@
       "active_days": 12,
       "max_contrib": 14
     },
-    "last_update": "2026-05-27 23:02:44",
-    "first_bug_awarded": true
+    "last_update": "2026-05-27 23:45:24",
+    "first_bug_awarded": true,
+    "start_date": "2026-05-27"
   }
 }
