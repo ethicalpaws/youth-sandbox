@@ -1,0 +1,90 @@
+/* ========== 顶部导航栏 - 终端风格 ========== */
+body:not(.role-panel-page) .md-header {
+  background: #0a0a0a !important;
+  border-bottom: 1px solid #00ff41 !important;
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.2) !important;
+}
+
+/* 终端提示符 */
+body:not(.role-panel-page) .md-header__inner::before {
+  content: "ethicalpaws@security-lab:~$ ";
+  color: #00ff41 !important;
+  font-family: 'Courier New', monospace !important;
+  font-size: 0.8rem !important;
+  margin-right: 1rem !important;
+  display: inline-block !important;
+}
+
+/* 导航链接样式 */
+body:not(.role-panel-page) .md-tabs {
+  background: #0a0a0a !important;
+  border-bottom: 1px solid #1a3a1a !important;
+}
+
+body:not(.role-panel-page) .md-tabs__link {
+  color: #6aff7a !important;
+  font-family: 'Courier New', monospace !important;
+  font-size: 0.85rem !important;
+  transition: all 0.2s ease !important;
+}
+
+body:not(.role-panel-page) .md-tabs__link:hover {
+  color: #00ff41 !important;
+  text-shadow: 0 0 5px #00ff41 !important;
+}
+
+body:not(.role-panel-page) .md-tabs__link--active {
+  color: #00ff41 !important;
+  border-bottom: 2px solid #00ff41 !important;
+}
+
+/* 搜索框终端风格 */
+body:not(.role-panel-page) .md-search__form {
+  background: #0c0c0c !important;
+  border: 1px solid #1a3a1a !important;
+  border-radius: 4px !important;
+}
+
+body:not(.role-panel-page) .md-search__form:hover {
+  border-color: #00ff41 !important;
+  box-shadow: 0 0 5px #00ff41 !important;
+}
+
+body:not(.role-panel-page) .md-search__input {
+  color: #00ff41 !important;
+  font-family: 'Courier New', monospace !important;
+}
+
+body:not(.role-panel-page) .md-search__input::placeholder {
+  color: #3a6e3a !important;
+}
+
+body:not(.role-panel-page) .md-search__icon {
+  color: #00ff41 !important;
+}
+
+/* 光标闪烁效果 */
+body:not(.role-panel-page) .md-header__inner::after {
+  content: "_";
+  color: #00ff41 !important;
+  animation: blink 1s step-end infinite;
+  margin-left: 2px;
+  display: inline-block;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* 手机端适配 */
+@media (max-width: 76.1875em) {
+  body:not(.role-panel-page) .md-header__inner::before {
+    content: "$> ";
+    font-size: 0.7rem;
+  }
+  
+  body:not(.role-panel-page) .md-header__inner::after {
+    display: none;
+  }
+}

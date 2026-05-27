@@ -9,11 +9,11 @@
   },
   "auto": {
     "level": 3,
-    "current_exp": 68,
+    "current_exp": 128,
     "next_exp": 288,
-    "total_exp": 508,
+    "total_exp": 568,
     "stats": {
-      "notes_count": 31,
+      "notes_count": 37,
       "ctf_count": 4,
       "cve_count": 2,
       "src_count": 0,
@@ -62,7 +62,7 @@
           ]
         },
         {
-          "total": 19,
+          "total": 25,
           "max_daily": 14,
           "days": [
             1,
@@ -70,7 +70,7 @@
             2,
             14,
             1,
-            0,
+            6,
             0
           ]
         },
@@ -712,11 +712,11 @@
           ]
         }
       ],
-      "total_notes": 31,
-      "active_days": 12,
+      "total_notes": 37,
+      "active_days": 13,
       "max_contrib": 14
     },
-    "last_update": "2026-05-28 00:22:36",
+    "last_update": "2026-05-28 03:11:23",
     "first_bug_awarded": true,
     "start_date": "2026-05-27"
   }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>迷你角色卡 - 黑客帝国风格</title>
+    <title>角色面板 - 黑客帝国风格</title>
     <style>
         * {
             margin: 0;
@@ -12,11 +12,19 @@
         }
 
         body {
-            background: transparent;
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             font-family: 'Courier New', 'Fira Code', monospace;
+            padding: 2rem;
         }
 
-        .terminal {
+        /* 主容器 */
+        .terminal-panel {
+            max-width: 520px;
+            width: 100%;
             background: #0c0c0c;
             border: 1px solid #1a3a1a;
             border-radius: 12px;
@@ -24,164 +32,151 @@
             overflow: hidden;
         }
 
-        .terminal-bar {
+        /* 终端头部 */
+        .terminal-header {
             background: #0a0a0a;
-            padding: 0.6rem 1rem;
+            padding: 0.75rem 1rem;
             border-bottom: 1px solid #1a3a1a;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .dot {
-            width: 10px;
-            height: 10px;
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
+            background: #2a2a2a;
         }
-        .dot-red { background: #ff5f56; }
-        .dot-yellow { background: #ffbd2e; }
-        .dot-green { background: #27c93f; }
+
+        .terminal-dot.red { background: #ff5f56; }
+        .terminal-dot.yellow { background: #ffbd2e; }
+        .terminal-dot.green { background: #27c93f; }
 
         .terminal-title {
             color: #3a6e3a;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             margin-left: 0.5rem;
         }
 
-        .content {
-            padding: 1.2rem;
+        /* 内容区域 */
+        .terminal-content {
+            padding: 1.5rem;
         }
 
+        /* 命令行样式 */
         .command-line {
+            color: #00ff41;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            border-bottom: 1px solid #1a3a1a;
-            padding-bottom: 0.6rem;
-            margin-bottom: 1rem;
+            flex-wrap: wrap;
         }
 
-        .prompt { color: #00ff41; }
-        .command { color: #6aff7a; }
-
-        .level-badge {
-            margin-left: auto;
-            background: #1a3a1a;
-            padding: 0.15rem 0.6rem;
-            border-radius: 4px;
-            font-size: 0.65rem;
+        .prompt {
             color: #00ff41;
         }
 
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.2rem;
+        .command {
+            color: #a7f0a7;
         }
 
-        .avatar { font-size: 2.5rem; }
-        .name { color: #00ff41; font-weight: bold; font-size: 1rem; }
-        .title { color: #6aff7a; font-size: 0.6rem; }
-
-        .exp-section {
-            margin-bottom: 1rem;
+        /* 进度条容器 */
+        .progress-section {
+            background: #0f0f0f;
+            border: 1px solid #1a3a1a;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
         }
 
-        .exp-header {
-            display: flex;
-            justify-content: space-between;
-            color: #6aff7a;
-            font-size: 0.6rem;
-            margin-bottom: 0.3rem;
-        }
-
-        .ascii-bar {
-            color: #00ff41;
-            font-size: 0.7rem;
-            margin-bottom: 0.3rem;
-            font-family: monospace;
-        }
-
-        .graph-bar {
+        .level-bar {
             background: #1a1a1a;
             border-radius: 4px;
-            height: 8px;
+            height: 20px;
             overflow: hidden;
+            margin: 0.5rem 0;
         }
 
-        .graph-fill {
-            background: #00ff41;
+        .level-fill {
+            background: linear-gradient(90deg, #00ff41, #00cc33);
             width: 0%;
             height: 100%;
             border-radius: 4px;
-            transition: width 0.8s ease;
+            transition: width 1s ease-out;
+            box-shadow: 0 0 8px #00ff41;
         }
 
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            color: #a7f0a7;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        /* 技能列表 */
         .skills-section {
-            margin-bottom: 1rem;
+            background: #0f0f0f;
+            border: 1px solid #1a3a1a;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
         }
 
-        .skills-title {
+        .section-title {
             color: #00ff41;
-            font-size: 0.6rem;
-            margin-bottom: 0.4rem;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.4rem;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            letter-spacing: 1px;
         }
 
         .skill-item {
+            margin-bottom: 0.75rem;
+        }
+
+        .skill-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            color: #a7f0a7;
+            font-size: 0.75rem;
+            margin-bottom: 0.25rem;
         }
 
-        .skill-name {
-            color: #6aff7a;
-            font-size: 0.6rem;
-        }
-
-        .skill-level {
-            color: #00ff41;
-            font-size: 0.6rem;
-        }
-
-        .skill-bar-small {
+        .skill-bar {
             background: #1a1a1a;
             border-radius: 3px;
-            height: 4px;
-            width: 60px;
+            height: 12px;
             overflow: hidden;
-            margin-left: 0.5rem;
         }
 
-        .skill-bar-small-fill {
+        .skill-fill {
             background: #00ff41;
             width: 0%;
             height: 100%;
             border-radius: 3px;
+            transition: width 0.8s ease-out;
         }
 
+        /* 成就列表 */
         .achievements-section {
+            background: #0f0f0f;
+            border: 1px solid #1a3a1a;
+            border-radius: 8px;
+            padding: 1rem;
             margin-bottom: 1rem;
-        }
-
-        .achievements-title {
-            color: #00ff41;
-            font-size: 0.6rem;
-            margin-bottom: 0.4rem;
         }
 
         .achievement-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.3rem 0;
+            padding: 0.5rem 0;
             border-bottom: 1px solid #1a3a1a;
+            color: #a7f0a7;
+            font-size: 0.75rem;
         }
 
         .achievement-item:last-child {
@@ -189,240 +184,177 @@
         }
 
         .achievement-name {
-            color: #6aff7a;
-            font-size: 0.6rem;
             display: flex;
             align-items: center;
-            gap: 0.3rem;
-        }
-
-        .achievement-date {
-            color: #3a6e3a;
-            font-size: 0.55rem;
+            gap: 0.5rem;
         }
 
         .achievement-xp {
             color: #00ff41;
-            font-size: 0.55rem;
         }
 
-        .footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            border-top: 1px solid #1a3a1a;
-            padding-top: 0.6rem;
-        }
-
-        .quote {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .quote-text {
-            color: #3a6e3a;
-            font-size: 0.6rem;
+        /* 语录 */
+        .quote-section {
+            background: #0f0f0f;
+            border-left: 3px solid #00ff41;
+            padding: 0.75rem 1rem;
+            margin-top: 1rem;
+            color: #a7f0a7;
+            font-size: 0.8rem;
         }
 
         .cursor {
-            width: 6px;
-            height: 12px;
+            display: inline-block;
+            width: 8px;
+            height: 14px;
             background: #00ff41;
             animation: blink 1s step-end infinite;
-        }
-
-        .link {
-            background: #1a3a1a;
-            color: #00ff41;
-            text-decoration: none;
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            font-size: 0.6rem;
-            border: 1px solid #00ff41;
-            transition: all 0.2s;
-        }
-
-        .link:hover {
-            background: #00ff41;
-            color: #0a0a0a;
+            vertical-align: middle;
+            margin-left: 2px;
         }
 
         @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
         }
+
+        /* 加载动画 */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #3a6e3a;
+        }
     </style>
 </head>
 <body>
-    <div class="terminal">
-        <div class="terminal-bar">
-            <div class="dot dot-red"></div>
-            <div class="dot dot-yellow"></div>
-            <div class="dot dot-green"></div>
+    <div class="terminal-panel" id="role-panel">
+        <div class="terminal-header">
+            <div class="terminal-dot red"></div>
+            <div class="terminal-dot yellow"></div>
+            <div class="terminal-dot green"></div>
             <div class="terminal-title">ethicalpaws@security-lab:~/profile</div>
         </div>
-        <div class="content">
-            <div class="command-line">
-                <span class="prompt">$></span>
-                <span class="command">cat profile</span>
-                <span class="level-badge" id="level-badge">Lv.?</span>
-            </div>
-
-            <div class="user-info">
-                <div class="avatar">🐕</div>
-                <div>
-                    <div class="name" id="name">ethicalpaws</div>
-                    <div class="title" id="title">VULN_HUNTER</div>
-                </div>
-            </div>
-
-            <div class="exp-section">
-                <div class="exp-header">
-                    <span>XP PROGRESS</span>
-                    <span><span id="exp-current">0</span> / <span id="exp-next">200</span></span>
-                </div>
-                <div class="ascii-bar" id="ascii-bar">[░░░░░░░░░░░░░░░░░░░░] 0%</div>
-                <div class="graph-bar">
-                    <div class="graph-fill" id="exp-fill"></div>
-                </div>
-            </div>
-
-            <div class="skills-section">
-                <div class="skills-title">> SKILL MATRIX</div>
-                <div class="skills-grid" id="skills-grid">
-                    <div class="skill-item">
-                        <span class="skill-name">WEB_SECURITY</span>
-                        <div style="display: flex; align-items: center;">
-                            <span class="skill-level" id="web-level">Lv.0</span>
-                            <div class="skill-bar-small"><div class="skill-bar-small-fill" id="web-fill"></div></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <span class="skill-name">JAVA_SECURITY</span>
-                        <div style="display: flex; align-items: center;">
-                            <span class="skill-level" id="java-level">Lv.0</span>
-                            <div class="skill-bar-small"><div class="skill-bar-small-fill" id="java-fill"></div></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <span class="skill-name">CTF_ABILITY</span>
-                        <div style="display: flex; align-items: center;">
-                            <span class="skill-level" id="ctf-level">Lv.0</span>
-                            <div class="skill-bar-small"><div class="skill-bar-small-fill" id="ctf-fill"></div></div>
-                        </div>
-                    </div>
-                    <div class="skill-item">
-                        <span class="skill-name">CVE_ANALYSIS</span>
-                        <div style="display: flex; align-items: center;">
-                            <span class="skill-level" id="cve-level">Lv.0</span>
-                            <div class="skill-bar-small"><div class="skill-bar-small-fill" id="cve-fill"></div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="achievements-section">
-                <div class="achievements-title">> ACHIEVEMENTS</div>
-                <div id="achievements-list">
-                    <div class="achievement-item">
-                        <div class="achievement-name">[!] 加载中...</div>
-                        <div class="achievement-xp"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer">
-                <div class="quote">
-                    <span class="prompt">$></span>
-                    <span class="quote-text" id="quote">加载中...</span>
-                    <div class="cursor"></div>
-                </div>
-                <a href="/role-panel/" class="link">🔍 完整档案</a>
-            </div>
+        <div class="terminal-content" id="content">
+            <div class="loading">$> loading profile... <span class="cursor"></span></div>
         </div>
     </div>
 
     <script>
-        async function loadData() {
-            try {
-                // 加载角色数据
-                const res = await fetch('/data/character.json');
-                const data = await res.json();
-                const auto = data.auto;
-                const manual = data.manual;
+        // 角色数据
+        const characterData = {
+            name: "ethicalpaws",
+            title: "漏洞猎人",
+            motto: "路漫漫其修远兮",
+            level: 15,
+            exp: 2450,
+            exp_to_next: 5000,
+            skills: {
+                web_security: { level: 8, exp: 800, max: 20 },
+                java_security: { level: 4, exp: 400, max: 20 },
+                ctf_ability: { level: 6, exp: 600, max: 20 },
+                cve_analysis: { level: 4, exp: 400, max: 20 }
+            },
+            achievements: [
+                { name: "🎯 初露锋芒", desc: "挖到第一个漏洞", date: "2025-05-20", xp: 100 },
+                { name: "☕ Java骑士", desc: "完成Java反序列化", date: "2025-05-15", xp: 200 },
+                { name: "🏴 CTF新兵", desc: "第一次参加CTF", date: "2025-05-10", xp: 150 }
+            ],
+            quote: "Flag 出来的那一刻，值了"
+        };
 
-                // 计算经验百分比
-                const expPercent = (auto.current_exp / auto.next_exp * 100).toFixed(1);
+        // 计算百分比
+        const expPercent = (characterData.exp / characterData.exp_to_next * 100).toFixed(1);
+        characterData.expPercent = expPercent;
 
-                // 更新基本信息
-                document.getElementById('name').textContent = manual.name || 'ethicalpaws';
-                document.getElementById('title').textContent = manual.title || 'VULN_HUNTER';
-                document.getElementById('level-badge').textContent = `Lv.${auto.level}`;
-                document.getElementById('exp-current').textContent = auto.current_exp;
-                document.getElementById('exp-next').textContent = auto.next_exp;
-
-                // 更新进度条
-                const barLen = 20;
-                const filled = Math.floor(expPercent / 100 * barLen);
-                const asciiBar = '█'.repeat(filled) + '░'.repeat(barLen - filled);
-                document.getElementById('ascii-bar').innerHTML = `[${asciiBar}] ${expPercent}%`;
-                document.getElementById('exp-fill').style.width = expPercent + '%';
-
-                // 更新技能
-                const skills = auto.skills || {};
-                const webLevel = skills.web_security || 0;
-                const javaLevel = skills.java_security || 0;
-                const ctfLevel = skills.ctf_ability || 0;
-                const cveLevel = skills.cve_analysis || 0;
-
-                document.getElementById('web-level').textContent = `Lv.${webLevel}`;
-                document.getElementById('java-level').textContent = `Lv.${javaLevel}`;
-                document.getElementById('ctf-level').textContent = `Lv.${ctfLevel}`;
-                document.getElementById('cve-level').textContent = `Lv.${cveLevel}`;
-
-                document.getElementById('web-fill').style.width = (webLevel / 20 * 100) + '%';
-                document.getElementById('java-fill').style.width = (javaLevel / 20 * 100) + '%';
-                document.getElementById('ctf-fill').style.width = (ctfLevel / 20 * 100) + '%';
-                document.getElementById('cve-fill').style.width = (cveLevel / 20 * 100) + '%';
-
-                // 成就
-                const achievements = manual.special_achievements || [];
-                if (achievements.length > 0) {
-                    document.getElementById('achievements-list').innerHTML = achievements.map(ach => `
-                        <div class="achievement-item">
-                            <div class="achievement-name">
-                                <span>[🏆]</span>
-                                <span>${ach}</span>
-                            </div>
-                            <div class="achievement-xp">✨</div>
-                        </div>
-                    `).join('');
-                } else {
-                    document.getElementById('achievements-list').innerHTML = `
-                        <div class="achievement-item">
-                            <div class="achievement-name">[!] 暂无成就，继续努力！</div>
-                            <div class="achievement-xp"></div>
-                        </div>
-                    `;
-                }
-
-                // 加载语录
-                const quotesRes = await fetch('/data/quotes.json');
-                const quotesData = await quotesRes.json();
-                const tips = quotesData.weekly_tips || ['Flag 出来的那一刻，值了'];
-                const randomTip = tips[Math.floor(Math.random() * tips.length)];
-                document.getElementById('quote').textContent = randomTip.replace(/[💡🌟]/g, '').trim();
-
-            } catch(e) {
-                console.error('加载失败:', e);
-                document.getElementById('quote').textContent = 'Flag 出来的那一刻，值了';
-                document.getElementById('level-badge').textContent = 'Lv.1';
-            }
+        for (let key in characterData.skills) {
+            characterData.skills[key].percent = (characterData.skills[key].level / characterData.skills[key].max * 100).toFixed(1);
         }
-        loadData();
+
+        // 生成HTML
+        function renderPanel() {
+            const skillsHtml = Object.entries(characterData.skills).map(([key, skill]) => {
+                const nameMap = {
+                    web_security: "WEB_SECURITY",
+                    java_security: "JAVA_SECURITY",
+                    ctf_ability: "CTF_ABILITY",
+                    cve_analysis: "CVE_ANALYSIS"
+                };
+                return `
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span>├─ ${nameMap[key]}</span>
+                            <span>Lv.${skill.level}</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-fill" data-width="${skill.percent}%"></div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const achievementsHtml = characterData.achievements.map(ach => `
+                <div class="achievement-item">
+                    <div class="achievement-name">
+                        <span>[!]</span>
+                        <span>${ach.name}</span>
+                        <span style="color: #3a6e3a;">${ach.date}</span>
+                    </div>
+                    <div class="achievement-xp">+${ach.xp} XP</div>
+                </div>
+            `).join('');
+
+            return `
+                <div class="command-line">
+                    <span class="prompt">$></span>
+                    <span class="command">cat profile</span>
+                </div>
+
+                <div class="progress-section">
+                    <div class="stat-row">
+                        <span>[${'█'.repeat(Math.floor(characterData.expPercent / 5))}${'░'.repeat(20 - Math.floor(characterData.expPercent / 5))}]</span>
+                        <span>Lv.${characterData.level}</span>
+                    </div>
+                    <div class="level-bar">
+                        <div class="level-fill" data-width="${characterData.expPercent}%"></div>
+                    </div>
+                    <div class="stat-row">
+                        <span>> XP: ${characterData.exp} / ${characterData.exp_to_next}</span>
+                        <span>> Title: ${characterData.title}</span>
+                    </div>
+                </div>
+
+                <div class="skills-section">
+                    <div class="section-title">> SKILLS</div>
+                    ${skillsHtml}
+                </div>
+
+                <div class="achievements-section">
+                    <div class="section-title">> ACHIEVEMENTS (${characterData.achievements.length})</div>
+                    ${achievementsHtml}
+                </div>
+
+                <div class="quote-section">
+                    <span>$></span> ${characterData.quote}
+                    <span class="cursor"></span>
+                </div>
+            `;
+        }
+
+        // 动画效果
+        function startAnimations() {
+            const fills = document.querySelectorAll('[data-width]');
+            fills.forEach(fill => {
+                const width = fill.getAttribute('data-width');
+                setTimeout(() => {
+                    fill.style.width = width;
+                }, 100);
+            });
+        }
+
+        // 加载面板
+        const container = document.getElementById('content');
+        container.innerHTML = renderPanel();
+        setTimeout(startAnimations, 100);
     </script>
 </body>
 </html>

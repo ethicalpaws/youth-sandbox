@@ -12,7 +12,7 @@
         <meta name="author" content="ethicalpaws">
       
       
-        <link rel="canonical" href="https://ethicalpaws.github.io/youth-sandbox/tech-study/knowledge/pwn/">
+        <link rel="canonical" href="https://ethicalpaws.github.io/youth-sandbox/tech-study/knowledge/06-red-blue-confrontation/pwn/pwn/">
       
       
       
@@ -20,19 +20,19 @@
         
       
       
-      <link rel="icon" href="../../../assets/images/favicon.png">
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>💥 Pwn 二进制漏洞 - 青春沙盒</title>
+        <title>📖 知识笔记 - 青春沙盒</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,11 +51,13 @@
       
     
     
-      <link rel="stylesheet" href="../../../css/timeago.css">
+      <link rel="stylesheet" href="../../../../../css/timeago.css">
     
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+      <link rel="stylesheet" href="../../../../../asserts/css/hacker-theme.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -80,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pwn" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -94,7 +96,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="青春沙盒" class="md-header__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+    <a href="../../../../.." title="青春沙盒" class="md-header__button md-logo" aria-label="青春沙盒" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
@@ -114,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              💥 Pwn 二进制漏洞
+              📖 知识笔记
             
           </span>
         </div>
@@ -232,7 +234,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../.." class="md-tabs__link">
+      <a href="../../../../.." class="md-tabs__link">
         
   
   
@@ -253,7 +255,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../" class="md-tabs__link">
+        <a href="../../../../" class="md-tabs__link">
           
   
   
@@ -275,7 +277,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../life/" class="md-tabs__link">
+        <a href="../../../../../life/" class="md-tabs__link">
           
   
   
@@ -297,7 +299,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../updates/" class="md-tabs__link">
+        <a href="../../../../../updates/" class="md-tabs__link">
           
   
   
@@ -319,7 +321,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../spiritual/" class="md-tabs__link">
+        <a href="../../../../../spiritual/" class="md-tabs__link">
           
   
   
@@ -341,7 +343,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../about/" class="md-tabs__link">
+        <a href="../../../../../about/" class="md-tabs__link">
           
   
   
@@ -361,7 +363,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../role-panel/" class="md-tabs__link">
+      <a href="../../../../../role-panel/" class="md-tabs__link">
         
   
   
@@ -396,7 +398,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="青春沙盒" class="md-nav__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+    <a href="../../../../.." title="青春沙盒" class="md-nav__button md-logo" aria-label="青春沙盒" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
@@ -426,7 +428,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../../../../.." class="md-nav__link">
         
   
   
@@ -484,7 +486,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../" class="md-nav__link ">
+            <a href="../../../../" class="md-nav__link ">
               
   
   
@@ -565,7 +567,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../../" class="md-nav__link ">
               
   
   
@@ -609,7 +611,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../01-foundation/" class="md-nav__link">
+      <a href="../../../01-foundation/" class="md-nav__link">
         
   
   
@@ -637,7 +639,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../02-network-protocol-security/" class="md-nav__link">
+      <a href="../../../02-network-protocol-security/" class="md-nav__link">
         
   
   
@@ -665,7 +667,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../03-web-basics/" class="md-nav__link">
+      <a href="../../../03-web-basics/" class="md-nav__link">
         
   
   
@@ -693,7 +695,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../04-web-advanced/" class="md-nav__link">
+      <a href="../../../04-web-advanced/" class="md-nav__link">
         
   
   
@@ -721,7 +723,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../05-java-security/" class="md-nav__link">
+      <a href="../../../05-java-security/" class="md-nav__link">
         
   
   
@@ -749,7 +751,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../06-red-blue-confrontation/index.md" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         
   
   
@@ -816,7 +818,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../practice/" class="md-nav__link ">
+            <a href="../../../../practice/" class="md-nav__link ">
               
   
   
@@ -860,7 +862,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../practice/ctf/" class="md-nav__link">
+      <a href="../../../../practice/ctf/" class="md-nav__link">
         
   
   
@@ -888,7 +890,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../practice/cve/" class="md-nav__link">
+      <a href="../../../../practice/cve/" class="md-nav__link">
         
   
   
@@ -916,7 +918,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../practice/src/" class="md-nav__link">
+      <a href="../../../../practice/src/" class="md-nav__link">
         
   
   
@@ -977,7 +979,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../weekly-check/" class="md-nav__link ">
+            <a href="../../../../weekly-check/" class="md-nav__link ">
               
   
   
@@ -1066,7 +1068,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../life/" class="md-nav__link ">
+            <a href="../../../../../life/" class="md-nav__link ">
               
   
   
@@ -1141,7 +1143,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../life/study-plan/" class="md-nav__link ">
+            <a href="../../../../../life/study-plan/" class="md-nav__link ">
               
   
   
@@ -1185,7 +1187,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../life/study-plan/week1/" class="md-nav__link">
+      <a href="../../../../../life/study-plan/week1/" class="md-nav__link">
         
   
   
@@ -1213,7 +1215,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../life/study-plan/week2/" class="md-nav__link">
+      <a href="../../../../../life/study-plan/week2/" class="md-nav__link">
         
   
   
@@ -1241,7 +1243,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../life/study-plan/week3/" class="md-nav__link">
+      <a href="../../../../../life/study-plan/week3/" class="md-nav__link">
         
   
   
@@ -1277,7 +1279,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../life/journal/" class="md-nav__link">
+      <a href="../../../../../life/journal/" class="md-nav__link">
         
   
   
@@ -1305,7 +1307,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../life/struggles/" class="md-nav__link">
+      <a href="../../../../../life/struggles/" class="md-nav__link">
         
   
   
@@ -1365,7 +1367,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../life/wins/" class="md-nav__link ">
+            <a href="../../../../../life/wins/" class="md-nav__link ">
               
   
   
@@ -1439,7 +1441,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../life/reflections/" class="md-nav__link ">
+            <a href="../../../../../life/reflections/" class="md-nav__link ">
               
   
   
@@ -1483,7 +1485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../life/reflections/%E7%A0%B4%E9%A2%98%E4%B9%8B%E4%BD%99-%E4%BA%A6%E7%A0%B4%E5%BF%83%E9%9A%9C/" class="md-nav__link">
+      <a href="../../../../../life/reflections/%E7%A0%B4%E9%A2%98%E4%B9%8B%E4%BD%99-%E4%BA%A6%E7%A0%B4%E5%BF%83%E9%9A%9C/" class="md-nav__link">
         
   
   
@@ -1553,7 +1555,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../updates/" class="md-nav__link ">
+            <a href="../../../../../updates/" class="md-nav__link ">
               
   
   
@@ -1597,7 +1599,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../../../../.." class="md-nav__link">
         
   
   
@@ -1663,7 +1665,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../spiritual/" class="md-nav__link ">
+            <a href="../../../../../spiritual/" class="md-nav__link ">
               
   
   
@@ -1732,7 +1734,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../spiritual/images/" class="md-nav__link ">
+            <a href="../../../../../spiritual/images/" class="md-nav__link ">
               
   
   
@@ -1804,7 +1806,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../spiritual/music/" class="md-nav__link ">
+            <a href="../../../../../spiritual/music/" class="md-nav__link ">
               
   
   
@@ -1876,7 +1878,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../spiritual/sentences/" class="md-nav__link ">
+            <a href="../../../../../spiritual/sentences/" class="md-nav__link ">
               
   
   
@@ -1957,7 +1959,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../about/" class="md-nav__link ">
+            <a href="../../../../../about/" class="md-nav__link ">
               
   
   
@@ -2001,7 +2003,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../about/why/" class="md-nav__link">
+      <a href="../../../../../about/why/" class="md-nav__link">
         
   
   
@@ -2036,7 +2038,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../role-panel/" class="md-nav__link">
+      <a href="../../../../../role-panel/" class="md-nav__link">
         
   
   
@@ -2083,21 +2085,93 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📝 内容
+        📚 章节列表
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📚 章节列表">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#01-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔰 01-基础知识
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#02-" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📌 快速导航
+        🌐 02-网络协议安全
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#03-web" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 03-Web基础漏洞
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#04-web" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚡ 04-Web高级漏洞
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#05-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ☕ 05-Java安全
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#06-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔴🟦 06-红蓝对抗
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 统计
       
     </span>
   </a>
@@ -2124,17 +2198,31 @@
   
 
 
-<h1 id="pwn">💥 Pwn 二进制漏洞<a class="headerlink" href="#pwn" title="Permanent link">&para;</a></h1>
+<h1 id="_1">📖 知识笔记<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p>栈溢出、堆利用、ROP等技术学习</p>
+<p>网络安全知识体系，从基础到进阶。</p>
 </blockquote>
-<h2 id="_1">📝 内容<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>待补充...</p>
+<h2 id="_2">📚 章节列表<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="01-"><a href="01-foundation/">🔰 01-基础知识</a><a class="headerlink" href="#01-" title="Permanent link">&para;</a></h3>
+<p>编程语言、操作系统基础 | 📝 3篇笔记 | 🔄 进行中</p>
+<h3 id="02-"><a href="02-network-protocol-security/">🌐 02-网络协议安全</a><a class="headerlink" href="#02-" title="Permanent link">&para;</a></h3>
+<p>网络基础、攻击技术 | 📝 6篇笔记 | 🔄 进行中</p>
+<h3 id="03-web"><a href="03-web-basics/">🎯 03-Web基础漏洞</a><a class="headerlink" href="#03-web" title="Permanent link">&para;</a></h3>
+<p>OWASP Top 10 核心漏洞 | 📝 9篇笔记 | 🔄 进行中</p>
+<h3 id="04-web"><a href="04-web-advanced/">⚡ 04-Web高级漏洞</a><a class="headerlink" href="#04-web" title="Permanent link">&para;</a></h3>
+<p>SSTI、原型链污染 | 📝 2篇笔记 | 🔄 进行中</p>
+<h3 id="05-java"><a href="05-java-security/">☕ 05-Java安全</a><a class="headerlink" href="#05-java" title="Permanent link">&para;</a></h3>
+<p>反序列化、内存马 | 📝 11篇笔记 | ✅ 已完成</p>
+<h3 id="06-"><a href="06-red-blue-confrontation/">🔴🟦 06-红蓝对抗</a><a class="headerlink" href="#06-" title="Permanent link">&para;</a></h3>
+<p>渗透测试、Pwn | 📝 0篇笔记 | ⬜ 未开始</p>
 <hr />
-<h2 id="_2">📌 快速导航<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h2 id="_3">📊 统计<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>返回</strong> <a href="../">技术总览</a></li>
+<li><strong>总笔记数</strong>：31</li>
+<li><strong>最后更新</strong>：2026-05-28 02:24:09</li>
 </ul>
+<hr />
+<p><em>自动更新</em></p>
 
 
 
@@ -2157,7 +2245,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 17:09:24 UTC"><span class="timeago" datetime="2026-05-27T17:09:24+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 17:09:24 UTC">2026-05-27</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 19:55:45 UTC"><span class="timeago" datetime="2026-05-27T19:55:45+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 19:55:45 UTC">2026-05-27</span>
   </span>
 
     
@@ -2167,7 +2255,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 17:09:24 UTC"><span class="timeago" datetime="2026-05-27T17:09:24+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 17:09:24 UTC">2026-05-27</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 19:55:45 UTC"><span class="timeago" datetime="2026-05-27T19:55:45+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 19:55:45 UTC">2026-05-27</span>
   </span>
 
     
@@ -2242,16 +2330,18 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.tracking", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.tracking", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="../../../js/timeago.min.js"></script>
+        <script src="../../../../../js/timeago.min.js"></script>
       
-        <script src="../../../js/timeago_mkdocs_material.js"></script>
+        <script src="../../../../../js/timeago_mkdocs_material.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../../../../../asserts/js/hacker-theme.js"></script>
       
     
   </body>
