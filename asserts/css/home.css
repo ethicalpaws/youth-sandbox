@@ -1,26 +1,22 @@
-/* 只在首页生效（因为只给 index.md 添加了 home 类） */
+/* 只在首页生效 */
 
-/* 英雄区大标题 */
-.mdx-hero {
-    text-align: center;
-    margin: 2rem 0 3rem;
-}
-
+/* 英雄区大标题 - 黑客绿色渐变 */
 .mdx-hero h1 {
     font-size: 3rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #33ff33 0%, #88ff88 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    text-shadow: 0 0 20px rgba(51, 255, 51, 0.3);
 }
 
-/* 动态推送区域的加载动画 */
+/* 加载动画 - 绿色 */
 .loading-spinner {
     display: inline-block;
     width: 20px;
     height: 20px;
-    border: 2px solid #f3f3f3;
-    border-top: 2px solid #7c3aed;
+    border: 2px solid rgba(51, 255, 51, 0.3);
+    border-top: 2px solid #33ff33;
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
@@ -30,21 +26,22 @@
     100% { transform: rotate(360deg); }
 }
 
-/* 快速入口卡片悬停效果 */
+/* 快速入口卡片 - 绿色阴影 */
 .entry-card {
     transition: all 0.3s ease;
 }
 
 .entry-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    box-shadow: 0 8px 20px rgba(51, 255, 51, 0.15);
 }
 
-/* 成就列表样式 */
+/* 成就列表样式 - 半透明黑底 */
 .wins-list li {
     margin: 0.5rem 0;
     padding: 0.5rem;
-    background: var(--md-surface-2);
+    background: rgba(0, 0, 0, 0.5);
     border-radius: 8px;
     list-style: none;
+    border-left: 2px solid #33ff33;
 }

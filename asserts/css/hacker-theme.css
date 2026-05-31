@@ -1,90 +1,556 @@
-/* ========== 顶部导航栏 - 终端风格 ========== */
-body:not(.role-panel-page) .md-header {
-  background: #0a0a0a !important;
-  border-bottom: 1px solid #00ff41 !important;
-  box-shadow: 0 0 15px rgba(0, 255, 65, 0.2) !important;
+/* ============================================
+   黑客帝国数字雨风格 + 极客增强版
+   ============================================ */
+
+/* ========== 全局背景 ========== */
+body:not(.role-panel-page) {
+  background: #000000 !important;
+  color: #ffffff !important;
+  font-family: 'Courier New', 'Fira Code', monospace !important;
+  font-size: 18px !important;
+  position: relative !important;
+  overflow-x: hidden !important;
+  cursor: crosshair !important;
 }
 
-/* 终端提示符 */
-body:not(.role-panel-page) .md-header__inner::before {
-  content: "ethicalpaws@security-lab:~$ ";
-  color: #00ff41 !important;
-  font-family: 'Courier New', monospace !important;
-  font-size: 0.8rem !important;
-  margin-right: 1rem !important;
+/* ========== CRT 圆角 + 内阴影（效果2） ========== */
+body:not(.role-panel-page) .md-main {
+  border-radius: 20px !important;
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 255, 65, 0.3) !important;
+  margin: 10px !important;
+}
+
+/* ========== 屏幕扫描线（效果3） ========== */
+body:not(.role-panel-page) .md-main::before {
+  content: "" !important;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0px, rgba(0, 0, 0, 0.15) 2px, transparent 2px, transparent 4px);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* ========== 终端加载动画（效果9） ========== */
+body:not(.role-panel-page) .md-main {
+  animation: fadeIn 0.3s ease-out !important;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== 绿色荧光打字机效果（效果4） ========== */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blinkCursor {
+  from, to { border-color: transparent; }
+  50% { border-color: #33ff33; }
+}
+
+.terminal-text {
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  animation: typing 3s steps(40, end) !important;
+  border-right: 2px solid #33ff33 !important;
   display: inline-block !important;
 }
 
-/* 导航链接样式 */
+/* ========== 主内容区域透明 ========== */
+body:not(.role-panel-page) .md-content {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
+body:not(.role-panel-page) .md-sidebar {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border-radius: 0 !important;
+}
+
+/* ========== 文字半透明背景 ========== */
+body:not(.role-panel-page) .md-typeset p,
+body:not(.role-panel-page) .md-typeset ul,
+body:not(.role-panel-page) .md-typeset ol,
+body:not(.role-panel-page) .md-typeset blockquote,
+body:not(.role-panel-page) .md-typeset pre,
+body:not(.role-panel-page) .md-typeset code,
+body:not(.role-panel-page) .md-typeset h1,
+body:not(.role-panel-page) .md-typeset h2,
+body:not(.role-panel-page) .md-typeset h3 {
+  background: rgba(0, 0, 0, 0.65) !important;
+  padding: 0.2rem 0.5rem !important;
+  border-radius: 4px !important;
+  display: block !important;
+  width: auto !important;
+  color: #ffffff !important;
+}
+
+body:not(.role-panel-page) .md-typeset p,
+body:not(.role-panel-page) .md-typeset pre,
+body:not(.role-panel-page) .md-typeset table:not([class]) {
+  display: block !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  padding: 0.75rem !important;
+  margin: 0.5rem 0 !important;
+}
+
+/* ========== 表格透明处理 ========== */
+body:not(.role-panel-page) .md-typeset table:not([class]) {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  outline: 1px solid rgba(51, 255, 51, 0.3) !important;
+}
+
+body:not(.role-panel-page) .md-typeset table:not([class]) td,
+body:not(.role-panel-page) .md-typeset table:not([class]) th {
+  background: transparent !important;
+  border: none !important;
+  color: #ffffff !important;
+  padding: 0.5rem !important;
+}
+
+/* ========== 标题样式 ========== */
+body:not(.role-panel-page) .md-typeset h1 {
+  color: #ffffff !important;
+  text-shadow: 0 0 15px #33ff33, 0 0 5px #00cc33 !important;
+  font-family: 'Courier New', monospace !important;
+  font-size: 2.2rem !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+  display: block !important;
+  padding: 0.2rem 1rem !important;
+  border-radius: 8px !important;
+  animation: glitch 4s infinite !important;
+}
+
+body:not(.role-panel-page) .md-typeset h1::after {
+  content: "_";
+  animation: blink 1s step-end infinite;
+  margin-left: 4px;
+}
+
+body:not(.role-panel-page) .md-typeset h2 {
+  color: #ffffff !important;
+  font-size: 1.8rem !important;
+  border-bottom: 2px solid #33ff33 !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  display: block !important;
+  padding: 0.2rem 0.75rem !important;
+  border-radius: 6px !important;
+}
+
+body:not(.role-panel-page) .md-typeset h3 {
+  color: #ffffff !important;
+  font-size: 1.4rem !important;
+  background: rgba(0, 0, 0, 0.6) !important;
+  display: block !important;
+  padding: 0.1rem 0.6rem !important;
+  border-radius: 4px !important;
+}
+
+/* ========== 链接样式 ========== */
+body:not(.role-panel-page) .md-typeset a {
+  color: #66ff66 !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease;
+}
+
+body:not(.role-panel-page) .md-typeset a:hover {
+  color: #aaffaa !important;
+  text-shadow: 0 0 8px #33ff33 !important;
+  text-decoration: underline !important;
+}
+
+/* ========== 代码块 ========== */
+body:not(.role-panel-page) .md-typeset code {
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+  border: 1px solid #33ff33 !important;
+  border-radius: 4px !important;
+  padding: 0.2rem 0.4rem !important;
+  font-size: 0.9em !important;
+}
+
+body:not(.role-panel-page) .md-typeset pre {
+  background: rgba(10, 10, 10, 0.9) !important;
+  border: 1px solid #33ff33 !important;
+  border-radius: 8px !important;
+  padding: 1rem !important;
+}
+
+/* ========== 导航栏 ========== */
+body:not(.role-panel-page) .md-header {
+  background: rgba(0, 0, 0, 0.9) !important;
+  border-bottom: 2px solid #33ff33 !important;
+  box-shadow: 0 0 20px rgba(51, 255, 51, 0.3) !important;
+}
+
+body:not(.role-panel-page) .md-header__inner::before {
+  content: "root@ethicalpaws:~$ ";
+  color: #ffffff !important;
+  font-size: 0.85rem !important;
+  margin-right: 1rem !important;
+  font-weight: bold;
+}
+
+body:not(.role-panel-page) .md-header__inner::after {
+  content: "_";
+  color: #ffffff !important;
+  animation: blink 1s step-end infinite;
+  margin-left: 2px;
+}
+
 body:not(.role-panel-page) .md-tabs {
-  background: #0a0a0a !important;
-  border-bottom: 1px solid #1a3a1a !important;
+  background: rgba(0, 0, 0, 0.9) !important;
 }
 
 body:not(.role-panel-page) .md-tabs__link {
-  color: #6aff7a !important;
+  color: #ffffff !important;
   font-family: 'Courier New', monospace !important;
-  font-size: 0.85rem !important;
+  font-weight: bold !important;
+  font-size: 1rem !important;
+  padding: 0.3rem 0.8rem !important;
+  margin: 0 0.2rem !important;
+  border: 1px solid #2a5a2a !important;
+  border-radius: 4px !important;
   transition: all 0.2s ease !important;
 }
 
 body:not(.role-panel-page) .md-tabs__link:hover {
-  color: #00ff41 !important;
-  text-shadow: 0 0 5px #00ff41 !important;
+  border-color: #33ff33 !important;
+  background: rgba(51, 255, 51, 0.15) !important;
+  box-shadow: 0 0 15px rgba(51, 255, 51, 0.4) !important;
+  color: #ffffff !important;
 }
 
 body:not(.role-panel-page) .md-tabs__link--active {
-  color: #00ff41 !important;
-  border-bottom: 2px solid #00ff41 !important;
+  border-color: #33ff33 !important;
+  background: rgba(51, 255, 51, 0.25) !important;
+  box-shadow: 0 0 20px rgba(51, 255, 51, 0.5) !important;
+  color: #ffffff !important;
 }
 
-/* 搜索框终端风格 */
+/* ========== 搜索框 ========== */
 body:not(.role-panel-page) .md-search__form {
   background: #0c0c0c !important;
-  border: 1px solid #1a3a1a !important;
+  border: 1px solid #33ff33 !important;
   border-radius: 4px !important;
-}
-
-body:not(.role-panel-page) .md-search__form:hover {
-  border-color: #00ff41 !important;
-  box-shadow: 0 0 5px #00ff41 !important;
+  box-shadow: 0 0 5px rgba(51,255,51,0.2);
 }
 
 body:not(.role-panel-page) .md-search__input {
-  color: #00ff41 !important;
-  font-family: 'Courier New', monospace !important;
-}
-
-body:not(.role-panel-page) .md-search__input::placeholder {
-  color: #3a6e3a !important;
+  color: #ffffff !important;
+  font-family: monospace !important;
+  font-size: 0.9rem !important;
 }
 
 body:not(.role-panel-page) .md-search__icon {
-  color: #00ff41 !important;
+  color: #66ff66 !important;
 }
 
-/* 光标闪烁效果 */
-body:not(.role-panel-page) .md-header__inner::after {
-  content: "_";
-  color: #00ff41 !important;
-  animation: blink 1s step-end infinite;
-  margin-left: 2px;
-  display: inline-block;
+/* ========== 侧边栏 ========== */
+body:not(.role-panel-page) .md-nav__item .md-nav__link {
+  color: #ffffff !important;
+  background: rgba(0, 0, 0, 0.6) !important;
+  display: block !important;
+  padding: 0.2rem 0.5rem !important;
+  border-radius: 4px !important;
+  margin: 2px 0 !important;
+  font-size: 0.95rem !important;
 }
 
+body:not(.role-panel-page) .md-nav__item .md-nav__link:hover {
+  color: #66ff66 !important;
+  text-shadow: 0 0 4px #33ff33;
+  background: rgba(0, 0, 0, 0.8) !important;
+}
+
+
+/* ========== 底部二进制滚动条 ========== */
+body:not(.role-panel-page) .md-footer::before {
+  content: "01001000 01100001 01100011 01101011 01100101 01110010 00100000 01001101 01101111 01100100 01100101 00100000 01000001 01100011 01110100 01101001 01110110 01100101 00100000 --- 00100000 01001000 01100001 01100011 01101011 00100000 01010100 01101000 01100101 00100000 01010000 01101100 01100001 01101110 01100101 01110100" !important;
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  font-size: 0.7rem !important;
+  font-family: monospace !important;
+  color: #33ff33 !important;
+  background: rgba(0, 0, 0, 0.85) !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  padding: 6px 0 !important;
+  text-align: center !important;
+  animation: binaryScroll 25s linear infinite !important;
+  z-index: 100 !important;
+  border-top: 1px solid rgba(51, 255, 51, 0.3) !important;
+  pointer-events: none !important;
+}
+
+/* ========== 底部状态栏 ========== */
+body:not(.role-panel-page) .md-footer-meta {
+  background: rgba(0, 0, 0, 0.85) !important;
+  backdrop-filter: blur(4px) !important;
+  border-top: 1px solid #33ff33 !important;
+  padding: 0.5rem 1rem !important;
+  margin-bottom: 28px !important;
+}
+
+body:not(.role-panel-page) .md-footer-meta__inner {
+  display: flex !important;
+  justify-content: space-between !important;
+  font-size: 0.7rem !important;
+  font-family: monospace !important;
+}
+
+body:not(.role-panel-page) .md-footer-meta__inner::before {
+  content: "🚀 SYS: ACTIVE | UPTIME: 42d 11h 7m" !important;
+  color: #66ff66 !important;
+}
+
+body:not(.role-panel-page) .md-footer-meta__inner::after {
+  content: "🔒 ENC: AES-256 | FW: ENABLED" !important;
+  color: #88ff88 !important;
+}
+
+/* ========== 呼吸边框 ========== */
+body:not(.role-panel-page) .md-grid {
+  animation: breathe 4s ease-in-out infinite !important;
+}
+
+/* ========== 扫线效果 ========== */
+body:not(.role-panel-page)::after {
+  content: "" !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 4px !important;
+  background: linear-gradient(90deg, transparent, #00ff41, #88ff88, #00ff41, transparent) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: 9999 !important;
+  animation: scanline 4s linear infinite !important;
+}
+
+/* ========== CRT 噪点 ========== */
+body:not(.role-panel-page) .md-main::after {
+  content: "" !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" opacity="0.06"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>') !important;
+  background-repeat: repeat !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+  mix-blend-mode: screen !important;
+}
+
+/* ========== 滚动条 ========== */
+body:not(.role-panel-page) ::-webkit-scrollbar {
+  width: 10px;
+}
+
+body:not(.role-panel-page) ::-webkit-scrollbar-track {
+  background: #000000;
+  border-left: 1px solid #1a3a1a;
+}
+
+body:not(.role-panel-page) ::-webkit-scrollbar-thumb {
+  background: #33ff33;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #33ff33;
+}
+
+body:not(.role-panel-page) ::-webkit-scrollbar-thumb:hover {
+  background: #66ff66;
+  box-shadow: 0 0 8px #66ff66;
+}
+
+/* ========== 动画定义 ========== */
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
 
-/* 手机端适配 */
-@media (max-width: 76.1875em) {
-  body:not(.role-panel-page) .md-header__inner::before {
-    content: "$> ";
-    font-size: 0.7rem;
-  }
-  
-  body:not(.role-panel-page) .md-header__inner::after {
-    display: none;
-  }
+@keyframes glitch {
+  0%, 97%, 100% { transform: skew(0deg, 0deg); text-shadow: 0 0 15px #33ff33; }
+  98% { transform: skew(2deg, 1deg); text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff; }
+  99% { transform: skew(-2deg, -1deg); text-shadow: 1px -1px #ff00ff, -1px 1px #00ffff; }
+}
+
+@keyframes binaryScroll {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes breathe {
+  0%, 100% { box-shadow: 0 0 5px rgba(0, 255, 65, 0.2), inset 0 0 15px rgba(0, 255, 65, 0.02); }
+  50% { box-shadow: 0 0 25px rgba(0, 255, 65, 0.5), inset 0 0 35px rgba(0, 255, 65, 0.08); }
+}
+
+@keyframes scanline {
+  0% { top: 0%; opacity: 0; }
+  10% { opacity: 0.8; }
+  20% { opacity: 0; }
+  100% { top: 100%; opacity: 0; }
+}
+
+@keyframes keyFlash {
+  0% { text-shadow: none; background: transparent; }
+  50% { text-shadow: 0 0 8px #00ff41; background: rgba(0, 255, 65, 0.2); }
+  100% { text-shadow: none; background: transparent; }
+}
+
+/* ========== 按键闪光 ========== */
+body:not(.role-panel-page) a:active,
+body:not(.role-panel-page) .md-tabs__link:active,
+body:not(.role-panel-page) .md-nav__link:active {
+  animation: keyFlash 0.12s ease-out !important;
+}
+
+/* ========== 其他元素 ========== */
+body:not(.role-panel-page) .md-typeset blockquote {
+  border-left: 4px solid #33ff33 !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  color: #ffffff !important;
+}
+
+body:not(.role-panel-page) .md-typeset hr {
+  border-bottom: 1px solid #33ff33 !important;
+  box-shadow: 0 0 8px #33ff33;
+}
+
+body:not(.role-panel-page) .md-button {
+  background: rgba(0, 0, 0, 0.7) !important;
+  border: 1px solid #33ff33 !important;
+  color: #ffffff !important;
+  transition: all 0.2s;
+}
+
+body:not(.role-panel-page) .md-button:hover {
+  background: rgba(51, 255, 51, 0.2) !important;
+  box-shadow: 0 0 12px rgba(51, 255, 51, 0.5) !important;
+  color: #66ff66 !important;
+}
+
+/* ========== 系统负载面板（效果10） ========== */
+.system-load {
+  position: fixed !important;
+  bottom: 60px !important;
+  right: 10px !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  border: 1px solid #33ff33 !important;
+  border-radius: 6px !important;
+  padding: 6px 12px !important;
+  font-family: monospace !important;
+  font-size: 11px !important;
+  color: #66ff66 !important;
+  z-index: 1000 !important;
+  backdrop-filter: blur(4px) !important;
+  pointer-events: none !important;
+}
+/* ============================================
+   顶部导航栏增强效果
+   1. 🔒 加密标识 + 2. 📡 信号强度 + 4. 💻 终端搜索框
+   ============================================ */
+
+/* 1. 导航栏右侧添加加密标识 🔒 */
+body:not(.role-panel-page) .md-header {
+  position: relative !important;
+}
+
+body:not(.role-panel-page) .md-header .md-header__inner {
+  position: relative !important;
+}
+
+body:not(.role-panel-page) .md-header .md-header__inner::after {
+  content: "🔒 SECURE CONNECTION" !important;
+  position: absolute !important;
+  right: 1510px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  font-size: 0.7rem !important;
+  font-family: monospace !important;
+  color: #33ff33 !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  padding: 3px 10px !important;
+  border-radius: 4px !important;
+  border: 1px solid #33ff33 !important;
+  letter-spacing: 1px !important;
+  backdrop-filter: blur(2px) !important;
+  z-index: 10 !important;
+}
+
+
+/* 可选：信号强度动态闪烁效果 */
+@keyframes signalPulse {
+  0%, 100% { opacity: 1; text-shadow: 0 0 2px #66ff66; }
+  50% { opacity: 0.8; text-shadow: 0 0 5px #33ff33; }
+}
+
+body:not(.role-panel-page) .md-header .md-header__inner::before {
+  animation: signalPulse 2s ease-in-out infinite !important;
+}
+
+/* 4. 搜索框终端风格改造 💻 */
+body:not(.role-panel-page) .md-search__form {
+  position: relative !important;
+  background: #0a0a0a !important;
+  border: 1px solid #33ff33 !important;
+  border-radius: 4px !important;
+  box-shadow: 0 0 5px rgba(51, 255, 51, 0.2) !important;
+}
+
+body:not(.role-panel-page) .md-search__form::before {
+  content: "$ " !important;
+  color: #33ff33 !important;
+  font-family: 'Courier New', monospace !important;
+  font-weight: bold !important;
+  font-size: 0.85rem !important;
+  position: absolute !important;
+  left: 5px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+}
+
+body:not(.role-panel-page) .md-search__input {
+  padding-left: 28px !important;
+  color: #88ff88 !important;
+  font-family: 'Courier New', monospace !important;
+  font-size: 0.85rem !important;
+}
+
+body:not(.role-panel-page) .md-search__input::placeholder {
+  color: #3a6a3a !important;
+  font-family: monospace !important;
+  font-size: 0.8rem !important;
+}
+
+/* 搜索框聚焦时的特效 */
+body:not(.role-panel-page) .md-search__form:focus-within {
+  border-color: #66ff66 !important;
+  box-shadow: 0 0 12px rgba(51, 255, 51, 0.4) !important;
+  transition: all 0.2s ease !important;
+}
+
+/* 搜索图标微调，避免与 $ 符号重叠 */
+body:not(.role-panel-page) .md-search__icon {
+  opacity: 0.7 !important;
+  margin-left: 4px !important;
 }

@@ -55,6 +55,10 @@
     
       <link rel="stylesheet" href="../css/timeago.css">
     
+      <link rel="stylesheet" href="../assets/css/extra.css">
+    
+      <link rel="stylesheet" href="../assets/css/home.css">
+    
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
       <link rel="stylesheet" href="../asserts/css/hacker-theme.css">
@@ -237,7 +241,7 @@
   
     
   
-  🏠 首页
+  首页
 
       </a>
     </li>
@@ -258,7 +262,7 @@
   
     
   
-  📚 技术学习
+  $ 技术学习
 
         </a>
       </li>
@@ -280,7 +284,7 @@
   
     
   
-  🌱 青春记录
+  青春记录
 
         </a>
       </li>
@@ -302,7 +306,7 @@
   
     
   
-  🔔 动态推送
+  动态推送
 
         </a>
       </li>
@@ -324,7 +328,7 @@
   
     
   
-  🔋 精神食粮
+  精神食粮
 
         </a>
       </li>
@@ -346,7 +350,7 @@
   
     
   
-  📄 关于本站
+  关于本站
 
         </a>
       </li>
@@ -368,7 +372,7 @@
   
     
   
-  🎮 角色档案
+  ❗️ 角色档案
 
       </a>
     </li>
@@ -436,7 +440,7 @@
   <span class="md-ellipsis">
     
   
-    🏠 首页
+    首页
   
 
     
@@ -494,7 +498,7 @@
   <span class="md-ellipsis">
     
   
-    📚 技术学习
+    $ 技术学习
   
 
     
@@ -516,7 +520,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    📚 技术学习
+    $ 技术学习
   
 
           </label>
@@ -870,7 +874,7 @@
   <span class="md-ellipsis">
     
   
-    CTF
+    CTF训练
   
 
     
@@ -1076,7 +1080,7 @@
   <span class="md-ellipsis">
     
   
-    🌱 青春记录
+    青春记录
   
 
     
@@ -1098,7 +1102,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    🌱 青春记录
+    青春记录
   
 
           </label>
@@ -1117,6 +1121,8 @@
       
         
           
+        
+      
         
       
         
@@ -1252,6 +1258,34 @@
     
   
     第3周
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../life/study-plan/week4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第4周
   
 
     
@@ -1563,7 +1597,7 @@
   <span class="md-ellipsis">
     
   
-    🔔 动态推送
+    动态推送
   
 
     
@@ -1585,7 +1619,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    🔔 动态推送
+    动态推送
   
 
           </label>
@@ -1673,7 +1707,7 @@
   <span class="md-ellipsis">
     
   
-    🔋 精神食粮
+    精神食粮
   
 
     
@@ -1695,7 +1729,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    🔋 精神食粮
+    精神食粮
   
 
           </label>
@@ -1967,7 +2001,7 @@
   <span class="md-ellipsis">
     
   
-    📄 关于本站
+    关于本站
   
 
     
@@ -1989,7 +2023,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    📄 关于本站
+    关于本站
   
 
           </label>
@@ -2053,7 +2087,7 @@
   <span class="md-ellipsis">
     
   
-    🎮 角色档案
+    ❗️ 角色档案
   
 
     
@@ -2107,14 +2141,8 @@
   
 
 
-  <h1>🎮 角色档案</h1>
+  <h1>❗️ 角色档案</h1>
 
-<hr />
-<p>title: 角色档案
-hide:
-  - navigation
-  - toc</p>
-<hr />
 <script>
 // 给 body 添加 role-panel 类名，排除全局样式
 document.body.classList.add('role-panel-page');
@@ -2133,6 +2161,70 @@ document.body.classList.add('role-panel-page');
 body {
     background: linear-gradient(135deg, #0a0a0f 0%, #1a0a0a 100%);
     font-family: 'Segoe UI', system-ui, sans-serif;
+}
+/* ============================================
+   Role Panel 页面 - 导航栏游戏化适配
+   ============================================ */
+
+/* 导航栏背景与游戏面板统一 */
+body.role-panel-page .md-header {
+  background: linear-gradient(135deg, #0a0a0f 0%, #1a0a0a 100%) !important;
+  border-bottom: 2px solid #ffaa00 !important;
+  box-shadow: none !important;
+  height: 52px !important;
+}
+
+/* 隐藏默认的导航栏文字，用自定义内容替代 */
+body.role-panel-page .md-header__topic {
+  display: none !important;
+}
+
+/* 自定义导航栏内容 */
+body.role-panel-page .md-header__inner {
+  justify-content: space-between !important;
+}
+
+body.role-panel-page .md-header__inner::before {
+  content: "🎮 角色档案系统" !important;
+  color: #ffaa00 !important;
+  font-family: 'Segoe UI', monospace !important;
+  font-size: 0.9rem !important;
+  font-weight: bold !important;
+  letter-spacing: 2px !important;
+  text-shadow: 0 0 10px rgba(255, 68, 68, 0.5) !important;
+}
+
+body.role-panel-page .md-header__inner::after {
+  content: "⚔️ ETHICAL HACKER" !important;
+  color: #ff6666 !important;
+  font-family: monospace !important;
+  font-size: 0.7rem !important;
+  background: rgba(255, 68, 68, 0.15) !important;
+  padding: 4px 12px !important;
+  border-radius: 20px !important;
+  border: 1px solid rgba(255, 170, 0, 0.3) !important;
+}
+
+/* 隐藏搜索框和 tabs */
+body.role-panel-page .md-search,
+body.role-panel-page .md-tabs,
+body.role-panel-page .md-header__source {
+  display: none !important;
+}
+
+/* 页面背景完全统一 */
+body.role-panel-page {
+  background: linear-gradient(135deg, #0a0a0f 0%, #1a0a0a 100%) !important;
+}
+
+body.role-panel-page .md-main {
+  background: transparent !important;
+  padding-top: 0.5rem !important;
+}
+
+/* 游戏面板与导航栏之间增加呼吸间距 */
+body.role-panel-page .game-panel {
+  margin-top: 1rem !important;
 }
 
 .loading {
@@ -2851,7 +2943,7 @@ loadRolePanel();
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 19:55:42 UTC"><span class="timeago" datetime="2026-05-27T19:55:42+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 19:55:42 UTC">2026-05-27</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 31, 2026 07:14:28 UTC"><span class="timeago" datetime="2026-05-31T07:14:28+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 31, 2026 07:14:28 UTC">2026-05-31</span>
   </span>
 
     
@@ -2861,7 +2953,7 @@ loadRolePanel();
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 27, 2026 19:55:42 UTC"><span class="timeago" datetime="2026-05-27T19:55:42+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 27, 2026 19:55:42 UTC">2026-05-27</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 31, 2026 07:14:28 UTC"><span class="timeago" datetime="2026-05-31T07:14:28+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 31, 2026 07:14:28 UTC">2026-05-31</span>
   </span>
 
     
@@ -2946,6 +3038,10 @@ loadRolePanel();
         <script src="../js/timeago.min.js"></script>
       
         <script src="../js/timeago_mkdocs_material.js"></script>
+      
+        <script src="../assets/js/extra.js"></script>
+      
+        <script src="../assets/js/encryption.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
       

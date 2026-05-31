@@ -1,360 +1,327 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>角色面板 - 黑客帝国风格</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* ============================================
+   黑客帝国数字雨风格 - 全站（排除 role-panel）
+   ============================================ */
 
-        body {
-            background: #0a0a0a;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Courier New', 'Fira Code', monospace;
-            padding: 2rem;
-        }
+/* ========== 全局背景 ========== */
+body:not(.role-panel-page) {
+  background: #000000 !important;
+  color: #00ff41 !important;
+  font-family: 'Courier New', 'Fira Code', monospace !important;
+  position: relative !important;
+  overflow-x: hidden !important;
+}
 
-        /* 主容器 */
-        .terminal-panel {
-            max-width: 520px;
-            width: 100%;
-            background: #0c0c0c;
-            border: 1px solid #1a3a1a;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
-            overflow: hidden;
-        }
+/* 全屏数字雨背景 - 清晰可见 */
+body:not(.role-panel-page)::before {
+  content: "" !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 255, 65, 0.12) 0px,
+    rgba(0, 255, 65, 0.12) 1px,
+    transparent 1px,
+    transparent 4px
+  ), repeating-linear-gradient(
+    90deg,
+    rgba(0, 255, 65, 0.08) 0px,
+    rgba(0, 255, 65, 0.08) 1px,
+    transparent 1px,
+    transparent 40px
+  ) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
 
-        /* 终端头部 */
-        .terminal-header {
-            background: #0a0a0a;
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid #1a3a1a;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+/* 数字雨粒子 - 清晰的大数字 */
+body:not(.role-panel-page)::after {
+  content: "0 1 0 1 1 0 0 1 0 1 1 0 1 0 0 1 0 1 1 0 0 1 0 1 1 0 1 0 0 1 0 1 1 0 0 1 0 1 1 0 1 0 0 1 0 1 1 0 0 1 0 1 1 0 1 0 0 1 0 1 1 0 0 1" !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  color: rgba(0, 255, 65, 0.2) !important;
+  font-family: monospace !important;
+  font-size: 2rem !important;
+  font-weight: bold !important;
+  white-space: pre-wrap !important;
+  word-break: break-all !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+  animation: matrixRain 20s linear infinite !important;
+  line-height: 2.5 !important;
+}
 
-        .terminal-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #2a2a2a;
-        }
+@keyframes matrixRain {
+  0% { transform: translateY(-15%); }
+  100% { transform: translateY(15%); }
+}
 
-        .terminal-dot.red { background: #ff5f56; }
-        .terminal-dot.yellow { background: #ffbd2e; }
-        .terminal-dot.green { background: #27c93f; }
+/* 主内容区域 - 背景透明，让数字雨透出来 */
+body:not(.role-panel-page) .md-main {
+  background: transparent !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
 
-        .terminal-title {
-            color: #3a6e3a;
-            font-size: 0.8rem;
-            margin-left: 0.5rem;
-        }
+body:not(.role-panel-page) .md-content {
+  background: rgba(0, 0, 0, 0.2) !important;  /* 非常透明 */
+  padding: 1rem !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
 
-        /* 内容区域 */
-        .terminal-content {
-            padding: 1.5rem;
-        }
+/* 表格区域 - 半透明 */
+body:not(.role-panel-page) .md-typeset table:not([class]) {
+  background: rgba(0, 0, 0, 0.35) !important;
+  border: 1px solid #00ff41 !important;
+  border-radius: 8px !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
 
-        /* 命令行样式 */
-        .command-line {
-            color: #00ff41;
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
+/* 表格上的数字雨 */
+body:not(.role-panel-page) .md-typeset table:not([class])::before {
+  content: "0 1" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  color: rgba(0, 255, 65, 0.15) !important;
+  font-family: monospace !important;
+  font-size: 1.2rem !important;
+  white-space: pre-wrap !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+  animation: tableRain 12s linear infinite !important;
+}
 
-        .prompt {
-            color: #00ff41;
-        }
+@keyframes tableRain {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
 
-        .command {
-            color: #a7f0a7;
-        }
+body:not(.role-panel-page) .md-typeset table:not([class]) th,
+body:not(.role-panel-page) .md-typeset table:not([class]) td {
+  position: relative !important;
+  z-index: 1 !important;
+  background: transparent !important;
+}
 
-        /* 进度条容器 */
-        .progress-section {
-            background: #0f0f0f;
-            border: 1px solid #1a3a1a;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-        }
+body:not(.role-panel-page) .md-typeset table:not([class]) th {
+  color: #00ff41 !important;
+  border-bottom: 1px solid #00ff41 !important;
+}
 
-        .level-bar {
-            background: #1a1a1a;
-            border-radius: 4px;
-            height: 20px;
-            overflow: hidden;
-            margin: 0.5rem 0;
-        }
+body:not(.role-panel-page) .md-typeset table:not([class]) td {
+  color: #ffffff !important;
+  border-bottom: 1px solid #1a3a1a !important;
+}
 
-        .level-fill {
-            background: linear-gradient(90deg, #00ff41, #00cc33);
-            width: 0%;
-            height: 100%;
-            border-radius: 4px;
-            transition: width 1s ease-out;
-            box-shadow: 0 0 8px #00ff41;
-        }
+/* 侧边栏透明 */
+body:not(.role-panel-page) .md-sidebar {
+  background: rgba(0, 0, 0, 0.2) !important;
+  backdrop-filter: blur(2px);
+  border-radius: 8px !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
 
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            color: #a7f0a7;
-            font-size: 0.75rem;
-            margin-top: 0.5rem;
-        }
+/* 侧边栏数字雨 */
+body:not(.role-panel-page) .md-sidebar::before {
+  content: "0 1" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  color: rgba(0, 255, 65, 0.1) !important;
+  font-family: monospace !important;
+  font-size: 0.9rem !important;
+  pointer-events: none !important;
+  animation: sidebarRain 10s linear infinite !important;
+}
 
-        /* 技能列表 */
-        .skills-section {
-            background: #0f0f0f;
-            border: 1px solid #1a3a1a;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-        }
+@keyframes sidebarRain {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
 
-        .section-title {
-            color: #00ff41;
-            font-size: 0.9rem;
-            margin-bottom: 0.75rem;
-            letter-spacing: 1px;
-        }
+/* ========== 标题样式 ========== */
+body:not(.role-panel-page) .md-typeset h1 {
+  color: #00ff41 !important;
+  text-shadow: 0 0 10px #00ff41 !important;
+  font-family: 'Courier New', monospace !important;
+}
 
-        .skill-item {
-            margin-bottom: 0.75rem;
-        }
+body:not(.role-panel-page) .md-typeset h1::after {
+  content: "_";
+  animation: blink 1s step-end infinite;
+  margin-left: 4px;
+}
 
-        .skill-header {
-            display: flex;
-            justify-content: space-between;
-            color: #a7f0a7;
-            font-size: 0.75rem;
-            margin-bottom: 0.25rem;
-        }
+body:not(.role-panel-page) .md-typeset h2 {
+  color: #6aff7a !important;
+  border-bottom: 1px solid #00ff41 !important;
+  padding-bottom: 0.3rem !important;
+}
 
-        .skill-bar {
-            background: #1a1a1a;
-            border-radius: 3px;
-            height: 12px;
-            overflow: hidden;
-        }
+body:not(.role-panel-page) .md-typeset h3 {
+  color: #3a8a3a !important;
+}
 
-        .skill-fill {
-            background: #00ff41;
-            width: 0%;
-            height: 100%;
-            border-radius: 3px;
-            transition: width 0.8s ease-out;
-        }
+/* ========== 链接样式 ========== */
+body:not(.role-panel-page) .md-typeset a {
+  color: #00ff41 !important;
+  text-decoration: none !important;
+}
 
-        /* 成就列表 */
-        .achievements-section {
-            background: #0f0f0f;
-            border: 1px solid #1a3a1a;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
+body:not(.role-panel-page) .md-typeset a:hover {
+  color: #6aff7a !important;
+  text-shadow: 0 0 5px #00ff41 !important;
+  text-decoration: underline !important;
+}
 
-        .achievement-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #1a3a1a;
-            color: #a7f0a7;
-            font-size: 0.75rem;
-        }
+/* ========== 代码块 ========== */
+body:not(.role-panel-page) .md-typeset code {
+  background: rgba(26, 26, 26, 0.7) !important;
+  color: #00ff41 !important;
+  border: 1px solid #00ff41 !important;
+  border-radius: 4px !important;
+}
 
-        .achievement-item:last-child {
-            border-bottom: none;
-        }
+body:not(.role-panel-page) .md-typeset pre {
+  background: rgba(10, 10, 10, 0.7) !important;
+  border: 1px solid #00ff41 !important;
+  border-radius: 8px !important;
+}
 
-        .achievement-name {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+/* ========== 导航栏 ========== */
+body:not(.role-panel-page) .md-header {
+  background: rgba(0, 0, 0, 0.95) !important;
+  border-bottom: 1px solid #00ff41 !important;
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.3) !important;
+}
 
-        .achievement-xp {
-            color: #00ff41;
-        }
+body:not(.role-panel-page) .md-header__inner::before {
+  content: "root@matrix:~$ ";
+  color: #00ff41 !important;
+  font-size: 0.8rem !important;
+  margin-right: 1rem !important;
+}
 
-        /* 语录 */
-        .quote-section {
-            background: #0f0f0f;
-            border-left: 3px solid #00ff41;
-            padding: 0.75rem 1rem;
-            margin-top: 1rem;
-            color: #a7f0a7;
-            font-size: 0.8rem;
-        }
+body:not(.role-panel-page) .md-header__inner::after {
+  content: "_";
+  color: #00ff41 !important;
+  animation: blink 1s step-end infinite;
+  margin-left: 2px;
+}
 
-        .cursor {
-            display: inline-block;
-            width: 8px;
-            height: 14px;
-            background: #00ff41;
-            animation: blink 1s step-end infinite;
-            vertical-align: middle;
-            margin-left: 2px;
-        }
+body:not(.role-panel-page) .md-tabs {
+  background: rgba(0, 0, 0, 0.95) !important;
+}
 
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
+body:not(.role-panel-page) .md-tabs__link {
+  color: #6aff7a !important;
+  font-family: 'Courier New', monospace !important;
+  padding: 0.3rem 0.8rem !important;
+  margin: 0 0.2rem !important;
+  border: 1px solid #1a3a1a !important;
+  border-radius: 4px !important;
+  transition: all 0.2s ease !important;
+}
 
-        /* 加载动画 */
-        .loading {
-            text-align: center;
-            padding: 3rem;
-            color: #3a6e3a;
-        }
-    </style>
-</head>
-<body>
-    <div class="terminal-panel" id="role-panel">
-        <div class="terminal-header">
-            <div class="terminal-dot red"></div>
-            <div class="terminal-dot yellow"></div>
-            <div class="terminal-dot green"></div>
-            <div class="terminal-title">ethicalpaws@security-lab:~/profile</div>
-        </div>
-        <div class="terminal-content" id="content">
-            <div class="loading">$> loading profile... <span class="cursor"></span></div>
-        </div>
-    </div>
+body:not(.role-panel-page) .md-tabs__link:hover {
+  border-color: #00ff41 !important;
+  background: rgba(0, 255, 65, 0.1) !important;
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3) !important;
+}
 
-    <script>
-        // 角色数据
-        const characterData = {
-            name: "ethicalpaws",
-            title: "漏洞猎人",
-            motto: "路漫漫其修远兮",
-            level: 15,
-            exp: 2450,
-            exp_to_next: 5000,
-            skills: {
-                web_security: { level: 8, exp: 800, max: 20 },
-                java_security: { level: 4, exp: 400, max: 20 },
-                ctf_ability: { level: 6, exp: 600, max: 20 },
-                cve_analysis: { level: 4, exp: 400, max: 20 }
-            },
-            achievements: [
-                { name: "🎯 初露锋芒", desc: "挖到第一个漏洞", date: "2025-05-20", xp: 100 },
-                { name: "☕ Java骑士", desc: "完成Java反序列化", date: "2025-05-15", xp: 200 },
-                { name: "🏴 CTF新兵", desc: "第一次参加CTF", date: "2025-05-10", xp: 150 }
-            ],
-            quote: "Flag 出来的那一刻，值了"
-        };
+body:not(.role-panel-page) .md-tabs__link--active {
+  border-color: #00ff41 !important;
+  background: rgba(0, 255, 65, 0.2) !important;
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.5) !important;
+}
 
-        // 计算百分比
-        const expPercent = (characterData.exp / characterData.exp_to_next * 100).toFixed(1);
-        characterData.expPercent = expPercent;
+/* 导航图标 */
+body:not(.role-panel-page) .md-tabs__link[href*="index.md"]::before {
+  content: "$ " !important;
+  color: #00ff41 !important;
+}
 
-        for (let key in characterData.skills) {
-            characterData.skills[key].percent = (characterData.skills[key].level / characterData.skills[key].max * 100).toFixed(1);
-        }
+body:not(.role-panel-page) .md-tabs__link[href*="tech-study"]::before {
+  content: "# " !important;
+  color: #00ff41 !important;
+}
 
-        // 生成HTML
-        function renderPanel() {
-            const skillsHtml = Object.entries(characterData.skills).map(([key, skill]) => {
-                const nameMap = {
-                    web_security: "WEB_SECURITY",
-                    java_security: "JAVA_SECURITY",
-                    ctf_ability: "CTF_ABILITY",
-                    cve_analysis: "CVE_ANALYSIS"
-                };
-                return `
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span>├─ ${nameMap[key]}</span>
-                            <span>Lv.${skill.level}</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-fill" data-width="${skill.percent}%"></div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+body:not(.role-panel-page) .md-tabs__link[href*="life"]::before {
+  content: "% " !important;
+  color: #6aff7a !important;
+}
 
-            const achievementsHtml = characterData.achievements.map(ach => `
-                <div class="achievement-item">
-                    <div class="achievement-name">
-                        <span>[!]</span>
-                        <span>${ach.name}</span>
-                        <span style="color: #3a6e3a;">${ach.date}</span>
-                    </div>
-                    <div class="achievement-xp">+${ach.xp} XP</div>
-                </div>
-            `).join('');
+body:not(.role-panel-page) .md-tabs__link[href*="updates"]::before {
+  content: "& " !important;
+  color: #6aff7a !important;
+}
 
-            return `
-                <div class="command-line">
-                    <span class="prompt">$></span>
-                    <span class="command">cat profile</span>
-                </div>
+body:not(.role-panel-page) .md-tabs__link[href*="spiritual"]::before {
+  content: "@ " !important;
+  color: #ffaa00 !important;
+}
 
-                <div class="progress-section">
-                    <div class="stat-row">
-                        <span>[${'█'.repeat(Math.floor(characterData.expPercent / 5))}${'░'.repeat(20 - Math.floor(characterData.expPercent / 5))}]</span>
-                        <span>Lv.${characterData.level}</span>
-                    </div>
-                    <div class="level-bar">
-                        <div class="level-fill" data-width="${characterData.expPercent}%"></div>
-                    </div>
-                    <div class="stat-row">
-                        <span>> XP: ${characterData.exp} / ${characterData.exp_to_next}</span>
-                        <span>> Title: ${characterData.title}</span>
-                    </div>
-                </div>
+body:not(.role-panel-page) .md-tabs__link[href*="about"]::before {
+  content: "? " !important;
+  color: #6aff7a !important;
+}
 
-                <div class="skills-section">
-                    <div class="section-title">> SKILLS</div>
-                    ${skillsHtml}
-                </div>
+body:not(.role-panel-page) .md-tabs__link[href*="role-panel"]::before {
+  content: "! " !important;
+  color: #ff4444 !important;
+}
 
-                <div class="achievements-section">
-                    <div class="section-title">> ACHIEVEMENTS (${characterData.achievements.length})</div>
-                    ${achievementsHtml}
-                </div>
+/* ========== 搜索框 ========== */
+body:not(.role-panel-page) .md-search__form {
+  background: rgba(12, 12, 12, 0.8) !important;
+  border: 1px solid #00ff41 !important;
+  border-radius: 4px !important;
+}
 
-                <div class="quote-section">
-                    <span>$></span> ${characterData.quote}
-                    <span class="cursor"></span>
-                </div>
-            `;
-        }
+body:not(.role-panel-page) .md-search__input {
+  color: #00ff41 !important;
+  font-family: monospace !important;
+}
 
-        // 动画效果
-        function startAnimations() {
-            const fills = document.querySelectorAll('[data-width]');
-            fills.forEach(fill => {
-                const width = fill.getAttribute('data-width');
-                setTimeout(() => {
-                    fill.style.width = width;
-                }, 100);
-            });
-        }
+body:not(.role-panel-page) .md-search__icon {
+  color: #00ff41 !important;
+}
 
-        // 加载面板
-        const container = document.getElementById('content');
-        container.innerHTML = renderPanel();
-        setTimeout(startAnimations, 100);
-    </script>
-</body>
-</html>
+/* ========== 滚动条 ========== */
+body:not(.role-panel-page) ::-webkit-scrollbar {
+  width: 8px;
+}
+
+body:not(.role-panel-page) ::-webkit-scrollbar-track {
+  background: #000;
+}
+
+body:not(.role-panel-page) ::-webkit-scrollbar-thumb {
+  background: #00ff41;
+  border-radius: 4px;
+}
+
+/* ========== 页脚 ========== */
+body:not(.role-panel-page) .md-footer {
+  background: rgba(0, 0, 0, 0.95) !important;
+  border-top: 1px solid #00ff41 !important;
+}
+
+/* ========== 动画 ========== */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
