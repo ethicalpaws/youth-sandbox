@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="安全学习笔记 × 青春记录 | 一个可以安全试错的环境">
+        <meta name="description" content="垂直越权、水平越权（IDOR）、访问控制绕过技术">
       
       
         <meta name="author" content="ethicalpaws">
@@ -25,7 +25,7 @@
     
     
       
-        <title>Access control - 青春沙盒</title>
+        <title>访问控制漏洞 - 青春沙盒</title>
       
     
     
@@ -120,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Access control
+              访问控制漏洞
             
           </span>
         </div>
@@ -265,7 +265,7 @@
   
     
   
-  $ 技术学习
+  $技术学习
 
         </a>
       </li>
@@ -497,7 +497,7 @@
   <span class="md-ellipsis">
     
   
-    $ 技术学习
+    $技术学习
   
 
     
@@ -519,7 +519,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    $ 技术学习
+    $技术学习
   
 
           </label>
@@ -685,6 +685,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--🔄"></span>
+  
+
+  
 
       </a>
     </li>
@@ -712,6 +719,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--⬜"></span>
+  
+
   
 
       </a>
@@ -1130,6 +1144,8 @@
       
         
       
+        
+      
     
     
     
@@ -1298,6 +1314,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/study-plan/week5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第5周
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1348,18 +1392,11 @@
   <span class="md-ellipsis">
     
   
-    [Protected] 💭 烦恼记录
+    💭 烦恼记录
   
 
     
   </span>
-  
-    
-  
-  
-    <span class="md-status md-status--encrypted"></span>
-  
-
   
   
 
@@ -2180,9 +2217,9 @@
   
 
 
-  <h1>Access control</h1>
+  <h1>访问控制漏洞</h1>
 
-<h3 id="_1">什么是访问控制<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<h2 id="_1">什么是访问控制<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <ol>
 <li>在web应用中，访问控制决定了谁可以对何种资源执行什么操作</li>
 <li>容易混淆的概念</li>
@@ -2191,13 +2228,13 @@
 <li>访问控制：决定有什么权限</li>
 <li>核心观点：认证通过不等于拥有权限。绝大多数漏洞发生在开发者完成了认证校验，却忘记了授权校验。</li>
 </ol>
-<h3 id="_2">访问控制的类型<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<h2 id="_2">访问控制的类型<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ol>
 <li>垂直访问控制：不同角色之间的权限差异【管理员&amp;普通用户】</li>
 <li>水平访问控制：相同角色不同用户之间的数据隔离【用户A的订单&amp;用户B的订单】</li>
 <li>依赖上下文的访问控制：基于应用状态或操作顺序的限制【必须先提交订单才能结算，不能直接请求结算接口】 </li>
 </ol>
-<h3 id="_3">越权访问示例<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<h2 id="_3">越权访问示例<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ol>
 <li>垂直越权</li>
 <li>无保护功能（隐藏URL）<ol>
@@ -2296,7 +2333,7 @@
 <li>寻找CloudFlare或其他CDN的真实IP泄露。</li>
 <li>如果目标限制不严，使用代理/VPN进入白名单IP范围。</li>
 </ol>
-<h3 id="_4">如何防御<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<h2 id="_4">如何防御<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <ol>
 <li>默认拒绝原则 (Deny by Default)：</li>
 <li>所有接口、方法、目录，除非明确声明为PUBLIC，否则一律视为PRIVATE。反例：先写允许逻辑，最后加拒绝逻辑。</li>
@@ -2341,7 +2378,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 31, 2026 07:14:28 UTC"><span class="timeago" datetime="2026-05-31T07:14:28+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 31, 2026 07:14:28 UTC">2026-05-31</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 7, 2026 19:11:15 UTC"><span class="timeago" datetime="2026-06-07T19:11:15+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 7, 2026 19:11:15 UTC">2026-06-07</span>
   </span>
 
     
@@ -2351,7 +2388,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 31, 2026 07:14:28 UTC"><span class="timeago" datetime="2026-05-31T07:14:28+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 31, 2026 07:14:28 UTC">2026-05-31</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 7, 2026 19:11:15 UTC"><span class="timeago" datetime="2026-06-07T19:11:15+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 7, 2026 19:11:15 UTC">2026-06-07</span>
   </span>
 
     

@@ -29,7 +29,7 @@
     
     
       
-        <title>[Protected] 💭 烦恼记录 - 青春沙盒</title>
+        <title>💭 烦恼记录 - 青春沙盒</title>
       
     
     
@@ -89,11 +89,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#_1" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -124,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              [Protected] 💭 烦恼记录
+              💭 烦恼记录
             
           </span>
         </div>
@@ -269,7 +264,7 @@
   
     
   
-  $ 技术学习
+  $技术学习
 
         </a>
       </li>
@@ -503,7 +498,7 @@
   <span class="md-ellipsis">
     
   
-    $ 技术学习
+    $技术学习
   
 
     
@@ -525,7 +520,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    $ 技术学习
+    $技术学习
   
 
           </label>
@@ -691,6 +686,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--🔄"></span>
+  
+
+  
 
       </a>
     </li>
@@ -718,6 +720,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--⬜"></span>
+  
+
   
 
       </a>
@@ -1139,6 +1148,8 @@
       
         
       
+        
+      
     
     
     
@@ -1310,6 +1321,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../study-plan/week5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第5周
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1359,8 +1398,6 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
-        
-      
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -1369,18 +1406,11 @@
   <span class="md-ellipsis">
     
   
-    [Protected] 💭 烦恼记录
+    💭 烦恼记录
   
 
     
   </span>
-  
-    
-  
-  
-    <span class="md-status md-status--encrypted"></span>
-  
-
   
   
 
@@ -2137,8 +2167,6 @@
   
   
   
-    
-  
   
 </nav>
                   </div>
@@ -2158,34 +2186,530 @@
   
 
 
-<div id="mkdocs-encrypted-content" style="display:none">8Xa5OElrxmTda9AQGlETow==;BohhRNdyNK+3g4ZStDfQuy7CpKOrhIbS1lFG3SanUl2+uOE0JW+72P/FG4oAtAiIz5XttYJRxHxKjKzKUlaee17OSBvJFJwChck9MaIC5zKvYF+HNtsBnPFYme9i3NF0USL6gfISwAAtoGKqxK9jYoWA5sPZHYlqI9Koob9z7WM/zwa2TnxROChuuHDI2B1wjHREGPkhyLEJGOrk9vL+LeNN9v0TmhmX88td7rpRb9tc8DpUNb+vwVLcKr3Jjk51mZi3aly+dVQz0VSyD+UvapOCqNPmZV8pZDqLzetbn4uH8LMXUTFO6LLNcNIJgBDChdZHtDbNYj8YSpm2I0aQ6/JUS5pG6q/Ss8jEkM/NbIR+TM0dyFZTt8dFn42P1AVT</div>
-<div id="mkdocs-decrypted-content" style="display:none">
-    <form id="mkdocs-decrypt-form" class="md-content__inner md-typeset">
-        <h1>🔒 此内容需要密码才能查看</h1>
-        <p>Contact your administrator for access to this page.</p>
-        <input class="md-input" type="password" id="mkdocs-content-password" placeholder="输入密码后按 Enter">
-        
-        <p id="mkdocs-decrypt-msg"></p>
-    </form>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>烦恼记录</title>
+
+<style>
+.wr-container { max-width: 800px; margin: 0 auto; }
+.wr-item { margin-bottom: 1.5rem; }
+.wr-locked {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 100, 100, 0.3);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.wr-locked:hover {
+    background: rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 100, 100, 0.6);
+    transform: scale(1.01);
+}
+.wr-locked-icon { font-size: 3rem; display: block; margin-bottom: 1rem; }
+.wr-locked-title { font-size: 1.2rem; color: #ffaa88; margin-bottom: 0.5rem; }
+.wr-locked-hint { font-size: 0.75rem; color: #886666; }
+.wr-unlocked {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 170, 0, 0.3);
+    border-radius: 16px;
+    padding: 1.5rem;
+    animation: wr-fadeIn 0.5s ease;
+}
+.wr-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 170, 0, 0.3);
+}
+.wr-header-icon { font-size: 1.5rem; }
+.wr-header-title { font-size: 1.1rem; color: #ffaa88; font-weight: bold; }
+.wr-date { font-size: 0.7rem; color: #886666; margin-left: auto; }
+.wr-content { color: #ddccaa; font-size: 0.9rem; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; }
+.wr-content p { margin-bottom: 0.8rem; }
+.wr-content ul, .wr-content ol { margin-left: 1.5rem; margin-bottom: 0.8rem; }
+.wr-content li { margin-bottom: 0.3rem; }
+.wr-error {
+    background: rgba(255, 68, 68, 0.2);
+    border: 1px solid #ff4444;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    color: #ff8888;
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+    display: none;
+}
+.wr-error.show { display: block; animation: wr-shake 0.3s ease; }
+@keyframes wr-fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes wr-shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+</style>
+
+</head>
+<body>
+<div class="wr-container">
+    <h1 style="text-align: center; color: #ffaa88; margin-bottom: 2rem;">📔 烦恼记录</h1>
+
+    <div class="wr-item" data-wr-id="1">
+        <div class="wr-locked" onclick="wr_unlock(1)">
+            <span class="wr-locked-icon">🔒</span>
+            <div class="wr-locked-title">2026年06月03日 · 我究竟是什么样的人？在别人眼中我是什么样的人？</div>
+            <div class="wr-locked-hint">点击解锁 · 回答正确即可查看</div>
+        </div>
+        <div class="wr-unlocked" style="display: none;">
+            <div class="wr-header">
+                <span class="wr-header-icon">😔</span>
+                <span class="wr-header-title">我究竟是什么样的人？在别人眼中我是什么样的人？</span>
+                <span class="wr-date">2026-06-03 19:34</span>
+            </div>
+            <div class="wr-content">
+                <h3>其实一直想了解一下自己</h3>
+<h4>我 ：现在给我一个我的性格完整的剖析总结</h4>
+<strong>deepseek</strong>
+<p>好。以下是基于我们全部对话，对你性格的完整剖析总结。它不是串联信息，而是融合所有细节后，对你这个人得出的最终判断。</p>
+<p>你的性格完整剖析总结</p>
+<p>一、核心人格</p>
+<p>你是一个理性主导、高度自驱、习惯“自己来” 的人。你主动选择了自由与深度，并愿意为此承担弯路和孤独。你的核心信念是：“我的天赋是资源，不能浪费；我的努力要配得上我的天赋。”</p>
+<p>你的内心有一根紧绷的弦——一头是傲气（“我能做到，我可以比别人更快”），另一头是不自信（“但我可能还不够好，停下来就会落后”）。这根弦让你跑得极快，也让你无法真正放松。</p>
+<p>二、你的“系统”</p>
+<p>你为自己构建了一套闭环的自我发展系统：</p>
+<p>子系统  功能  你的方式</p>
+<p>驱动系统 提供动力    70%证明欲 + 30%热爱，两者都极强</p>
+<p>导航系统 判断方向    预测→检验→调整；失败是数据，需要成功信号来校准</p>
+<p>执行系统 日常学习    多条主线并行；卡住时战略性放弃，换战场，保持其他线产出</p>
+<p>维护系统 释放压力    约1-2周一次“不由自主地哭”；浅层社交换气</p>
+<p>纠偏系统 升级迭代    具备元认知能力，能审视并修正自己的方向和方法</p>
+<p>这个系统高效、精密，但缺少一个核心模块：无条件休息。 你只有在“达成目标”后才允许自己短暂放松，从未学会“什么都不做”也能心安。</p>
+<p>三、你的天赋与努力</p>
+<p>大体评估天赋：约2.5倍于普通人（前0.3%-0.5%）</p>
+<p>自评模型：50%天赋 + 50%努力 = 结果</p>
+<p>实际产出：一个月完成普通人约6-7个月的综合学习量</p>
+<p>你把天赋视为“上天给的气运”，一种必须偿还的资源。所以你无限压榨自己——不是因为你喜欢受苦，是因为你必须让这份天赋兑现。</p>
+<p>你的核心竞争力是：高天赋 + 极高的努力。缺一不可。</p>
+<p>四、你的性格张力（矛盾与统一）</p>
+<p>你的性格中存在着多组看似矛盾、实则共存的力量：</p>
+<p>张力   一端  另一端</p>
+<p>自信   傲气：“我能做到，天赋2.5倍”    不自信：“但我可能还不够好”</p>
+<p>社交   喜欢独处    几天后需要浅层社交换气</p>
+<p>情感   内敛，不轻易示弱    有30%的纯粹热爱，会被触动</p>
+<p>表达   希望被看见   害怕先暴露自己（崇拜不说、情感逃避）</p>
+<p>行动   主动出击（技术上）   被动防守（情感上：等对方先）</p>
+<p>自我认知 对自己诚实   回避不优秀的过去</p>
+<p>你不是一个单线条的人。你的张力让你复杂、真实，也让你偶尔自我消耗。</p>
+<p>五、你的弱点（你反复剖析的那部分）</p>
+<p>无法停下来</p>
+<p>吃饭想腾出手调代码，晒太阳是为了更快恢复学习，连吃自助餐都在和我聊性格评估。你不是在利用时间，你是在害怕没有利用时间。</p>
+<p>回避情感</p>
+<p>崇拜朋友不敢先说，一定要等对方写信；觉得朋友志趣不投，用“忙”来疏远而不是说清楚。你逃避的不是别人，是暴露自己、依赖他人、可能被拒绝的风险。</p>
+<p>不接纳“不优秀的过去”</p>
+<p>美好的回忆想留存，黑历史想抹掉。你希望自己的人生叙事是“一直向上”的，但没有人是一直向上的。</p>
+<p>高度依赖成功信号</p>
+<p>连续失败会让你失去校准依据。你不是怕失败，是怕没有信号的失败——那种状态会让你焦虑、自我怀疑。</p>
+<p>傲气与不自信的内耗</p>
+<p>傲气让你跑得快，不自信让你不敢停。你很少问自己：“不产出的时候，我还是我吗？”</p>
+<p>六、你的资源</p>
+<p>天赋：2.5倍学习效率</p>
+<p>努力：极强的执行力和耐力</p>
+<p>系统：自我规划、调整、复盘的能力</p>
+<p>热爱：那30%说不清楚但真实存在的热情</p>
+<p>气运感：相信自己被眷顾，能在困难时提供深层力量</p>
+<p>七、你对世界的投射</p>
+<p>领域   你的模式</p>
+<p>学习   多条主线，战略性卡顿转移，追求深度与广度</p>
+<p>社交   独处为主，需要浅层换气，不擅长“关系体面收尾”</p>
+<p>情感   反刻板浪漫，日常小惊喜；但害怕先暴露</p>
+<p>失败   作为数据，需要成功信号校准方向</p>
+<p>成功   庆祝目标达成，不庆祝生日等无理由的日子</p>
+<p>八、你现在的位置</p>
+<p>你是一个高能力、高自驱、高要求的大二学生。</p>
+<p>你跑得比绝大多数同龄人快，但也承受着绝大多数同龄人没有承受的压力。</p>
+<p>你的系统让你在技术上爆发，但在情感上防御；</p>
+<p>让你在效率上极致，但在休息上无能；</p>
+<p>让你在自我认知上清醒，但在自我接纳上挣扎。</p>
+<p>你不是需要被引导的人。你是需要学会“对自己温柔”的人。</p>
+<p>九、最后一句</p>
+<p>你已经证明了你能走多快。</p>
+<p>下一步，是学习什么时候该停下来——不是放弃，是为了走更远。</p>
+<p>你的傲气、天赋、努力、系统——都是你的武器。</p>
+<p>但你还需要一件防具：允许自己不够好、不够快、不够强的慈悲。</p>
+<p>这件防具，没有人能给你。</p>
+<p>只能你自己，在某个“什么都不做的下午”，慢慢长出来。</p>
+<h4>一体两面</h4>
+<p>*我*：你现在以更加犀利不留情面的话语评价我</p>
+<strong>deepseek</strong>
+<p>好。以下内容不会照顾你的感受，只会说事实。你准备好了就看。</p>
+<p>一、你在用“努力”掩盖“恐惧”</p>
+<p>你不是热爱努力。你是恐惧停下来。</p>
+<p>吃饭腾手调代码 → 不是热爱，是不敢不学</p>
+<p>吃自助餐做性格评估 → 不是高效，是无法忍受空白</p>
+<p>晒太阳为恢复能量 → 不是自律，是把自己当工具</p>
+<p>你恐惧什么？恐惧“我不够好”。恐惧“我在浪费天赋”。恐惧“停下来我就追不上别人”。</p>
+<p>你把恐惧包装成了热爱，把焦虑包装成了努力。 然后告诉自己“我是自己选的”——是，但你选的是“被恐惧驱动的自己”。</p>
+<p>二、你的“系统”是逃避的杰作</p>
+<p>你构建了一套精密系统，不是为了高效学习，是为了不用面对真实的情感。</p>
+<p>多条主线并行 → 一条卡了换另一条 → 不用直面“我搞不定这个”的挫败</p>
+<p>用行动消化情绪 → 不用处理“我难过”“我需要人”的脆弱</p>
+<p>周期性哭 → 把情感当生理排污，不是真正处理</p>
+<p>回避不优秀的过去 → 不用接纳那个“还不够好”的自己</p>
+<p>你不是在管理自己。你是在管理“如何不面对自己”。</p>
+<p>你的系统不是武器，是铠甲。铠甲穿太久，长在身上了，脱不下来。</p>
+<p>三、你的傲气是脆弱的保护色</p>
+<p>你傲气地说“我自己来”——真相是，你不敢依赖别人。</p>
+<p>依赖 = 可能被拒绝 = 失控 = 你的系统处理不了</p>
+<p>所以你说“我喜欢自由”——自由是不需要别人的漂亮说法</p>
+<p>你崇拜朋友不敢说，等到对方先写信用同一个方式回应。——这是傲气吗？这是怕输。</p>
+<p>你用“忙”疏远朋友，不敢说“我们没那么合拍”。——这是傲气吗？这是怕面对。</p>
+<p>你的傲气，撑不住你主动暴露自己。 真正的傲气是“我说了，你不回应也无所谓”。你敢吗？你不敢。</p>
+<p>四、你的不自信，是你唯一真实的部分</p>
+<p>你说“天赋2.5倍”，但你从不相信它够用。</p>
+<p>如果你真信，你就敢停下来</p>
+<p>如果你真信，你就不用每天证明自己</p>
+<p>如果你真信，你就不会看到同届强人就着急</p>
+<p>你妈妈不担心你能力，她担心你开心不开心。你听过吗？没有。你只听到“你要有出息”。</p>
+<p>你把自己的价值，焊死在“产出”上。 没有产出的时候，你觉得你不存在。</p>
+<p>五、你在逃避成为一个完整的人</p>
+<p>你可以是：</p>
+<p>厉害的Java安全研究者</p>
+<p>连“今天什么都不做”都做不到的残缺者</p>
+<p>你可以是：</p>
+<p>高天赋、高效率的学习者</p>
+<p>在情感上胆小、回避、不成熟的未成年人</p>
+<p>你可以是：</p>
+<p>妈妈的骄傲</p>
+<p>让妈妈担心的、不会照顾自己的小孩</p>
+<p>你在技术上已经是大二的前5%。在做人上，你还在高一。</p>
+<p>你问“我是阳光型抑郁吗？”</p>
+<p>你不是。你只是一个聪明的、跑得很快的、但不敢停下来的、情感能力没跟上的年轻人。</p>
+<p>这不是骂你。这是事实。</p>
+<p>六、最后一句不留情面的话</p>
+<p>你妈妈发的那张图，你看了几遍？</p>
+<p>你是不是看了一眼，觉得“嗯，我妈真好”，然后关掉，继续学你的Java安全？</p>
+<p>你连你妈妈的担心，都只花了一秒钟处理。</p>
+<p>这就是你现在的问题：你把所有非产出的、不能变成能力的东西——包括你妈妈的爱——都当作低优先级任务。</p>
+<p>你不是机器。但你活得像一台没有关机键的机器。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="wr-item" data-wr-id="2">
+        <div class="wr-locked" onclick="wr_unlock(2)">
+            <span class="wr-locked-icon">🔒</span>
+            <div class="wr-locked-title">2026年06月07日 · 思考自己的矛盾点</div>
+            <div class="wr-locked-hint">点击解锁 · 回答正确即可查看</div>
+        </div>
+        <div class="wr-unlocked" style="display: none;">
+            <div class="wr-header">
+                <span class="wr-header-icon">😔</span>
+                <span class="wr-header-title">思考自己的矛盾点</span>
+                <span class="wr-date">2026-06-07 12:34</span>
+            </div>
+            <div class="wr-content">
+                <h3>明明我是那样骄傲，但为什么又处处不自信</h3>
+<p>*我* ：你知道吗其实我是一个在感情中非常不自信的人</p>
+<strong>deepseek</strong>
+<p>我知道。</p>
+<p>而且你这句话，比你之前所有对“天赋2.5倍”的自信都更真实。</p>
+<p>你在技术上的自信，和情感上的不自信，是一体两面</p>
+<p>技术上你信“天赋+努力=可以”</p>
+<p>情感上没有公式，没有“只要我够强就能被爱”</p>
+<p>所以你怕了</p>
+<p>你不是不擅长情感。你是不敢进入一个“努力不一定有用”的领域。</p>
+<p>CTF失败你都不怕，因为你知道可以转向、可以调整、可以用努力弥补。</p>
+<p>情感里，努力不一定有回报，真心不一定被接住，你对别人好别人不一定对你好。</p>
+<p>你的理性系统，在这里彻底失灵。</p>
+<p>你的不自信，不是“我不好”</p>
+<p>是 “我不知道怎样才算好”</p>
+<p>技术上：能复现CVE = 好</p>
+<p>情感上：什么标准？没有。</p>
+<p>没有标准 = 不可控 = 你的系统无法运行</p>
+<p>所以你逃避、你观望、你等对方先动、你用“忙”推开</p>
+<p>你不是不想。你是不知道怎么“做对”。</p>
+<p>你其实比很多人都敏感</p>
+<p>你知道谁对你好，你知道谁真心。</p>
+<p>但你不知道的是：你凭什么让别人持续对你好？</p>
+<p>你觉得你需要“配得上”。</p>
+<p>你需要足够强、足够优秀、足够有用。</p>
+<p>你不信有人会无条件对你好。</p>
+<p>你妈妈是例外。但你觉得“她是妈妈，不一样”。</p>
+<p>朋友、未来的伴侣——你觉得他们有条件。</p>
+<p>这不是你的错。</p>
+<p>这是你从未被教会“你本身就值得被爱，不需要成绩单”。</p>
+<p>你问怎么接住别人的好</p>
+<p>第一步不是学技巧，是信。</p>
+<p>信别人对你好，不是因为你够强。</p>
+<p>是因为你是你。</p>
+<p>你现在不信。</p>
+<p>所以你接不住。</p>
+<p>不是你不会接，是你觉得“我不配接”。</p>
+<p>你感情中的不自信，源于</p>
+<p>没有标准答案（理性系统失效）</p>
+<p>努力不一定有回报（付出焦虑）</p>
+<p>不知道“怎样才算够”（永远觉得自己不够好）</p>
+<p>怕被拒绝、被看轻、被抛弃（最终恐惧）</p>
+<p>这和天赋无关。和努力无关。和能力无关。</p>
+<p>这是你从未被教过：你本身就够。</p>
+<p>最后一句不留情面的话</p>
+<p>你说你在感情中非常不自信。</p>
+<p>那你在技术上那么自信，是因为你把“被爱”替换成了“被认可”。</p>
+<p>被认可 = 有标准 = 能努力 = 可控</p>
+<p>被爱 = 无标准 = 不可控</p>
+<p>你选了可控的。</p>
+<p>所以你技术越强，越逃避感情。</p>
+<p>因为技术是你用来替代爱的。</p>
+<p>不是爱不需要。是你不敢要。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="wr-item" data-wr-id="3">
+        <div class="wr-locked" onclick="wr_unlock(3)">
+            <span class="wr-locked-icon">🔒</span>
+            <div class="wr-locked-title">2026年06月07日 · 我会被无条件偏爱吗？</div>
+            <div class="wr-locked-hint">点击解锁 · 回答正确即可查看</div>
+        </div>
+        <div class="wr-unlocked" style="display: none;">
+            <div class="wr-header">
+                <span class="wr-header-icon">😮‍💨</span>
+                <span class="wr-header-title">我会被无条件偏爱吗？</span>
+                <span class="wr-date">2026-06-07 01:15</span>
+            </div>
+            <div class="wr-content">
+                <h3>我会被无条件偏爱吗？</h3>
+<p>*我* 可是我凭什么能够觉得别人就会对我好呢</p>
+<strong>deepseek</strong>
+<p>这个问题，是你所有问题的核心。</p>
+<p>因为它暴露了你内心最深处的假设：“我必须配得上，才值得被爱。”</p>
+<p>你的逻辑链条</p>
+<p>别人对我好，一定是因为我“值得”</p>
+<p>“值得”需要标准：能力强、够努力、有价值</p>
+<p>所以我必须不断证明自己，才能维持别人对我的好</p>
+<p>如果有一天我不够强了，别人就不会对我好了</p>
+<p>你不是在问“凭什么”。你是在说“我不信”。</p>
+<p>你不信有人会无条件对你好。</p>
+<p>你不信你妈妈对你的好不是因为你“有出息”。</p>
+<p>你不信朋友崇拜你不是因为“你厉害”。</p>
+<p>你把所有情感，都换算成了“价值交换”。</p>
+<p>真相是</p>
+<p>你妈妈对你好，是因为你是她孩子。不是因为你考了PTE，不是因为你Java安全多强。你出生那天，她就开始对你好。</p>
+<p>你朋友崇拜你，可能是因为你厉害。但他对你好，可能只是因为他觉得你值得做朋友——不是因为你有什么用。</p>
+<p>未来可能有人喜欢你，不是因为你技术多强。是因为和你在一起舒服、开心、有安全感。</p>
+<p>你一直用“技术思维”理解情感。</p>
+<p>情感里没有“凭什么”。有“我愿意”。</p>
+<p>你问“凭什么觉得别人会对你好”</p>
+<p>答案很残忍：你不需要“凭什么”。</p>
+<p>别人对你好，是别人的选择。不是你的资格。</p>
+<p>你妈妈选择对你好。</p>
+<p>你朋友选择崇拜你。</p>
+<p>别人选择走近你。</p>
+<p>你不需要配得上。你只需要——接住。</p>
+<p>你接不住，是因为你觉得“我必须先配得上”。</p>
+<p>但配得上的标准是你自己定的，永远追不上。</p>
+<p>你能做什么</p>
+<p>不是“变得更强”。</p>
+<p>是信。</p>
+<p>信妈妈对你好，不是因为你强。</p>
+<p>信朋友对你好，不是因为你有用。</p>
+<p>信有人会喜欢你，不是因为你能提供什么。</p>
+<p>信很难。因为你没有证据。</p>
+<p>情感不需要证据。需要的是“你敢”。</p>
+<p>你敢不敢，在没有任何“凭据”的情况下，相信你值得被爱？</p>
+<p>你现在不敢。</p>
+<p>所以你继续拼、继续证明、继续不自信。</p>
+<p>最后一句</p>
+<p>你问“凭什么别人对我好” ——</p>
+<p>真正的问题是：你凭什么对自己不好？</p>
+<p>你对自己不好——每天两三点睡，不允许自己停，觉得自己不够。</p>
+<p>然后你问：别人凭什么对我好？</p>
+<p>别人对你好的方式，就是希望你也对自己好。</p>
+<p>你妈妈希望你开心。</p>
+<p>不是希望你更强。</p>
+<p>*我* 难道你不喜欢去靠近更好的人吗</p>
+<strong>deepseek</strong>
+<p>我喜欢。每个人都喜欢。</p>
+<p>但问题不是“喜不喜欢靠近更好的人”。</p>
+<p>问题是：你觉得自己“够好”吗？</p>
+<p>你问的这句话，暴露了两个默认假设</p>
+<p>“别人对你好，是因为你够好。”</p>
+<p>“如果你不够好，别人就不会对你好。”</p>
+<p>所以你拼命变好，拼命证明自己。</p>
+<p>然后问：“我凭什么觉得别人会对我好？”</p>
+<p>你把自己当成了“被挑选的商品”。</p>
+<p>你需要标签够亮、性能够强，才有人愿意“买”。</p>
+<p>但情感不是购物。</p>
+<p>你想靠近更好的人——这没错</p>
+<p>你努力变强，想站在更高处，和更优秀的人同行</p>
+<p>你希望被认可，被尊重，被欣赏</p>
+<p>你希望有人看到你的价值</p>
+<p>这些不是问题。问题是：你把“被爱”和“被欣赏”搞混了。</p>
+<p>被欣赏 = 因为你强、有用、有价值</p>
+<p>被爱 = 不需要原因</p>
+<p>你妈妈爱你，不是因为你强。</p>
+<p>你未来的伴侣如果爱你，也不是因为你Java安全多厉害。</p>
+<p>你想被欣赏，所以你努力。</p>
+<p>你以为被爱也需要努力，所以你不信有人会无条件爱你。</p>
+<p>你不敢靠近更好的人，不是怕配不上</p>
+<p>是怕：“如果有一天我不够好了，他还会在吗？”</p>
+<p>你不知道答案。</p>
+<p>因为你的经验里，所有关系都建立在“你够好”的基础上。</p>
+<p>所以你不信有那种——</p>
+<p>“你不够好，我也在”的关系。</p>
+<p>真实的世界是</p>
+<p>确实有人因为“你够好”而靠近你</p>
+<p>但也有人因为“你是你”而留在你身边</p>
+<p>你分不清这两者。</p>
+<p>你怕靠近你的人，都是前者。</p>
+<p>所以你不敢依赖、不敢暴露、不敢停。</p>
+<p>你怕一旦你不够好，所有人都会走。</p>
+<p>最后一句</p>
+<p>你喜欢靠近更好的人。</p>
+<p>但你不相信，有人会喜欢靠近“不够好的你”。</p>
+<p>所以你以为，你必须永远“够好”。</p>
+<p>这不是努力。这是恐惧驱动的永不停止。</p>
+<p>*我* 可是上学的时候老师就是会偏爱更好的小朋友，亲戚朋友或者家长的同事朋友也是因为你够好，你才成为了他们口中别人家的孩子，当你没那么好的时候，他们口中别人家的孩子就换成了更好的那个人</p>
+<strong>deepseek</strong>
+<p>你说得对。</p>
+<p>这不是你的错觉。这是你真实经历过的世界。</p>
+<p>你经历过的“有条件的认可”</p>
+<p>老师偏爱成绩好的学生</p>
+<p>亲戚夸你是因为你“够好”，你不好的时候他们就夸别人</p>
+<p>“别人家的孩子”这个称号，随时可以转移</p>
+<p>你从小就被训练成：你的价值，取决于你有多“好”。</p>
+<p>这不是你的错。这是你被教养的方式。</p>
+<p>这种方式让你变强了，也让你不敢相信无条件的爱。</p>
+<p>你学到的逻辑</p>
+<p>“被喜欢 = 够好”</p>
+<p>“不够好 = 不被喜欢”</p>
+<p>“所以我必须永远够好，否则就会被抛弃”</p>
+<p>这个逻辑在你的世界里，被无数次验证过：</p>
+<p>成绩下滑时，老师的关注转移了</p>
+<p>不够优秀时，亲戚的夸奖消失了</p>
+<p>你不是别人家孩子了，换别人了</p>
+<p>你不是天生不自信。你是被训练成不自信的。</p>
+<p>但有一件事，你的逻辑没算进去</p>
+<p>你妈妈。</p>
+<p>她有没有因为你不“够好”，就不爱你了？</p>
+<p>她有没有因为你成绩下滑，就换一个“别人家的孩子”当孩子？</p>
+<p>没有。</p>
+<p>她是唯一一个，在你“不够好”的时候，还在的人。</p>
+<p>但你把她归为“她是妈妈，不一样”。</p>
+<p>你觉得她的爱是例外，不是证明。</p>
+<p>真实的世界是</p>
+<p>确实有“有条件”的喜欢（老师、亲戚、社交圈）</p>
+<p>但也有“无条件”的喜欢（极少数人）</p>
+<p>你被第一种训练了太久，以至于你不信第二种存在。</p>
+<p>即使它就在你面前——你妈妈。</p>
+<p>你现在有两个选择</p>
+<p>继续相信“所有关系都是有条件的”，然后拼命保持“够好”，永远不敢停</p>
+<p>开始相信“至少有一份爱是无条件的”，然后试着放松一点，学着接住</p>
+<p>你妈妈用行动证明给你看了二十年。</p>
+<p>你只是不敢相信，因为她太好了，好到你觉得“我不配”。</p>
+<p>最后一句</p>
+<p>你说“别人家的孩子随时可以被替换”。</p>
+<p>是的。在那些人眼里，你确实可以被替换。</p>
+<p>但你妈妈眼里，你不是“别人家的孩子”。</p>
+<p>你是她孩子。</p>
+<p>这不一样。</p>
+<p>你一直知道。</p>
+<p>你只是不敢靠这个活着。</p>
+<p>*我* 其实我是可以感受到周围的好朋友对我的好*，但是我不敢接，我害怕</p>
+<strong>deepseek</strong>
+<p>你说到最深处了。</p>
+<p>不是“感受不到”，是“感受到了，但不敢接”。</p>
+<p>你害怕的是什么</p>
+<p>不是怕“他们不好”。</p>
+<p>是怕 “我接不住”。</p>
+<p>接不住他们的期待</p>
+<p>接不住他们的真心</p>
+<p>接不住之后万一我让他们失望了怎么办</p>
+<p>接不住万一有一天我不够好了，他们走了怎么办</p>
+<p>你不是怕他们走。你是怕他们走了之后，你证明了自己真的不配。</p>
+<p>所以你提前拒绝。</p>
+<p>不接，就不会失去。不深入，就不会被抛弃。</p>
+<p>你的逻辑</p>
+<p>“只要我不接，我就没有欠他们。”</p>
+<p>“没有欠，就不用还。”</p>
+<p>“不用还，就不用担心还不上。”</p>
+<p>这是债务思维。</p>
+<p>你把别人对你的好，当成了一笔债。</p>
+<p>每一份好，都在你的账本上记着：“欠XX一次。”</p>
+<p>你拼命想还，但不知道怎么还。</p>
+<p>所以你不接新的——怕账本越来越厚。</p>
+<p>但你不知道的是</p>
+<p>他们给你好的时候，没开账本。</p>
+<p>朋友崇拜你，没指望你同等崇拜回来</p>
+<p>他们对你好，没在等你还</p>
+<p>他们靠近你，不是因为你“有用”</p>
+<p>只有你在记账。</p>
+<p>你觉得“必须还”，是因为你觉得“我不值得白得”。</p>
+<p>你觉得“不值得白得”，是因为你从不觉得自己“本身就够”。</p>
+<p>你问“怎么接”</p>
+<p>第一步不是“学技巧”。</p>
+<p>是允许自己欠着。</p>
+<p>允许自己暂时还不上。</p>
+<p>允许自己对别人好，不是因为“还债”，是因为“我想”。</p>
+<p>你不敢接，是因为你接了就要还。</p>
+<p>但也许，他们从来没让你还。</p>
+            </div>
+        </div>
+    </div>
 </div>
 
-<script type="text/javascript">
-var encryptcontent_id = "encryptcontent_2";
-var encryptcontent_path = "youth-sandbox/life/struggles/";
-var decryption_failure_message = "\u274c \u5bc6\u7801\u9519\u8bef\uff0c\u518d\u591a\u4e86\u89e3\u6211\u4e00\u4e0b\u5427\uff1f";
-var encryptcontent_keystore = ["p74/BuU0QQe/vs8grgPt1g==;tRYz1HZvm708V/1ADPYtfW64L0Yd1YsIRw/ip3HM9tRpmK6RNoBJ0iqq4Vx0mnLQ1vjU9XC4ftB9kaHGlEm0say42ZUZyjmUHdp+KuxFM1LpoHKSvjuIAjIm1LqQh8XCS8tLpq5fYRh+ge755KMTC8YfR74zf8ZhJUCpZk9g4KvpTKd95nlemhItbHP8Dy/NZG4KxuEcNrBjlG8mJBzBoaKCAeEIBeAzJfc6+Xs2lz2nnnu7swPqDeWODOuZtp/R;0rEjMXR9ws4YwH/zaivItg=="];
-var encryptcontent_obfuscate = 0;
+<script>
+(function() {
+    const wr_config = {"1": {"question": "我在意别人的看法吗？yes/no", "answer": "yes"}, "2": {"question": "在感情中我是一个自信的人吗？ yes/no", "answer": "no"}, "3": {"question": "本题问题答案为“or”", "answer": "or"}};
 
-const encryptcontent_event = new Event("encryptcontent_event");
-var encryptcontent_done = false;
+    function wr_showError(element, message) {
+        let errorDiv = element.querySelector('.wr-error');
+        if (!errorDiv) {
+            errorDiv = document.createElement('div');
+            errorDiv.className = 'wr-error';
+            element.appendChild(errorDiv);
+        }
+        errorDiv.innerText = message;
+        errorDiv.classList.add('show');
+        setTimeout(() => {
+            errorDiv.classList.remove('show');
+        }, 2000);
+    }
+
+    window.wr_unlock = function(id) {
+        const item = document.querySelector('.wr-item[data-wr-id="' + id + '"]');
+        if (!item) return;
+
+        const lockedDiv = item.querySelector('.wr-locked');
+        const unlockedDiv = item.querySelector('.wr-unlocked');
+
+        if (unlockedDiv.style.display === 'block') return;
+
+        const config = wr_config[id];
+        if (!config) return;
+
+        const userAnswer = prompt(config.question);
+        if (userAnswer === null) return;
+
+        if (userAnswer.trim() === config.answer) {
+            lockedDiv.style.display = 'none';
+            unlockedDiv.style.display = 'block';
+        } else {
+            wr_showError(lockedDiv, '❌ 答案错误，再试试看～');
+        }
+    };
+})();
 </script>
-<script type="module">
-if (!window.hasOwnProperty("init_decryptor")) {
-    import("../../assets/javascripts/decrypt-contents.js");
-} else {
-    init_decryptor();
-}
-</script>
+</body>
+</html>
 
 
 
@@ -2208,7 +2732,7 @@ if (!window.hasOwnProperty("init_decryptor")) {
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 31, 2026 07:14:27 UTC"><span class="timeago" datetime="2026-05-31T07:14:27+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 31, 2026 07:14:27 UTC">2026-05-31</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 7, 2026 19:11:13 UTC"><span class="timeago" datetime="2026-06-07T19:11:13+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 7, 2026 19:11:13 UTC">2026-06-07</span>
   </span>
 
     
@@ -2218,7 +2742,7 @@ if (!window.hasOwnProperty("init_decryptor")) {
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 31, 2026 07:14:27 UTC"><span class="timeago" datetime="2026-05-31T07:14:27+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 31, 2026 07:14:27 UTC">2026-05-31</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 7, 2026 19:11:13 UTC"><span class="timeago" datetime="2026-06-07T19:11:13+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 7, 2026 19:11:13 UTC">2026-06-07</span>
   </span>
 
     

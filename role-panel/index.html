@@ -262,7 +262,7 @@
   
     
   
-  $ 技术学习
+  $技术学习
 
         </a>
       </li>
@@ -498,7 +498,7 @@
   <span class="md-ellipsis">
     
   
-    $ 技术学习
+    $技术学习
   
 
     
@@ -520,7 +520,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    $ 技术学习
+    $技术学习
   
 
           </label>
@@ -686,6 +686,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--🔄"></span>
+  
+
+  
 
       </a>
     </li>
@@ -713,6 +720,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--⬜"></span>
+  
+
   
 
       </a>
@@ -1131,6 +1145,8 @@
       
         
       
+        
+      
     
     
     
@@ -1299,6 +1315,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../life/study-plan/week5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第5周
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1349,18 +1393,11 @@
   <span class="md-ellipsis">
     
   
-    [Protected] 💭 烦恼记录
+    💭 烦恼记录
   
 
     
   </span>
-  
-    
-  
-  
-    <span class="md-status md-status--encrypted"></span>
-  
-
   
   
 
@@ -2162,6 +2199,7 @@ body {
     background: linear-gradient(135deg, #0a0a0f 0%, #1a0a0a 100%);
     font-family: 'Segoe UI', system-ui, sans-serif;
 }
+
 /* ============================================
    Role Panel 页面 - 导航栏游戏化适配
    ============================================ */
@@ -2419,6 +2457,7 @@ body.role-panel-page .game-panel {
     margin: 0 auto;
 }
 
+/* 技能树美化 */
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -2426,30 +2465,73 @@ body.role-panel-page .game-panel {
 }
 
 .skill-item {
-    margin-bottom: 0.5rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: 0.6rem 0.8rem;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 170, 0, 0.2);
+}
+
+.skill-item:hover {
+    border-color: rgba(255, 170, 0, 0.6);
+    background: rgba(255, 170, 0, 0.05);
+    transform: translateX(4px);
 }
 
 .skill-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     color: #ffccaa;
     font-size: 0.7rem;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.35rem;
+    font-weight: 500;
+}
+
+.skill-name {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.skill-name::before {
+    content: "▸";
+    color: #ffaa00;
+    font-size: 0.6rem;
 }
 
 .skill-bar {
     background: #1a0a0a;
-    border-radius: 6px;
+    border-radius: 10px;
     height: 6px;
     overflow: hidden;
+    box-shadow: inset 0 0 2px rgba(0,0,0,0.5);
 }
 
 .skill-fill {
     background: linear-gradient(90deg, #ffaa00, #ffcc44);
     width: 0%;
     height: 100%;
-    border-radius: 6px;
-    transition: width 0.6s ease;
+    border-radius: 10px;
+    transition: width 0.6s cubic-bezier(0.4, 1.2, 0.6, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-fill::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, rgba(255,255,255,0.2), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
 }
 
 .heatmap {
@@ -2468,11 +2550,11 @@ body.role-panel-page .game-panel {
     border-radius: 3px;
 }
 
-.heatmap-day.level-0 { background: #c9c9c940; }  /* 深灰 - 无活跃度 */
-.heatmap-day.level-1 { background: #8B5A2B; }  /* 棕黄 - 低活跃度 */
-.heatmap-day.level-2 { background: #DAA520; }  /* 金黄 - 中活跃度 */
-.heatmap-day.level-3 { background: #FF6347; }  /* 番茄红 - 高活跃度 */
-.heatmap-day.level-4 { background: #FF0000; }  /* 红色 - 极高活跃度 */
+.heatmap-day.level-0 { background: #c9c9c940; }
+.heatmap-day.level-1 { background: #8B5A2B; }
+.heatmap-day.level-2 { background: #DAA520; }
+.heatmap-day.level-3 { background: #FF6347; }
+.heatmap-day.level-4 { background: #FF0000; }
 
 .achievement-item {
     display: flex;
@@ -2602,16 +2684,24 @@ async function loadRolePanel() {
             if (i < titleRoad.length - 1) roadHtml += ' → ';
         }
 
-        // 战力计算
+        // 战力计算 - 包含所有16项能力
         const combatPower = Math.floor(
-            (skills.web_security || 0) * 100 +
-            (skills.web_advanced || 0) * 120 +
+            (skills.web_security || 0) * 80 +
+            (skills.web_advanced || 0) * 80 +
             (skills.java_security || 0) * 150 +
-            (skills.ctf_ability || 0) * 80 +
-            (skills.cve_analysis || 0) * 90 +
-            (skills.programming || 0) * 70 +
-            (skills.bypass_waf || 0) * 110 +
-            (skills.code_review || 0) * 100
+            (skills.ctf_ability || 0) * 70 +
+            (skills.cve_analysis || 0) * 80 +
+            (skills.programming || 0) * 60 +
+            (skills.bypass_waf || 0) * 100 +
+            (skills.code_review || 0) * 90 +
+            (skills.internal_network || 0) * 100 +
+            (skills.pwn || 0) * 120 +
+            (skills.evasion || 0) * 80 +
+            (skills.lateral_movement || 0) * 90 +
+            (skills.c2_framework || 0) * 90 +
+            (skills.blue_team || 0) * 70 +
+            (skills.network_traffic || 0) * 60 +
+            (skills.cryptography || 0) * 50
         );
 
         const currentTitle = getTitleByLevel(auto.level);
@@ -2619,21 +2709,44 @@ async function loadRolePanel() {
 
         // 属性面板
         const rpgAttrs = [
-            { name: "🎯 信息收集", value: (skills.web_security || 0) * 8 + (skills.code_review || 0) * 6, max: 200 },
-            { name: "🔓 漏洞挖掘", value: (skills.web_advanced || 0) * 10 + (skills.src || 0) * 8 + (skills.cve_analysis || 0) * 6, max: 200 },
-            { name: "⚔️ 利用开发", value: (skills.ctf_ability || 0) * 10 + (skills.java_security || 0) * 8 + (skills.programming || 0) * 6, max: 200 },
-            { name: "🛡️ 绕过技巧", value: (skills.web_security || 0) * 6 + (skills.ctf_ability || 0) * 6 + (skills.bypass_waf || 0) * 10, max: 200 }
+            { 
+                name: "🎯 信息收集", 
+                value: (skills.web_security || 0) * 0.7 + (skills.code_review || 0) * 0.3, 
+                max: 100 
+            },
+            { 
+                name: "🔓 漏洞挖掘", 
+                value: (skills.web_advanced || 0) * 0.15 + (skills.src_dig || 0) * 0.4 + (skills.cve_analysis || 0) * 0.3 + (skills.cryptography || 0) * 0.15, 
+                max: 100 
+            },
+            { 
+                name: "💣 利用开发", 
+                value: (skills.ctf_ability || 0) * 0.3 + (skills.java_security || 0) * 0.3 + (skills.programming || 0) * 0.3 + (skills.cryptography || 0) * 0.1, 
+                max: 100 
+            },
+            { 
+                name: "🛡️ 绕过技巧", 
+                value: (skills.web_security || 0) * 0.3 + (skills.ctf_ability || 0) * 0.4 + (skills.bypass_waf || 0) * 0.3, 
+                max: 100 
+            },
+            { 
+                name: "⚔️ 攻防对抗", 
+                value: (skills.network_traffic || 0) * 0.1 + (skills.c2_framework || 0) * 0.2 + (skills.lateral_movement || 0) * 0.3 + (skills.evasion || 0) * 0.1 + (skills.internal_network || 0) * 0.3, 
+                max: 100 
+            }
         ];
 
         // 雷达图数据
-        const radarLabels = ['Web基础', 'Java安全', 'CTF能力', 'CVE分析', '编程能力', '绕WAF'];
+        const radarLabels = ['Web安全', 'Java安全', 'CTF能力', 'CVE分析', '编程能力', '绕WAF', '内网渗透', '二进制安全'];
         const radarValues = [
-            skills.web_security || 0,
+            (skills.web_security || 0) + (skills.web_advanced || 0),
             skills.java_security || 0,
             skills.ctf_ability || 0,
             skills.cve_analysis || 0,
             skills.programming || 0,
-            skills.bypass_waf || 0
+            skills.bypass_waf || 0,
+            skills.internal_network || 0,
+            skills.pwn || 0
         ];
 
         // 动态计算雷达图最大值
@@ -2649,68 +2762,87 @@ async function loadRolePanel() {
         else if (maxValue > 20) radarMax = 30;
         else radarMax = 20;
 
-        // 技能树
+        // 技能树 - 16项能力
         const skillTree = [
-            { name: "Web基础", value: skills.web_security || 0, max: 100 },
-            { name: "Web高级", value: skills.web_advanced || 0, max: 100 },
-            { name: "Java安全", value: skills.java_security || 0, max: 100 },
-            { name: "CTF能力", value: skills.ctf_ability || 0, max: 100 },
-            { name: "CVE分析", value: skills.cve_analysis || 0, max: 100 },
-            { name: "编程能力", value: skills.programming || 0, max: 100 },
-            { name: "绕WAF", value: skills.bypass_waf || 0, max: 100 },
-            { name: "代码审计", value: skills.code_review || 0, max: 100 }
+            { name: "Web基础", value: skills.web_security || 0, icon: "🌐", max: 100 },
+            { name: "Web高级", value: skills.web_advanced || 0, icon: "⚡", max: 100 },
+            { name: "Java安全", value: skills.java_security || 0, icon: "☕", max: 100 },
+            { name: "CTF能力", value: skills.ctf_ability || 0, icon: "🏆", max: 100 },
+            { name: "CVE分析", value: skills.cve_analysis || 0, icon: "🐞", max: 100 },
+            { name: "编程能力", value: skills.programming || 0, icon: "💻", max: 100 },
+            { name: "绕WAF", value: skills.bypass_waf || 0, icon: "🛡️", max: 100 },
+            { name: "代码审计", value: skills.code_review || 0, icon: "🔍", max: 100 },
+            { name: "内网渗透", value: skills.internal_network || 0, icon: "🌐", max: 100 },
+            { name: "二进制安全", value: skills.pwn || 0, icon: "⚙️", max: 100 },
+            { name: "免杀能力", value: skills.evasion || 0, icon: "🎭", max: 100 },
+            { name: "横向移动", value: skills.lateral_movement || 0, icon: "🔄", max: 100 },
+            { name: "C2框架", value: skills.c2_framework || 0, icon: "📡", max: 100 },
+            { name: "蓝队防御", value: skills.blue_team || 0, icon: "🛡️", max: 100 },
+            { name: "网络流量", value: skills.network_traffic || 0, icon: "📊", max: 100 },
+            { name: "密码学", value: skills.cryptography || 0, icon: "🔐", max: 100 }
         ];
 
-       // 热力图：根据当周笔记数和周测得分综合判断
-const heatmapData = auto.heatmap || { weeks: [] };
-const weeksData = heatmapData.weeks || [];
-const weeklyScores = auto.stats.weekly_scores || [];
+        // 生成技能树 HTML
+        const skillsHtml = skillTree.map(skill => {
+            const percent = (skill.value / skill.max * 100).toFixed(1);
+            return `
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <div class="skill-name">
+                            <span>${skill.icon}</span>
+                            <span>${skill.name}</span>
+                        </div>
+                        <span>${skill.value} / ${skill.max}</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-fill" data-width="${percent}%"></div>
+                    </div>
+                </div>
+            `;
+        }).join('');
 
-function getWeekActivityLevel(weekDays, weekIndex) {
-    // 计算当周总笔记数
-    let totalNotes = 0;
-    for (let d = 0; d < 7; d++) {
-        totalNotes += weekDays[d] || 0;
-    }
+        // 热力图数据
+        const heatmapData = auto.heatmap || { weeks: [] };
+        const weeksData = heatmapData.weeks || [];
+        const weeklyScores = auto.stats.weekly_scores || [];
 
-    // 获取当周周测得分
-    const weeklyScore = weeklyScores[weekIndex] || 0;
+        function getWeekActivityLevel(weekDays, weekIndex) {
+            let totalNotes = 0;
+            for (let d = 0; d < 7; d++) totalNotes += weekDays[d] || 0;
+            const weeklyScore = weeklyScores[weekIndex] || 0;
 
-    // 笔记数评分（0-2分）
-    let noteScore = 0;
-    if (totalNotes >= 10) noteScore = 2;
-    else if (totalNotes >= 7) noteScore = 1.8;
-    else if (totalNotes >= 5) noteScore = 1.5;
-    else if (totalNotes >= 3) noteScore = 1.0;
-    else if (totalNotes >= 1) noteScore = 0.5;
+            let noteScore = 0;
+            if (totalNotes >= 10) noteScore = 2;
+            else if (totalNotes >= 7) noteScore = 1.8;
+            else if (totalNotes >= 5) noteScore = 1.5;
+            else if (totalNotes >= 3) noteScore = 1.0;
+            else if (totalNotes >= 1) noteScore = 0.5;
 
-    // 周测评分（0-2分）
-    let testScore = 0;
-    if (weeklyScore >= 95) testScore = 2;
-    else if (weeklyScore >= 90) testScore = 1.8;
-    else if (weeklyScore >= 85) testScore = 1.5;
-    else if (weeklyScore >= 80) testScore = 1.2;
-    else if (weeklyScore >= 75) testScore = 1.0;
-    else if (weeklyScore >= 70) testScore = 0.8;
-    else if (weeklyScore >= 65) testScore = 0.5;
-    else if (weeklyScore >= 60) testScore = 0.3;
+            let testScore = 0;
+            if (weeklyScore >= 95) testScore = 2;
+            else if (weeklyScore >= 90) testScore = 1.8;
+            else if (weeklyScore >= 85) testScore = 1.5;
+            else if (weeklyScore >= 80) testScore = 1.2;
+            else if (weeklyScore >= 75) testScore = 1.0;
+            else if (weeklyScore >= 70) testScore = 0.8;
+            else if (weeklyScore >= 65) testScore = 0.5;
+            else if (weeklyScore >= 60) testScore = 0.3;
 
-    // 总分 0-4
-    const totalScore = noteScore + testScore;
+            const totalScore = noteScore + testScore;
+            if (totalScore >= 3.5) return 4;
+            if (totalScore >= 2.5) return 3;
+            if (totalScore >= 1.5) return 2;
+            if (totalScore >= 0.5) return 1;
+            return 0;
+        }
 
-    if (totalScore >= 3.5) return 4;
-    if (totalScore >= 2.5) return 3;
-    if (totalScore >= 1.5) return 2;
-    if (totalScore >= 0.5) return 1;
-    return 0;
-}
+        let heatmapHtml = '';
+        for (let i = 0; i < weeksData.length; i++) {
+            const week = weeksData[i];
+            const level = getWeekActivityLevel(week.days, i);
+            heatmapHtml += `<div class="heatmap-day level-${level}" title="第${i+1}周"></div>`;
+        }
 
-let heatmapHtml = '';
-for (let i = 0; i < weeksData.length; i++) {
-    const week = weeksData[i];
-    const level = getWeekActivityLevel(week.days, i);
-    heatmapHtml += `<div class="heatmap-day level-${level}" title="第${i+1}周"></div>`;
-}
         // 成就
         const achievements = manual.special_achievements || [];
 
@@ -2725,26 +2857,10 @@ for (let i = 0; i < weeksData.length; i++) {
                 <div class="attr-item">
                     <div class="attr-header">
                         <span>${attr.name}</span>
-                        <span>${attr.value}</span>
+                        <span>${attr.value.toFixed(1)}</span>
                     </div>
                     <div class="attr-bar">
                         <div class="attr-fill" data-width="${percent}%"></div>
-                    </div>
-                </div>
-            `;
-        }).join('');
-
-        // 生成技能树 HTML
-        const skillsHtml = skillTree.map(skill => {
-            const percent = (skill.value / skill.max * 100).toFixed(1);
-            return `
-                <div class="skill-item">
-                    <div class="skill-header">
-                        <span>├─ ${skill.name}</span>
-                        <span>${skill.value} / ${skill.max}</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-fill" data-width="${percent}%"></div>
                     </div>
                 </div>
             `;
@@ -2768,19 +2884,18 @@ for (let i = 0; i < weeksData.length; i++) {
                 `;
             }).join('')
             : '<div style="color:#886666; text-align:center; padding:0.5rem;">暂无成就，继续努力！</div>';
+
         // 头像处理
-const avatarHtml = manual.avatar && (manual.avatar.startsWith('/') || manual.avatar.startsWith('http'))
-    ? `<img src="${manual.avatar}" alt="avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`
-    : `<span style="font-size: 3rem;">${manual.avatar || '🐕'}</span>`;
+        const avatarHtml = manual.avatar && (manual.avatar.startsWith('/') || manual.avatar.startsWith('http'))
+            ? `<img src="${manual.avatar}" alt="avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`
+            : `<span style="font-size: 3rem;">${manual.avatar || '🐕'}</span>`;
 
         const panelHtml = `
             <div class="game-panel">
                 <div class="game-header">
                     <div class="header-top">
                         <div class="header-left">
-                            <div class="avatar">
-    ${avatarHtml}
-</div>
+                            <div class="avatar">${avatarHtml}</div>
                             <div>
                                 <div class="player-name">${manual.name || 'ethicalpaws'}</div>
                                 <div class="player-title">🔰 ${currentTitle}</div>
@@ -2792,9 +2907,7 @@ const avatarHtml = manual.avatar && (manual.avatar.startsWith('/') || manual.ava
                         </div>
                     </div>
                     <div class="motto">"${manual.motto || '路漫漫其修远兮'}"</div>
-                    <div class="title-road">
-                        📈 进阶路线：${roadHtml}
-                    </div>
+                    <div class="title-road">📈 进阶路线：${roadHtml}</div>
                 </div>
                 <div class="game-content">
                     <div class="card">
@@ -2811,9 +2924,7 @@ const avatarHtml = manual.avatar && (manual.avatar.startsWith('/') || manual.ava
                     <div class="two-columns">
                         <div class="card">
                             <div class="card-title">⚔️ 属性面板</div>
-                            <div class="attrs-grid">
-                                ${attrsHtml}
-                            </div>
+                            <div class="attrs-grid">${attrsHtml}</div>
                         </div>
 
                         <div class="card">
@@ -2826,22 +2937,18 @@ const avatarHtml = manual.avatar && (manual.avatar.startsWith('/') || manual.ava
 
                     <div class="card">
                         <div class="card-title">🔧 技能树</div>
-                        <div class="skills-grid">
-                            ${skillsHtml}
-                        </div>
+                        <div class="skills-grid">${skillsHtml}</div>
                     </div>
 
                     <div class="card">
                         <div class="card-title">🔥 学习热力图</div>
-                        <div class="heatmap">
-                            ${heatmapHtml}
-                        </div>
+                        <div class="heatmap">${heatmapHtml}</div>
                         <div style="margin-top: 0.5rem; font-size: 0.6rem; color: #886666; text-align: center; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-    <span><span style="display: inline-block; width: 12px; height: 12px; background: #bdb5b5c6; border-radius: 2px;"></span> di</span>
-    <span><span style="display: inline-block; width: 12px; height: 12px; background: #DAA520; border-radius: 2px;"></span> 中</span>
-    <span><span style="display: inline-block; width: 12px; height: 12px; background: #FF6347; border-radius: 2px;"></span> 高</span>
-    <span><span style="display: inline-block; width: 12px; height: 12px; background: #FF0000; border-radius: 2px;"></span> 极高</span>
-</div>
+                            <span><span style="display: inline-block; width: 12px; height: 12px; background: #bdb5b5c6; border-radius: 2px;"></span> 无</span>
+                            <span><span style="display: inline-block; width: 12px; height: 12px; background: #DAA520; border-radius: 2px;"></span> 中</span>
+                            <span><span style="display: inline-block; width: 12px; height: 12px; background: #FF6347; border-radius: 2px;"></span> 高</span>
+                            <span><span style="display: inline-block; width: 12px; height: 12px; background: #FF0000; border-radius: 2px;"></span> 极高</span>
+                        </div>
                     </div>
 
                     <div class="card">
@@ -2849,9 +2956,7 @@ const avatarHtml = manual.avatar && (manual.avatar.startsWith('/') || manual.ava
                         ${achievementsHtml}
                     </div>
 
-                    <div class="quote">
-                        💬 "${randomQuote}"
-                    </div>
+                    <div class="quote">💬 "${randomQuote}"</div>
                 </div>
             </div>
         `;
@@ -2904,9 +3009,7 @@ const avatarHtml = manual.avatar && (manual.avatar.startsWith('/') || manual.ava
         // 执行进度条动画
         setTimeout(() => {
             const expFill = document.getElementById('expFill');
-            if (expFill) {
-                expFill.style.width = expFill.getAttribute('data-width') + '%';
-            }
+            if (expFill) expFill.style.width = expFill.getAttribute('data-width') + '%';
             document.querySelectorAll('.attr-fill, .skill-fill').forEach(fill => {
                 const width = fill.getAttribute('data-width');
                 if (width) fill.style.width = width + '%';
@@ -2943,7 +3046,7 @@ loadRolePanel();
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 31, 2026 07:14:28 UTC"><span class="timeago" datetime="2026-05-31T07:14:28+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 31, 2026 07:14:28 UTC">2026-05-31</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 7, 2026 19:11:13 UTC"><span class="timeago" datetime="2026-06-07T19:11:13+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 7, 2026 19:11:13 UTC">2026-06-07</span>
   </span>
 
     
@@ -2953,7 +3056,7 @@ loadRolePanel();
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="May 31, 2026 07:14:28 UTC"><span class="timeago" datetime="2026-05-31T07:14:28+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 31, 2026 07:14:28 UTC">2026-05-31</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 7, 2026 19:11:13 UTC"><span class="timeago" datetime="2026-06-07T19:11:13+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 7, 2026 19:11:13 UTC">2026-06-07</span>
   </span>
 
     

@@ -1,0 +1,21 @@
+<mxfile host="Electron">
+  <diagram name="第 1 页" id="gS9-atHtpxRbOMlY6JJ1">
+    <mxGraphModel dx="572" dy="417" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <object label="" id="0">
+          <mxCell />
+        </object>
+        <mxCell id="1" parent="0" />
+        <mxCell id="PwRcIuIyIW8TerIFfRzp-1" parent="1" style="sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.cisco.computers_and_peripherals.pc;" value="web01&lt;div&gt;ip：192.168.162.20&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="78" x="670" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="PwRcIuIyIW8TerIFfRzp-2" parent="1" style="sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.cisco.computers_and_peripherals.pc;" value="DC01&lt;div&gt;ip：192.168.162.10&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="78" x="462" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="PwRcIuIyIW8TerIFfRzp-3" parent="1" style="sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;shape=mxgraph.cisco.computers_and_peripherals.pc;" value="攻击机&lt;div&gt;ip：192.168.162.129&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="78" x="550" y="550" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

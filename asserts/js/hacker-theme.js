@@ -42,7 +42,7 @@
     let drops = [];
     
     // 字符集 + 彩色字符概率
-    const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
+    const chars = "01";
     const colors = ['#33ff33', '#66ff66', '#88ff88', '#44ff44'];
     const specialColors = ['#ff4444', '#33ccff', '#cc33ff']; // 红、蓝、紫
     
@@ -177,7 +177,7 @@
   function initClickSound() {
     let clickSound = null;
     try {
-      clickSound = new Audio('/sounds/click.mp3');
+      clickSound = new Audio('/youth-sandbox/asserts/sounds/click.mp3');
       clickSound.volume = 0.15;
     } catch(e) { console.log('Audio not supported'); }
     
