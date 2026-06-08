@@ -2272,6 +2272,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        踩坑
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        收获
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2310,57 +2332,532 @@
 <h3 id="socattun">使用socat构建基于TUN的虚拟网络<a class="headerlink" href="#socattun" title="Permanent link">&para;</a></h3>
 <ol>
 <li>网络拓扑图
-   <img alt="" src="2026-06-05-20-25-42.png" /> 
-   <img alt="" src="2026-06-05-20-54-50.png" /></li>
-<li>主机 U 可以与 VPN Server 通信。
-      进入主机u容器ping VPN服务器 
-      <img alt="" src="2026-06-05-21-04-39.png" /></li>
-<li>VPN Server 可以与主机 V 通信。
-      <img alt="" src="2026-06-05-21-09-27.png" /> </li>
-<li>主机 U 不能与主机 V 通信。
-      <img alt="" src="2026-06-05-21-02-02.png" /> <ol>
-<li>在路由器上运行 tcpdump，并嗅探每个网络上的流量</li>
-</ol>
-</li>
+   <img alt="" src="2026-06-08-17-07-24.png" />
+   <a href="%E7%BD%91%E7%BB%9C%E6%8B%93%E6%89%91%E5%9B%BE.drawio"></a></li>
 <li>
 <p>网络拓扑说明
     | 角色 | 身份 | 关键接口 | 作用 |
     |------|------|----------|------|
-    | 主机U | VPN 客户端 | tun0（虚拟）+ eth0（真实） | 发起请求，把原始包封装进隧道 |
-    | VPN服务器 | 网关/转发器 | tun0（虚拟）+ eth0（真实） | 解封装 + 转发到私网 |
-    | 主机V | 私网内目标主机 | eth0 | 接收请求并回复 |</p>
+    | kali1 | VPN 客户端 | tun0（虚拟）+ eth0（真实） | 发起请求，把原始包封装进隧道 |
+    | Ubuntu | VPN服务器 网关/转发器 | tun0（虚拟）+ ens33（真实） | 解封装 + 转发到私网 |
+    | kali2 | 私网内目标主机 | eth0 | 接收请求并回复 |</p>
 <hr />
-<ol>
-<li>流程图
-   <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>10.9.0.5                     
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>主机U (客户端)                 VPN服务器                  主机V
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  |                              |                        |
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a> tun0 &lt;---&gt; tun_client.py    tun_server.py &lt;---&gt; tun0     |
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>             UDP:9090 -----&gt;     |                        |
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                              真实网卡 -----------------&gt;  |
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>                                 |                       接收
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>                                 | &lt;-------------------- 回复 
+</li>
+<li>
+<p>使用socat生成TUN设备
+    客户端（kali1）：sudo socat TUN:12.9.0.6/24,up UDP:192.168.162.128:9090
+    <img alt="" src="2026-06-08-15-38-37.png" />
+    服务端（Ubuntu）：sudo socat -d -d TUN:12.9.0.5/24,up UDP-LISTEN:9090,reuseaddr
+    <img alt="" src="2026-06-08-15-39-04.png" />
+    添加路由：sudo ip route add 192.168.3.0/24 dev tun0
+    <img alt="" src="2026-06-08-17-38-45.png" />
+    验证隧道是否通了
+    <img alt="" src="2026-06-08-17-39-10.png" />
+    在Ubuntu上开启ip转发
+    <img alt="" src="2026-06-08-17-41-00.png" />
+    设置防火墙策略为默认转发
+    <img alt="" src="2026-06-08-18-02-26.png" />
+    在Ubuntu上开启SNAT，把来自隧道的包的源 IP 改成自己的 ens37 IP
+    【让kali2收到包后知道如何处理，如果kali2收到源ip还是12.9.0.6的数据包，路由表中没有相关路由就会把包丢弃，那么kali1就不会收到回复】
+    <img alt="" src="2026-06-08-17-55-40.png" />
+    在kali上ping kali2测试VPN是否生效
+    <img alt="" src="2026-06-08-18-02-54.png" />
+    成功</p>
+</li>
+<li>完整的数据流向
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Kali 1 (12.9.0.6)
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>   │
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>   │ ping 192.168.3.132
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>   │ 原始包: src=12.9.0.6, dst=192.168.3.132
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>   ↓
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>tun0 → socat 封装 → UDP → Ubuntu ens33
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>   │
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>Ubuntu 解封装，写入 tun0
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>   │
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>Ubuntu 路由：192.168.3.132 走 ens37
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>   │
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>Ubuntu 做 SNAT：src 从 12.9.0.6 改成 192.168.3.10
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>   │
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>ens37 发出：src=192.168.3.10, dst=192.168.3.132
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>   ↓
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>Kali 2 收到，回复：src=192.168.3.132, dst=192.168.3.10
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>   ↓
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>Ubuntu 收到回复，反向 SNAT：dst 改回 12.9.0.6
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>   │
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>Ubuntu 路由：12.9.0.6 走 tun0
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>   │
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>socat 封装 → UDP → Kali 1
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>   ↓
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>Kali 1 收到 reply 
 </span></code></pre></div></li>
-</ol>
+<li>抓包分析
+   在kali1上开启tcpdump抓包
+   <img alt="" src="2026-06-08-18-28-45.png" /></li>
+<li>左侧<code>sudo tcpdump -i eth0 -n udp port 9090 -X</code>是抓取eth0网卡上端口号为9090的udp数据包，-X是以十六进制格式显示udp负载内容</li>
+<li>右侧<code>sudo tcpdump -i tun0 -n icmp</code>是抓取tun0上的icmp数据包</li>
+<li>
+<p>分析左侧udp数据包</p>
+<ul>
+<li><code>IP 192.168.162.129.50422 &gt; 192.168.162.128.9090: UDP</code>源ip是kali1的eth0网卡的ip，目的ip是Ubuntu（vpn服务器）ens33网卡的ip，目的端口9090是Ubuntu的监听端口</li>
+<li><code>4500 0054 190a 4000 4001 5164 0c09 0006 c0a8 0384</code>图中标白的数据，这是udp数据包负载的关键部分——封装的内层ip数据包
+     | 十六进制 | 含义 | 值 |
+     |----------|------|-----|
+     | 0800 | 以太网类型（不是重点） | - |
+     | 45 | IP 版本 4，头长度 5 | IPv4 * |
+     | 00 | 服务类型 | - |
+     | 0054 | 总长度 | 84 字节 |
+     | 190a | 标识 | - |
+     | 4000 | 标志 | DF=1 |
+     | 4001 | TTL(64) + 协议(1=ICMP) | ICMP * |
+     | 5164 | 校验和 | - |
+     | 0c09 0006 | 源 IP | 12.9.0.6（Kali 1 的 TUN IP） |
+     | c0a8 0384 | 目标 IP | 192.168.3.132（Kali 2） |        </li>
+</ul>
 </li>
 <li>
-<p>使用socat生成TUN设备</p>
+<p>分析右侧icmp数据包</p>
+<ul>
+<li><code>IP 12.9.0.6 &gt; 192.168.3.132: ICMP</code>源ip是kali1的tun0的ip，目的ip是kali2的eth0网卡ip</li>
+</ul>
 </li>
-<li>
-<p>抓包分析
-   <img alt="" src="2026-06-05-21-26-32.png" /> </p>
-</li>
+<li>udp数据包的负载中的ip数据包信息刚好和右侧数据包一致，验证了VPN的封装功能  </li>
 </ol>
 <h3 id="tun">完成创建和配置 TUN 接口实验<a class="headerlink" href="#tun" title="Permanent link">&para;</a></h3>
+<ol>
+<li>创建 TUN 接口
+   tun_create.py脚本
+   <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="ch">#!/usr/bin/env python3</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">fcntl</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># 常量定义</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">TUNSETIFF</span> <span class="o">=</span> <span class="mh">0x400454ca</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">IFF_TUN</span> <span class="o">=</span> <span class="mh">0x0001</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="n">IFF_NO_PI</span> <span class="o">=</span> <span class="mh">0x1000</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="c1"># 1. 打开 TUN 设备</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="n">tun</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;/dev/net/tun&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">O_RDWR</span><span class="p">)</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Step 1: Opened /dev/net/tun&quot;</span><span class="p">)</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1"># 2. 创建 TUN 接口</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="n">ifr</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;16sH&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;li</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">IFF_TUN</span> <span class="o">|</span> <span class="n">IFF_NO_PI</span><span class="p">)</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="n">ifname_bytes</span> <span class="o">=</span> <span class="n">fcntl</span><span class="o">.</span><span class="n">ioctl</span><span class="p">(</span><span class="n">tun</span><span class="p">,</span> <span class="n">TUNSETIFF</span><span class="p">,</span> <span class="n">ifr</span><span class="p">)</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="n">ifname</span> <span class="o">=</span> <span class="n">ifname_bytes</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)[:</span><span class="mi">16</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="p">)</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Step 2: Created TUN interface: </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="c1"># 3. 分配 IP 地址</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ip addr add 12.9.0.6/24 dev </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Step 3: Assigned IP 12.9.0.6 to </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="c1"># 4. 启用接口</span>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ip link set dev </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2"> up&quot;</span><span class="p">)</span>
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Step 4: </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2"> is UP&quot;</span><span class="p">)</span>
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TUN interface is ready. Press Ctrl+C to exit.&quot;</span><span class="p">)</span>
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>   <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</span></code></pre></div></li>
+<li>运行脚本创建tun
+      <img alt="" src="2026-06-08-21-04-04.png" /></li>
+<li>验证是否成功创建tun 
+      <img alt="" src="2026-06-08-21-05-23.png" /> 
+      创建成功</li>
+<li>从 TUN 读取数据包
+   tun_read.py脚本
+   <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="ch">#!/usr/bin/env python3</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">fcntl</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">scapy.all</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">TUNSETIFF</span> <span class="o">=</span> <span class="mh">0x400454ca</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">IFF_TUN</span> <span class="o">=</span> <span class="mh">0x0001</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">IFF_NO_PI</span> <span class="o">=</span> <span class="mh">0x1000</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="c1"># 创建 TUN 接口</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="n">tun</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;/dev/net/tun&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">O_RDWR</span><span class="p">)</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="n">ifr</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;16sH&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;li</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">IFF_TUN</span> <span class="o">|</span> <span class="n">IFF_NO_PI</span><span class="p">)</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="n">ifname_bytes</span> <span class="o">=</span> <span class="n">fcntl</span><span class="o">.</span><span class="n">ioctl</span><span class="p">(</span><span class="n">tun</span><span class="p">,</span> <span class="n">TUNSETIFF</span><span class="p">,</span> <span class="n">ifr</span><span class="p">)</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="n">ifname</span> <span class="o">=</span> <span class="n">ifname_bytes</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)[:</span><span class="mi">16</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="p">)</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;TUN Interface: </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ip addr add 12.9.0.6/24 dev </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ip link set dev </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2"> up&quot;</span><span class="p">)</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TUN is ready. Reading packets...</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>   <span class="n">packet</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">tun</span><span class="p">,</span> <span class="mi">2048</span><span class="p">)</span>
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>   <span class="k">if</span> <span class="n">packet</span><span class="p">:</span>
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>      <span class="n">ip</span> <span class="o">=</span> <span class="n">IP</span><span class="p">(</span><span class="n">packet</span><span class="p">)</span>
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received: </span><span class="si">{</span><span class="n">ip</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div></li>
+<li>运行脚本
+      <img alt="" src="2026-06-08-21-15-07.png" /></li>
+<li>在另一个终端ping 12.9.0.1验证脚本是否运行正确
+      <img alt="" src="2026-06-08-21-16-24.png" />
+      脚本成功读取内核转发来的数据包</li>
+<li>写入 TUN
+   tun_reply.py
+   <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="ch">#!/usr/bin/env python3</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">fcntl</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">scapy.all</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">TUNSETIFF</span> <span class="o">=</span> <span class="mh">0x400454ca</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="n">IFF_TUN</span> <span class="o">=</span> <span class="mh">0x0001</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="n">IFF_NO_PI</span> <span class="o">=</span> <span class="mh">0x1000</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="c1"># 创建 TUN 接口</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="n">tun</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;/dev/net/tun&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">O_RDWR</span><span class="p">)</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="n">ifr</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;16sH&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;li</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">IFF_TUN</span> <span class="o">|</span> <span class="n">IFF_NO_PI</span><span class="p">)</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="n">ifname_bytes</span> <span class="o">=</span> <span class="n">fcntl</span><span class="o">.</span><span class="n">ioctl</span><span class="p">(</span><span class="n">tun</span><span class="p">,</span> <span class="n">TUNSETIFF</span><span class="p">,</span> <span class="n">ifr</span><span class="p">)</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="n">ifname</span> <span class="o">=</span> <span class="n">ifname_bytes</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)[:</span><span class="mi">16</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="p">)</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;TUN Interface: </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ip addr add 12.9.0.6/24 dev </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ip link set dev </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2"> up&quot;</span><span class="p">)</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TUN is ready. Press Ctrl+C to stop.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>   <span class="n">packet</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">tun</span><span class="p">,</span> <span class="mi">2048</span><span class="p">)</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>   <span class="k">if</span> <span class="n">packet</span><span class="p">:</span>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>      <span class="n">ip</span> <span class="o">=</span> <span class="n">IP</span><span class="p">(</span><span class="n">packet</span><span class="p">)</span>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received: </span><span class="si">{</span><span class="n">ip</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>      <span class="c1"># 如果是 ICMP echo request，伪造 echo reply</span>
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>      <span class="k">if</span> <span class="n">ICMP</span> <span class="ow">in</span> <span class="n">ip</span> <span class="ow">and</span> <span class="n">ip</span><span class="p">[</span><span class="n">ICMP</span><span class="p">]</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>            <span class="n">reply</span> <span class="o">=</span> <span class="n">IP</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="n">ip</span><span class="o">.</span><span class="n">dst</span><span class="p">,</span> <span class="n">dst</span><span class="o">=</span><span class="n">ip</span><span class="o">.</span><span class="n">src</span><span class="p">)</span> <span class="o">/</span> <span class="n">ICMP</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">ip</span><span class="p">[</span><span class="n">ICMP</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">seq</span><span class="o">=</span><span class="n">ip</span><span class="p">[</span><span class="n">ICMP</span><span class="p">]</span><span class="o">.</span><span class="n">seq</span><span class="p">)</span> <span class="o">/</span> <span class="n">ip</span><span class="p">[</span><span class="n">ICMP</span><span class="p">]</span><span class="o">.</span><span class="n">payload</span>
+</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>            <span class="n">os</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">tun</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">reply</span><span class="p">))</span>
+</span><span id="__span-3-32"><a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  -&gt; Sent fake reply to </span><span class="si">{</span><span class="n">ip</span><span class="o">.</span><span class="n">src</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div></li>
+<li>运行脚本
+     <img alt="" src="2026-06-08-21-27-33.png" /> </li>
+<li>ping 12.9.0.6验证脚本是否能够完成回复
+     <img alt="" src="2026-06-08-21-29-02.png" />
+     收到回复，脚本运行正常  </li>
+</ol>
 <h3 id="ip-vpn">通过隧道将 IP 数据包发送到 VPN 服务器<a class="headerlink" href="#ip-vpn" title="Permanent link">&para;</a></h3>
+<ol>
+<li>客户端tun读取+udp封装发送
+   client.py
+   <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="ch">#!/usr/bin/env python3</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">fcntl</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">scapy.all</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">TUNSETIFF</span> <span class="o">=</span> <span class="mh">0x400454ca</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="n">IFF_TUN</span> <span class="o">=</span> <span class="mh">0x0001</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="n">IFF_NO_PI</span> <span class="o">=</span> <span class="mh">0x1000</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="c1"># 创建 TUN 接口</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="n">tun</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;/dev/net/tun&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">O_RDWR</span><span class="p">)</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="n">ifr</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;16sH&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;li</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">IFF_TUN</span> <span class="o">|</span> <span class="n">IFF_NO_PI</span><span class="p">)</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="n">ifname_bytes</span> <span class="o">=</span> <span class="n">fcntl</span><span class="o">.</span><span class="n">ioctl</span><span class="p">(</span><span class="n">tun</span><span class="p">,</span> <span class="n">TUNSETIFF</span><span class="p">,</span> <span class="n">ifr</span><span class="p">)</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="n">ifname</span> <span class="o">=</span> <span class="n">ifname_bytes</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)[:</span><span class="mi">16</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="p">)</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;TUN Interface: </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ip addr add 12.9.0.6/24 dev </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ip link set dev </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2"> up&quot;</span><span class="p">)</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="c1"># UDP 配置</span>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="n">SERVER_IP</span> <span class="o">=</span> <span class="s2">&quot;192.168.162.128&quot;</span>   <span class="c1"># Ubuntu 的 ens33 IP</span>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="n">SERVER_PORT</span> <span class="o">=</span> <span class="mi">9090</span>
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>
+</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Will send tunnel packets to </span><span class="si">{</span><span class="n">SERVER_IP</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">SERVER_PORT</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>
+</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>   <span class="n">packet</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">tun</span><span class="p">,</span> <span class="mi">2048</span><span class="p">)</span>
+</span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>   <span class="k">if</span> <span class="n">packet</span><span class="p">:</span>
+</span><span id="__span-4-32"><a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>      <span class="n">pkt</span> <span class="o">=</span> <span class="n">IP</span><span class="p">(</span><span class="n">packet</span><span class="p">)</span>
+</span><span id="__span-4-33"><a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a>      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Read from TUN: </span><span class="si">{</span><span class="n">pkt</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-4-34"><a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a>      <span class="n">sock</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="n">packet</span><span class="p">,</span> <span class="p">(</span><span class="n">SERVER_IP</span><span class="p">,</span> <span class="n">SERVER_PORT</span><span class="p">))</span>
+</span><span id="__span-4-35"><a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a>      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  -&gt; Sent to server via UDP&quot;</span><span class="p">)</span>
+</span></code></pre></div></li>
+<li>服务端udp接收
+   <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="ch">#!/usr/bin/env python3</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">scapy.all</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">IP_A</span> <span class="o">=</span> <span class="s2">&quot;0.0.0.0&quot;</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">PORT</span> <span class="o">=</span> <span class="mi">9090</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">IP_A</span><span class="p">,</span> <span class="n">PORT</span><span class="p">))</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Server listening on UDP port </span><span class="si">{</span><span class="n">PORT</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>   <span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recvfrom</span><span class="p">(</span><span class="mi">2048</span><span class="p">)</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>   <span class="n">pkt</span> <span class="o">=</span> <span class="n">IP</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>   <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received from </span><span class="si">{</span><span class="n">ip</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>   <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Inner packet: </span><span class="si">{</span><span class="n">pkt</span><span class="o">.</span><span class="n">src</span><span class="si">}</span><span class="s2"> --&gt; </span><span class="si">{</span><span class="n">pkt</span><span class="o">.</span><span class="n">dst</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div></li>
+<li>验证</li>
+<li>运行两个脚本
+     <img alt="" src="2026-06-08-22-26-36.png" />
+     <img alt="" src="2026-06-08-22-29-33.png" /></li>
+<li>kali1中添加路由：<code>sudo ip route add 192.168.3.0/24 dev li0</code> 
+     <img alt="" src="2026-06-08-22-32-12.png" />   </li>
+<li>在kali另一个终端ping 192.168.3.132
+     <img alt="" src="2026-06-08-22-35-53.png" /></li>
+<li>Ubuntu中成功收到经过封装的数据包
+     <img alt="" src="2026-06-08-22-34-51.png" />     </li>
+</ol>
 <h3 id="vpn_1">设置 VPN 服务器<a class="headerlink" href="#vpn_1" title="Permanent link">&para;</a></h3>
+<ol>
+<li>服务端udp接收+tun写入
+   server.py
+   <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="ch">#!/usr/bin/env python3</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">fcntl</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">scapy.all</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="n">TUNSETIFF</span> <span class="o">=</span> <span class="mh">0x400454ca</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="n">IFF_TUN</span> <span class="o">=</span> <span class="mh">0x0001</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="n">IFF_NO_PI</span> <span class="o">=</span> <span class="mh">0x1000</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="c1"># ========== 创建 TUN 接口 ==========</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="n">tun</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;/dev/net/tun&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">O_RDWR</span><span class="p">)</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="n">ifr</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;16sH&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;tun0&#39;</span><span class="p">,</span> <span class="n">IFF_TUN</span> <span class="o">|</span> <span class="n">IFF_NO_PI</span><span class="p">)</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="n">ifname_bytes</span> <span class="o">=</span> <span class="n">fcntl</span><span class="o">.</span><span class="n">ioctl</span><span class="p">(</span><span class="n">tun</span><span class="p">,</span> <span class="n">TUNSETIFF</span><span class="p">,</span> <span class="n">ifr</span><span class="p">)</span>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="n">ifname</span> <span class="o">=</span> <span class="n">ifname_bytes</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)[:</span><span class="mi">16</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="p">)</span>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Server TUN Interface: </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ip addr add 12.9.0.5/24 dev </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ip link set dev </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2"> up&quot;</span><span class="p">)</span>
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TUN configured and UP&quot;</span><span class="p">)</span>
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="c1"># ========== UDP 服务器 ==========</span>
+</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="n">PORT</span> <span class="o">=</span> <span class="mi">9090</span>
+</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a><span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">PORT</span><span class="p">))</span>
+</span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Listening on UDP port </span><span class="si">{</span><span class="n">PORT</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>
+</span><span id="__span-6-29"><a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a>   <span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">client_ip</span><span class="p">,</span> <span class="n">client_port</span><span class="p">)</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recvfrom</span><span class="p">(</span><span class="mi">2048</span><span class="p">)</span>
+</span><span id="__span-6-31"><a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a>   <span class="n">pkt</span> <span class="o">=</span> <span class="n">IP</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span id="__span-6-32"><a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a>   <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received from </span><span class="si">{</span><span class="n">client_ip</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">client_port</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-6-33"><a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a>   <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Inner: </span><span class="si">{</span><span class="n">pkt</span><span class="o">.</span><span class="n">src</span><span class="si">}</span><span class="s2"> --&gt; </span><span class="si">{</span><span class="n">pkt</span><span class="o">.</span><span class="n">dst</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-6-34"><a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a>
+</span><span id="__span-6-35"><a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a>   <span class="c1"># 写入 TUN 接口</span>
+</span><span id="__span-6-36"><a id="__codelineno-6-36" name="__codelineno-6-36" href="#__codelineno-6-36"></a>   <span class="n">os</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">tun</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</span><span id="__span-6-37"><a id="__codelineno-6-37" name="__codelineno-6-37" href="#__codelineno-6-37"></a>   <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  -&gt; Written to </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div></li>
+<li>验证</li>
+<li>kali1上运行client.py
+     <img alt="" src="2026-06-09-01-32-45.png" /> </li>
+<li>在Ubuntu上开启ip转发<code>sudo sysctl -w net.ipv4.ip_forward=1</code>
+     <img alt="" src="2026-06-09-01-28-48.png" /> </li>
+<li>Ubuntu上运行server.py<br />
+<img alt="" src="2026-06-09-01-32-01.png" /> </li>
+<li>在kali1中ping 192.168.3.132
+     <img alt="" src="2026-06-09-01-43-39.png" /> </li>
+<li>在kali2中开启tcpdump抓包
+     <img alt="" src="2026-06-09-01-43-15.png" />
+     成功抓到来自Ubuntu转发的数据包</li>
+</ol>
 <h3 id="_3">处理双向流量<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ol>
+<li>final_client.py
+   <div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="ch">#!/usr/bin/env python3</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">fcntl</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">select</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">scapy.all</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="n">TUNSETIFF</span> <span class="o">=</span> <span class="mh">0x400454ca</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="n">IFF_TUN</span> <span class="o">=</span> <span class="mh">0x0001</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="n">IFF_NO_PI</span> <span class="o">=</span> <span class="mh">0x1000</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="c1"># 创建 TUN 接口</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="n">tun</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;/dev/net/tun&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">O_RDWR</span><span class="p">)</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="n">ifr</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;16sH&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;li</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">IFF_TUN</span> <span class="o">|</span> <span class="n">IFF_NO_PI</span><span class="p">)</span>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="n">ifname_bytes</span> <span class="o">=</span> <span class="n">fcntl</span><span class="o">.</span><span class="n">ioctl</span><span class="p">(</span><span class="n">tun</span><span class="p">,</span> <span class="n">TUNSETIFF</span><span class="p">,</span> <span class="n">ifr</span><span class="p">)</span>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="n">ifname</span> <span class="o">=</span> <span class="n">ifname_bytes</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)[:</span><span class="mi">16</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="p">)</span>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Client TUN: </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ip addr add 12.9.0.6/24 dev </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ip link set dev </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2"> up&quot;</span><span class="p">)</span>
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>
+</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="c1"># 添加路由（去往 Kali 2 的网络）</span>
+</span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ip route add 192.168.3.0/24 dev </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-7-25"><a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a>
+</span><span id="__span-7-26"><a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="c1"># UDP socket</span>
+</span><span id="__span-7-27"><a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a><span class="n">SERVER_IP</span> <span class="o">=</span> <span class="s2">&quot;192.168.162.128&quot;</span>
+</span><span id="__span-7-28"><a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a><span class="n">SERVER_PORT</span> <span class="o">=</span> <span class="mi">9090</span>
+</span><span id="__span-7-29"><a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a><span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+</span><span id="__span-7-30"><a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a>
+</span><span id="__span-7-31"><a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Client ready. Press Ctrl+C to stop.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-7-32"><a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a>
+</span><span id="__span-7-33"><a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="__span-7-34"><a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a>   <span class="n">ready</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="n">sock</span><span class="p">,</span> <span class="n">tun</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[])</span>
+</span><span id="__span-7-35"><a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a>
+</span><span id="__span-7-36"><a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a>   <span class="k">for</span> <span class="n">fd</span> <span class="ow">in</span> <span class="n">ready</span><span class="p">:</span>
+</span><span id="__span-7-37"><a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a>      <span class="k">if</span> <span class="n">fd</span> <span class="o">==</span> <span class="n">sock</span><span class="p">:</span>
+</span><span id="__span-7-38"><a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a>            <span class="n">data</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recvfrom</span><span class="p">(</span><span class="mi">2048</span><span class="p">)</span>
+</span><span id="__span-7-39"><a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a>            <span class="n">pkt</span> <span class="o">=</span> <span class="n">IP</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span id="__span-7-40"><a id="__codelineno-7-40" name="__codelineno-7-40" href="#__codelineno-7-40"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[UDP-&gt;TUN] </span><span class="si">{</span><span class="n">pkt</span><span class="o">.</span><span class="n">src</span><span class="si">}</span><span class="s2"> --&gt; </span><span class="si">{</span><span class="n">pkt</span><span class="o">.</span><span class="n">dst</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-7-41"><a id="__codelineno-7-41" name="__codelineno-7-41" href="#__codelineno-7-41"></a>            <span class="n">os</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">tun</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</span><span id="__span-7-42"><a id="__codelineno-7-42" name="__codelineno-7-42" href="#__codelineno-7-42"></a>
+</span><span id="__span-7-43"><a id="__codelineno-7-43" name="__codelineno-7-43" href="#__codelineno-7-43"></a>      <span class="k">elif</span> <span class="n">fd</span> <span class="o">==</span> <span class="n">tun</span><span class="p">:</span>
+</span><span id="__span-7-44"><a id="__codelineno-7-44" name="__codelineno-7-44" href="#__codelineno-7-44"></a>            <span class="n">packet</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">tun</span><span class="p">,</span> <span class="mi">2048</span><span class="p">)</span>
+</span><span id="__span-7-45"><a id="__codelineno-7-45" name="__codelineno-7-45" href="#__codelineno-7-45"></a>            <span class="n">pkt</span> <span class="o">=</span> <span class="n">IP</span><span class="p">(</span><span class="n">packet</span><span class="p">)</span>
+</span><span id="__span-7-46"><a id="__codelineno-7-46" name="__codelineno-7-46" href="#__codelineno-7-46"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[TUN-&gt;UDP] </span><span class="si">{</span><span class="n">pkt</span><span class="o">.</span><span class="n">src</span><span class="si">}</span><span class="s2"> --&gt; </span><span class="si">{</span><span class="n">pkt</span><span class="o">.</span><span class="n">dst</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-7-47"><a id="__codelineno-7-47" name="__codelineno-7-47" href="#__codelineno-7-47"></a>            <span class="n">sock</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="n">packet</span><span class="p">,</span> <span class="p">(</span><span class="n">SERVER_IP</span><span class="p">,</span> <span class="n">SERVER_PORT</span><span class="p">))</span>
+</span></code></pre></div></li>
+<li>final_server.py
+   <div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="ch">#!/usr/bin/env python3</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">fcntl</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">select</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="kn">from</span><span class="w"> </span><span class="nn">scapy.all</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="n">TUNSETIFF</span> <span class="o">=</span> <span class="mh">0x400454ca</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="n">IFF_TUN</span> <span class="o">=</span> <span class="mh">0x0001</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="n">IFF_NO_PI</span> <span class="o">=</span> <span class="mh">0x1000</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="c1"># 创建 TUN 接口</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="n">tun</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;/dev/net/tun&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">O_RDWR</span><span class="p">)</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="n">ifr</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;16sH&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;tun0&#39;</span><span class="p">,</span> <span class="n">IFF_TUN</span> <span class="o">|</span> <span class="n">IFF_NO_PI</span><span class="p">)</span>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="n">ifname_bytes</span> <span class="o">=</span> <span class="n">fcntl</span><span class="o">.</span><span class="n">ioctl</span><span class="p">(</span><span class="n">tun</span><span class="p">,</span> <span class="n">TUNSETIFF</span><span class="p">,</span> <span class="n">ifr</span><span class="p">)</span>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="n">ifname</span> <span class="o">=</span> <span class="n">ifname_bytes</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)[:</span><span class="mi">16</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="p">)</span>
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Server TUN: </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ip addr add 12.9.0.5/24 dev </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ip link set dev </span><span class="si">{</span><span class="n">ifname</span><span class="si">}</span><span class="s2"> up&quot;</span><span class="p">)</span>
+</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>
+</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="c1"># UDP 服务器</span>
+</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="n">PORT</span> <span class="o">=</span> <span class="mi">9090</span>
+</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">PORT</span><span class="p">))</span>
+</span><span id="__span-8-27"><a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Listening on UDP port </span><span class="si">{</span><span class="n">PORT</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-8-28"><a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a>
+</span><span id="__span-8-29"><a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="c1"># 记录客户端地址</span>
+</span><span id="__span-8-30"><a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="n">client_addr</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="__span-8-31"><a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a>
+</span><span id="__span-8-32"><a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a><span class="c1"># 开启 IP 转发</span>
+</span><span id="__span-8-33"><a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;sysctl -w net.ipv4.ip_forward=1&quot;</span><span class="p">)</span>
+</span><span id="__span-8-34"><a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a>
+</span><span id="__span-8-35"><a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a><span class="c1"># 添加 SNAT（让 Kali 2 的回包能回来）</span>
+</span><span id="__span-8-36"><a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;iptables -t nat -A POSTROUTING -s 192.168.53.0/24 -o ens37 -j MASQUERADE&quot;</span><span class="p">)</span>
+</span><span id="__span-8-37"><a id="__codelineno-8-37" name="__codelineno-8-37" href="#__codelineno-8-37"></a><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;iptables -P FORWARD ACCEPT&quot;</span><span class="p">)</span>
+</span><span id="__span-8-38"><a id="__codelineno-8-38" name="__codelineno-8-38" href="#__codelineno-8-38"></a>
+</span><span id="__span-8-39"><a id="__codelineno-8-39" name="__codelineno-8-39" href="#__codelineno-8-39"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Server ready. Press Ctrl+C to stop.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-8-40"><a id="__codelineno-8-40" name="__codelineno-8-40" href="#__codelineno-8-40"></a>
+</span><span id="__span-8-41"><a id="__codelineno-8-41" name="__codelineno-8-41" href="#__codelineno-8-41"></a><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="__span-8-42"><a id="__codelineno-8-42" name="__codelineno-8-42" href="#__codelineno-8-42"></a>   <span class="n">ready</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="n">sock</span><span class="p">,</span> <span class="n">tun</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[])</span>
+</span><span id="__span-8-43"><a id="__codelineno-8-43" name="__codelineno-8-43" href="#__codelineno-8-43"></a>
+</span><span id="__span-8-44"><a id="__codelineno-8-44" name="__codelineno-8-44" href="#__codelineno-8-44"></a>   <span class="k">for</span> <span class="n">fd</span> <span class="ow">in</span> <span class="n">ready</span><span class="p">:</span>
+</span><span id="__span-8-45"><a id="__codelineno-8-45" name="__codelineno-8-45" href="#__codelineno-8-45"></a>      <span class="k">if</span> <span class="n">fd</span> <span class="o">==</span> <span class="n">sock</span><span class="p">:</span>
+</span><span id="__span-8-46"><a id="__codelineno-8-46" name="__codelineno-8-46" href="#__codelineno-8-46"></a>            <span class="n">data</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recvfrom</span><span class="p">(</span><span class="mi">2048</span><span class="p">)</span>
+</span><span id="__span-8-47"><a id="__codelineno-8-47" name="__codelineno-8-47" href="#__codelineno-8-47"></a>            <span class="n">client_addr</span> <span class="o">=</span> <span class="n">addr</span>
+</span><span id="__span-8-48"><a id="__codelineno-8-48" name="__codelineno-8-48" href="#__codelineno-8-48"></a>            <span class="n">pkt</span> <span class="o">=</span> <span class="n">IP</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span id="__span-8-49"><a id="__codelineno-8-49" name="__codelineno-8-49" href="#__codelineno-8-49"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[UDP-&gt;TUN] </span><span class="si">{</span><span class="n">pkt</span><span class="o">.</span><span class="n">src</span><span class="si">}</span><span class="s2"> --&gt; </span><span class="si">{</span><span class="n">pkt</span><span class="o">.</span><span class="n">dst</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-8-50"><a id="__codelineno-8-50" name="__codelineno-8-50" href="#__codelineno-8-50"></a>            <span class="n">os</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">tun</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</span><span id="__span-8-51"><a id="__codelineno-8-51" name="__codelineno-8-51" href="#__codelineno-8-51"></a>
+</span><span id="__span-8-52"><a id="__codelineno-8-52" name="__codelineno-8-52" href="#__codelineno-8-52"></a>      <span class="k">elif</span> <span class="n">fd</span> <span class="o">==</span> <span class="n">tun</span><span class="p">:</span>
+</span><span id="__span-8-53"><a id="__codelineno-8-53" name="__codelineno-8-53" href="#__codelineno-8-53"></a>            <span class="n">packet</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">tun</span><span class="p">,</span> <span class="mi">2048</span><span class="p">)</span>
+</span><span id="__span-8-54"><a id="__codelineno-8-54" name="__codelineno-8-54" href="#__codelineno-8-54"></a>            <span class="n">pkt</span> <span class="o">=</span> <span class="n">IP</span><span class="p">(</span><span class="n">packet</span><span class="p">)</span>
+</span><span id="__span-8-55"><a id="__codelineno-8-55" name="__codelineno-8-55" href="#__codelineno-8-55"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[TUN-&gt;UDP] </span><span class="si">{</span><span class="n">pkt</span><span class="o">.</span><span class="n">src</span><span class="si">}</span><span class="s2"> --&gt; </span><span class="si">{</span><span class="n">pkt</span><span class="o">.</span><span class="n">dst</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-8-56"><a id="__codelineno-8-56" name="__codelineno-8-56" href="#__codelineno-8-56"></a>            <span class="k">if</span> <span class="n">client_addr</span><span class="p">:</span>
+</span><span id="__span-8-57"><a id="__codelineno-8-57" name="__codelineno-8-57" href="#__codelineno-8-57"></a>               <span class="n">sock</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="n">packet</span><span class="p">,</span> <span class="n">client_addr</span><span class="p">)</span>
+</span></code></pre></div></li>
+<li>验证</li>
+<li>运行两个脚本
+     <img alt="" src="2026-06-09-01-49-04.png" />
+     <img alt="" src="2026-06-09-01-50-31.png" /> </li>
+<li>kali1上ping 192.168.3.132
+     <img alt="" src="2026-06-09-01-50-51.png" />
+     成功收到回复 </li>
+<li>kali2上开启抓包
+     <img alt="" src="2026-06-09-01-51-44.png" />
+     成功抓到包，证明双向流量处理正确  </li>
+</ol>
 <h2 id="_4">实验总结<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <h3 id="_5">问题与思考<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<ol>
+<li>为什么要建立一个TUN接口</li>
+<li>建立 TUN 接口，是为了让操作系统的内核“主动”把 IP 包交给用户态VPN程序 </li>
+<li>VPN的实现需要对原始数据包进行封装转发的操作，这就需要我们的VPN程序能够从内核拿到数据包</li>
+<li>但是正常情况下数据包在内核中就处理完了（路由、转发、丢弃），用户态的VPN程序根本接触不到数据包</li>
+<li>有了TUN接口后，配置路由告诉内核某些流量走TUN虚拟接口，这样内核就会把数据包从内核态转发到用户态程序，然后VPN程序就可以对数据包进行封装转发了
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>应用程序（ping）→ 内核构造 IP 包 → 路由表 → 发现走 tun0 → 交给 TUN 设备
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>                                                      ↓
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>                                          你的程序（tun_client.py）
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>                                          从 TUN 读到这个包
+</span></code></pre></div></li>
+<li>VPN到底是如何工作的
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>咖啡厅（客户端）                    公司（VPN服务器）                公司内网
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>   │                                      │                        │
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>   │ ① ping 192.168.60.5                  │                        │
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>   │    (原始包：src:10.0.0.2 dst:192.168.60.5)                    │
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>   │                                      │                        │
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>   │ ② 路由表说：去这个网段走 tun0         │                        │
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>   │    原始包被交给 TUN 接口              │                        │
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>   │                                      │                        │
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>   │ ③ 你的程序从 TUN 读到原始包           │                        │
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>   │    封装成 UDP：                       │                        │
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>   │    ┌────────────────────┐            │                        │
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>   │    │ 外层IP: 咖啡厅IP → 服务器IP      │                        │
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>   │    │ UDP端口: 11443                  │                        │
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>   │    │ 负载: 原始ICMP包                │                        │
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>   │    └────────────────────┘            │                        │
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>   │                                      │                        │
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>   │ ④ 通过真实网卡发出 ──────────────────→│                        │
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>   │                                      │ ⑤ 服务器程序收到UDP     │
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>   │                                      │    取出原始ICMP包       │
+</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>   │                                      │    写入服务器的 TUN     │
+</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>   │                                      │                        │
+</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>   │                                      │ ⑥ 内核从 TUN 收到包     │
+</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>   │                                      │    查路由：转发到 eth0  │
+</span><span id="__span-10-24"><a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>   │                                      │                        │
+</span><span id="__span-10-25"><a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>   │                                      │ ⑦ eth0 发给打印机 ─────→│
+</span><span id="__span-10-26"><a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>   │                                      │                        │ ⑧ 打印机收到
+</span><span id="__span-10-27"><a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a>   │                                      │                        │    回复ICMP reply
+</span><span id="__span-10-28"><a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a>   │                                      │                        │
+</span><span id="__span-10-29"><a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a>   │                                      │ ⑨ 回复包反向走隧道 ────→│
+</span><span id="__span-10-30"><a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a>   │                                      │                        │
+</span><span id="__span-10-31"><a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a>   │ ⑩ 客户端收到 reply → ping 成功 ✅      │                        │
+</span></code></pre></div></li>
+<li>为什么不直接把VPN服务器设为网关转发数据包，偏要走vpn隧道呢？</li>
+<li>隔离和抽象<ul>
+<li>网关方式：Kali 1 的真实 IP（162.129）暴露给 Kali 2。如果 162 网段变化，所有配置都要改。</li>
+<li>VPN 方式：Kali 2 只知道 12.9.0.x，不关心 162 网段。VPN 隧道把两端解耦了。</li>
+</ul>
+</li>
+<li>多客户端支持<ul>
+<li>网关方式：每个客户端都需要在 Kali 2 上配一条回指路由（162.129、162.130、162.131...），管理麻烦。</li>
+<li>VPN 方式：所有客户端共享 12.9.0.0/24 网段，Kali 2 只需一条路由。</li>
+</ul>
+</li>
+<li>安全性<ul>
+<li>网关方式：Kali 1 的真实 IP 暴露给整个 3.x 网段。</li>
+<li>VPN 方式：Kali 2 只知道隧道 IP（12.9.0.6），不知道真实 IP。
+   VPN 隧道的作用
+   | 作用 | 说明 | 你的实验中是否体现 |
+   |------|------|---------------------|
+   | 1. 跨网段通信 | 让两个本来无法直接通信的网络（162.x 和 3.x）能互通 | ✅ Kali 1 ping 通 Kali 2 |
+   | 2. 隐藏真实 IP | 目标网络只能看到隧道 IP（12.9.0.6）或网关 IP（3.10），看不到客户端真实 IP（162.129） | ✅ Kali 2 抓包看不到 162.129 |
+   | 3. 统一虚拟网络 | 所有客户端共享同一个隧道网段（12.9.0.0/24），后端只需配置一次路由 | ✅ 只加了一条路由就支持所有客户端 |
+   | 4. 绕过网络限制 | 防火墙只看到 UDP 包，不会拦截“去往 3.x 的包” | ✅ 真实网络上只有 162.129 → 162.128 的 UDP |</li>
+</ul>
+</li>
+</ol>
 <h3 id="_6">知识点<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <ol>
 <li>
-<p>UN/TAP 虚拟网络接口是什么
+<p>TUN/TAP 虚拟网络接口是什么
     Linux 内核提供的纯软件实现的网络接口，一端连着内核网络协议栈，另一端连着用户态程序。
     什么时候用TUN，什么时候用TAP
     | 场景 | 推荐 | 原因 |
@@ -2379,28 +2876,28 @@
 为什么需要：
 操作系统不知道哪些流量应该进 TUN 隧道，必须手动告诉它
 核心命令：
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ip<span class="w"> </span>route<span class="w"> </span>add<span class="w"> </span>&lt;目标网络&gt;<span class="w"> </span>dev<span class="w"> </span>&lt;接口&gt;<span class="w"> </span>via<span class="w"> </span>&lt;下一跳&gt;
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ip<span class="w"> </span>route<span class="w"> </span>add<span class="w"> </span>&lt;目标网络&gt;<span class="w"> </span>dev<span class="w"> </span>&lt;接口&gt;<span class="w"> </span>via<span class="w"> </span>&lt;下一跳&gt;
 </span></code></pre></div>
 4. IP over UDP 封装
 为什么用 UDP：
 - 简单、无连接、适合封装 IP 包。TCP 会引入额外重传和延迟。
 封装格式（从内到外）：
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>[原始IP包（含ICMP/TCP等）]
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>↓ 作为负载
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>[UDP头（源端口随机，目标端口9090）]
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>↓ 再加上
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>[外层IP头（源=U的公网IP，目标=VPN服务器的公网IP）]    
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>[原始IP包（含ICMP/TCP等）]
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>↓ 作为负载
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>[UDP头（源端口随机，目标端口9090）]
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>↓ 再加上
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>[外层IP头（源=U的公网IP，目标=VPN服务器的公网IP）]    
 </span></code></pre></div>
 5. 双向转发与 I/O 多路复用（select）
 <strong>问题</strong>：
 VPN 程序需要同时处理两个方向的数据：
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>从网络（UDP socket）收到包 → 写入 TUN
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>从 TUN 读到包 → 发往网络
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>如果用普通的阻塞 read()，程序会卡在一个接口上，错过另一个接口的数据。
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>从网络（UDP socket）收到包 → 写入 TUN
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>从 TUN 读到包 → 发往网络
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>如果用普通的阻塞 read()，程序会卡在一个接口上，错过另一个接口的数据。
 </span></code></pre></div>
 <strong>解决方案</strong>：select() 系统调用
 它同时监控多个文件描述符（TUN 和 socket），只要任何一个有数据，就返回并告诉你是哪个</p>
-<p><div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">ready</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="n">sock</span><span class="p">,</span> <span class="n">tun</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[])</span>
+<p><div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">ready</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="n">sock</span><span class="p">,</span> <span class="n">tun</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[])</span>
 </span></code></pre></div>
 6. IP 转发（IP Forwarding）</p>
 <blockquote>
@@ -2409,7 +2906,7 @@ VPN 程序需要同时处理两个方向的数据：
 <p>为什么 VPN 服务器需要：
 它一边连接互联网（与客户端通信），一边连接私有网络（与主机V通信）。收到来自隧道的包后，必须能转发给主机V。
 <strong>开启命令</strong>（实验环境已默认开启）：
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sysctl<span class="w"> </span>net.ipv4.ip_forward<span class="o">=</span><span class="m">1</span><span class="w">    </span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>sysctl<span class="w"> </span>net.ipv4.ip_forward<span class="o">=</span><span class="m">1</span><span class="w">    </span>
 </span></code></pre></div>
  7. socat是什么</p>
 <blockquote>
@@ -2426,6 +2923,20 @@ VPN 程序需要同时处理两个方向的数据：
     | 加密传输 | <code>socat OPENSSL-LISTEN:443,cert=server.pem TCP:localhost:80</code> |    </p>
 <div class="language-text highlight"><pre><span></span><code>---
 </code></pre></div>
+<h3 id="_7">踩坑<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<ol>
+<li>注意检查Ubuntu（vpn服务器）的防火墙策略是不是默认丢弃经过Ubuntu转发的数据包，如果是那么就算开启内核ip转发规则也会被防火墙策略覆盖
+   <img alt="" src="2026-06-08-18-00-25.png" /> </li>
+</ol>
+<h3 id="_8">收获<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<ol>
+<li>通过 socat 快速搭建 VPN 隧道验证</li>
+<li>TUN 接口：创建虚拟网卡，让内核能把特定流量交给用户程序处理。</li>
+<li>隧道网段（12.9.0.0/24）：VPN 虚拟网络，隐藏客户端真实 IP，统一管理多客户端。</li>
+<li>封装：原始 IP 包作为 UDP 负载传输，抓包可看到两层 IP 地址。</li>
+<li>路由：添加路由规则，让目标网段的流量进入 TUN 接口。</li>
+<li>IP 转发 + SNAT：VPN 服务器在不同网卡间转发包，并解决回包路由问题。</li>
+</ol>
 </li>
 </ol>
 
@@ -2450,7 +2961,7 @@ VPN 程序需要同时处理两个方向的数据：
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 8, 2026 03:09:10 UTC"><span class="timeago" datetime="2026-06-08T03:09:10+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 8, 2026 03:09:10 UTC">2026-06-08</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 8, 2026 17:55:27 UTC"><span class="timeago" datetime="2026-06-08T17:55:27+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 8, 2026 17:55:27 UTC">2026-06-08</span>
   </span>
 
     
@@ -2460,7 +2971,7 @@ VPN 程序需要同时处理两个方向的数据：
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 8, 2026 03:09:10 UTC"><span class="timeago" datetime="2026-06-08T03:09:10+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 8, 2026 03:09:10 UTC">2026-06-08</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 8, 2026 17:55:27 UTC"><span class="timeago" datetime="2026-06-08T17:55:27+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 8, 2026 17:55:27 UTC">2026-06-08</span>
   </span>
 
     
