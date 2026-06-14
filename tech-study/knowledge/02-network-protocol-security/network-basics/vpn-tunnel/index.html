@@ -1223,6 +1223,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--已完成"></span>
+  
+
+  
 
       </a>
     </li>
@@ -1250,6 +1257,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--已完成"></span>
+  
+
   
 
       </a>
@@ -1279,6 +1293,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--已完成"></span>
+  
+
+  
 
       </a>
     </li>
@@ -1307,6 +1328,13 @@
   </span>
   
   
+    
+  
+  
+    <span class="md-status md-status--已完成"></span>
+  
+
+  
 
       </a>
     </li>
@@ -1334,6 +1362,13 @@
     
   </span>
   
+  
+    
+  
+  
+    <span class="md-status md-status--进行中"></span>
+  
+
   
 
       </a>
@@ -2843,61 +2878,112 @@
 </li>
 <li>安全性<ul>
 <li>网关方式：Kali 1 的真实 IP 暴露给整个 3.x 网段。</li>
-<li>VPN 方式：Kali 2 只知道隧道 IP（12.9.0.6），不知道真实 IP。
-   VPN 隧道的作用
-   | 作用 | 说明 | 你的实验中是否体现 |
-   |------|------|---------------------|
-   | 1. 跨网段通信 | 让两个本来无法直接通信的网络（162.x 和 3.x）能互通 | ✅ Kali 1 ping 通 Kali 2 |
-   | 2. 隐藏真实 IP | 目标网络只能看到隧道 IP（12.9.0.6）或网关 IP（3.10），看不到客户端真实 IP（162.129） | ✅ Kali 2 抓包看不到 162.129 |
-   | 3. 统一虚拟网络 | 所有客户端共享同一个隧道网段（12.9.0.0/24），后端只需配置一次路由 | ✅ 只加了一条路由就支持所有客户端 |
-   | 4. 绕过网络限制 | 防火墙只看到 UDP 包，不会拦截“去往 3.x 的包” | ✅ 真实网络上只有 162.129 → 162.128 的 UDP |</li>
+<li>VPN 方式：Kali 2 只知道隧道 IP（12.9.0.6），不知道真实 IP。</li>
 </ul>
 </li>
 </ol>
+<p>VPN 隧道的作用</p>
+<table>
+<thead>
+<tr>
+<th>作用</th>
+<th>说明</th>
+<th>你的实验中是否体现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 跨网段通信</td>
+<td>让两个本来无法直接通信的网络（162.x 和 3.x）能互通</td>
+<td>✅ Kali 1 ping 通 Kali 2</td>
+</tr>
+<tr>
+<td>2. 隐藏真实 IP</td>
+<td>目标网络只能看到隧道 IP（12.9.0.6）或网关 IP（3.10），看不到客户端真实 IP（162.129）</td>
+<td>✅ Kali 2 抓包看不到 162.129</td>
+</tr>
+<tr>
+<td>3. 统一虚拟网络</td>
+<td>所有客户端共享同一个隧道网段（12.9.0.0/24），后端只需配置一次路由</td>
+<td>✅ 只加了一条路由就支持所有客户端</td>
+</tr>
+<tr>
+<td>4. 绕过网络限制</td>
+<td>防火墙只看到 UDP 包，不会拦截“去往 3.x 的包”</td>
+<td>✅ 真实网络上只有 162.129 → 162.128 的 UDP</td>
+</tr>
+</tbody>
+</table>
 <h3 id="_6">知识点<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <ol>
 <li>
 <p>TUN/TAP 虚拟网络接口是什么
-    Linux 内核提供的纯软件实现的网络接口，一端连着内核网络协议栈，另一端连着用户态程序。
-    什么时候用TUN，什么时候用TAP
-    | 场景 | 推荐 | 原因 |
-    |------|------|------|
-    | 点对点 VPN（本实验） | TUN | 简单，只关心 IP 层，不需要处理 MAC 和 ARP |
-    | 需要桥接两个局域网 | TAP | 要传递 ARP、广播等二层流量 |
-    | 移动设备 VPN（如手机连公司） | TUN | 点对点，不需要二层 |
-    | 虚拟机能通过 VPN 被访问 | TAP | 要让虚拟机像在本地一样收到 ARP |</p>
+    Linux 内核提供的纯软件实现的网络接口，一端连着内核网络协议栈，另一端连着用户态程序
+    什么时候用TUN，什么时候用TAP</p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>点对点 VPN（本实验）</td>
+<td>TUN</td>
+<td>简单，只关心 IP 层，不需要处理 MAC 和 ARP</td>
+</tr>
+<tr>
+<td>需要桥接两个局域网</td>
+<td>TAP</td>
+<td>要传递 ARP、广播等二层流量</td>
+</tr>
+<tr>
+<td>移动设备 VPN（如手机连公司）</td>
+<td>TUN</td>
+<td>点对点，不需要二层</td>
+</tr>
+<tr>
+<td>虚拟机能通过 VPN 被访问</td>
+<td>TAP</td>
+<td>要让虚拟机像在本地一样收到 ARP</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <p><strong>数据流向</strong>：
-- 内核 → 用户程序：路由表决定某类包走 TUN 接口 → 内核交给 TUN 设备 → 用户程序 read() 拿到原始 IP 包
-- 用户程序 → 内核：用户 write() 一个 IP 包到 TUN 设备 → 内核就像从网卡收到包一样处理它（路由、转发、响应）
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>内核 → 用户程序：路由表决定某类包走 TUN 接口 → 内核交给 TUN 设备 → 用户程序 read() 拿到原始 IP 包
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>用户程序 → 内核：用户 write() 一个 IP 包到 TUN 设备 → 内核就像从网卡收到包一样处理它（路由、转发、响应）
+</span></code></pre></div>
 2. 隧道（Tunneling）是什么：
    把一个网络协议的数据包，整个装进另一个协议的负载里传输。
 3. 路由控制（Routing）
 为什么需要：
 操作系统不知道哪些流量应该进 TUN 隧道，必须手动告诉它
 核心命令：
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ip<span class="w"> </span>route<span class="w"> </span>add<span class="w"> </span>&lt;目标网络&gt;<span class="w"> </span>dev<span class="w"> </span>&lt;接口&gt;<span class="w"> </span>via<span class="w"> </span>&lt;下一跳&gt;
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ip<span class="w"> </span>route<span class="w"> </span>add<span class="w"> </span>&lt;目标网络&gt;<span class="w"> </span>dev<span class="w"> </span>&lt;接口&gt;<span class="w"> </span>via<span class="w"> </span>&lt;下一跳&gt;
 </span></code></pre></div>
 4. IP over UDP 封装
 为什么用 UDP：
 - 简单、无连接、适合封装 IP 包。TCP 会引入额外重传和延迟。
 封装格式（从内到外）：
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>[原始IP包（含ICMP/TCP等）]
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>↓ 作为负载
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>[UDP头（源端口随机，目标端口9090）]
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>↓ 再加上
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>[外层IP头（源=U的公网IP，目标=VPN服务器的公网IP）]    
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>[原始IP包（含ICMP/TCP等）]
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>↓ 作为负载
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>[UDP头（源端口随机，目标端口9090）]
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>↓ 再加上
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>[外层IP头（源=U的公网IP，目标=VPN服务器的公网IP）]    
 </span></code></pre></div>
 5. 双向转发与 I/O 多路复用（select）
 <strong>问题</strong>：
 VPN 程序需要同时处理两个方向的数据：
-<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>从网络（UDP socket）收到包 → 写入 TUN
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>从 TUN 读到包 → 发往网络
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>如果用普通的阻塞 read()，程序会卡在一个接口上，错过另一个接口的数据。
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>从网络（UDP socket）收到包 → 写入 TUN
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>从 TUN 读到包 → 发往网络
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>如果用普通的阻塞 read()，程序会卡在一个接口上，错过另一个接口的数据。
 </span></code></pre></div>
 <strong>解决方案</strong>：select() 系统调用
 它同时监控多个文件描述符（TUN 和 socket），只要任何一个有数据，就返回并告诉你是哪个</p>
-<p><div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">ready</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="n">sock</span><span class="p">,</span> <span class="n">tun</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[])</span>
+<p><div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">ready</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="n">sock</span><span class="p">,</span> <span class="n">tun</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[])</span>
 </span></code></pre></div>
 6. IP 转发（IP Forwarding）</p>
 <blockquote>
@@ -2906,22 +2992,23 @@ VPN 程序需要同时处理两个方向的数据：
 <p>为什么 VPN 服务器需要：
 它一边连接互联网（与客户端通信），一边连接私有网络（与主机V通信）。收到来自隧道的包后，必须能转发给主机V。
 <strong>开启命令</strong>（实验环境已默认开启）：
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>sysctl<span class="w"> </span>net.ipv4.ip_forward<span class="o">=</span><span class="m">1</span><span class="w">    </span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>sysctl<span class="w"> </span>net.ipv4.ip_forward<span class="o">=</span><span class="m">1</span><span class="w">    </span>
 </span></code></pre></div>
  7. socat是什么</p>
 <blockquote>
 <p>socat 是一个强大的网络瑞士军刀，名字来源于 "SOcket CAT"。你可以把它理解为 netcat 的超级增强版，功能更强大，能连接几乎任何两个数据源</p>
 </blockquote>
 <p>socat 可以在两个数据通道之间建立双向数据传输连接。
-- 两个通道可以是：文件、管道、设备（如 TUN）、TCP 连接、UDP 连接、SSL 连接、Unix socket 等 
-- socat 常见用法示例
-    | 用途 | 命令 |
-    |------|------|
-    | 监听 TCP 端口转发到另一个端口 | <code>socat TCP-LISTEN:8080,fork TCP:localhost:80</code> |
-    | 建立双向 UDP 隧道 | <code>socat UDP-LISTEN:9090,fork TUN:192.168.53.1/24,up</code> |
-    | 将串口数据转发到网络 | <code>socat /dev/ttyUSB0 TCP:server:1234</code> |
-    | 加密传输 | <code>socat OPENSSL-LISTEN:443,cert=server.pem TCP:localhost:80</code> |    </p>
-<div class="language-text highlight"><pre><span></span><code>---
+1. 两个通道可以是：文件、管道、设备（如 TUN）、TCP 连接、UDP 连接、SSL 连接、Unix socket 等 
+2. socat 常见用法示例</p>
+<div class="language-text highlight"><pre><span></span><code>| 用途 | 命令 |
+|------|------|
+| 监听 TCP 端口转发到另一个端口 | `socat TCP-LISTEN:8080,fork TCP:localhost:80` |
+| 建立双向 UDP 隧道 | `socat UDP-LISTEN:9090,fork TUN:192.168.53.1/24,up` |
+| 将串口数据转发到网络 | `socat /dev/ttyUSB0 TCP:server:1234` |
+| 加密传输 | `socat OPENSSL-LISTEN:443,cert=server.pem TCP:localhost:80` |
+
+---
 </code></pre></div>
 <h3 id="_7">踩坑<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
 <ol>
@@ -2961,7 +3048,7 @@ VPN 程序需要同时处理两个方向的数据：
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 8, 2026 18:02:46 UTC"><span class="timeago" datetime="2026-06-08T18:02:46+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 8, 2026 18:02:46 UTC">2026-06-08</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 14, 2026 04:47:51 UTC"><span class="timeago" datetime="2026-06-14T04:47:51+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 14, 2026 04:47:51 UTC">2026-06-14</span>
   </span>
 
     
@@ -2971,7 +3058,7 @@ VPN 程序需要同时处理两个方向的数据：
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 8, 2026 18:02:46 UTC"><span class="timeago" datetime="2026-06-08T18:02:46+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 8, 2026 18:02:46 UTC">2026-06-08</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 14, 2026 04:47:51 UTC"><span class="timeago" datetime="2026-06-14T04:47:51+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 14, 2026 04:47:51 UTC">2026-06-14</span>
   </span>
 
     
