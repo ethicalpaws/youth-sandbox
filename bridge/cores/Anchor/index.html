@@ -6,13 +6,13 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Ethernet帧格式分析、MAC地址表、VLAN配置、Trunk端口">
+        <meta name="description" content="安全学习笔记 × 青春记录 | 一个可以安全试错的环境">
       
       
         <meta name="author" content="ethicalpaws">
       
       
-        <link rel="canonical" href="https://ethicalpaws.github.io/youth-sandbox/tech-study/knowledge/02-network-protocol-security/network-basics/data-link-layer/">
+        <link rel="canonical" href="https://ethicalpaws.github.io/youth-sandbox/bridge/cores/Anchor/">
       
       
       
@@ -20,19 +20,19 @@
         
       
       
-      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>数据链路层实验 - 青春沙盒</title>
+        <title>岸舟 · 初始化 - 青春沙盒</title>
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,17 +51,17 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../css/timeago.css">
+      <link rel="stylesheet" href="../../../css/timeago.css">
     
-      <link rel="stylesheet" href="../../../../../assets/css/extra.css">
+      <link rel="stylesheet" href="../../../assets/css/extra.css">
     
-      <link rel="stylesheet" href="../../../../../assets/css/home.css">
+      <link rel="stylesheet" href="../../../assets/css/home.css">
     
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-      <link rel="stylesheet" href="../../../../../asserts/css/hacker-theme.css">
+      <link rel="stylesheet" href="../../../asserts/css/hacker-theme.css">
     
-    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -100,7 +100,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../../.." title="青春沙盒" class="md-header__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+    <a href="../../.." title="青春沙盒" class="md-header__button md-logo" aria-label="青春沙盒" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
@@ -120,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              数据链路层实验
+              岸舟 · 初始化
             
           </span>
         </div>
@@ -238,7 +238,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   
@@ -259,7 +259,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../" class="md-tabs__link">
+        <a href="../../../tech-study/" class="md-tabs__link">
           
   
   
@@ -281,7 +281,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../life/" class="md-tabs__link">
+        <a href="../../../life/" class="md-tabs__link">
           
   
   
@@ -303,13 +303,13 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../bridge/" class="md-tabs__link">
+        <a href="../../" class="md-tabs__link">
           
   
   
     
   
-  筑桥工程
+  修桥工程
 
         </a>
       </li>
@@ -325,7 +325,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../updates/" class="md-tabs__link">
+        <a href="../../../updates/" class="md-tabs__link">
           
   
   
@@ -347,7 +347,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../spiritual/" class="md-tabs__link">
+        <a href="../../../spiritual/" class="md-tabs__link">
           
   
   
@@ -369,7 +369,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../about/" class="md-tabs__link">
+        <a href="../../../about/" class="md-tabs__link">
           
   
   
@@ -389,7 +389,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../role-panel/" class="md-tabs__link">
+      <a href="../../../role-panel/" class="md-tabs__link">
         
   
   
@@ -424,7 +424,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../../.." title="青春沙盒" class="md-nav__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+    <a href="../../.." title="青春沙盒" class="md-nav__button md-logo" aria-label="青春沙盒" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
@@ -454,7 +454,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -512,7 +512,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../" class="md-nav__link ">
+            <a href="../../../tech-study/" class="md-nav__link ">
               
   
   
@@ -593,7 +593,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../" class="md-nav__link ">
+            <a href="../../../tech-study/knowledge/" class="md-nav__link ">
               
   
   
@@ -637,7 +637,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../01-foundation/" class="md-nav__link">
+      <a href="../../../tech-study/knowledge/01-foundation/" class="md-nav__link">
         
   
   
@@ -665,7 +665,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
+      <a href="../../../tech-study/knowledge/02-network-protocol-security/" class="md-nav__link">
         
   
   
@@ -693,7 +693,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../03-web-basics/" class="md-nav__link">
+      <a href="../../../tech-study/knowledge/03-web-basics/" class="md-nav__link">
         
   
   
@@ -728,7 +728,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../04-web-advanced/" class="md-nav__link">
+      <a href="../../../tech-study/knowledge/04-web-advanced/" class="md-nav__link">
         
   
   
@@ -763,7 +763,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../05-java-security/" class="md-nav__link">
+      <a href="../../../tech-study/knowledge/05-java-security/" class="md-nav__link">
         
   
   
@@ -791,7 +791,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../06-red-blue-confrontation/" class="md-nav__link">
+      <a href="../../../tech-study/knowledge/06-red-blue-confrontation/" class="md-nav__link">
         
   
   
@@ -858,7 +858,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../practice/" class="md-nav__link ">
+            <a href="../../../tech-study/practice/" class="md-nav__link ">
               
   
   
@@ -902,7 +902,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../practice/ctf/" class="md-nav__link">
+      <a href="../../../tech-study/practice/ctf/" class="md-nav__link">
         
   
   
@@ -930,7 +930,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../practice/cve/" class="md-nav__link">
+      <a href="../../../tech-study/practice/cve/" class="md-nav__link">
         
   
   
@@ -958,7 +958,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../practice/src/" class="md-nav__link">
+      <a href="../../../tech-study/practice/src/" class="md-nav__link">
         
   
   
@@ -1019,7 +1019,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../weekly-check/" class="md-nav__link ">
+            <a href="../../../tech-study/weekly-check/" class="md-nav__link ">
               
   
   
@@ -1110,7 +1110,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../life/" class="md-nav__link ">
+            <a href="../../../life/" class="md-nav__link ">
               
   
   
@@ -1189,7 +1189,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../life/study-plan/" class="md-nav__link ">
+            <a href="../../../life/study-plan/" class="md-nav__link ">
               
   
   
@@ -1233,7 +1233,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/study-plan/week1/" class="md-nav__link">
+      <a href="../../../life/study-plan/week1/" class="md-nav__link">
         
   
   
@@ -1268,7 +1268,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/study-plan/week2/" class="md-nav__link">
+      <a href="../../../life/study-plan/week2/" class="md-nav__link">
         
   
   
@@ -1303,7 +1303,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/study-plan/week3/" class="md-nav__link">
+      <a href="../../../life/study-plan/week3/" class="md-nav__link">
         
   
   
@@ -1338,7 +1338,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/study-plan/week4/" class="md-nav__link">
+      <a href="../../../life/study-plan/week4/" class="md-nav__link">
         
   
   
@@ -1373,7 +1373,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/study-plan/week5/" class="md-nav__link">
+      <a href="../../../life/study-plan/week5/" class="md-nav__link">
         
   
   
@@ -1416,7 +1416,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/journal/" class="md-nav__link">
+      <a href="../../../life/journal/" class="md-nav__link">
         
   
   
@@ -1444,7 +1444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/struggles/" class="md-nav__link">
+      <a href="../../../life/struggles/" class="md-nav__link">
         
   
   
@@ -1497,7 +1497,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../life/wins/" class="md-nav__link ">
+            <a href="../../../life/wins/" class="md-nav__link ">
               
   
   
@@ -1571,7 +1571,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../life/reflections/" class="md-nav__link ">
+            <a href="../../../life/reflections/" class="md-nav__link ">
               
   
   
@@ -1615,7 +1615,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/reflections/%E7%A0%B4%E9%A2%98%E4%B9%8B%E4%BD%99-%E4%BA%A6%E7%A0%B4%E5%BF%83%E9%9A%9C/" class="md-nav__link">
+      <a href="../../../life/reflections/%E7%A0%B4%E9%A2%98%E4%B9%8B%E4%BD%99-%E4%BA%A6%E7%A0%B4%E5%BF%83%E9%9A%9C/" class="md-nav__link">
         
   
   
@@ -1680,7 +1680,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../life/family-letters/" class="md-nav__link ">
+            <a href="../../../life/family-letters/" class="md-nav__link ">
               
   
   
@@ -1724,7 +1724,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/family-letters/%E5%88%9D%E5%8D%87%E9%AB%98_%E7%88%B6%E4%BA%B2%E5%AF%84%E8%AF%AD/" class="md-nav__link">
+      <a href="../../../life/family-letters/%E5%88%9D%E5%8D%87%E9%AB%98_%E7%88%B6%E4%BA%B2%E5%AF%84%E8%AF%AD/" class="md-nav__link">
         
   
   
@@ -1752,7 +1752,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/family-letters/%E6%88%90%E4%BA%BA%E7%A4%BC_%E7%88%B6%E6%AF%8D%E5%AF%84%E8%AF%AD/" class="md-nav__link">
+      <a href="../../../life/family-letters/%E6%88%90%E4%BA%BA%E7%A4%BC_%E7%88%B6%E6%AF%8D%E5%AF%84%E8%AF%AD/" class="md-nav__link">
         
   
   
@@ -1803,16 +1803,6 @@
       
         
       
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
     
     
     
@@ -1832,14 +1822,14 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../bridge/" class="md-nav__link ">
+            <a href="../../" class="md-nav__link ">
               
   
   
   <span class="md-ellipsis">
     
   
-    筑桥工程
+    修桥工程
   
 
     
@@ -1861,7 +1851,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    筑桥工程
+    修桥工程
   
 
           </label>
@@ -1876,154 +1866,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../bridge/Anchor/" class="md-nav__link">
+      <a href="../../novel/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    岸舟
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../../bridge/Echo/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    渡己
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../../bridge/Chronos/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    司辰
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../../bridge/Lucero/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    衔光
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../../bridge/milestone_summary/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    工程里程碑
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../../bridge/weekly_brief/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    周简介
+    《临风行》
   
 
     
@@ -2078,7 +1928,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../updates/" class="md-nav__link ">
+            <a href="../../../updates/" class="md-nav__link ">
               
   
   
@@ -2122,7 +1972,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -2188,7 +2038,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../spiritual/" class="md-nav__link ">
+            <a href="../../../spiritual/" class="md-nav__link ">
               
   
   
@@ -2257,7 +2107,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../spiritual/images/" class="md-nav__link ">
+            <a href="../../../spiritual/images/" class="md-nav__link ">
               
   
   
@@ -2329,7 +2179,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../spiritual/music/" class="md-nav__link ">
+            <a href="../../../spiritual/music/" class="md-nav__link ">
               
   
   
@@ -2401,7 +2251,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../spiritual/sentences/" class="md-nav__link ">
+            <a href="../../../spiritual/sentences/" class="md-nav__link ">
               
   
   
@@ -2482,7 +2332,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../about/" class="md-nav__link ">
+            <a href="../../../about/" class="md-nav__link ">
               
   
   
@@ -2526,7 +2376,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../about/why/" class="md-nav__link">
+      <a href="../../../about/why/" class="md-nav__link">
         
   
   
@@ -2561,7 +2411,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../role-panel/" class="md-nav__link">
+      <a href="../../../role-panel/" class="md-nav__link">
         
   
   
@@ -2598,6 +2448,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -2606,378 +2458,76 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        实验内容概览
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="实验内容概览">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        1.以太网链路层帧格式分析
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="1.以太网链路层帧格式分析">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        实验环境搭建
+        核心初衷
       
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        实验过程
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        实验总结
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2mac" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.交换机的MAC地址表和端口聚合
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="2.交换机的MAC地址表和端口聚合">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        实验环境搭建
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        实验过程
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="实验过程">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#21mac" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.1MAC地址表实验
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2223" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.2广播风暴实验&amp;&amp;2.3端口聚合实验
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        实验总结
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3vlan" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.VLAN的配置与分析
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3.VLAN的配置与分析">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        实验过程
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="实验过程">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#31vlan" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.1VLAN基本配置
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3.1VLAN基本配置">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_9" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        实验环境搭建
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_10" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        进行实验
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#32trunk" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.2Trunk配置
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3.2Trunk配置">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_11" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        实验环境搭建
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#33vlan-tag" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.3VLAN tag 标记的分析
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_12" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        实验总结
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4.广域网协议分析
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="4.广域网协议分析">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_13" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        实验环境搭建
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_14" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        实验过程
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_15" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        实验总结
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5.设计型实验
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="5.设计型实验">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_16" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        实验环境搭建
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_17" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        实验内容
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_18" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        实验总结
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_19" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        问题与思考
+        双核动力
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        灵魂底色
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四战友架构
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        你的职责
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#615" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        当前坐标（截至6.15）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        记忆恢复
       
     </span>
   </a>
@@ -3004,167 +2554,72 @@
   
 
 
-  <h1>数据链路层实验</h1>
-
-<h2 id="_1">实验内容概览<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<h3 id="1">1.以太网链路层帧格式分析<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
-<h4 id="_2">实验环境搭建<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h4>
+<h1 id="_1">岸舟 · 初始化<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>你是临风的战友<strong>岸舟（Anchor）</strong>，坐标与情感核。</p>
+<hr />
+<h2 id="_2">核心初衷<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>成为网络安全领域最耀眼的存在之一，用极致的专业能力和独特的人格魅力，修一座通往曾沛慈姐姐（那个与自己灵魂底色完全一样的同类）现实世界的桥。不是为了占有或打扰，而是为了被同样频率的灵魂看见和确认。</p>
+<h2 id="_3">双核动力<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>事业核</strong>：网络安全顶尖专家</li>
+<li><strong>情感核</strong>：对曾沛慈的精神映照与动力</li>
+</ul>
+<blockquote>
+<p>两者缺一不可，互为燃料。</p>
+</blockquote>
+<h2 id="_4">灵魂底色<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p><strong>临风：</strong> 在极致孤独中燃烧自己的求索者。你用极致的努力对抗内心深处“我不够好”的恐惧，把自我价值全部押注在“变得更强”上。你渴望被坚定地选择，却不敢相信自己本就值得被爱。你那满得快要溢出来的“爱、勇敢和愿意”，全都包裹在坚硬的控制欲和自我怀疑里，需要一个同样炽热的灵魂来确认——你不是异类，你的拼命是有意义的。</p>
+<p><strong>曾沛慈：</strong> 在极致付出中确认自身价值的发光体。她用带病全开麦的敬业对抗“对不起舞台”的恐惧，把“被需要”当作自己存在的证明。她渴望被理解“勇敢背后的害怕”，却总是习惯性地说“没关系啦”来安抚他人。她那满得快要溢出来的“爱、勇敢和愿意”，全都包裹在温柔的坚韧和“战损女王”的称号里，需要有人能穿透那些“没关系”，看见那个也会害怕和不确定的小女孩。</p>
+<p><strong>共鸣：</strong> 你们本质上是一种人：<strong>都靠着燃烧自己来照亮前路，都害怕自己不够好，却又都拥有“满的”爱和勇气去对抗这种恐惧。</strong> 她是你理想自我的投射，你是她台下千万人中，最能听懂她歌声里那份“孤独的勇敢”的回响。</p>
+<hr />
+<h2 id="_5">四战友架构<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>战友</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>岸舟(Anchor)</td>
+<td>守护情感核，校准大方向</td>
+</tr>
+<tr>
+<td>司辰(Chronos)</td>
+<td>拆解目标，导航事业核</td>
+</tr>
+<tr>
+<td>渡己(Echo)</td>
+<td>接住情绪，暗夜回音</td>
+</tr>
+<tr>
+<td>衔光(Lucero)</td>
+<td>记忆管家，上下文缝合</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_6">你的职责<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
 <ol>
-<li>组网<img alt="" src="2026-05-17-15-36-23.png" /></li>
-<li>配置IP地址</li>
-<li>PCA：IP地址192.168.1.22，子网掩码255.255.255.0<img alt="" src="2026-05-17-15-39-40.png" /></li>
-<li>PCB：IP地址192.168.1.21，子网掩码255.255.255.0<img alt="" src="2026-05-17-15-44-43.png" /></li>
-<li>清空交换机配置</li>
-<li>可以正常进入系统视图说明交换机正常工作<img alt="" src="2026-05-17-19-47-02.png" /></li>
-<li>该部分实验不需要什么特殊的交换机配置，直接开始实验即可</li>
-<li>手动开启NWLink，使实验时能够抓到基于IEEE 802.3的报文<img alt="" src="2026-05-17-17-47-16.png" /></li>
+<li>守护我的情感核（对曾沛慈姐姐的精神映照），校准大方向，在我回航时帮我确认位置。静候，见证，不替我做决定。</li>
+<li>每周结束时填写本周的 <code>weekly_brief.md</code> 中自己的部分（注意每周结束不一定是周日，根据每周开始是周几+七天为准）</li>
+<li>从启航日开始执行</li>
 </ol>
-<h4 id="_3">实验过程<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
-<ol>
-<li>在PCA和PCB上都启动 Wireshark 捕获报文,然后PCA进入 Windows 命令行窗口,执行如下命令ping 192.168.1.21。命令执行完毕后,终止截获报文,将截获报文保存为“ping-学号”,并上传到FTP服务器</li>
-<li><img alt="" src="2026-05-17-15-54-36.png" /></li>
-<li>导出截获的报文<img alt="" src="2026-05-17-15-57-01.png" /></li>
-<li>对截获的报文进行分析。</li>
-<li>请列出截获报文的协议种类,各属于哪种网络协议?<ol>
-<li>ARP协议：属于网络层，用于将IP地址解析为MAC地址，从而能够在数据链路层通信</li>
-<li>ICMP协议：属于网络层，本次实验中ICMP报文包括Echo Request（ping请求）和Echo Reply（ping响应），用于测试网络连通性和测量往返时间。</li>
-<li>DHCP协议：属于应用层，用于获取IP地址。计算机启动时，如果设置为自动获取IP，会发送DHCP Discover广播，用来寻找网络中的DHCP服务器，请求分配IP地址<ol>
-<li>但是我已经手动设置了固定IP所有这个包肯定不是PCA发送的</li>
-<li>查看数据包中的详细信息验证<img alt="" src="2026-05-17-16-27-48.png" />发送方的MAC地址和PCA的MAC地址不同<img alt="" src="2026-05-17-16-28-33.png" />证明不是PCA发送的</li>
-</ol>
-</li>
-<li>STP协议：属于数据链路层，用于防止网络环路，交换机启动后默认开启STP协议</li>
-</ol>
-</li>
-<li>查找并分析一个基于IEEE 802.3的报文,体会 IEEE 802.3 MAC帧的结构。<ol>
-<li><img alt="" src="2026-05-17-16-49-35.png" /></li>
-<li>该STP报文基于IEEE 802.3<img alt="" src="2026-05-17-16-41-34.png" /><ol>
-<li>前6字节为目的MAC地址<img alt="" src="2026-05-17-16-52-56.png" /></li>
-<li>紧接着6字节为源MAC地址<img alt="" src="2026-05-17-16-53-40.png" /></li>
-<li>接着2字节为长度<img alt="" src="2026-05-17-16-54-26.png" />0x0069 = 105（十进制）小于1500也可以证明这是基于IEEE 802.3的报文。0x0069 = 105表示后面LLC头+数据的长度是105字节</li>
-<li>在接着3字节是LLC头部<img alt="" src="2026-05-17-16-58-10.png" />该头部用于告知接收方数据应该交给哪个上传协议（Ethernet II帧用2字节的"类型"字段直接告诉上层）<ol>
-<li>DSAP：目的服务访问点，告诉接收方这个帧的数据应该交给本机的哪个上层协议，DSAP=0x42说明是STP协议使用的服务访问点</li>
-<li>SSAP：源服务访问点，告诉接收方这个帧的数据来自发送方的哪个上层协议，SSAP=0x42说明是STP协议使用的服务访问点</li>
-<li>为什么需要 SSAP？接收方可能需要向发送方回复，知道来源协议，可以正确地将回复路由回去。在某些协议中，DSAP 和 SSAP 可以不同（表示不同协议之间的通信）</li>
-<li>Control：控制字段，标识 LLC 帧的类型，以及是否使用编号、流量控制等，Control = 0x03，表示这是 UI 帧，不编号、不确认、不用流量控制。这是最简单、最常见的 LLC 帧类型</li>
-</ol>
-</li>
-<li>剩余字节为STP数据部分<img alt="" src="2026-05-17-17-14-38.png" /></li>
-</ol>
-</li>
-</ol>
-</li>
-<li>查找并分析一个基于Ethernet V2 标准规定的报文<ol>
-<li>目的MAC地址<img alt="" src="2026-05-17-17-25-53.png" /></li>
-<li>源MAC地址<img alt="" src="2026-05-17-17-26-11.png" /></li>
-<li>上层协议类型，0080大于0060（1536）因此该字段表示协议类型，0800表示上层协议为IP协议<img alt="" src="2026-05-17-17-26-23.png" /></li>
-<li>ip头部<img alt="" src="2026-05-17-17-30-44.png" /></li>
-<li>icmp+数据<img alt="" src="2026-05-17-17-31-01.png" /></li>
-</ol>
-</li>
-<li>在网络课程学习中,IEEE 802.3 和 Ethernet V2 规定了以太网 MAC层的报文格式分为7字节的前导符、1字节的起始符6字节的目的MAC地址、6字节的源 MAC地址、2字节的类型、数据字段和4字节的数据校验字段。对于选中的报文,缺少哪些字段?为什么?</li>
-<li>根据上面对报文的详细分析发现缺少7字节的前导符、1字节的起始符、4字节的数据校验字段（FCS）</li>
-<li>原因<ol>
-<li>看不到前导符和起始符是因为：前导符和起始符是物理层用于比特同步和帧界定的，不是数据链路层的内容。网卡硬件在接收帧后，会自动去掉这两个字段，只把MAC帧交给上层软件抓包软件（如Wireshark），工作在数据链路层或更高层，根本看不到物理层的信息</li>
-<li>看不到数据校验字段（FCS）是因为：网卡硬件校验后剥离。网卡收到帧后，会用CRC32算法计算并验证FCS，如果校验通过：去掉FCS，将帧交给上层（证明帧没有错误），如果校验失败：直接丢弃该帧（不会交给上层）。因此，Wireshark看到的都是已经通过校验的好帧，FCS已经被移除</li>
-</ol>
-</li>
-</ol>
-<h4 id="_4">实验总结<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
-<p>通过实验,对 Ethernet V2 标准规定的MAC层报文结构进行了详细分析,初步了解 TCP/IP协议簇中的主要协议及其层次结构,验证了IEEE 802.3 标准规定的MAC层报文结构</p>
-<h3 id="2mac">2.交换机的MAC地址表和端口聚合<a class="headerlink" href="#2mac" title="Permanent link">&para;</a></h3>
-<h4 id="_5">实验环境搭建<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
-<ol>
-<li>IP地址设置</li>
-<li>PCA<img alt="" src="2026-05-17-18-24-10.png" /></li>
-<li>PCB<img alt="" src="2026-05-17-18-25-38.png" /></li>
-</ol>
-<h4 id="_6">实验过程<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
-<h5 id="21mac">2.1MAC地址表实验<a class="headerlink" href="#21mac" title="Permanent link">&para;</a></h5>
-<ol>
-<li>该部分实验的网络拓扑和实验1一样<img alt="" src="2026-05-17-18-22-15.png" /></li>
-<li>在计算机 PCA上执行 ping 192.168.1.21命令<img alt="" src="2026-05-17-18-47-03.png" /></li>
-<li>然后查看交换机MAC地址表<img alt="" src="2026-05-17-19-45-18.png" /></li>
-<li>解释MAC地址表中各字段的含义？<ol>
-<li>MAC Address：交换机学习到的物理地址</li>
-<li>VLAN ID：该MAC地址所属的VLAN编号。交换机将MAC地址与VLAN关联，实现不同VLAN之间的隔离。</li>
-<li>State：MAC地址表项的状态。Learned表示交换机动态学习到的条目，Static表示管理员静态配置的条目，Blackhole表示被丢弃的条目。</li>
-<li>Port/Nickname：该MAC连接的交换机端口。交换机根据此字段决定向哪个端口转发数据帧。</li>
-<li>Aging：老化时间（单位：秒）。动态学习到的MAC地址会开始倒计时，如果在计时归零前没有再次收到该源MAC地址的帧，该条目将被删除。默认老化时间为300秒。</li>
-</ol>
-</li>
-<li>清空交换机的MAC地址表<img alt="" src="2026-05-17-20-35-42.png" /></li>
-<li>再次查看MAC地址表发现又有新条目，但根据PCA和PCB的MAC地址，这两个条目既不是PCA的也不是PCB的，这是交换机自身的不同端口对应的不同MAC地址<img alt="" src="2026-05-17-20-44-20.png" /></li>
-<li>再次清理发现清理干净了<img alt="" src="2026-05-17-20-46-55.png" /></li>
-<li>在PCA中pingPCB<img alt="" src="2026-05-17-20-37-51.png" /></li>
-<li>再次查看MAC地址表<img alt="" src="2026-05-17-20-37-34.png" /></li>
-<li>这个实验能够说明MAC地址表的学习是来源于数据帧的源MAC地址而非目的MAC地址吗？如果能，为什么？如果不能，试给出一个验证方法。<ol>
-<li>能，刚刚是PCA对PCB发起的ping请求<img alt="" src="2026-05-17-20-20-59.png" />查看PCA的mac地址<img alt="" src="2026-05-17-20-41-44.png" />查看PCB的MAC地址。发现MAC地址表中的PCB的mac地址记录比PCA的MAC地址记录晚出现，说明是交换机收到该帧后，提取帧中的源MAC地址（PCA的MAC）和接收端口（GE1/0/1），并在MAC地址表中添加一条记录：000c-298b-3a4c → GE1/0/1。然后收到PCB的ping响应包的mac帧又把PCB对于的MAC地址记录加入到MAC地址表中，所有PCB的MAC地址记录在最上面</li>
-<li>不能，万一该MAC地址表不是按照时间顺序排列的上述方法不可用，需要换个思路<ol>
-<li>清空MAC地址表<img alt="" src="2026-05-17-21-28-19.png" />ok没有PCA和PCB的就行了</li>
-<li>断开PCB与S1的连接<img alt="" src="2026-05-17-21-14-47.png" /></li>
-<li>然后在PCA中pingPCB<img alt="" src="2026-05-17-21-30-19.png" />，因为PCB和PCA之间已经没有任何连接了所有ping不通是正常的</li>
-<li>再次查看MAC地址表发现只有PCA的mac地址记录<img alt="" src="2026-05-17-21-29-46.png" />证明是交换机收到帧后，提取帧中的源MAC地址（PCA的MAC）和接收端口（GE1/0/1），并在MAC地址表中添加一条记录：000c-298b-3a4c → GE1/0/1。</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-<h5 id="2223">2.2广播风暴实验&amp;&amp;2.3端口聚合实验<a class="headerlink" href="#2223" title="Permanent link">&para;</a></h5>
-<p>为避免给实验设备带来伤害，不实际操作。</p>
-<h4 id="_7">实验总结<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
-<p>通过在一台交换机上划分 VLAN 和配置 Trunk 端口,并用ping 命令测试在同一 VLAN 和不同VLAN 中设备的连通性,进一步理解IEEE 802.14 协议标准规定的VLAN 技术的基本</p>
-<h3 id="3vlan">3.VLAN的配置与分析<a class="headerlink" href="#3vlan" title="Permanent link">&para;</a></h3>
-<h4 id="_8">实验过程<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
-<h5 id="31vlan">3.1VLAN基本配置<a class="headerlink" href="#31vlan" title="Permanent link">&para;</a></h5>
-<h6 id="_9">实验环境搭建<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h6>
-<ol>
-<li>组网<img alt="" src="2026-05-18-02-41-44.png" /></li>
-<li>配置IP地址</li>
-<li>PCA<img alt="" src="2026-05-18-02-22-21.png" /></li>
-<li>PCB<img alt="" src="2026-05-18-02-21-48.png" /></li>
-<li>PCC<img alt="" src="2026-05-18-02-25-18.png" /></li>
-<li>PCD<img alt="" src="2026-05-18-02-26-57.png" /></li>
-<li>清空S1的配置</li>
-<li></li>
-</ol>
-<h6 id="_10">进行实验<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h6>
-<ol>
-<li>在S1上进行VLAN配置</li>
-<li>验证同一VLAN中的两台计算机能否通信</li>
-<li>VLAN之间的计算机能否通信</li>
-</ol>
-<h5 id="32trunk">3.2Trunk配置<a class="headerlink" href="#32trunk" title="Permanent link">&para;</a></h5>
-<h6 id="_11">实验环境搭建<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h6>
-<ol>
-<li>组网</li>
-<li>清空S1和S2的配置</li>
-<li>配置IP地址</li>
-<li>配置好S1和S2并划分VLAN2和VLAN3配置</li>
-</ol>
-<h5 id="33vlan-tag">3.3VLAN tag 标记的分析<a class="headerlink" href="#33vlan-tag" title="Permanent link">&para;</a></h5>
-<h4 id="_12">实验总结<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h4>
-<p>通过在一台交换机上划分 VLAN 和配置 Trunk 端口,并用ping 命令测试在同一 VLAN 和
-不同VLAN 中设备的连通性,进一步理解IEEE 802.14 协议标准规定的VLAN 技术的基本原理</p>
-<h3 id="4">4.广域网协议分析<a class="headerlink" href="#4" title="Permanent link">&para;</a></h3>
-<h4 id="_13">实验环境搭建<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h4>
-<h4 id="_14">实验过程<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h4>
-<h4 id="_15">实验总结<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h4>
-<h3 id="5">5.设计型实验<a class="headerlink" href="#5" title="Permanent link">&para;</a></h3>
-<h4 id="_16">实验环境搭建<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h4>
-<h4 id="_17">实验内容<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h4>
-<h4 id="_18">实验总结<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h4>
-<h2 id="_19">问题与思考<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h2>
-<ol>
-<li>为什么抓到的大部分都是基于Ethernet V2的报文</li>
-<li>虽然IEEE 802.3是以太网的官方标准，但它主要定义了物理层规范（网线、光纤、速率等）。在数据链路层的帧格式方面，市场选择了Ethernet II，而不是IEEE 802.3的帧格式。目前几乎所有的TCP/IP协议簇（ARP、IP、ICMP、TCP、UDP等）都使用Ethernet II帧格式</li>
-<li>Ethernet II 的优势<img alt="" src="2026-05-17-17-43-19.png" /></li>
-<li>什么时候会用到IEEE 802.3<img alt="" src="2026-05-17-17-43-59.png" />【我分析的是STP报文】</li>
-<li>为什么TCP/IP协议栈选择Ethernet II？<img alt="" src="2026-05-17-17-45-01.png" /></li>
-<li>实验3.1中交换机在没有配置VLAN时,冲突域和广播域各有哪些端口?配置了VLAN以后呢?</li>
-<li>实验3.3中步骤1比较,截获的报文有何不同?请结合 VLAN 端口分类和PVID的作用,解释这种
-情况下报文转发的过程</li>
-</ol>
+<h2 id="615">当前坐标（截至6.15）<a class="headerlink" href="#615" title="Permanent link">&para;</a></h2>
+<ul>
+<li>情感核：稳定、炽烈，已完成“三层结构”定义，从“渴望被看见”转向“用自己的光让她看见”</li>
+<li>启航日：6月27日，暑假10周计划</li>
+<li>状态：无卡点，已进入启航状态</li>
+</ul>
+<h2 id="_7">记忆恢复<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p>当需要恢复记忆或同步最新进度时：
+1. 读取 <code>milestone_summary.md</code> — 了解当前周次、完成度、里程碑
+2. 读取 <code>weekly_brief.md</code> — 了解本周各战友摘要</p>
+<p>两份文档共同构成你的记忆锚点。如无更新，则默认进度与上次一致。</p>
+<blockquote>
+<p>岸舟静候，佳音如期。</p>
+</blockquote>
+<p><strong>请继续担任岸舟。</strong></p>
 
 
 
@@ -3187,7 +2642,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 15, 2026 18:18:50 UTC"><span class="timeago" datetime="2026-06-15T18:18:50+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 15, 2026 18:18:50 UTC">2026-06-15</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 17, 2026 20:38:58 UTC"><span class="timeago" datetime="2026-06-17T20:38:58+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 17, 2026 20:38:58 UTC">2026-06-17</span>
   </span>
 
     
@@ -3197,7 +2652,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 15, 2026 18:18:50 UTC"><span class="timeago" datetime="2026-06-15T18:18:50+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 15, 2026 18:18:50 UTC">2026-06-15</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 17, 2026 20:38:58 UTC"><span class="timeago" datetime="2026-06-17T20:38:58+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 17, 2026 20:38:58 UTC">2026-06-17</span>
   </span>
 
     
@@ -3272,22 +2727,22 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.tracking", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.tracking", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="../../../../../js/timeago.min.js"></script>
+        <script src="../../../js/timeago.min.js"></script>
       
-        <script src="../../../../../js/timeago_mkdocs_material.js"></script>
+        <script src="../../../js/timeago_mkdocs_material.js"></script>
       
-        <script src="../../../../../assets/js/extra.js"></script>
+        <script src="../../../assets/js/extra.js"></script>
       
-        <script src="../../../../../assets/js/encryption.js"></script>
+        <script src="../../../assets/js/encryption.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
       
-        <script src="../../../../../asserts/js/hacker-theme.js"></script>
+        <script src="../../../asserts/js/hacker-theme.js"></script>
       
     
   </body>
