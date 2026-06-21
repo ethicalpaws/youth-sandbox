@@ -40,7 +40,7 @@
       "lateral_movement": 0.0,
       "c2_framework": 0.0,
       "blue_team": 0.0,
-      "network_traffic": 62.5,
+      "network_traffic": 66.0,
       "cryptography": 16.0
     },
     "heatmap": {
@@ -125,11 +125,11 @@
         },
         {
           "total": 7,
-          "max_daily": 4,
+          "max_daily": 5,
           "days": [
             1,
-            2,
-            4,
+            1,
+            5,
             0,
             0,
             0,
@@ -726,7 +726,7 @@
       "active_days": 18,
       "max_contrib": 49
     },
-    "last_update": "2026-06-22 01:05:34",
+    "last_update": "2026-06-22 02:16:54",
     "first_bug_awarded": true,
     "start_date": "2026-05-27"
   }
