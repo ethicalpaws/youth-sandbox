@@ -8,12 +8,12 @@
     "special_achievements": []
   },
   "auto": {
-    "level": 4,
-    "current_exp": 297,
-    "next_exp": 345,
-    "total_exp": 1025,
+    "level": 5,
+    "current_exp": 12,
+    "next_exp": 414,
+    "total_exp": 1085,
     "stats": {
-      "notes_count": 81,
+      "notes_count": 87,
       "ctf_count": 0,
       "cve_count": 4,
       "src_count": 0,
@@ -40,7 +40,7 @@
       "lateral_movement": 0.0,
       "c2_framework": 0.0,
       "blue_team": 0.0,
-      "network_traffic": 50.0,
+      "network_traffic": 59.0,
       "cryptography": 16.0
     },
     "heatmap": {
@@ -98,11 +98,11 @@
           ]
         },
         {
-          "total": 56,
-          "max_daily": 51,
+          "total": 54,
+          "max_daily": 49,
           "days": [
             3,
-            51,
+            49,
             1,
             1,
             0,
@@ -111,25 +111,25 @@
           ]
         },
         {
-          "total": 0,
-          "max_daily": 0,
+          "total": 2,
+          "max_daily": 1,
           "days": [
             0,
             0,
             0,
             0,
+            1,
             0,
-            0,
-            0
+            1
           ]
         },
         {
-          "total": 0,
-          "max_daily": 0,
+          "total": 6,
+          "max_daily": 3,
           "days": [
-            0,
-            0,
-            0,
+            1,
+            2,
+            3,
             0,
             0,
             0,
@@ -722,11 +722,11 @@
           ]
         }
       ],
-      "total_notes": 81,
-      "active_days": 14,
-      "max_contrib": 51
+      "total_notes": 87,
+      "active_days": 19,
+      "max_contrib": 49
     },
-    "last_update": "2026-06-09 02:02:32",
+    "last_update": "2026-06-22 01:00:05",
     "first_bug_awarded": true,
     "start_date": "2026-05-27"
   }
