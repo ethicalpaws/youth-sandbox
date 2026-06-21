@@ -40,7 +40,7 @@
       "lateral_movement": 0.0,
       "c2_framework": 0.0,
       "blue_team": 0.0,
-      "network_traffic": 59.0,
+      "network_traffic": 62.5,
       "cryptography": 16.0
     },
     "heatmap": {
@@ -98,13 +98,13 @@
           ]
         },
         {
-          "total": 54,
+          "total": 53,
           "max_daily": 49,
           "days": [
             3,
             49,
             1,
-            1,
+            0,
             0,
             0,
             0
@@ -124,12 +124,12 @@
           ]
         },
         {
-          "total": 6,
-          "max_daily": 3,
+          "total": 7,
+          "max_daily": 4,
           "days": [
             1,
             2,
-            3,
+            4,
             0,
             0,
             0,
@@ -723,10 +723,10 @@
         }
       ],
       "total_notes": 87,
-      "active_days": 19,
+      "active_days": 18,
       "max_contrib": 49
     },
-    "last_update": "2026-06-22 01:00:05",
+    "last_update": "2026-06-22 01:05:34",
     "first_bug_awarded": true,
     "start_date": "2026-05-27"
   }
