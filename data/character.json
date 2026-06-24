@@ -9,11 +9,11 @@
   },
   "auto": {
     "level": 5,
-    "current_exp": 12,
+    "current_exp": 2,
     "next_exp": 414,
-    "total_exp": 1085,
+    "total_exp": 1075,
     "stats": {
-      "notes_count": 87,
+      "notes_count": 86,
       "ctf_count": 0,
       "cve_count": 4,
       "src_count": 0,
@@ -98,11 +98,11 @@
           ]
         },
         {
-          "total": 53,
-          "max_daily": 49,
+          "total": 50,
+          "max_daily": 46,
           "days": [
             3,
-            49,
+            46,
             1,
             0,
             0,
@@ -111,26 +111,26 @@
           ]
         },
         {
-          "total": 2,
+          "total": 1,
           "max_daily": 1,
           "days": [
             0,
             0,
             0,
             0,
-            1,
+            0,
             0,
             1
           ]
         },
         {
-          "total": 7,
-          "max_daily": 5,
+          "total": 10,
+          "max_daily": 6,
           "days": [
-            1,
-            1,
-            5,
             0,
+            0,
+            6,
+            4,
             0,
             0,
             0
@@ -722,11 +722,11 @@
           ]
         }
       ],
-      "total_notes": 87,
-      "active_days": 18,
-      "max_contrib": 49
+      "total_notes": 86,
+      "active_days": 16,
+      "max_contrib": 46
     },
-    "last_update": "2026-06-22 02:16:54",
+    "last_update": "2026-06-24 19:36:50",
     "first_bug_awarded": true,
     "start_date": "2026-05-27"
   }
