@@ -29,3 +29,6 @@ local.yml
 
 # 日志
 *.log
+
+# 宠物小游戏
+pets/
