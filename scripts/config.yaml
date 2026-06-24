@@ -1,0 +1,449 @@
+# ==================== 全局配置 ====================
+status_map:
+  已完成: "✅"
+  进行中: "🔄"
+  未开始: "⬜"
+
+difficulty_config:
+  简单:
+    exp: 10
+    level: "⭐"
+    achievement: "简单猎手"
+  中等:
+    exp: 20
+    level: "⭐⭐"
+    achievement: "中等猎手"
+  困难:
+    exp: 50
+    level: "⭐⭐⭐"
+    achievement: "困难猎手"
+  专家:
+    exp: 100
+    level: "⭐⭐⭐⭐"
+    achievement: "专家猎手"
+
+# ==================== SRC 成就配置 ====================
+src_achievements:
+  1000: "🎖️ 千元猎手"
+  5000: "🏅 五千猎人"
+  10000: "🏆 万元大师"
+  50000: "👑 五万王者"
+  default: "🔰 新手入门"
+
+# ==================== 年度目标配置 ====================
+annual_goal:
+  target_bounty: 100000
+  target_targets: 50
+  vuln_level_map:
+    "⭐⭐⭐⭐": "严重"
+    "⭐⭐⭐": "高危"
+    "⭐⭐": "中危"
+    "⭐": "低危"
+  bounty_reference:
+    严重: "5000-10000元"
+    高危: "2000-5000元"
+    中危: "500-2000元"
+    低危: "50-500元"
+
+# ==================== 01-foundation 章节 ====================
+foundation_chapter:
+  title: "🔰 基础知识"
+  description: "编程语言、操作系统、WAF绕过等基础"
+  module_tag_mapping:
+    bypass-waf:
+      - bypass
+      - waf
+      - 绕过
+      - waf-bypass
+  learning_route:
+    - "**编程基础**：Python、JavaScript、Java"
+    - "**操作系统**：Linux、Windows基础"
+    - "**WAF绕过**：基础绕过技巧"
+  resources:
+    - name: "菜鸟教程"
+      url: "https://www.runoob.com/"
+      purpose: "编程入门"
+    - name: "Linux命令大全"
+      url: "https://www.linuxcool.com/"
+      purpose: "命令查询"
+  milestones:
+    - count: 2
+      icon: "🎖️"
+      title: "基础入门"
+    - count: 4
+      icon: "🏅"
+      title: "基础进阶"
+    - count: 6
+      icon: "🏆"
+      title: "基础精通"
+
+# ==================== 02-network-protocol-security 章节 ====================
+network_chapter:
+  title: "🌐 网络协议安全"
+  description: "网络基础、攻击技术与防御措施"
+  learning_route:
+    - "**网络基础**：OSI模型、TCP/IP协议族"
+    - "**网络攻击**：ARP欺骗、ICMP攻击、TCP攻击"
+    - "**防御技术**：防火墙、VPN隧道"
+  resources:
+    - name: "TCP/IP详解"
+      url: "https://book.douban.com/subject/1088054/"
+      purpose: "经典书籍"
+    - name: "Wireshark"
+      url: "https://www.wireshark.org/"
+      purpose: "抓包分析工具"
+  milestones:
+    - count: 2
+      icon: "🎖️"
+      title: "网络基础入门"
+    - count: 4
+      icon: "🏅"
+      title: "网络基础进阶"
+    - count: 6
+      icon: "🏆"
+      title: "网络基础精通"
+
+# ==================== 03-web-basics 章节 ====================
+web_basics:
+  title: "🌐 Web基础漏洞"
+  description: "OWASP Top 10 核心漏洞，Web安全入门必学"
+  status_to_chapter:
+    持续更新中: "♻️"
+    进行中: "🔄"
+    未开始: "⬜"
+  
+  module_tag_mapping:
+    xss:
+      - xss
+      - XSS
+      - cross-site-scripting
+    sqli:
+      - sqli
+      - sql-injection
+      - SQL注入
+    csrf:
+      - csrf
+      - CSRF
+      - xsrf
+    ssrf:
+      - ssrf
+      - SSRF
+    xxe:
+      - xxe
+      - XXE
+    command-injection:
+      - command-injection
+      - command injection
+      - cmdi
+      - 命令注入
+    file-upload:
+      - file-upload
+      - file upload
+      - upload
+      - 文件上传
+    access-control:
+      - access-control
+      - access control
+      - 越权
+      - 权限绕过
+    info-leak:
+      - info-leak
+      - info leak
+      - information-disclosure
+      - 信息泄露
+  
+  learning_route:
+    - "**基础三剑客**：XSS → CSRF → SQL注入"
+    - "**服务端漏洞**：SSRF → XXE → 命令注入"
+    - "**权限与文件**：文件上传 → 访问控制 → 信息泄露"
+  
+  resources:
+    - name: "OWASP Top 10"
+      url: "https://owasp.org/Top10/"
+      purpose: "漏洞权威列表"
+    - name: "PortSwigger"
+      url: "https://portswigger.net/web-security"
+      purpose: "在线实战"
+    - name: "BugKu CTF"
+      url: "https://ctf.bugku.com/"
+      purpose: "CTF练习"
+  
+  milestones:
+    - count: 3
+      icon: "🎖️"
+      title: "Web安全基础入门"
+    - count: 6
+      icon: "🏅"
+      title: "Web安全基础进阶"
+    - count: 9
+      icon: "🏆"
+      title: "Web安全基础精通"
+
+# ==================== 04-web-advanced 章节 ====================
+web_advanced:
+  title: "⚡ Web高级漏洞"
+  description: "SSTI、原型链污染、API安全等高级漏洞"
+  status_to_chapter:
+    持续更新中: "♻️"
+    进行中: "🔄"
+    未开始: "⬜"
+  
+  module_tag_mapping:
+    ssti:
+      - ssti
+      - template-injection
+      - 模板注入
+    prototype-pollution:
+      - prototype-pollution
+      - prototype
+      - 原型链污染
+    api-security:
+      - api
+      - api-security
+      - API安全
+  
+  learning_route:
+    - "**模板注入**：SSTI"
+    - "**前端安全**：原型链污染"
+    - "**API安全**：API漏洞"
+  
+  resources:
+    - name: "SSTI 实验室"
+      url: "https://portswigger.net/web-security/server-side-template-injection"
+      purpose: "在线实战"
+    - name: "API Security Top 10"
+      url: "https://owasp.org/www-project-api-security/"
+      purpose: "API安全权威"
+    - name: "Node.js 安全"
+      url: "https://nodejs.org/en/docs/guides/security/"
+      purpose: "官方文档"
+  
+  milestones:
+    - count: 1
+      icon: "🎖️"
+      title: "Web高级入门"
+    - count: 2
+      icon: "🏅"
+      title: "Web高级进阶"
+    - count: 3
+      icon: "🏆"
+      title: "Web高级精通"
+
+# ==================== 05-java-security 章节 ====================
+java_security:
+  title: "☕ Java安全"
+  description: "Java反序列化、内存马、JNDI注入等"
+  status_to_chapter:
+    持续更新中: "♻️"
+    进行中: "🔄"
+    未开始: "⬜"
+  
+  module_tag_mapping:
+    java-deserialization:
+      - deserialization
+      - cc1
+      - cc2
+      - cc3
+      - cc4
+      - cc5
+      - cc6
+      - cc7
+      - cb1
+      - beanutils
+    jndi-injection:
+      - jndi
+      - jndi-injection
+      - log4j
+      - ldap
+      - rmi
+    memory-shell:
+      - memory-shell
+      - 内存马
+      - filter
+      - servlet
+      - agent
+    fastjson:
+      - fastjson
+      - deserialization
+    shiro:
+      - shiro
+      - shiro550
+      - cve-2016-4437
+    spring:
+      - spring
+      - springboot
+      - spring4shell
+      - spel
+    tomcat:
+      - tomcat
+      - cve-2020-1938
+      - ajp
+  
+  learning_route:
+    - "**反序列化**：CC链 → CB链 → Fastjson"
+    - "**JNDI注入**：Log4j → RMI → LDAP"
+    - "**内存马**：Filter → Servlet → Agent"
+    - "**框架漏洞**：Fastjson → Shiro → Spring → Tomcat"
+  
+  resources:
+    - name: "ysoserial"
+      url: "https://github.com/frohoff/ysoserial"
+      purpose: "反序列化工具"
+    - name: "Java安全漫谈"
+      url: "https://paper.seebug.org/category/java/"
+      purpose: "学习文章"
+  
+  milestones:
+    - count: 3
+      icon: "🎖️"
+      title: "Java安全入门"
+    - count: 6
+      icon: "🏅"
+      title: "Java安全进阶"
+    - count: 10
+      icon: "🏆"
+      title: "Java安全精通"
+
+# ==================== 06-red-blue-confrontation 章节 ====================
+red_blue_chapter:
+  title: "🔴🟦 红蓝对抗"
+  description: "渗透测试、内网渗透、C2框架、免杀绕过"
+  learning_route:
+    - "**渗透测试**：信息收集、漏洞利用、权限维持"
+    - "**内网渗透**：域渗透、横向移动、权限提升"
+    - "**C2与免杀**：C2框架、免杀技术、绕过技巧"
+  resources:
+    - name: "MITRE ATT&CK"
+      url: "https://attack.mitre.org/"
+      purpose: "攻击矩阵"
+    - name: "Cobalt Strike"
+      url: "https://www.cobaltstrike.com/"
+      purpose: "C2框架"
+  milestones:
+    - count: 3
+      icon: "🎖️"
+      title: "红蓝入门"
+    - count: 6
+      icon: "🏅"
+      title: "红蓝进阶"
+    - count: 9
+      icon: "🏆"
+      title: "红蓝精通"
+
+# ==================== Practice 板块 ====================
+practice:
+  ctf:
+    note_suffix: "_wp.md"
+    template: "ctf"
+  
+  cve:
+    note_suffix: ".md"
+    template: "cve"
+    extract_sections:
+      - "修复方案"
+  
+  lab:
+    note_suffix: ".md"
+    template: "lab"
+  
+  src:
+    note_suffix: ".md"
+    template: "src"
+
+# ==================== 角色面板配置 ====================
+character:
+  skills:
+    web_security:
+      source: "knowledge/03-web-basics/index.md"
+      field: "completed"
+      multiplier: 15
+      max: 100
+    web_advanced:
+      source: "knowledge/04-web-advanced/index.md"
+      field: "completed"
+      multiplier: 15
+      max: 100
+    java_security:
+      source: "knowledge/05-java-security/index.md"
+      field: "completed"
+      multiplier: 5
+      max: 100
+    ctf_ability:
+      source: "practice/ctf/index.md"
+      field: "completed_questions"
+      multiplier: 2
+      max: 100
+    cve_analysis:
+      source: "practice/cve/index.md"
+      field: "analyzed"
+      multiplier: 2
+      max: 100
+    src_dig:
+      source: "practice/src/index.md"
+      field: "completed_targets"
+      multiplier: 1
+      max: 100
+    programming:
+      source: "knowledge/01-foundation/programming/index.md"
+      field: "total_notes"
+      formula: "value + code_attachments/30"
+      max: 100
+    bypass_waf:
+      source: "knowledge/01-foundation/bypass-waf/index.md"
+      field: "completed"
+      formula: "(value + practice_related) * 3"
+      practice_keywords: ["bypass", "waf", "绕过", "waf-bypass"]
+      max: 100
+    code_review:
+      source_type: "code_attachments"
+      source: "sources"
+      multiplier: 2
+      max: 100
+    internal_network:
+      source: "knowledge/06-red-blue-confrontation/internal-network/index.md"
+      field: "completed"
+      multiplier: 3
+      max: 100
+    pwn:
+      source: "knowledge/06-red-blue-confrontation/pwn/index.md"
+      field: "completed"
+      multiplier: 5
+      max: 100
+    evasion:
+      source: "knowledge/06-red-blue-confrontation/evasion/index.md"
+      field: "completed"
+      multiplier: 3
+      max: 100
+    penetration_test:
+      source: "knowledge/06-red-blue-confrontation/penetration-test/index.md"
+      field: "completed"
+      extra_field: "in_progress"
+      formula: "completed*5 + in_progress*3"
+      max: 100
+    lateral_movement:
+      source: "knowledge/06-red-blue-confrontation/lateral-movement/index.md"
+      field: "completed"
+      multiplier: 5
+      max: 100
+    c2_framework:
+      source: "knowledge/06-red-blue-confrontation/c2-framework/index.md"
+      field: "completed"
+      multiplier: 5
+      max: 100
+    blue_team:
+      source: "knowledge/06-red-blue-confrontation/blue-team/index.md"
+      field: "completed"
+      multiplier: 5
+      max: 100
+    network_traffic:
+      source: "knowledge/02-network-protocol-security/network-basics/index.md"
+      field: "completed"
+      extra_source: "knowledge/02-network-protocol-security/network-attack/index.md"
+      extra_field: "completed"
+      formula: "value*5 + extra*10"
+      max: 100
+    cryptography:
+      source: "knowledge/01-foundation/cryptography/index.md"
+      field: "total_notes"
+      multiplier: 8
+      max: 100

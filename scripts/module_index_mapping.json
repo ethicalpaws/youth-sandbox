@@ -1,0 +1,29 @@
+# 03-web-basics 章节
+web_basics:
+  module_tag_mapping:
+    xss:
+      - xss
+      - XSS
+      - cross-site-scripting
+    sqli:
+      - sqli
+      - sql-injection
+    # ...
+
+# 04-web-advanced 章节
+web_advanced:
+  module_tag_mapping:
+    ssti:
+      - ssti
+      - template-injection
+    # ...
+
+# 01-foundation 章节
+foundation_chapter:
+  module_tag_mapping:
+    bypass-waf:
+      - bypass
+      - waf
+      - 绕过
+      - waf-bypass
+    # 其他模块不需要关联，所以不用写

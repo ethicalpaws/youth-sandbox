@@ -1,83 +1,240 @@
-site_name: 'Ethicalpaws-Youth Notes'
-site_description: 'Java反序列化 | Web安全 | CTF'
-site_author: 'ethicalpaws'
-site_url: 'https://ethicalpaws.github.io/security-study-notes/'
-
-repo_name: 'ethicalpaws/security-study-notes'
-repo_url: 'https://github.com/ethicalpaws/security-study-notes'
-
-copyright: 'Copyright &copy; 2026 ethicalpaws'
+# 站点信息
+site_name: 青春沙盒
+site_description: 安全学习笔记 × 青春记录 | 一个可以安全试错的环境
+site_author: ethicalpaws
+site_url: https://ethicalpaws.github.io/youth-sandbox/
+copyright: © 2026 青春沙盒 - 记录技术，也记录青春
 
 # 主题配置
 theme:
-  name: 'material'
-  language: 'zh'
+  name: material
+  custom_dir: overrides  # 自定义模板目录
   palette:
-    - scheme: 'default'
-      primary: 'indigo'
-      accent: 'indigo'
+    # 亮色模式
+    - scheme: default
+      primary: indigo
+      accent: deep purple
       toggle:
-        icon: 'material/brightness-7'
-        name: '切换深色模式'
-    - scheme: 'slate'
-      primary: 'indigo'
-      accent: 'indigo'
+        icon: material/brightness-7
+        name: 切换到深色模式
+    # 暗色模式
+    - scheme: slate
+      primary: deep purple
+      accent: indigo
       toggle:
-        icon: 'material/brightness-4'
-        name: '切换浅色模式'
+        icon: material/brightness-4
+        name: 切换到浅色模式
+  
   features:
-    - navigation.tabs        # 顶部标签式导航
-    - navigation.sections    # 左侧导航显示章节
-    - navigation.top         # 返回顶部按钮
-    - search.highlight       # 搜索高亮
-    - search.share           # 搜索分享
-    - content.code.copy      # 代码块复制按钮
+    - navigation.tabs          # 顶部标签页
+    - navigation.sections      # 侧边栏分组
+    - navigation.expand        # 自动展开
+    - navigation.top           # 返回顶部
+    - navigation.indexes       # 章节索引
+    - navigation.tracking      # URL锚点跟踪
+    - search.suggest           # 搜索建议
+    - search.highlight         # 搜索高亮
+    - search.share             # 搜索分享
+    - content.code.copy        # 代码复制
+    - content.code.annotate    # 代码注释
+    - toc.follow               # 目录跟随滚动
+  
+  icon:
+    repo: fontawesome/brands/github
+    logo: material/cloud
 
-# 引入自定义CSS和JS
+# 仓库信息（显示在右上角）
+repo_url: https://github.com/ethicalpaws/youth-sandbox
+repo_name: youth-sandbox
+edit_uri: blob/main/docs/
+
+# 全局 CSS
 extra_css:
-  - css/extra.css
-  - css/test-style.css
+  - assets/css/extra.css
+  - assets/css/home.css
+  - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css
+  - asserts/css/hacker-theme.css      # 新增：黑客帝国风格
+# 全局 JS（会加载到所有页面）
 extra_javascript:
-  - js/extra.js
-  - js/test-script.js
-# 扩展插件
+  - assets/js/extra.js
+  - assets/js/encryption.js
+  - https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js
+  - asserts/js/hacker-theme.js        # 新增：黑客帝国特效
+
+# 如果有需要延迟加载或条件加载的 JS
+# 可以在具体页面的 Markdown 中用 <script> 标签
+
+
+# 插件配置 
 plugins:
   - search
-  - tags                    # 文章标签
+  - blog:
+      blog_dir: updates
+      post_date_format: long
+      post_url_format: "{date}/{slug}"
+      post_excerpt_separator: "<!-- more -->"
+      pagination_per_page: 10
+      pagination_url_format: "page/{page}"
+      archive: true
+      archive_name: "📦 全部动态"
+      categories: true
+      categories_name: "📂 分类"
+      categories_allowed:
+        - "🎉 成就时刻"
+        - "🔧 技术突破"
+        - "💭 日常感悟"
+        - "📖 学习周报"
+        - "💪 奋斗记录"
+      authors: true
+      authors_profiles: true
+      generate_rss: true
+      rss_url: "feed_rss.xml"
+      post_readtime: true
+      post_readtime_words_per_minute: 265
+      post_navigation: true
 
-# Markdown扩展配置
+ 
+
+  - git-revision-date-localized:
+      enable_creation_date: true
+      type: timeago
+      enable_git_follow: false   # 修复警告
+
+# Markdown扩展
 markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
-      use_pygments: true
+      line_spans: __span
+      pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
-  - admonition              # 提示框（Note, Warning等）
-  - pymdownx.details        # 可折叠块
-  - attr_list               # 给Markdown元素添加属性（如图片大小）
-  - md_in_html              # 在HTML中嵌入Markdown
-  - tables                  # 表格支持
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - admonition
+  - pymdownx.details
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+  - footnotes
 
-
-strict: false
-# 导航结构（这是最重要的部分！）
+# 导航配置
 nav:
-  - 首页: index.md
-#  - 学习计划: 
-#    - 四周学习计划: study-plan/README.md
- #   - 第一周: study-plan/week1.md
-  - 每周复盘:
-    - Week 1:
-      - 收获: weekly/week1/outcome.md
-      - 检测: weekly/week1/detection.md
-  - Java反序列化: java-deserialization/java-deserialization(ing).md
-  - Web漏洞笔记:
-#    - XSS: web-vulns/xss/xss.md
-    - CSRF&&XSS: web-vulns/csrf&xss/csrf&xss.md
-    - SSRF: web-vulns/ssrf/ssrf.md
-    - 访问控制: web-vulns/access-control/access-control.md
-    - XXE: web-vulns/xxe/xxe.md
-#    - CSRF: web-vulns/csrf/csrf.md
+  # ==================== 首页 ====================
+  -  首页: index.md
+
+  # ==================== 技术学习 ====================
+  -  $技术学习:
+      - 技术学习总览: tech-study/index.md
+
+      # ---------- 知识笔记 ----------
+      - 📖 知识笔记:
+          - 知识总览: tech-study/knowledge/index.md
+
+          # 01 基础知识
+          - 01-基础知识: tech-study/knowledge/01-foundation/index.md
+              
+          # 02 网络协议安全
+          - 02-网络协议安全: tech-study/knowledge/02-network-protocol-security/index.md
+              
+          # 03 Web基础漏洞
+          - 03-Web基础漏洞: tech-study/knowledge/03-web-basics/index.md
+              
+          # 04 Web高级漏洞
+          - 04-Web高级漏洞: tech-study/knowledge/04-web-advanced/index.md
+              
+          # 05 Java安全
+          - 05-Java安全: tech-study/knowledge/05-java-security/index.md
+              
+          # 06 红蓝对抗
+          - 06-红蓝对抗: tech-study/knowledge/06-red-blue-confrontation/index.md
+
+      # ---------- 实战练习 ----------
+      
+      - 🎯 实战练习:
+          - 实战总览: tech-study/practice/index.md
+
+          # CTF训练
+          - CTF训练: tech-study/practice/ctf/index.md
+             
+          # CVE分析
+          - CVE分析: tech-study/practice/cve/index.md
+              
+          # SRC实战
+          - SRC实战: tech-study/practice/src/index.md
+              
+      # ---------- 每周检测 ----------
+      - 📋 每周检测:
+          - 检测总览: tech-study/weekly-check/index.md
+          
+  # ==================== 青春记录 ====================
+  -  青春记录:
+      - 青春记录总览: life/index.md
+      - 📝 每周计划:
+          - 计划索引: life/study-plan/index.md
+          - 第1周: life/study-plan/week1.md
+          - 第2周: life/study-plan/week2.md
+          - 第3周: life/study-plan/week3.md
+          - 第4周: life/study-plan/week4.md
+          - 第5周: life/study-plan/week5.md
+
+      - 📔 随笔日记: life/journal/index.md
+      - 💭 烦恼记录: life/struggles/index.md
+      - 🎉 成就时刻:
+          - 成就墙: life/wins/index.md
+      - 🔄 复盘反思:
+          - 复盘索引: life/reflections/index.md
+          - 第一次ctf赛后复盘: life/reflections/破题之余-亦破心障.md
+      - 💌 父母寄语:
+          - 父母寄语总览: life/family-letters/index.md
+          - 父亲寄语: life/family-letters/初升高_父亲寄语.md
+          - 父母寄语: life/family-letters/成人礼_父母寄语.md
+
+  # ==================== 修桥工程 ====================     
+  -  修桥工程:
+      - 工程总览: bridge/index.md
+      - 《临风行》: bridge/novel/index.md
+
+  # ==================== 动态推送 ====================
+  -  动态推送:
+      - 动态列表: updates/index.md
+
+  # ==================== 精神食粮 ====================
+  -  精神食粮:
+      - 精神充电宝: spiritual/index.md
+      - 🖼️ 照片:
+          - 图片总览: spiritual/images/index.md
+      - 🎵 音乐:
+          - 音乐总览: spiritual/music/index.md
+      - 💬 句子:
+          - 句子收藏夹: spiritual/sentences/index.md
+
+  # ==================== 关于本站 ====================
+  -  关于本站:
+      - 关于: about/index.md
+      - 为什么建这个站: about/why.md
+
+  # ==================== 角色档案 ====================
+  - ❗️ 角色档案: role-panel/index.md
+
+# 额外配置
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/ethicalpaws
+      name: GitHub
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/ethicalpaws
+      name: Twitter
+  generator: false  # 隐藏MkDocs生成信息
+

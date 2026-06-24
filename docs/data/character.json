@@ -1,0 +1,733 @@
+{
+  "manual": {
+    "name": "ethicalpaws",
+    "avatar": "/youth-sandbox/asserts/images/avatar/avatar.png",
+    "title": "安全学徒",
+    "motto": "路漫漫其修远兮",
+    "join_date": "2026-05-27",
+    "special_achievements": []
+  },
+  "auto": {
+    "level": 5,
+    "current_exp": 2,
+    "next_exp": 414,
+    "total_exp": 1075,
+    "stats": {
+      "notes_count": 86,
+      "ctf_count": 0,
+      "cve_count": 4,
+      "src_count": 0,
+      "weekly_scores": [
+        95,
+        93,
+        87
+      ]
+    },
+    "skills": {
+      "web_security": 75.0,
+      "web_advanced": 0.0,
+      "java_security": 62.5,
+      "ctf_ability": 8.0,
+      "cve_analysis": 8.0,
+      "src_dig": 0.0,
+      "programming": 23.1,
+      "bypass_waf": 3.0,
+      "code_review": 4.0,
+      "internal_network": 12.0,
+      "pwn": 0.0,
+      "evasion": 0.0,
+      "penetration_test": 0.0,
+      "lateral_movement": 0.0,
+      "c2_framework": 0.0,
+      "blue_team": 0.0,
+      "network_traffic": 66.0,
+      "cryptography": 16.0
+    },
+    "heatmap": {
+      "weeks": [
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 1,
+          "max_daily": 1,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "total": 13,
+          "max_daily": 6,
+          "days": [
+            1,
+            0,
+            1,
+            3,
+            2,
+            6,
+            0
+          ]
+        },
+        {
+          "total": 11,
+          "max_daily": 5,
+          "days": [
+            0,
+            3,
+            1,
+            0,
+            0,
+            5,
+            2
+          ]
+        },
+        {
+          "total": 50,
+          "max_daily": 46,
+          "days": [
+            3,
+            46,
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 1,
+          "max_daily": 1,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "total": 10,
+          "max_daily": 6,
+          "days": [
+            0,
+            0,
+            6,
+            4,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "total_notes": 86,
+      "active_days": 16,
+      "max_contrib": 46
+    },
+    "last_update": "2026-06-24 19:36:50",
+    "first_bug_awarded": true,
+    "start_date": "2026-05-27"
+  }
+}

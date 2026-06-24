@@ -1,0 +1,240 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+CVE 板块题目级 index.md 自动生成脚本
+优化版：使用 common.py 公共模块，功能与原脚本完全一致
+"""
+
+import os
+import re
+import sys
+from datetime import datetime
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, SCRIPT_DIR)
+
+from common import (
+    logger, load_config, parse_front_matter, read_metadata,
+    get_status_emoji, get_difficulty_config, get_current_date,
+    safe_write, need_update
+)
+
+# ==================== 配置 ====================
+PROJECT_ROOT = r"E:\youth-sandbox\docs"
+CVE_PATH = os.path.join(PROJECT_ROOT, "tech-study", "practice", "cve")
+
+# CVE 模板（完全保持原样）
+CVE_TEMPLATE = '''---
+title: {title}
+description: {description}
+tags: {tags}
+status: {status_emoji}
+difficulty: {difficulty}
+cvss: {cvss}
+cve_id: {cve_id}
+affected_versions: {affected_versions}
+publish_date: {publish_date}
+---
+
+# 🛡️ 漏洞分析 · {title}
+
+---
+
+### 📋 漏洞档案
+
+| 属性 | 数值 |
+|------|------|
+| `CVE编号` | {cve_id} |
+| `漏洞类型` | {weakness} |
+| `CVSS评分` | {cvss} |
+| `危害等级` | {risk_level} |
+| `影响版本` | {affected_versions} |
+| `公开日期` | {publish_date} |
+| `分析状态` | {status_display} |
+
+### 🏆 分析成果
+
+| 奖励 | 数量 |
+|------|------|
+| `经验值` | **+{exp} XP** ✨ |
+| `成就` | {achievement} 🏅 |
+
+---
+
+### 📜 漏洞描述
+
+{description}
+
+### 🔧 修复方案
+
+{fix_suggestion}
+
+---
+
+### 🔗 关联档案
+
+[📖 详细分析 →]({note_file})
+
+---
+
+<span style="animation: blink 1s step-end infinite; text-shadow: 0 0 5px #0055ff, 0 0 10px #0033cc;">🛡️</span> **ANALYSIS COMPLETE** · {finish_date}
+
+<style>
+@keyframes blink {{
+  0%, 100% {{ opacity: 1; }}
+  50% {{ opacity: 0.6; }}
+}}
+</style>
+'''
+
+def get_difficulty_conf(difficulty: str) -> dict:
+    """获取难度配置"""
+    diff_config = get_difficulty_config()
+    return diff_config.get(difficulty, {'exp': 20, 'level': '⭐⭐', 'achievement': '中等猎手'})
+
+def extract_section(content: str, section_name: str) -> str:
+    """从笔记中提取指定章节的内容"""
+    _, rest = parse_front_matter(content)
+    pattern = rf'##\s*{section_name}\s*\n(.*?)(?=\n##|\n```|\n\n|$)'
+    match = re.search(pattern, rest, re.DOTALL)
+    if match:
+        text = match.group(1).strip()
+        if len(text) > 800:
+            text = text[:800] + "..."
+        return text
+    return "待补充"
+
+def get_risk_level(difficulty: str, cvss: str) -> str:
+    """根据难度和CVSS评分获取危害等级"""
+    risk_map = {'简单': '低危', '中等': '中危', '困难': '高危', '专家': '严重'}
+    
+    if cvss and cvss != '待补充':
+        try:
+            score = float(cvss)
+            if score >= 9.0:
+                return "严重"
+            elif score >= 7.0:
+                return "高危"
+            elif score >= 4.0:
+                return "中危"
+            else:
+                return "低危"
+        except:
+            pass
+    
+    return risk_map.get(difficulty, '中危')
+
+def generate_index_for_note(note_dir: str, note_file: str, dry_run: bool = False) -> bool:
+    """生成单个 CVE 笔记的 index.md"""
+    note_path = os.path.join(note_dir, note_file)
+    index_path = os.path.join(note_dir, 'index.md')
+    
+    logger.info(f"处理: {note_path}")
+    
+    try:
+        with open(note_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+    except Exception as e:
+        logger.warning(f"  读取失败: {e}")
+        return False
+    
+    metadata, _ = parse_front_matter(content)
+    
+    if not metadata:
+        logger.warning(f"  跳过：无 Front Matter")
+        return False
+    
+    title = metadata.get('title')
+    if not title:
+        title = os.path.basename(note_dir)
+    
+    description = metadata.get('description', '')
+    tags = metadata.get('tags', [])
+    status_cn = metadata.get('status', '未开始')
+    finish_date = metadata.get('finish-date', datetime.now().strftime("%Y-%m-%d"))
+    difficulty = metadata.get('difficulty', '中等')
+    cvss = metadata.get('cvss', '待补充')
+    cve_id = metadata.get('cve_id', os.path.basename(note_dir))
+    affected_versions = metadata.get('affected_versions', '待补充')
+    publish_date = metadata.get('publish_date', '待补充')
+    weakness = metadata.get('weakness', tags[0] if tags else '待补充')
+    
+    # 获取配置
+    diff_conf = get_difficulty_conf(difficulty)
+    exp = metadata.get('exp', diff_conf.get('exp', 20))
+    level = metadata.get('level', diff_conf.get('level', '⭐⭐'))
+    achievement = metadata.get('achievement', diff_conf.get('achievement', '中等猎手'))
+    
+    status_emoji = get_status_emoji(status_cn)
+    status_display = f"{status_emoji} **已分析**" if status_cn == '已完成' else f"{status_emoji} **分析中**"
+    risk_level = get_risk_level(difficulty, cvss)
+    
+    # 提取修复方案
+    fix_suggestion = extract_section(content, '修复方案')
+    
+    index_content = CVE_TEMPLATE.format(
+        title=title,
+        description=description,
+        tags=tags,
+        status_emoji=status_emoji,
+        difficulty=difficulty,
+        cvss=cvss,
+        cve_id=cve_id,
+        affected_versions=affected_versions,
+        publish_date=publish_date,
+        weakness=weakness,
+        risk_level=risk_level,
+        exp=exp,
+        level=level,
+        achievement=achievement,
+        status_display=status_display,
+        fix_suggestion=fix_suggestion,
+        note_file=note_file,
+        finish_date=finish_date
+    )
+    
+    return safe_write(index_path, index_content, dry_run)
+
+def scan_and_update(dry_run: bool = False) -> None:
+    """扫描并更新所有 CVE 笔记"""
+    logger.info("=" * 60)
+    logger.info("CVE 板块题目级 index.md 自动生成脚本")
+    logger.info("=" * 60)
+    logger.info(f"扫描路径: {CVE_PATH}")
+    logger.info(f"模式: {'DRY RUN' if dry_run else '实际运行'}")
+    
+    if not os.path.exists(CVE_PATH):
+        logger.error(f"路径不存在: {CVE_PATH}")
+        return
+    
+    success_count = 0
+    skip_count = 0
+    
+    for root, dirs, files in os.walk(CVE_PATH):
+        if root == CVE_PATH:
+            continue
+        
+        note_files = [f for f in files if f.endswith('.md') and f != 'index.md']
+        if not note_files:
+            continue
+        
+        note_file = note_files[0]
+        
+        if generate_index_for_note(root, note_file, dry_run):
+            success_count += 1
+        else:
+            skip_count += 1
+    
+    logger.info("=" * 60)
+    logger.info(f"完成！成功生成 {success_count} 个，跳过 {skip_count} 个")
+    logger.info("=" * 60)
+
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--dry-run", action="store_true", help="模拟运行")
+    parser.add_argument("--verbose", "-v", action="store_true", help="详细输出")
+    args = parser.parse_args()
+    
+    dry_run = args.dry_run or os.environ.get("DRY_RUN", "0") == "1"
+    scan_and_update(dry_run)

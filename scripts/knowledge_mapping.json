@@ -1,0 +1,67 @@
+{
+  "description": "知识点到目录的映射配置，用于脚本自动关联",
+  "version": "2.0",
+  "last_updated": "2026-06-01",
+  
+  "mappings": {
+    "SQL注入": "03-web-basics/sqli",
+    "XSS": "03-web-basics/xss",
+    "CSRF": "03-web-basics/csrf",
+    "SSRF": "03-web-basics/ssrf",
+    "XXE": "03-web-basics/xxe",
+    "命令注入": "03-web-basics/command-injection",
+    "文件上传": "03-web-basics/file-upload",
+    "访问控制": "03-web-basics/access-control",
+    "信息泄露": "03-web-basics/info-leak",
+    "SSTI": "04-web-advanced/ssti",
+    "原型链污染": "04-web-advanced/prototype-pollution",
+    "Java反序列化": "05-java-security/java-deserialization",
+    "Fastjson": "05-java-security/framework-vulns/fastjson",
+    "内存马": "05-java-security/memory-shell",
+    "Shiro550": "05-java-security/java-deserialization",
+    "WebLogic": "05-java-security/java-deserialization",
+    "EL注入": "05-java-security/framework-vulns/EL-injection",
+    "JNDI注入": "05-java-security/jndi-injection",
+    "绕WAF": "01-foundation/bypass-waf",
+    "编程基础": "01-foundation/programming",
+    "操作系统": "01-foundation/os",
+    "代码审计": "01-foundation/code-review",
+    "渗透测试": "06-red-blue-confrontation/penetration-test",
+    "Pwn": "06-red-blue-confrontation/pwn",
+    "免杀绕过": "06-red-blue-confrontation/evasion",
+    "横向移动": "06-red-blue-confrontation/lateral-movement",
+    "C2框架": "06-red-blue-confrontation/c2-framework",
+    "蓝队防御": "06-red-blue-confrontation/blue-team"
+  },
+  
+  "aliases": {
+    "SQLi": "SQL注入",
+    "Cross-site Scripting": "XSS",
+    "跨站脚本": "XSS",
+    "跨站请求伪造": "CSRF",
+    "服务端请求伪造": "SSRF",
+    "XML外部实体注入": "XXE",
+    "Command Injection": "命令注入",
+    "File Upload": "文件上传",
+    "越权": "访问控制",
+    "IDOR": "访问控制",
+    "Info Leak": "信息泄露",
+    "Server-side Template Injection": "SSTI",
+    "Prototype Pollution": "原型链污染",
+    "Deserialization": "Java反序列化",
+    "Memory Shell": "内存马",
+    "WebLogic CVE-2017-10271": "WebLogic",
+    "Bypass WAF": "绕WAF",
+    "WAF绕过": "绕WAF",
+    "Code Review": "代码审计",
+    "Pentest": "渗透测试",
+    "Binary Exploitation": "Pwn"
+  },
+  
+  "study_plan_mapping": {
+    "week1": "01-foundation",
+    "week2": "03-web-basics",
+    "week3": "05-java-security",
+    "week4": "04-web-advanced"
+  }
+}
