@@ -5,7 +5,7 @@ completed_questions: 4
 in_progress_questions: 0
 not_started_questions: 1
 completion_rate: 80
-last_updated: 2026-06-24 19:36:47
+last_updated: 2026-06-25 00:18:46
 ---
 
 # 🎯 CTF 训练场
@@ -84,7 +84,7 @@ last_updated: 2026-06-24 19:36:47
 
 ## 📝 近期更新
 
-- **MINIL** (2026-06-24) : 4/5 题已完成
+- **MINIL** (2026-06-25) : 4/5 题已完成
 
 ---
-*最后更新：2026-06-24 19:36:47 | 保持练习，持续进步 💪*
+*最后更新：2026-06-25 00:18:46 | 保持练习，持续进步 💪*

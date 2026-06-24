@@ -4,7 +4,7 @@ completed: 4
 in_progress: 0
 not_started: 1
 completion_rate: 80
-last_updated: 2026-06-24 19:36:47
+last_updated: 2026-06-25 00:18:46
 ---
 
 # 🎯 MINIL WriteUp
@@ -58,4 +58,4 @@ last_updated: 2026-06-24 19:36:47
 - **返回** [CTF章节](../index.md)
 
 ---
-*最后更新：2026-06-24 19:36:47 | 保持练习，持续进步 💪*
+*最后更新：2026-06-25 00:18:46 | 保持练习，持续进步 💪*

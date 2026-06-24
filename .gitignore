@@ -35,3 +35,6 @@ pets/
 
 # 代码附件
 docs/tech-study/code-attachment/
+
+# MkDocs 搜索索引
+search/

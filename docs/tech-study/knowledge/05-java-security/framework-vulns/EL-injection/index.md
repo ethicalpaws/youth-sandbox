@@ -7,7 +7,7 @@ completed: 1
 in_progress: 0
 not_started: 0
 completion_rate: 100
-last_updated: 2026-06-24 19:36:46
+last_updated: 2026-06-25 00:18:45
 ---
 
 # EL-injection
@@ -33,4 +33,4 @@ last_updated: 2026-06-24 19:36:46
 | [EL表达式注入](EL-Injection.md) | EL表达式注入原理、OGNL/SpEL/MVEL语法、反序列化链中的表达式注入、黑名单绕过技巧 | ✅ |
 
 ---
-*自动更新：2026-06-24 19:36:46
+*自动更新：2026-06-25 00:18:45
