@@ -8,12 +8,12 @@
     "special_achievements": []
   },
   "auto": {
-    "level": 5,
-    "current_exp": 2,
-    "next_exp": 414,
-    "total_exp": 1075,
+    "level": 4,
+    "current_exp": 317,
+    "next_exp": 345,
+    "total_exp": 1045,
     "stats": {
-      "notes_count": 86,
+      "notes_count": 83,
       "ctf_count": 0,
       "cve_count": 4,
       "src_count": 0,
@@ -85,11 +85,11 @@
           ]
         },
         {
-          "total": 11,
+          "total": 8,
           "max_daily": 5,
           "days": [
             0,
-            3,
+            0,
             1,
             0,
             0,
@@ -722,11 +722,11 @@
           ]
         }
       ],
-      "total_notes": 86,
-      "active_days": 16,
+      "total_notes": 83,
+      "active_days": 15,
       "max_contrib": 46
     },
-    "last_update": "2026-06-24 19:36:50",
+    "last_update": "2026-06-25 00:18:50",
     "first_bug_awarded": true,
     "start_date": "2026-05-27"
   }
