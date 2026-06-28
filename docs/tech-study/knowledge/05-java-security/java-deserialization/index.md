@@ -7,7 +7,7 @@ completed: 9
 in_progress: 0
 not_started: 0
 completion_rate: 100
-last_updated: 2026-06-25 00:18:45
+last_updated: 2026-06-29 00:07:24
 ---
 
 # ☕ java-deserialization
@@ -60,4 +60,4 @@ last_updated: 2026-06-25 00:18:45
 | [WebLogic CVE-2017-10271](../../../practice/cve\WebLogic-CVE-2017-10271) | WebLogic XMLDecoder反序列化漏洞，可远程代码执行 |
 
 ---
-*自动更新：2026-06-25 00:18:45
+*自动更新：2026-06-29 00:07:24

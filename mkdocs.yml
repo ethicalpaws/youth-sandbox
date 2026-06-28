@@ -182,11 +182,8 @@ nav:
       - 青春记录总览: life/index.md
       - 📝 每周计划:
           - 计划索引: life/study-plan/index.md
-          - 第1周: life/study-plan/week1.md
-          - 第2周: life/study-plan/week2.md
-          - 第3周: life/study-plan/week3.md
-          - 第4周: life/study-plan/week4.md
-          - 第5周: life/study-plan/week5.md
+          - 暑期计划: life/study-plan/summer-plan.md
+          - 第二阶段第一周: life/study-plan/week5.md
 
       - 📔 随笔日记: life/journal/index.md
       - 💭 烦恼记录: life/struggles/index.md
