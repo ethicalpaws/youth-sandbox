@@ -1,5 +1,14 @@
-### 不同Gadget库对比
-#### Jackson
+---
+title: 不同Gadget库对比
+description: Jackson反序列化漏洞原理与触发链、Spring框架自动反序列化机制、CC链核心原理、三大Gadget库对比分析
+tags: [Jackson, Spring, CC链, 反序列化, Gadget, TemplatesImpl, readObject, RequestBody]
+status: 已完成
+finish-date: 2026-05-17
+difficulty: 困难
+---
+
+# 不同Gadget库对比
+## Jackson
 1. Jackson是干什么的：JSON数据<-->Java对象的转换器
 2. 核心能力：自动把JSON字符串转成Java对象，把Java对象转成JSON
    ```java
@@ -96,7 +105,7 @@
       // 如果JSON里有@class，Jackson会对Map的value部分应用多态
       // ❌ 有漏洞风险
       ``` 
-#### Spring
+## Spring
 1. Spring是什么：一个工具箱（包含web功能）
 2. 作用：Spring Web让开发者写网站更简单
    ```java
@@ -231,7 +240,7 @@
          jackson-databind（提供多态解析）【实际解析器】
          spring-beans（提供参数绑定）【值绑定器】
 7. ![](java-deserialization(ing)/2026-05-16-16-45-28.png)
-#### CC链
+## CC链
 1. 核心原理：readObject() → 调用链 → Transformer.transform() → 反射执行任意方法
 2. 关键特点：
    1. 直接反射：InvokerTransformer包装任意方法调用
@@ -241,5 +250,5 @@
    1. CC1链：jdk8u71之前可用（AnnotationInvocationHandler修复）
    2. CC2/CC4：需要javassist（部分版本）
    3. CC6：无jdk版本限制
-#### 对比
+## 对比
 ![](java-deserialization(ing)/2026-05-16-16-35-58.png)
