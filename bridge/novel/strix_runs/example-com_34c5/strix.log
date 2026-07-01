@@ -1,0 +1,10 @@
+2026-07-02 06:15:08.961 INFO    example-com_34c5 - strix.core.runner: Starting Strix scan example-com_34c5 (image=ghcr.io/usestrix/strix-sandbox:1.0.0, max_turns=500, interactive=True, run_dir=E:\youth-sandbox\docs\bridge\novel\strix_runs\example-com_34c5)
+2026-07-02 06:15:08.962 INFO    example-com_34c5 - strix.core.runner: LLM model resolved: ollama/qwen2.5:1.5b
+2026-07-02 06:15:08.962 INFO    example-com_34c5 - strix.core.runner: Bringing up sandbox session for scan example-com_34c5
+2026-07-02 06:15:08.963 DEBUG   example-com_34c5 - strix.runtime.backends: Selected sandbox backend: docker
+2026-07-02 06:15:08.963 INFO    example-com_34c5 - strix.runtime.session_manager: Creating sandbox session for scan example-com_34c5 (backend=docker, image=ghcr.io/usestrix/strix-sandbox:1.0.0)
+2026-07-02 06:15:09.319 DEBUG   example-com_34c5 - strix.runtime.docker_client: Creating sandbox container: image=ghcr.io/usestrix/strix-sandbox:1.0.0 caps=['NET_ADMIN', 'NET_RAW'] exposed_ports=[48080]
+2026-07-02 06:15:09.709 INFO    example-com_34c5 - strix.runtime.docker_client: Sandbox container created: id=13f3f201a071 image=ghcr.io/usestrix/strix-sandbox:1.0.0
+2026-07-02 06:15:11.432 DEBUG   example-com_34c5 - strix.runtime.session_manager: Caido host endpoint resolved: http://127.0.0.1:14686
+2026-07-02 06:15:11.432 INFO    example-com_34c5 - strix.runtime.caido_bootstrap: Bootstrapping Caido client (host=http://127.0.0.1:14686, container=http://127.0.0.1:48080)
+2026-07-02 06:15:16.450 DEBUG   - - strix.runtime.session_manager: cleanup(example-com_34c5): no cached session
