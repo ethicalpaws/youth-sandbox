@@ -57,13 +57,9 @@
     
       <link rel="stylesheet" href="../../../css/timeago.css">
     
-      <link rel="stylesheet" href="../../../assets/css/extra.css">
-    
-      <link rel="stylesheet" href="../../../assets/css/home.css">
+      <link rel="stylesheet" href="../../../asserts/css/home.css">
     
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-      <link rel="stylesheet" href="../../../asserts/css/hacker-theme.css">
     
     <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -3180,517 +3176,635 @@
 <hr />
 <h1 id="web">模块一　Web 安全·常见漏洞原理与防护<a class="headerlink" href="#web" title="Permanent link">&para;</a></h1>
 <h3 id="day-1-sql">Day 1 ｜ SQL 注入的原理、分类与防护<a class="headerlink" href="#day-1-sql" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：请说明 SQL 注入的原理、常见分类，以及防御手段。
-<strong>答案</strong>：
-- <strong>原理</strong>：后端把用户输入直接拼接进 SQL 语句，未做校验/转义，导致用户输入被当作 SQL 代码执行，从而绕过逻辑、读取/篡改/删除数据。例：<code>select * from user where name='$name' and pw='$pw'</code>，输入 <code>pw = ' or '1'='1</code> 使条件恒真。
-- <strong>分类</strong>：按数据类型分数字型/字符型；按回显分联合查询、报错注入、布尔盲注、时间盲注、堆叠查询；按提交方式分 GET/POST/Cookie/HTTP 头注入。
-- <strong>防护</strong>：使用<strong>预编译（Prepared Statement / 参数化查询）</strong>；最小权限数据库账户；输入校验与白名单；ORM 框架；敏感操作加 WAF；错误回显关闭。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：请说明 SQL 注入的原理、常见分类，以及防御手段。
+<strong>答案</strong>：</li>
+<li><strong>原理</strong>：后端把用户输入直接拼接进 SQL 语句，未做校验/转义，导致用户输入被当作 SQL 代码执行，从而绕过逻辑、读取/篡改/删除数据。例：<code>select * from user where name='$name' and pw='$pw'</code>，输入 <code>pw = ' or '1'='1</code> 使条件恒真。</li>
+<li><strong>分类</strong>：按数据类型分数字型/字符型；按回显分联合查询、报错注入、布尔盲注、时间盲注、堆叠查询；按提交方式分 GET/POST/Cookie/HTTP 头注入。</li>
+<li><strong>防护</strong>：使用<strong>预编译（Prepared Statement / 参数化查询）</strong>；最小权限数据库账户；输入校验与白名单；ORM 框架；敏感操作加 WAF；错误回显关闭。
 <strong>解析</strong>：预编译是根本解法——SQL 语义与数据分离，参数永远作为值而非代码。WAF/过滤只是辅助，不能替代参数化。面试常追问"预编译就绝对安全吗？"——若仍用拼接（如 <code>order by $col</code>）或宽字节/二阶注入场景仍可能中招。
-<strong>考察知识点</strong>：SQL 语法、参数化查询、注入类型、纵深防御。</p>
+<strong>考察知识点</strong>：SQL 语法、参数化查询、注入类型、纵深防御。</li>
+</ul>
 <h3 id="day-2-sql-webshell">Day 2 ｜ SQL 注入写文件（webshell）的条件<a class="headerlink" href="#day-2-sql-webshell" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：通过 MySQL 注入点直接写入一句话木马，需要哪些前提条件？
-<strong>答案</strong>：
-1. 网站<strong>绝对路径</strong>已知（报错/phpinfo/读取配置文件得到）；
-2. 当前数据库用户具备 <strong>File 权限</strong>（<code>select file_priv from mysql.user</code> 为 Y）；
-3. <code>secure_file_priv</code> 为空（非 <code>NULL</code> 限制目录）；
-4. <strong>写入口令</strong>对目标目录有写权限（通常 web 目录可写）；
-5. 用 <code>select '&lt;?php @eval($_POST[1]);?&gt;' into outfile '/var/www/shell.php'</code> 导出。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：通过 MySQL 注入点直接写入一句话木马，需要哪些前提条件？
+<strong>答案</strong>：</li>
+<li>网站<strong>绝对路径</strong>已知（报错/phpinfo/读取配置文件得到）；</li>
+<li>当前数据库用户具备 <strong>File 权限</strong>（<code>select file_priv from mysql.user</code> 为 Y）；</li>
+<li><code>secure_file_priv</code> 为空（非 <code>NULL</code> 限制目录）；</li>
+<li><strong>写入口令</strong>对目标目录有写权限（通常 web 目录可写）；</li>
+<li>用 <code>select '&lt;?php @eval($_POST[1]);?&gt;' into outfile '/var/www/shell.php'</code> 导出。
 <strong>解析</strong>：<code>into outfile</code>/<code>into dumpfile</code> 受 <code>secure_file_priv</code> 严格限制（MySQL 5.6+ 默认 <code>NULL</code> 禁止导出）。<code>outfile</code> 会转义换行，<code>dumpfile</code> 不转义，写二进制用 dumpfile。若不能写文件，可改读文件（<code>load_file</code>）。
-<strong>考察知识点</strong>：MySQL 文件操作权限、secure_file_priv、getshell 路径。</p>
+<strong>考察知识点</strong>：MySQL 文件操作权限、secure_file_priv、getshell 路径。</li>
+</ul>
 <h3 id="day-3">Day 3 ｜ 盲注（布尔/时间）与报错注入<a class="headerlink" href="#day-3" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：没有回显时如何注入？报错注入常用函数有哪些？
-<strong>答案</strong>：
-- <strong>布尔盲注</strong>：构造 <code>and 1=1</code> / <code>and 1=2</code>，根据页面真假差异逐位猜解（配合 <code>substr()</code>/<code>ascii()</code>/<code>length()</code>）。
-- <strong>时间盲注</strong>：无差异时用 <code>and sleep(5)</code> 或 <code>if(...,sleep(5),0)</code>、<code>benchmark()</code> 看响应时延。
-- <strong>报错注入</strong>：利用报错回显数据，如 <code>updatexml(1,concat(0x7e,(select version()),0x7e),1)</code>、<code>extractvalue()</code>、<code>floor(rand(0)*2)</code> 主键冲突、<code>exp()</code> 溢出。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：没有回显时如何注入？报错注入常用函数有哪些？
+<strong>答案</strong>：</li>
+<li><strong>布尔盲注</strong>：构造 <code>and 1=1</code> / <code>and 1=2</code>，根据页面真假差异逐位猜解（配合 <code>substr()</code>/<code>ascii()</code>/<code>length()</code>）。</li>
+<li><strong>时间盲注</strong>：无差异时用 <code>and sleep(5)</code> 或 <code>if(...,sleep(5),0)</code>、<code>benchmark()</code> 看响应时延。</li>
+<li><strong>报错注入</strong>：利用报错回显数据，如 <code>updatexml(1,concat(0x7e,(select version()),0x7e),1)</code>、<code>extractvalue()</code>、<code>floor(rand(0)*2)</code> 主键冲突、<code>exp()</code> 溢出。
 <strong>解析</strong>：盲注效率低，实战用 <code>sqlmap -technique=B/T</code> 自动化；报错注入依赖特定函数报错且版本相关（updatexml/extractvalue 在 MySQL 5.x 通用）。<code>floor(rand(0)*2)</code> 需 <code>group by</code> 与 <code>count(*)</code> 配合。
-<strong>考察知识点</strong>：盲注逻辑、报错函数、sqlmap 技术参数。</p>
+<strong>考察知识点</strong>：盲注逻辑、报错函数、sqlmap 技术参数。</li>
+</ul>
 <h3 id="day-4-xss">Day 4 ｜ XSS 类型与防御<a class="headerlink" href="#day-4-xss" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：XSS 有哪几种类型？如何防御？
-<strong>答案</strong>：
-- <strong>存储型</strong>：恶意脚本存于数据库，用户访问时服务端返回并执行（危害最大，如留言/评论）。
-- <strong>反射型</strong>：payload 在 URL 中，服务端原样返回到页面（需诱导点击）。
-- <strong>DOM 型</strong>：前端 JS 直接操作 DOM（如 <code>location.hash</code>、<code>innerHTML</code>）造成，不经过服务端。
-- <strong>防御</strong>：输出<strong>编码/转义</strong>（HTML 实体、JS、URL 编码按需）；输入校验白名单；<code>HttpOnly</code> + <code>Secure</code> + <code>SameSite</code> Cookie；CSP 策略；富文本用白名单过滤器（如 DOMPurify）。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：XSS 有哪几种类型？如何防御？
+<strong>答案</strong>：</li>
+<li><strong>存储型</strong>：恶意脚本存于数据库，用户访问时服务端返回并执行（危害最大，如留言/评论）。</li>
+<li><strong>反射型</strong>：payload 在 URL 中，服务端原样返回到页面（需诱导点击）。</li>
+<li><strong>DOM 型</strong>：前端 JS 直接操作 DOM（如 <code>location.hash</code>、<code>innerHTML</code>）造成，不经过服务端。</li>
+<li><strong>防御</strong>：输出<strong>编码/转义</strong>（HTML 实体、JS、URL 编码按需）；输入校验白名单；<code>HttpOnly</code> + <code>Secure</code> + <code>SameSite</code> Cookie；CSP 策略；富文本用白名单过滤器（如 DOMPurify）。
 <strong>解析</strong>：存储型危害最高（可盗 Cookie、蠕变、配合 CSRF）。DOM 型要在前端代码层面修（不要在 <code>.innerHTML</code>/<code>.html()</code> 直接拼用户输入）。CSP 是纵深防御而非万能。
-<strong>考察知识点</strong>：XSS 三类区别、输出编码、CSP、HttpOnly。</p>
+<strong>考察知识点</strong>：XSS 三类区别、输出编码、CSP、HttpOnly。</li>
+</ul>
 <h3 id="day-5-csrf-xss">Day 5 ｜ CSRF 原理与防御，与 XSS 区别<a class="headerlink" href="#day-5-csrf-xss" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：CSRF 是什么？如何防护？它和 XSS 有何区别？
-<strong>答案</strong>：
-- <strong>原理</strong>：攻击者诱导已登录用户浏览器，在用户不知情下向存在漏洞的站点发起<strong>伪造请求</strong>（利用浏览器自动带 Cookie 的特性），以用户身份执行操作（改密码/转账）。
-- <strong>防护</strong>：<strong>CSRF Token</strong>（服务端随机令牌，请求必须携带且校验）；校验 <code>Referer</code>/<code>Origin</code>；<code>SameSite=Strict/Lax</code> Cookie；重要操作加二次认证/验证码。
-- <strong>与 XSS 区别</strong>：XSS 利用"用户对站点的信任"（盗取/执行）；CSRF 利用"站点对用户的信任"（冒用身份）。XSS 可盗 Token，CSRF 无法读响应。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：CSRF 是什么？如何防护？它和 XSS 有何区别？
+<strong>答案</strong>：</li>
+<li><strong>原理</strong>：攻击者诱导已登录用户浏览器，在用户不知情下向存在漏洞的站点发起<strong>伪造请求</strong>（利用浏览器自动带 Cookie 的特性），以用户身份执行操作（改密码/转账）。</li>
+<li><strong>防护</strong>：<strong>CSRF Token</strong>（服务端随机令牌，请求必须携带且校验）；校验 <code>Referer</code>/<code>Origin</code>；<code>SameSite=Strict/Lax</code> Cookie；重要操作加二次认证/验证码。</li>
+<li><strong>与 XSS 区别</strong>：XSS 利用"用户对站点的信任"（盗取/执行）；CSRF 利用"站点对用户的信任"（冒用身份）。XSS 可盗 Token，CSRF 无法读响应。
 <strong>解析</strong>：Token 必须随机、不可预测、绑定会话且一次一用；<code>SameSite=Lax</code> 已能挡多数跨站场景。RESTful 接口若用自定义头（如 <code>X-Requested-With</code>）也能增加 CSRF 难度（简单请求不跨域发自定义头）。
-<strong>考察知识点</strong>：CSRF 利用链、Token、SameSite、与 XSS 边界。</p>
+<strong>考察知识点</strong>：CSRF 利用链、Token、SameSite、与 XSS 边界。</li>
+</ul>
 <h3 id="day-6-ssrf">Day 6 ｜ SSRF 原理、利用与防御<a class="headerlink" href="#day-6-ssrf" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：SSRF 是什么？常见利用与防御？
-<strong>答案</strong>：
-- <strong>原理</strong>：服务端代用户发起请求，且 URL 由用户可控，攻击者可让服务器访问<strong>内网/本地</strong>资源（如 <code>http://127.0.0.1:6379</code>、<code>file:///etc/passwd</code>、<code>http://169.254.169.254/</code> 云元数据）。
-- <strong>利用</strong>：探测内网端口、攻击内网服务（Redis/MySQL）、读取本地文件、绕过授权访问云元数据（AK 泄露）、配合 Gopher 打内网协议。
-- <strong>防御</strong>：<strong>白名单</strong>协议（仅 http/https）与域名/IP；禁止访问内网与回环地址（正则过滤 <code>127.0.0.1</code>、<code>localhost</code>、<code>0.0.0.0</code>、十进制/八进制 IP 绕过需一并处理）；统一出网出口；需鉴权的内网服务加认证。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：SSRF 是什么？常见利用与防御？
+<strong>答案</strong>：</li>
+<li><strong>原理</strong>：服务端代用户发起请求，且 URL 由用户可控，攻击者可让服务器访问<strong>内网/本地</strong>资源（如 <code>http://127.0.0.1:6379</code>、<code>file:///etc/passwd</code>、<code>http://169.254.169.254/</code> 云元数据）。</li>
+<li><strong>利用</strong>：探测内网端口、攻击内网服务（Redis/MySQL）、读取本地文件、绕过授权访问云元数据（AK 泄露）、配合 Gopher 打内网协议。</li>
+<li><strong>防御</strong>：<strong>白名单</strong>协议（仅 http/https）与域名/IP；禁止访问内网与回环地址（正则过滤 <code>127.0.0.1</code>、<code>localhost</code>、<code>0.0.0.0</code>、十进制/八进制 IP 绕过需一并处理）；统一出网出口；需鉴权的内网服务加认证。
 <strong>解析</strong>：绕过手段多（DNS 重绑定、<code>xip.io</code>、进制转换、短网址），单纯黑名单不够，应做"解析后校验目标 IP 是否在内网"。这是云原生环境下的高危漏洞。
-<strong>考察知识点</strong>：SSRF 危害面、云元数据、DNS 重绑定、白名单校验。</p>
+<strong>考察知识点</strong>：SSRF 危害面、云元数据、DNS 重绑定、白名单校验。</li>
+</ul>
 <h3 id="day-7">Day 7 ｜ 命令执行 / 代码执行函数及防御<a class="headerlink" href="#day-7" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：PHP/Java 中常见的命令执行、代码执行函数有哪些？如何防御？
-<strong>答案</strong>：
-- <strong>PHP</strong>：命令执行 <code>system() exec() shell_exec() passthru() popen()</code>、<code>\</code>反引号`<code>；代码执行</code>eval() assert() preg_replace(/e) create_function()<code>。
-- **Java**：</code>Runtime.exec()<code>、</code>ProcessBuilder<code>、</code>Groovy/SpEL/Ognl<code>表达式、</code>ScriptEngine<code>。
-- **防御**：禁用危险函数（</code>disable_functions<code>）；绝不拼接用户输入进命令/表达式；用白名单参数；白名单校验文件/命令；RASP 运行时防护。
-**解析**：</code>Runtime.exec()<code>不支持 shell 重定向/管道，需经</code>/bin/sh -c`。Java 表达式注入（SpEL/Ognl）常见于 Spring/Struts 历史洞。
-<strong>考察知识点</strong>：危险函数清单、命令注入与代码注入差异、disable_functions。</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：PHP/Java 中常见的命令执行、代码执行函数有哪些？如何防御？
+<strong>答案</strong>：</li>
+<li><strong>PHP</strong>：命令执行 <code>system() exec() shell_exec() passthru() popen()</code>、<code>\</code>反引号`<code>；代码执行</code>eval() assert() preg_replace(/e) create_function()`。</li>
+<li><strong>Java</strong>：<code>Runtime.exec()</code>、<code>ProcessBuilder</code>、<code>Groovy/SpEL/Ognl</code> 表达式、<code>ScriptEngine</code>。</li>
+<li><strong>防御</strong>：禁用危险函数（<code>disable_functions</code>）；绝不拼接用户输入进命令/表达式；用白名单参数；白名单校验文件/命令；RASP 运行时防护。
+<strong>解析</strong>：<code>Runtime.exec()</code> 不支持 shell 重定向/管道，需经 <code>/bin/sh -c</code>。Java 表达式注入（SpEL/Ognl）常见于 Spring/Struts 历史洞。
+<strong>考察知识点</strong>：危险函数清单、命令注入与代码注入差异、disable_functions。</li>
+</ul>
 <h3 id="day-8">Day 8 ｜ 文件上传漏洞与绕过<a class="headerlink" href="#day-8" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：文件上传漏洞有哪些绕过方式？如何根本防御？
-<strong>答案</strong>：
-- <strong>绕过</strong>：前端 JS 校验（Burp 改包）；服务端后缀黑名单不全（<code>.php5 .phtml .pht</code>、<code>.asa .cer</code>、大小写、<code>.php.</code>、空格点、<code>::$DATA</code>、双后缀 <code>.php.jpg</code>）；Content-Type 伪造；<code>.htaccess</code>/<code>user.ini</code> 解析；00 截断（旧版）；二次渲染绕过（维持图片马结构）；竞争条件（先传后删）。
-- <strong>防护</strong>：<strong>白名单</strong>后缀（仅允许业务需要的类型）；重命名随机文件名（用户不可控扩展名）；存于非执行目录；限制 Content-Type 并二次渲染；单独域名/隔离存储（如 OSS）。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：文件上传漏洞有哪些绕过方式？如何根本防御？
+<strong>答案</strong>：</li>
+<li><strong>绕过</strong>：前端 JS 校验（Burp 改包）；服务端后缀黑名单不全（<code>.php5 .phtml .pht</code>、<code>.asa .cer</code>、大小写、<code>.php.</code>、空格点、<code>::$DATA</code>、双后缀 <code>.php.jpg</code>）；Content-Type 伪造；<code>.htaccess</code>/<code>user.ini</code> 解析；00 截断（旧版）；二次渲染绕过（维持图片马结构）；竞争条件（先传后删）。</li>
+<li><strong>防护</strong>：<strong>白名单</strong>后缀（仅允许业务需要的类型）；重命名随机文件名（用户不可控扩展名）；存于非执行目录；限制 Content-Type 并二次渲染；单独域名/隔离存储（如 OSS）。
 <strong>解析</strong>：黑名单永远有遗漏，白名单 + 随机重命名 + 非执行存储位是黄金组合。<code>.htaccess</code> 写入需目录允许覆盖配置。
-<strong>考察知识点</strong>：黑白名单、解析漏洞、00 截断、二次渲染、随机命名。</p>
+<strong>考察知识点</strong>：黑白名单、解析漏洞、00 截断、二次渲染、随机命名。</li>
+</ul>
 <h3 id="day-9-web">Day 9 ｜ 常见 Web 容器解析漏洞<a class="headerlink" href="#day-9-web" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：IIS / Apache / Nginx 有哪些经典解析漏洞？
-<strong>答案</strong>：
-- <strong>IIS 6.0</strong>：<code>*.asp;*.jpg</code> 按 asp 解析；目录 <code>/*.asp/</code> 下文件当 asp。
-- <strong>Apache</strong>：多后缀从右往左认，遇不认识的后缀继续向左（<code>a.php.xxx</code> 若 <code>.xxx</code> 未知可能按 <code>.php</code> 解析）；<code>AddHandler</code> 配置 <code>*.php</code> 导致 <code>x.php.jpg</code> 解析。
-- <strong>Nginx</strong>：<code>xxx.jpg/1.php</code> 若 <code>cgi.fix_pathinfo=1</code> 且 PHP 配置不当会解析；空字节 <code>%00.php</code> 旧版；<code>x.jpg%00.php</code> 截断。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：IIS / Apache / Nginx 有哪些经典解析漏洞？
+<strong>答案</strong>：</li>
+<li><strong>IIS 6.0</strong>：<code>*.asp;*.jpg</code> 按 asp 解析；目录 <code>/*.asp/</code> 下文件当 asp。</li>
+<li><strong>Apache</strong>：多后缀从右往左认，遇不认识的后缀继续向左（<code>a.php.xxx</code> 若 <code>.xxx</code> 未知可能按 <code>.php</code> 解析）；<code>AddHandler</code> 配置 <code>*.php</code> 导致 <code>x.php.jpg</code> 解析。</li>
+<li><strong>Nginx</strong>：<code>xxx.jpg/1.php</code> 若 <code>cgi.fix_pathinfo=1</code> 且 PHP 配置不当会解析；空字节 <code>%00.php</code> 旧版；<code>x.jpg%00.php</code> 截断。
 <strong>解析</strong>：本质都是"解析器对路径/后缀的处理规则"与预期不符。修复靠升级版本与收紧配置（关闭 <code>cgi.fix_pathinfo</code>、正确设置 <code>security.limit_extensions</code>）。
-<strong>考察知识点</strong>：IIS/Apache/Nginx 解析差异、fix_pathinfo、后缀处理顺序。</p>
+<strong>考察知识点</strong>：IIS/Apache/Nginx 解析差异、fix_pathinfo、后缀处理顺序。</li>
+</ul>
 <h3 id="day-10-xxe">Day 10 ｜ XXE 原理与防御<a class="headerlink" href="#day-10-xxe" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：什么是 XXE？如何产生与防御？
-<strong>答案</strong>：
-- <strong>原理</strong>：XML 解析器启用外部实体（DTD）时，攻击者构造 <code>&lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt;</code> 读取本地文件，或用 <code>http://</code> 造成 SSRF、拒绝服务（Billion Laughs 实体膨胀）。
-- <strong>防御</strong>：<strong>禁用外部实体</strong>（<code>libxml_disable_entity_loader(true)</code> / <code>XMLConstants.FEATURE_SECURE_PROCESSING</code> / 关闭 <code>DOCTYPE</code>）；使用 JSON 替代 XML；升级解析库。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：什么是 XXE？如何产生与防御？
+<strong>答案</strong>：</li>
+<li><strong>原理</strong>：XML 解析器启用外部实体（DTD）时，攻击者构造 <code>&lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt;</code> 读取本地文件，或用 <code>http://</code> 造成 SSRF、拒绝服务（Billion Laughs 实体膨胀）。</li>
+<li><strong>防御</strong>：<strong>禁用外部实体</strong>（<code>libxml_disable_entity_loader(true)</code> / <code>XMLConstants.FEATURE_SECURE_PROCESSING</code> / 关闭 <code>DOCTYPE</code>）；使用 JSON 替代 XML；升级解析库。
 <strong>解析</strong>：XXE 常出现在支持 XML 的接口（SVG 上传、Office 文档、SOAP、SSO SAML）。本质是"解析器信任了外部实体声明"。
-<strong>考察知识点</strong>：外部实体、DTD、实体膨胀、禁用实体加载。</p>
+<strong>考察知识点</strong>：外部实体、DTD、实体膨胀、禁用实体加载。</li>
+</ul>
 <h3 id="day-11-php-java">Day 11 ｜ 反序列化漏洞原理（PHP / Java）<a class="headerlink" href="#day-11-php-java" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：反序列化漏洞是什么？PHP 与 Java 有何不同？
-<strong>答案</strong>：
-- <strong>原理</strong>：把用户可控的序列化数据反序列化时，对象重建过程触发<strong>魔术方法/生命周期回调</strong>（PHP 的 <code>__destruct()</code> <code>__wakeup()</code>，Java 的 <code>readObject()</code>），若其中调用危险方法且参数可控即 RCE。
-- <strong>PHP</strong>：<code>unserialize($_GET['data'])</code>，依赖 POP 链（如 <code>__destruct → call → system</code>）。
-- <strong>Java</strong>：依赖存在 gadget 的库（CommonsCollections、CommonsBeanutils、FastJson、Jackson），构造利用链触发 <code>Runtime.exec</code>/<code>Method.invoke</code>。
-- <strong>防御</strong>：不反序列化不可信数据；使用白名单类名（<code>ObjectInputFilter</code>）；升级含已知 gadget 的库；签名校验数据完整性。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：反序列化漏洞是什么？PHP 与 Java 有何不同？
+<strong>答案</strong>：</li>
+<li><strong>原理</strong>：把用户可控的序列化数据反序列化时，对象重建过程触发<strong>魔术方法/生命周期回调</strong>（PHP 的 <code>__destruct()</code> <code>__wakeup()</code>，Java 的 <code>readObject()</code>），若其中调用危险方法且参数可控即 RCE。</li>
+<li><strong>PHP</strong>：<code>unserialize($_GET['data'])</code>，依赖 POP 链（如 <code>__destruct → call → system</code>）。</li>
+<li><strong>Java</strong>：依赖存在 gadget 的库（CommonsCollections、CommonsBeanutils、FastJson、Jackson），构造利用链触发 <code>Runtime.exec</code>/<code>Method.invoke</code>。</li>
+<li><strong>防御</strong>：不反序列化不可信数据；使用白名单类名（<code>ObjectInputFilter</code>）；升级含已知 gadget 的库；签名校验数据完整性。
 <strong>解析</strong>：Java 反序列化不等于"任意反序列化就 RCE"，关键是有<strong>可利用的 gadget 链</strong>。Shiro（硬编码 key + CB 链）、FastJson（<code>@type</code> 自动类型）是经典入口。
-<strong>考察知识点</strong>：序列化/反序列化、魔术方法、POP/gadget 链、Shiro/FastJson。</p>
+<strong>考察知识点</strong>：序列化/反序列化、魔术方法、POP/gadget 链、Shiro/FastJson。</li>
+</ul>
 <h3 id="day-12">Day 12 ｜ 逻辑漏洞：越权 / 支付 / 验证码 / 密码找回<a class="headerlink" href="#day-12" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：常见的业务逻辑漏洞有哪些？如何修复？
-<strong>答案</strong>：
-- <strong>越权</strong>：水平（改 <code>user_id</code> 看他人数据）、垂直（普通用户访问管理员接口）。修复：服务端<strong>严格校验当前用户对该资源的权限</strong>，不依赖前端隐藏。
-- <strong>支付/数量</strong>：修改金额、数量、为负、并发重复下单。修复：服务端重算价格、库存加锁、幂等校验。
-- <strong>验证码</strong>：前端校验、可重用、可爆破、不过期。修复：服务端校验、单次有效、限频、图形复杂度。
-- <strong>密码找回</strong>：改 <code>userid</code> 改他人邮箱、验证码回显、token 可预测。修复：绑定身份、token 随机且短时、校验一致性。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：常见的业务逻辑漏洞有哪些？如何修复？
+<strong>答案</strong>：</li>
+<li><strong>越权</strong>：水平（改 <code>user_id</code> 看他人数据）、垂直（普通用户访问管理员接口）。修复：服务端<strong>严格校验当前用户对该资源的权限</strong>，不依赖前端隐藏。</li>
+<li><strong>支付/数量</strong>：修改金额、数量、为负、并发重复下单。修复：服务端重算价格、库存加锁、幂等校验。</li>
+<li><strong>验证码</strong>：前端校验、可重用、可爆破、不过期。修复：服务端校验、单次有效、限频、图形复杂度。</li>
+<li><strong>密码找回</strong>：改 <code>userid</code> 改他人邮箱、验证码回显、token 可预测。修复：绑定身份、token 随机且短时、校验一致性。
 <strong>解析</strong>：逻辑漏洞源于"只信前端/只信参数"。面试强调"所有权限与金额判断必须在服务端做，且基于当前会话身份"。
-<strong>考察知识点</strong>：水平/垂直越权、服务端鉴权、幂等、验证码安全。</p>
+<strong>考察知识点</strong>：水平/垂直越权、服务端鉴权、幂等、验证码安全。</li>
+</ul>
 <h3 id="day-13">Day 13 ｜ 未授权访问与任意文件读取/下载<a class="headerlink" href="#day-13" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：未授权访问和任意文件读取有哪些典型场景？
-<strong>答案</strong>：
-- <strong>未授权访问</strong>：Redis/MongoDB/Elasticsearch/Kibana/Solr 暴露在公网无认证；后台/API 仅靠 URL 隐藏；Actuator、Swagger 未鉴权泄露。
-- <strong>任意文件读取/下载</strong>：<code>download?file=../../etc/passwd</code>（路径遍历）；日志/模板读取；配合 <code>file://</code> 读源码、配钥。
-- <strong>修复</strong>：服务加认证与网络隔离；文件路径用 ID 映射（禁用户输入路径）；白名单目录；最小权限运行；关闭不必要的管理端。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：未授权访问和任意文件读取有哪些典型场景？
+<strong>答案</strong>：</li>
+<li><strong>未授权访问</strong>：Redis/MongoDB/Elasticsearch/Kibana/Solr 暴露在公网无认证；后台/API 仅靠 URL 隐藏；Actuator、Swagger 未鉴权泄露。</li>
+<li><strong>任意文件读取/下载</strong>：<code>download?file=../../etc/passwd</code>（路径遍历）；日志/模板读取；配合 <code>file://</code> 读源码、配钥。</li>
+<li><strong>修复</strong>：服务加认证与网络隔离；文件路径用 ID 映射（禁用户输入路径）；白名单目录；最小权限运行；关闭不必要的管理端。
 <strong>解析</strong>：路径遍历用 <code>../</code>、编码 <code>..%2f</code>、<code>....//</code> 绕过。未授权 Redis 常可直接写 webshell 或 SSH 公钥。
-<strong>考察知识点</strong>：路径遍历、目录穿越、服务未授权、ID 映射。</p>
+<strong>考察知识点</strong>：路径遍历、目录穿越、服务未授权、ID 映射。</li>
+</ul>
 <h3 id="day-14-waf-bypass">Day 14 ｜ WAF bypass 思路<a class="headerlink" href="#day-14-waf-bypass" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：如何绕过 WAF 进行注入/上传/XSS？
-<strong>答案</strong>：
-- <strong>注入</strong>：混淆（注释 <code>/**/</code>、<code>/*!*/</code>、内联注释）、换行/编码（URL/Unicode/十六进制）、等价函数替换（<code>sleep</code>→<code>benchmark</code>、<code>substring</code>→<code>substr</code>）、分块传输（Chunked）、HTTP 参数污染（HPPT）、双写 <code>ununionion</code>、畸形包。
-- <strong>上传</strong>：见 Day 8 后缀/Content-Type/解析绕过。
-- <strong>XSS</strong>：标签/事件拼接（<code>&lt;img src=x onerror=&gt;</code>）、编码绕过、大小写/换行、利用 SVG/MathML。
-- <strong>根本</strong>：WAF 是边界，真正安全靠代码层修复；bypass 仅用于测试与证明危害。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：如何绕过 WAF 进行注入/上传/XSS？
+<strong>答案</strong>：</li>
+<li><strong>注入</strong>：混淆（注释 <code>/**/</code>、<code>/*!*/</code>、内联注释）、换行/编码（URL/Unicode/十六进制）、等价函数替换（<code>sleep</code>→<code>benchmark</code>、<code>substring</code>→<code>substr</code>）、分块传输（Chunked）、HTTP 参数污染（HPPT）、双写 <code>ununionion</code>、畸形包。</li>
+<li><strong>上传</strong>：见 Day 8 后缀/Content-Type/解析绕过。</li>
+<li><strong>XSS</strong>：标签/事件拼接（<code>&lt;img src=x onerror=&gt;</code>）、编码绕过、大小写/换行、利用 SVG/MathML。</li>
+<li><strong>根本</strong>：WAF 是边界，真正安全靠代码层修复；bypass 仅用于测试与证明危害。
 <strong>解析</strong>：现代云 WAF 还有分块、TLS 分片、超大数据包等绕过。强调"绕过是为了验证防护有效性，不是教攻击"。
-<strong>考察知识点</strong>：SQL/XSS 混淆、分块传输、参数污染、防御为本。</p>
+<strong>考察知识点</strong>：SQL/XSS 混淆、分块传输、参数污染、防御为本。</li>
+</ul>
 <hr />
 <h1 id="_2">模块二　渗透测试流程与方法<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
 <h3 id="day-15-ptes">Day 15 ｜ 渗透测试标准流程（PTES）<a class="headerlink" href="#day-15-ptes" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：一次完整的渗透测试流程是什么？
-<strong>答案</strong>：
-1. <strong>前期交互</strong>：明确目标、范围、授权边界、时间与方式（黑/白/灰盒）、交付物。
-2. <strong>情报收集（信息收集）</strong>：被动+主动，域名/IP/资产/端口/服务/指纹/人员。
-3. <strong>威胁建模</strong>：确定攻击面与优先级。
-4. <strong>漏洞分析</strong>：扫描+手工验证。
-5. <strong>漏洞利用</strong>：getshell、提权、内网横向。
-6. <strong>后渗透</strong>：权限维持、内网拓展、敏感数据。
-7. <strong>报告</strong>：漏洞清单、复现、危害、修复建议。
-8. <strong>复测</strong>：验证修复有效性。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：一次完整的渗透测试流程是什么？
+<strong>答案</strong>：</li>
+<li><strong>前期交互</strong>：明确目标、范围、授权边界、时间与方式（黑/白/灰盒）、交付物。</li>
+<li><strong>情报收集（信息收集）</strong>：被动+主动，域名/IP/资产/端口/服务/指纹/人员。</li>
+<li><strong>威胁建模</strong>：确定攻击面与优先级。</li>
+<li><strong>漏洞分析</strong>：扫描+手工验证。</li>
+<li><strong>漏洞利用</strong>：getshell、提权、内网横向。</li>
+<li><strong>后渗透</strong>：权限维持、内网拓展、敏感数据。</li>
+<li><strong>报告</strong>：漏洞清单、复现、危害、修复建议。</li>
+<li><strong>复测</strong>：验证修复有效性。
 <strong>解析</strong>：PTES 是业界通用框架。强调"授权先行"——无书面授权的测试违法。护网/众测都需范围确认。
-<strong>考察知识点</strong>：PTES 阶段、授权、情报收集、后渗透、报告。</p>
+<strong>考察知识点</strong>：PTES 阶段、授权、情报收集、后渗透、报告。</li>
+</ul>
 <h3 id="day-16">Day 16 ｜ 信息收集都收集什么<a class="headerlink" href="#day-16" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：渗透测试的信息收集阶段要收集哪些内容？
-<strong>答案</strong>：
-- <strong>资产</strong>：域名、子域、C 段、旁站、IP、CDN 前后的真实 IP、ASN。
-- <strong>服务</strong>：开放端口、服务/版本、Web 指纹（CMS、中间件、框架）、WAF 类型。
-- <strong>人员</strong>：whois、备案、邮箱、GitHub 泄露、社工库关联。
-- <strong>技术</strong>：目录/敏感文件（备份、.git、phpinfo）、JS 接口、API、配置泄露。
-- <strong>工具</strong>：OneForAll、subfinder、masscan、nmap、fofa/quake/hunter 等引擎。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：渗透测试的信息收集阶段要收集哪些内容？
+<strong>答案</strong>：</li>
+<li><strong>资产</strong>：域名、子域、C 段、旁站、IP、CDN 前后的真实 IP、ASN。</li>
+<li><strong>服务</strong>：开放端口、服务/版本、Web 指纹（CMS、中间件、框架）、WAF 类型。</li>
+<li><strong>人员</strong>：whois、备案、邮箱、GitHub 泄露、社工库关联。</li>
+<li><strong>技术</strong>：目录/敏感文件（备份、.git、phpinfo）、JS 接口、API、配置泄露。</li>
+<li><strong>工具</strong>：OneForAll、subfinder、masscan、nmap、fofa/quake/hunter 等引擎。
 <strong>解析</strong>：信息收集决定攻击面宽度。旁站/C 段、真实 IP（绕 CDN）、GitHub 源码泄露常是突破口。
-<strong>考察知识点</strong>：资产测绘、真实 IP、指纹识别、OSINT。</p>
+<strong>考察知识点</strong>：资产测绘、真实 IP、指纹识别、OSINT。</li>
+</ul>
 <h3 id="day-17">Day 17 ｜ 黑盒 / 白盒 / 灰盒区别<a class="headerlink" href="#day-17" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：黑盒、白盒、灰盒测试的区别？
-<strong>答案</strong>：
-- <strong>黑盒</strong>：无内部信息，仅从外部模拟攻击者（最接近真实入侵）。
-- <strong>白盒</strong>：提供源码/架构/账号，做代码审计与配置审查（覆盖深）。
-- <strong>灰盒</strong>：部分信息（如普通账号），兼顾效率与真实度。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：黑盒、白盒、灰盒测试的区别？
+<strong>答案</strong>：</li>
+<li><strong>黑盒</strong>：无内部信息，仅从外部模拟攻击者（最接近真实入侵）。</li>
+<li><strong>白盒</strong>：提供源码/架构/账号，做代码审计与配置审查（覆盖深）。</li>
+<li><strong>灰盒</strong>：部分信息（如普通账号），兼顾效率与真实度。
 <strong>解析</strong>：渗透测试实习常从黑盒起步，进阶需白盒代码审计能力。面试会问"你更擅长哪种"——如实说并说明学习路径。
-<strong>考察知识点</strong>：测试模型、代码审计、真实性 vs 覆盖度。</p>
+<strong>考察知识点</strong>：测试模型、代码审计、真实性 vs 覆盖度。</li>
+</ul>
 <h3 id="day-18-webshell">Day 18 ｜ 拿到 webshell 后的思路<a class="headerlink" href="#day-18-webshell" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：拿到一个 webshell 后，下一步怎么扩大战果？
-<strong>答案</strong>：
-1. <strong>判环境</strong>：系统（Linux/Win）、权限（whoami）、网络位置（是否内网）。
-2. <strong>提权</strong>：内核/服务/配置不当（见模块三）。
-3. <strong>信息搜集</strong>：配置文件（数据库/云 AK）、内网段、域信息。
-4. <strong>内网横向</strong>：端口扫描、口令复用、PTH、搭建代理（reGeorg/frp）。
-5. <strong>权限维持</strong>：计划任务、启停项、后门账号、webshell 变形。
-6. <strong>清理</strong>：清日志、测试数据，输出报告。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：拿到一个 webshell 后，下一步怎么扩大战果？
+<strong>答案</strong>：</li>
+<li><strong>判环境</strong>：系统（Linux/Win）、权限（whoami）、网络位置（是否内网）。</li>
+<li><strong>提权</strong>：内核/服务/配置不当（见模块三）。</li>
+<li><strong>信息搜集</strong>：配置文件（数据库/云 AK）、内网段、域信息。</li>
+<li><strong>内网横向</strong>：端口扫描、口令复用、PTH、搭建代理（reGeorg/frp）。</li>
+<li><strong>权限维持</strong>：计划任务、启停项、后门账号、webshell 变形。</li>
+<li><strong>清理</strong>：清日志、测试数据，输出报告。
 <strong>解析</strong>：低权限 shell 价值有限，提权与内网才是关键。所有动作须在授权范围并记录，便于出报告与复测。
-<strong>考察知识点</strong>：后渗透、提权、内网横向、权限维持。</p>
+<strong>考察知识点</strong>：后渗透、提权、内网横向、权限维持。</li>
+</ul>
 <h3 id="day-19-webshell">Day 19 ｜ 获取 webshell 的多种途径<a class="headerlink" href="#day-19-webshell" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：拿到一个网站 webshell 有哪些常见途径？
-<strong>答案</strong>：
-- 文件上传（解析/绕过，见 Day 8/9）；
-- 后台模板/配置文件编辑写入；
-- SQL 注入写文件（Day 2）；
-- 命令执行/代码执行点；
-- 反序列化/表达式注入（Day 11）；
-- 已知 CMS/中间件 RCE（Struts2、Log4j、Weblogic）；
-- 第三方组件/插件漏洞。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：拿到一个网站 webshell 有哪些常见途径？
+<strong>答案</strong>：</li>
+<li>文件上传（解析/绕过，见 Day 8/9）；</li>
+<li>后台模板/配置文件编辑写入；</li>
+<li>SQL 注入写文件（Day 2）；</li>
+<li>命令执行/代码执行点；</li>
+<li>反序列化/表达式注入（Day 11）；</li>
+<li>已知 CMS/中间件 RCE（Struts2、Log4j、Weblogic）；</li>
+<li>第三方组件/插件漏洞。
 <strong>解析</strong>：面试常问"优选哪种"——优先找<strong>最稳定、最难被发现</strong>的（如后台模板/配置写入），避免频繁上传大马触发告警。
-<strong>考察知识点</strong>：getshell 面、稳定性与隐蔽性权衡。</p>
+<strong>考察知识点</strong>：getshell 面、稳定性与隐蔽性权衡。</li>
+</ul>
 <h3 id="day-20">Day 20 ｜ 授权边界与合规<a class="headerlink" href="#day-20" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：渗透测试的合法边界是什么？
-<strong>答案</strong>：
-- 必须有<strong>书面授权</strong>（授权书/合同），明确目标、IP、时间、方式、禁止行为（如破坏、拖库、影响业务）。
-- 遵守《网络安全法》《数据安全法》《刑法》285/286 条；未经授权扫描/测试可能违法。
-- 护网/众测在指定范围与时段内进行；发现高危（如可 RCE、可拖库）及时上报，不扩大危害。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：渗透测试的合法边界是什么？
+<strong>答案</strong>：</li>
+<li>必须有<strong>书面授权</strong>（授权书/合同），明确目标、IP、时间、方式、禁止行为（如破坏、拖库、影响业务）。</li>
+<li>遵守《网络安全法》《数据安全法》《刑法》285/286 条；未经授权扫描/测试可能违法。</li>
+<li>护网/众测在指定范围与时段内进行；发现高危（如可 RCE、可拖库）及时上报，不扩大危害。
 <strong>解析</strong>：这是安全从业底线。面试必问"你做过未授权测试吗"——必须答"只在授权范围内"。CISP-PTE 也强调合规。
-<strong>考察知识点</strong>：授权测试、网络安全法、护网合规、红队纪律。</p>
+<strong>考察知识点</strong>：授权测试、网络安全法、护网合规、红队纪律。</li>
+</ul>
 <hr />
 <h1 id="_3">模块三　权限提升与内网渗透<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h1>
 <h3 id="day-21-windows">Day 21 ｜ Windows 常见提权方法<a class="headerlink" href="#day-21-windows" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：Windows 下常见的提权方式有哪些？
-<strong>答案</strong>：
-- <strong>系统漏洞</strong>：内核提权（如 MS16-032、CVE 提权），用 <code>systeminfo</code> 对照补丁。
-- <strong>服务/计划任务</strong>：服务路径可写（烂土豆系列 RottenPotato→JuicyPotato）、计划任务以 SYSTEM 运行且脚本可写。
-- <strong>错误权限配置</strong>：可写目录、AlwaysInstallElevated（msi 提权）、未引号服务路径。
-- <strong>令牌窃取</strong>：<code>Incognito</code>/<code>Potato</code> 系列盗用令牌。
-- <strong>工具</strong>：WinPEAS、PowerUp、Sherlock、MSF <code>local_exploit_suggester</code>。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：Windows 下常见的提权方式有哪些？
+<strong>答案</strong>：</li>
+<li><strong>系统漏洞</strong>：内核提权（如 MS16-032、CVE 提权），用 <code>systeminfo</code> 对照补丁。</li>
+<li><strong>服务/计划任务</strong>：服务路径可写（烂土豆系列 RottenPotato→JuicyPotato）、计划任务以 SYSTEM 运行且脚本可写。</li>
+<li><strong>错误权限配置</strong>：可写目录、AlwaysInstallElevated（msi 提权）、未引号服务路径。</li>
+<li><strong>令牌窃取</strong>：<code>Incognito</code>/<code>Potato</code> 系列盗用令牌。</li>
+<li><strong>工具</strong>：WinPEAS、PowerUp、Sherlock、MSF <code>local_exploit_suggester</code>。
 <strong>解析</strong>：先 <code>whoami /priv</code> 看是否有 <code>SeImpersonatePrivilege</code>（土豆类提权前提）。优先用 PEAS 类脚本全盘检查"错误配置"比盲打/exp 更稳。
-<strong>考察知识点</strong>：内核提权、令牌 impersonate、错误配置、WinPEAS。</p>
+<strong>考察知识点</strong>：内核提权、令牌 impersonate、错误配置、WinPEAS。</li>
+</ul>
 <h3 id="day-22-linux">Day 22 ｜ Linux 常见提权方法<a class="headerlink" href="#day-22-linux" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：Linux 下常见的提权方式有哪些？
-<strong>答案</strong>：
-- <strong>内核漏洞</strong>：脏牛（CVE-2016-5195）、脏管道（CVE-2022-0847）等，比对内核版本。
-- <strong>SUID 滥用</strong>：<code>find / -perm -u=s</code> 找异常 SUID（如 <code>find</code>、<code>vim</code>、<code>nmap</code> 交互模式）。
-- <strong>sudo 配置不当</strong>：<code>sudo -l</code> 看可无密码执行的命令（如 <code>sudo vim</code>→<code>:!sh</code>）。
-- <strong>计划任务/可写脚本</strong>：cron 以 root 执行且文件可写。
-- <strong>环境变量劫持</strong>：<code>PATH</code> 劫持、sudo 的 <code>env_keep</code>。
-- <strong>工具</strong>：LinPEAS、linprivchecker、GTFOBins。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：Linux 下常见的提权方式有哪些？
+<strong>答案</strong>：</li>
+<li><strong>内核漏洞</strong>：脏牛（CVE-2016-5195）、脏管道（CVE-2022-0847）等，比对内核版本。</li>
+<li><strong>SUID 滥用</strong>：<code>find / -perm -u=s</code> 找异常 SUID（如 <code>find</code>、<code>vim</code>、<code>nmap</code> 交互模式）。</li>
+<li><strong>sudo 配置不当</strong>：<code>sudo -l</code> 看可无密码执行的命令（如 <code>sudo vim</code>→<code>:!sh</code>）。</li>
+<li><strong>计划任务/可写脚本</strong>：cron 以 root 执行且文件可写。</li>
+<li><strong>环境变量劫持</strong>：<code>PATH</code> 劫持、sudo 的 <code>env_keep</code>。</li>
+<li><strong>工具</strong>：LinPEAS、linprivchecker、GTFOBins。
 <strong>解析</strong>：<code>sudo -l</code> 与 SUID 是最常见的"低垂果实"。GTFOBins 是查单条命令提权的权威库。
-<strong>考察知识点</strong>：SUID、sudo 滥用、cron、GTFOBins、LinPEAS。</p>
+<strong>考察知识点</strong>：SUID、sudo 滥用、cron、GTFOBins、LinPEAS。</li>
+</ul>
 <h3 id="day-23">Day 23 ｜ 内网渗透思路<a class="headerlink" href="#day-23" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：拿到边界机后，内网渗透的一般思路？
-<strong>答案</strong>：
-1. 本机信息：网卡、路由、域、登录会话、本地哈希（<code>mimikatz</code>/<code>sekurlsa</code>）。
-2. 内网存活与拓扑：扫描网段（arp/nbtscan/icmp）、端口服务。
-3. 横向移动：IPC$/WMI/psexec、SMB/WinRM、口令复用/爆破、PTH。
-4. 域渗透：定位域控、Kerberos 攻击（见 D24–D26）。
-5. 权限维持与凭据窃取：黄金票据、组策略、DCSync。
-6. 目标达成（域控/核心数据）后出报告。
-<strong>解析</strong>：内网核心是"凭据复用 + 信任关系利用"。先找域成员/域控，再围绕 Kerberos 做文章。
-<strong>考察知识点</strong>：内网拓扑、横向移动、凭据复用、域控定位。</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：拿到边界机后，内网渗透的一般思路？</li>
+</ul>
+<p><strong>答案</strong>：</p>
+<ol>
+<li>本机信息：网卡、路由、域、登录会话、本地哈希（<code>mimikatz</code>/<code>sekurlsa</code>）。</li>
+<li>内网存活与拓扑：扫描网段（arp/nbtscan/icmp）、端口服务。</li>
+<li>横向移动：IPC$/WMI/psexec、SMB/WinRM、口令复用/爆破、PTH。</li>
+<li>域渗透：定位域控、Kerberos 攻击（见 D24–D26）。</li>
+<li>权限维持与凭据窃取：黄金票据、组策略、DCSync。</li>
+<li>目标达成（域控/核心数据）后出报告。</li>
+</ol>
+<p><strong>解析</strong>：内网核心是"凭据复用 + 信任关系利用"。先找域成员/域控，再围绕 Kerberos 做文章。</p>
+<p><strong>考察知识点</strong>：内网拓扑、横向移动、凭据复用、域控定位。</p>
 <h3 id="day-24-kerberos">Day 24 ｜ 域渗透：Kerberos 认证过程<a class="headerlink" href="#day-24-kerberos" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：简述域环境中 Kerberos 认证流程。
-<strong>答案</strong>：
-- <strong>AS-REQ/AS-REP</strong>：客户向 AS 请求 TGT，AS 用 krbtgt 密钥加密返回 TGT（含会话密钥）。
-- <strong>TGS-REQ/TGS-REP</strong>：客户用 TGT 向 TGS 请求某服务票据（ST），TGS 用服务账号密钥加密 ST。
-- <strong>AP-REQ/AP-REP</strong>：客户携 ST 访问服务，服务用自身密钥解密校验。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：简述域环境中 Kerberos 认证流程。
+<strong>答案</strong>：</li>
+<li><strong>AS-REQ/AS-REP</strong>：客户向 AS 请求 TGT，AS 用 krbtgt 密钥加密返回 TGT（含会话密钥）。</li>
+<li><strong>TGS-REQ/TGS-REP</strong>：客户用 TGT 向 TGS 请求某服务票据（ST），TGS 用服务账号密钥加密 ST。</li>
+<li><strong>AP-REQ/AP-REP</strong>：客户携 ST 访问服务，服务用自身密钥解密校验。
 <strong>解析</strong>：理解三步走是关键。黄金票据伪造 TGT（需 krbtgt 哈希），白银票据伪造 ST（需服务账号哈希），分别对应不同环节。
-<strong>考察知识点</strong>：AS/TGS、TGT/ST、krbtgt、票据流转。</p>
+<strong>考察知识点</strong>：AS/TGS、TGT/ST、krbtgt、票据流转。</li>
+</ul>
 <h3 id="day-25">Day 25 ｜ 黄金票据 / 白银票据<a class="headerlink" href="#day-25" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：黄金票据和白银票据分别伪造什么？条件与区别？
-<strong>答案</strong>：
-- <strong>黄金票据（Golden Ticket）</strong>：伪造 <strong>TGT</strong>，需 <code>krbtgt</code> 账号的 NTLM 哈希 + 域名/SID/管理员名。效果：任意服务任意权限、长期有效、无需与 DC 通信。
-- <strong>白银票据（Silver Ticket）</strong>：伪造 <strong>ST</strong>，需目标<strong>服务账号</strong>哈希（如机器账号/SQL）。效果：仅对该服务有效、不留域控日志，但需知道服务名。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：黄金票据和白银票据分别伪造什么？条件与区别？
+<strong>答案</strong>：</li>
+<li><strong>黄金票据（Golden Ticket）</strong>：伪造 <strong>TGT</strong>，需 <code>krbtgt</code> 账号的 NTLM 哈希 + 域名/SID/管理员名。效果：任意服务任意权限、长期有效、无需与 DC 通信。</li>
+<li><strong>白银票据（Silver Ticket）</strong>：伪造 <strong>ST</strong>，需目标<strong>服务账号</strong>哈希（如机器账号/SQL）。效果：仅对该服务有效、不留域控日志，但需知道服务名。
 <strong>解析</strong>：黄金票据权限更大、隐蔽性更强（不接触 DC），白银票据日志更少但范围小。两者都依赖"哈希泄露"，防护在凭据保护与 DC 加固。
-<strong>考察知识点</strong>：TGT vs ST 伪造、krbtgt、日志差异、凭据保护。</p>
+<strong>考察知识点</strong>：TGT vs ST 伪造、krbtgt、日志差异、凭据保护。</li>
+</ul>
 <h3 id="day-26-pth-pttmimikatz">Day 26 ｜ PTH / PTT、mimikatz<a class="headerlink" href="#day-26-pth-pttmimikatz" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：什么是 PTH、PTT？mimikatz 的作用？
-<strong>答案</strong>：
-- <strong>PTH（Pass The Hash）</strong>：直接用 NTLM 哈希认证，无需明文口令（如 <code>sekurlsa::pth</code>）。
-- <strong>PTT（Pass The Ticket）</strong>：传递票据（如注入黄金/白银票据、kirbi）。
-- <strong>mimikatz</strong>：提取明文/哈希（<code>sekurlsa::logonpasswords</code>）、票据（<code>sekurlsa::tickets</code>）、DCSync（<code>lsadump::dcsync</code>）、生成黄金票据（<code>kerberos::golden</code>）。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：什么是 PTH、PTT？mimikatz 的作用？
+<strong>答案</strong>：</li>
+<li><strong>PTH（Pass The Hash）</strong>：直接用 NTLM 哈希认证，无需明文口令（如 <code>sekurlsa::pth</code>）。</li>
+<li><strong>PTT（Pass The Ticket）</strong>：传递票据（如注入黄金/白银票据、kirbi）。</li>
+<li><strong>mimikatz</strong>：提取明文/哈希（<code>sekurlsa::logonpasswords</code>）、票据（<code>sekurlsa::tickets</code>）、DCSync（<code>lsadump::dcsync</code>）、生成黄金票据（<code>kerberos::golden</code>）。
 <strong>解析</strong>：PTH 在 NTLM 环境有效；PTT 绕过 NTLM 限制。mimikatz 是域渗透标配工具，蓝队需在日志/EDR 层面检测其典型行为（如 lsass 读取）。
-<strong>考察知识点</strong>：哈希传递、票据传递、lsass、DCSync。</p>
+<strong>考察知识点</strong>：哈希传递、票据传递、lsass、DCSync。</li>
+</ul>
 <h3 id="day-27">Day 27 ｜ 内网穿透<a class="headerlink" href="#day-27" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：什么是内网穿透？常见工具与场景？
-<strong>答案</strong>：
-- <strong>目的</strong>：把内网/靶机端口映射到公网或可访问点，便于用本机工具（MSF、C2）控制。
-- <strong>工具/方式</strong>：frp、ngrok、reGeorg（HTTP 隧道）、EarthWorm（ew）、SSH 反向隧道、CS 的 listener/beacon。
-- <strong>场景</strong>：目标只出网、无公网 IP；通过 webshell 建隧；护网中 C2 隐蔽通道。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：什么是内网穿透？常见工具与场景？
+<strong>答案</strong>：</li>
+<li><strong>目的</strong>：把内网/靶机端口映射到公网或可访问点，便于用本机工具（MSF、C2）控制。</li>
+<li><strong>工具/方式</strong>：frp、ngrok、reGeorg（HTTP 隧道）、EarthWorm（ew）、SSH 反向隧道、CS 的 listener/beacon。</li>
+<li><strong>场景</strong>：目标只出网、无公网 IP；通过 webshell 建隧；护网中 C2 隐蔽通道。
 <strong>解析</strong>：穿透要解决"目标不暴露公网"的问题。reGeorg 走 HTTP 最不易被拦；frp 需一台公网跳板。注意流量加密与画像规避。
-<strong>考察知识点</strong>：frp/reGeorg、反向隧道、C2、流量隐蔽。</p>
+<strong>考察知识点</strong>：frp/reGeorg、反向隧道、C2、流量隐蔽。</li>
+</ul>
 <hr />
 <h1 id="_4">模块四　安全工具<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h1>
 <h3 id="day-28-burp-suite">Day 28 ｜ Burp Suite 核心功能<a class="headerlink" href="#day-28-burp-suite" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：Burp Suite 主要有哪几块功能？实战怎么用？
-<strong>答案</strong>：
-- <strong>Proxy</strong>：拦截/改包（重发、绕过前端校验）。
-- <strong>Repeater</strong>：手动重放、调 payload。
-- <strong>Intruder</strong>：爆破/模糊测试（Sniper/Cluster bomb 等攻击类型）。
-- <strong>Decoder/Comparer</strong>：编解码、差异比对。
-- <strong>Scanner（Pro）/Extensions</strong>：主动扫描、插件（如 SQLiPy、Authz、HaE）。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：Burp Suite 主要有哪几块功能？实战怎么用？
+<strong>答案</strong>：</li>
+<li><strong>Proxy</strong>：拦截/改包（重发、绕过前端校验）。</li>
+<li><strong>Repeater</strong>：手动重放、调 payload。</li>
+<li><strong>Intruder</strong>：爆破/模糊测试（Sniper/Cluster bomb 等攻击类型）。</li>
+<li><strong>Decoder/Comparer</strong>：编解码、差异比对。</li>
+<li><strong>Scanner（Pro）/Extensions</strong>：主动扫描、插件（如 SQLiPy、Authz、HaE）。
 <strong>解析</strong>：Proxy+Repeater+Intruder 是日常三件套；Authz 做越权测试、HaE 做被动信息收集。配合浏览器代理与证书安装。
-<strong>考察知识点</strong>：Proxy/Repeater/Intruder、攻击类型、插件生态。</p>
+<strong>考察知识点</strong>：Proxy/Repeater/Intruder、攻击类型、插件生态。</li>
+</ul>
 <h3 id="day-29-sqlmap">Day 29 ｜ sqlmap 对注入点注入<a class="headerlink" href="#day-29-sqlmap" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：用 sqlmap 怎么对一个注入点注入？常用参数？
-<strong>答案</strong>：
-- 基本：<code>sqlmap -u "url?p=1" --batch</code>
-- 指定注入点/技术：<code>--data</code> POST、<code>-p id</code> 指定参数、<code>--technique=BEUST</code>（B布尔/E报错/U联合/S堆叠/T时间）。
-- 拖库：<code>--dbs / --tables / --dump</code>、<code>--current-db</code>、<code>--os-shell</code>（写 shell 需文件权限）。
-- 进阶：<code>--tamper=xxx</code>（绕过 WAF）、<code>--level=5 --risk=3</code>、<code>--threads</code>。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：用 sqlmap 怎么对一个注入点注入？常用参数？
+<strong>答案</strong>：</li>
+<li>基本：<code>sqlmap -u "url?p=1" --batch</code></li>
+<li>指定注入点/技术：<code>--data</code> POST、<code>-p id</code> 指定参数、<code>--technique=BEUST</code>（B布尔/E报错/U联合/S堆叠/T时间）。</li>
+<li>拖库：<code>--dbs / --tables / --dump</code>、<code>--current-db</code>、<code>--os-shell</code>（写 shell 需文件权限）。</li>
+<li>进阶：<code>--tamper=xxx</code>（绕过 WAF）、<code>--level=5 --risk=3</code>、<code>--threads</code>。
 <strong>解析</strong>：先用 <code>--batch</code> 自动确认；有 WAF 加 <code>--tamper</code>（如 <code>space2comment</code>、<code>charencode</code>）。<code>--os-shell</code> 依赖 Day 2 的文件写条件。
-<strong>考察知识点</strong>：sqlmap 参数、technique、tamper、os-shell。</p>
+<strong>考察知识点</strong>：sqlmap 参数、technique、tamper、os-shell。</li>
+</ul>
 <h3 id="day-30-nmap">Day 30 ｜ nmap 常用用法<a class="headerlink" href="#day-30-nmap" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：nmap 常用的扫描命令与脚本？
-<strong>答案</strong>：
-- 端口：<code>nmap -p- -sT</code> 全端口 TCP；<code>-sS</code> SYN 半开（需权限）；<code>-sU</code> UDP。
-- 服务/系统：<code>nmap -sV -O</code>；<code>-Pn</code> 跳过存活探测（禁 ping 环境）。
-- 脚本：<code>nmap --script=default/vuln/smb-*</code>；<code>-A</code> 综合。
-- 输出：<code>-oN/-oX</code> 保存。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：nmap 常用的扫描命令与脚本？
+<strong>答案</strong>：</li>
+<li>端口：<code>nmap -p- -sT</code> 全端口 TCP；<code>-sS</code> SYN 半开（需权限）；<code>-sU</code> UDP。</li>
+<li>服务/系统：<code>nmap -sV -O</code>；<code>-Pn</code> 跳过存活探测（禁 ping 环境）。</li>
+<li>脚本：<code>nmap --script=default/vuln/smb-*</code>；<code>-A</code> 综合。</li>
+<li>输出：<code>-oN/-oX</code> 保存。
 <strong>解析</strong>：<code>-sS</code> 快但需原始套接字权限（Windows 上常退回 <code>-sT</code>）；内网用 <code>-Pn</code> 避免被防火墙丢 icmp 漏主机。<code>vuln</code> 脚本可初筛已知漏洞。
-<strong>考察知识点</strong>：SYN 扫描、服务识别、NSE 脚本、-Pn。</p>
+<strong>考察知识点</strong>：SYN 扫描、服务识别、NSE 脚本、-Pn。</li>
+</ul>
 <h3 id="day-31-metasploit-msf">Day 31 ｜ Metasploit (MSF) 使用<a class="headerlink" href="#day-31-metasploit-msf" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：Metasploit 的基本使用流程？
-<strong>答案</strong>：
-- <code>msfconsole</code> 进入；<code>search</code> 找模块；<code>use</code> 加载 exploit/auxiliary；<code>set RHOSTS/LPORT/PAYLOAD</code>；<code>exploit</code>/<code>run</code>。
-- 后渗透：<code>post/</code> 模块、<code>sessions</code> 管理、<code>migrate</code> 进程迁移、<code>getsystem</code> 提权、<code>hashdump</code>、<code>run persistence</code> 维持。
-- 生成 payload：<code>msfvenom -p windows/meterpreter/reverse_tcp LHOST= LPORT= -f exe -o x.exe</code>。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：Metasploit 的基本使用流程？
+<strong>答案</strong>：</li>
+<li><code>msfconsole</code> 进入；<code>search</code> 找模块；<code>use</code> 加载 exploit/auxiliary；<code>set RHOSTS/LPORT/PAYLOAD</code>；<code>exploit</code>/<code>run</code>。</li>
+<li>后渗透：<code>post/</code> 模块、<code>sessions</code> 管理、<code>migrate</code> 进程迁移、<code>getsystem</code> 提权、<code>hashdump</code>、<code>run persistence</code> 维持。</li>
+<li>生成 payload：<code>msfvenom -p windows/meterpreter/reverse_tcp LHOST= LPORT= -f exe -o x.exe</code>。
 <strong>解析</strong>：MSF 是后渗透中枢，配合数据库（<code>db_nmap</code>）管理多目标。Meterpreter 强在内存执行与丰富后渗透命令。
-<strong>考察知识点</strong>：模块体系、payload、meterpreter、后渗透命令。</p>
+<strong>考察知识点</strong>：模块体系、payload、meterpreter、后渗透命令。</li>
+</ul>
 <h3 id="day-32">Day 32 ｜ 冰蝎 / 蚁剑 / 菜刀区别与流量特征<a class="headerlink" href="#day-32" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：菜刀、蚁剑、冰蝎有什么异同？流量特征？
-<strong>答案</strong>：
-- <strong>菜刀（Cknife）</strong>：老牌，明文/简单加密通信，特征明显易被检测。
-- <strong>蚁剑（AntSword）</strong>：开源、多平台、插件化，默认流量仍有特征。
-- <strong>冰蝎（Behinder）</strong>：<strong>流量加密</strong>（AES，密钥协商），无明显明文特征，较难检测；需服务端特定 eval 解析。
-- <strong>防守侧</strong>：WAF/IDS 靠正则与行为识别；冰蝎靠解密与异常长连接/非常规 UA 检测；建议用哥斯拉等更新马并自定义流量。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：菜刀、蚁剑、冰蝎有什么异同？流量特征？
+<strong>答案</strong>：</li>
+<li><strong>菜刀（Cknife）</strong>：老牌，明文/简单加密通信，特征明显易被检测。</li>
+<li><strong>蚁剑（AntSword）</strong>：开源、多平台、插件化，默认流量仍有特征。</li>
+<li><strong>冰蝎（Behinder）</strong>：<strong>流量加密</strong>（AES，密钥协商），无明显明文特征，较难检测；需服务端特定 eval 解析。</li>
+<li><strong>防守侧</strong>：WAF/IDS 靠正则与行为识别；冰蝎靠解密与异常长连接/非常规 UA 检测；建议用哥斯拉等更新马并自定义流量。
 <strong>解析</strong>：免杀与流量加密是红队重点，也是蓝队检测难点。面试常从"防守如何发现"反向考察。
-<strong>考察知识点</strong>：三款马差异、加密流量、检测思路、哥斯拉。</p>
+<strong>考察知识点</strong>：三款马差异、加密流量、检测思路、哥斯拉。</li>
+</ul>
 <hr />
 <h1 id="_5">模块五　护网·红蓝对抗·应急响应<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h1>
 <h3 id="day-33">Day 33 ｜ 护网行动与红蓝队职责<a class="headerlink" href="#day-33" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：什么是护网行动？红队、蓝队分别做什么？
-<strong>答案</strong>：
-- <strong>护网</strong>：国家/行业组织的网络安全实战攻防演练，红队攻击、蓝队防守，检验防护与应急能力。
-- <strong>红队</strong>：模拟真实攻击方，信息收集→外网突破→钓鱼/边界突破→内网横向→拿分（靶标系统）。强调隐蔽与合规。
-- <strong>蓝队</strong>：监测（流量/日志/终端）、研判告警、处置（封 IP/隔离主机）、溯源反制、编写报告。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：什么是护网行动？红队、蓝队分别做什么？
+<strong>答案</strong>：</li>
+<li><strong>护网</strong>：国家/行业组织的网络安全实战攻防演练，红队攻击、蓝队防守，检验防护与应急能力。</li>
+<li><strong>红队</strong>：模拟真实攻击方，信息收集→外网突破→钓鱼/边界突破→内网横向→拿分（靶标系统）。强调隐蔽与合规。</li>
+<li><strong>蓝队</strong>：监测（流量/日志/终端）、研判告警、处置（封 IP/隔离主机）、溯源反制、编写报告。
 <strong>解析</strong>：护网是"以攻促防"。红队得分靠拿下指定靶标（如域控/业务系统），蓝队靠早发现、快处置、成功溯源反制。
-<strong>考察知识点</strong>：护网机制、红蓝分工、靶标、攻防对抗。</p>
+<strong>考察知识点</strong>：护网机制、红蓝分工、靶标、攻防对抗。</li>
+</ul>
 <h3 id="day-34">Day 34 ｜ 红队攻击思路<a class="headerlink" href="#day-34" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：红队一般怎么打？
-<strong>答案</strong>：
-1. 外网资产测绘（fofa/quake + 自研），找暴露面与 0day/NDay。
-2. Web 突破：注入/上传/反序列化/RCE 拿边界 webshell。
-3. 钓鱼：伪装邮件/客服，诱导运行木马（C2 上线）。
-4. 边界到内网：提权、内网横向、域渗透拿域控/靶标。
-5. 隐蔽：流量加密、免杀、清除痕迹、躲避蜜罐/蜜饵。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：红队一般怎么打？
+<strong>答案</strong>：</li>
+<li>外网资产测绘（fofa/quake + 自研），找暴露面与 0day/NDay。</li>
+<li>Web 突破：注入/上传/反序列化/RCE 拿边界 webshell。</li>
+<li>钓鱼：伪装邮件/客服，诱导运行木马（C2 上线）。</li>
+<li>边界到内网：提权、内网横向、域渗透拿域控/靶标。</li>
+<li>隐蔽：流量加密、免杀、清除痕迹、躲避蜜罐/蜜饵。
 <strong>解析</strong>：红队不只技术，还重社工与供应链。近年强调"不触碰非靶标、不扩大影响"，纪律第一。
-<strong>考察知识点</strong>：外网突破、钓鱼、横向、隐蔽、合规纪律。</p>
+<strong>考察知识点</strong>：外网突破、钓鱼、横向、隐蔽、合规纪律。</li>
+</ul>
 <h3 id="day-35">Day 35 ｜ 蓝队监测防守思路<a class="headerlink" href="#day-35" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：蓝队如何监测与防守？
-<strong>答案</strong>：
-- <strong>监测</strong>：全流量探针、IDS/IPS、EDR、日志集中（SIEM）、威胁情报比对。
-- <strong>研判</strong>：区分误报与真实攻击（看 payload、源 IP、行为链）。
-- <strong>处置</strong>：封禁 IP、隔离主机、断网、改密、关端口、WAF 加规则。
-- <strong>反制</strong>：溯源攻击链、蜜罐诱捕、反制钓鱼样本回连。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：蓝队如何监测与防守？
+<strong>答案</strong>：</li>
+<li><strong>监测</strong>：全流量探针、IDS/IPS、EDR、日志集中（SIEM）、威胁情报比对。</li>
+<li><strong>研判</strong>：区分误报与真实攻击（看 payload、源 IP、行为链）。</li>
+<li><strong>处置</strong>：封禁 IP、隔离主机、断网、改密、关端口、WAF 加规则。</li>
+<li><strong>反制</strong>：溯源攻击链、蜜罐诱捕、反制钓鱼样本回连。
 <strong>解析</strong>：蓝队靠"看见"能力（全流量+终端）。重点是从海量告警中快速定位高危真实事件并形成处置闭环。
-<strong>考察知识点</strong>：SIEM、EDR、流量分析、处置闭环、溯源。</p>
+<strong>考察知识点</strong>：SIEM、EDR、流量分析、处置闭环、溯源。</li>
+</ul>
 <h3 id="day-36">Day 36 ｜ 应急响应流程（入侵排查）<a class="headerlink" href="#day-36" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：发生入侵/勒索时，应急响应流程是什么？
-<strong>答案</strong>：
-1. <strong>隔离</strong>：断网/封端口，防止扩散（保留现场）。
-2. <strong>研判</strong>：确认事件类型（webshell/勒索/挖矿/反弹 shell）、时间线。
-3. <strong>排查</strong>：进程（<code>ps</code>/<code>tasklist</code>）、网络连接（<code>netstat</code>）、启动项、计划任务、账号、近期文件、日志（web/安全/系统）。
-4. <strong>清除</strong>：删马、杀进程、修漏洞、改密、补丁。
-5. <strong>恢复</strong>：从干净备份恢复，业务验证。
-6. <strong>复盘</strong>：根因、加固、报告与改进。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：发生入侵/勒索时，应急响应流程是什么？
+<strong>答案</strong>：</li>
+<li><strong>隔离</strong>：断网/封端口，防止扩散（保留现场）。</li>
+<li><strong>研判</strong>：确认事件类型（webshell/勒索/挖矿/反弹 shell）、时间线。</li>
+<li><strong>排查</strong>：进程（<code>ps</code>/<code>tasklist</code>）、网络连接（<code>netstat</code>）、启动项、计划任务、账号、近期文件、日志（web/安全/系统）。</li>
+<li><strong>清除</strong>：删马、杀进程、修漏洞、改密、补丁。</li>
+<li><strong>恢复</strong>：从干净备份恢复，业务验证。</li>
+<li><strong>复盘</strong>：根因、加固、报告与改进。
 <strong>解析</strong>：原则是"先隔离后取证"，避免破坏证据。勒索优先断网+停共享，切忌盲目重启（可能触发锁盘）。
-<strong>考察知识点</strong>：应急响应 PDCERF、隔离取证、排查项、根因。</p>
+<strong>考察知识点</strong>：应急响应 PDCERF、隔离取证、排查项、根因。</li>
+</ul>
 <h3 id="day-37-webshell">Day 37 ｜ webshell 查杀 / 内存马检测<a class="headerlink" href="#day-37-webshell" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：如何查杀 webshell 与内存马？
-<strong>答案</strong>：
-- <strong>webshell</strong>：文件特征（关键词 <code>eval</code>/<code>assert</code>/<code>base64_decode</code>、一句话）、MD5 比对、河马/ D 盾等查杀器、对比基线。
-- <strong>内存马</strong>：Java 中 Filter/Servlet/Listener 型无文件马，靠 arthas 看加载类、检查中间件上下文、dump 内存分析；重启可清除但需根除入口。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：如何查杀 webshell 与内存马？
+<strong>答案</strong>：</li>
+<li><strong>webshell</strong>：文件特征（关键词 <code>eval</code>/<code>assert</code>/<code>base64_decode</code>、一句话）、MD5 比对、河马/ D 盾等查杀器、对比基线。</li>
+<li><strong>内存马</strong>：Java 中 Filter/Servlet/Listener 型无文件马，靠 arthas 看加载类、检查中间件上下文、dump 内存分析；重启可清除但需根除入口。
 <strong>解析</strong>：内存马无落地文件，传统文件查杀失效，需结合进程/类加载分析。防守要定位"为什么能注入"（反序列化/表达式注入入口）并修复。
-<strong>考察知识点</strong>：文件马 vs 内存马、arthas、无文件攻击、查杀器。</p>
+<strong>考察知识点</strong>：文件马 vs 内存马、arthas、无文件攻击、查杀器。</li>
+</ul>
 <h3 id="day-38">Day 38 ｜ 溯源反制思路<a class="headerlink" href="#day-38" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：蓝队如何做攻击溯源与反制？
-<strong>答案</strong>：
-- <strong>溯源</strong>：从告警反向还原攻击链（IP→payload→样本→C2），用威胁情报扩线、关联同手法其他告警、定位攻击者画像（虚拟身份/跳板）。
-- <strong>反制</strong>：蜜罐部署诱捕、在可控样本/页面埋反制代码（如获取攻击者真实 IP/主机信息，须合法合规）、钓鱼反制。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：蓝队如何做攻击溯源与反制？
+<strong>答案</strong>：</li>
+<li><strong>溯源</strong>：从告警反向还原攻击链（IP→payload→样本→C2），用威胁情报扩线、关联同手法其他告警、定位攻击者画像（虚拟身份/跳板）。</li>
+<li><strong>反制</strong>：蜜罐部署诱捕、在可控样本/页面埋反制代码（如获取攻击者真实 IP/主机信息，须合法合规）、钓鱼反制。
 <strong>解析</strong>：溯源讲"证据链闭合"，反制必须在法律与授权框架内，避免变成"以攻对攻"违法。
-<strong>考察知识点</strong>：攻击链还原、威胁情报、蜜罐反制、合规边界。</p>
+<strong>考察知识点</strong>：攻击链还原、威胁情报、蜜罐反制、合规边界。</li>
+</ul>
 <hr />
 <h1 id="_6">模块六　网络协议与安全<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h1>
 <h3 id="day-39-tcp-udp">Day 39 ｜ TCP 与 UDP 区别<a class="headerlink" href="#day-39-tcp-udp" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：TCP 和 UDP 的区别？
-<strong>答案</strong>：
-- <strong>TCP</strong>：面向连接、可靠（确认/重传/拥塞控制）、字节流、一对一、有握手，速度慢，用于 HTTP/SSH/MySQL 等。
-- <strong>UDP</strong>：无连接、不可靠（不保证到达/有序）、数据报、支持一对多、实时性高，用于 DNS/视频/游戏/QUIC。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：TCP 和 UDP 的区别？
+<strong>答案</strong>：</li>
+<li><strong>TCP</strong>：面向连接、可靠（确认/重传/拥塞控制）、字节流、一对一、有握手，速度慢，用于 HTTP/SSH/MySQL 等。</li>
+<li><strong>UDP</strong>：无连接、不可靠（不保证到达/有序）、数据报、支持一对多、实时性高，用于 DNS/视频/游戏/QUIC。
 <strong>解析</strong>：可靠性靠开销换。TCP 保证顺序与完整，UDP 适合低延迟。面试可补：TCP 有流量/拥塞控制，UDP 没有。
-<strong>考察知识点</strong>：连接/可靠/字节流、适用场景、实时性。</p>
+<strong>考察知识点</strong>：连接/可靠/字节流、适用场景、实时性。</li>
+</ul>
 <h3 id="day-40">Day 40 ｜ 三次握手 / 四次挥手<a class="headerlink" href="#day-40" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：简述 TCP 三次握手与四次挥手。
-<strong>答案</strong>：
-- <strong>握手</strong>：①SYN → ②SYN+ACK ← ③ACK →，建立连接（双方确认收发能力）。
-- <strong>挥手</strong>：①FIN → ②ACK ←（被动方可能还有数据）③FIN ← ④ACK →，关闭连接（全双工，需双向关闭）。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：简述 TCP 三次握手与四次挥手。
+<strong>答案</strong>：</li>
+<li><strong>握手</strong>：①SYN → ②SYN+ACK ← ③ACK →，建立连接（双方确认收发能力）。</li>
+<li><strong>挥手</strong>：①FIN → ②ACK ←（被动方可能还有数据）③FIN ← ④ACK →，关闭连接（全双工，需双向关闭）。
 <strong>解析</strong>：三次握手防止历史连接；四次挥手因 TCP 全双工，被动方收到 FIN 后可能先回 ACK 继续发数据，再发自己的 FIN。TIME_WAIT 等待 2MSL 防旧包。
-<strong>考察知识点</strong>：SYN/SYN+ACK/ACK、全双工、TIME_WAIT、2MSL。</p>
+<strong>考察知识点</strong>：SYN/SYN+ACK/ACK、全双工、TIME_WAIT、2MSL。</li>
+</ul>
 <h3 id="day-41-tcp">Day 41 ｜ TCP 为何三次握手（不是两次）<a class="headerlink" href="#day-41-tcp" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：TCP 为什么是三次握手而不是两次？
-<strong>答案</strong>：
-- 两次握手只能确认<strong>客户端→服务端</strong>可达，无法确认<strong>服务端→客户端</strong>链路正常（服务端不知客户端能否收包）。
-- 三次握手让双方都确认彼此的收发能力，且同步初始序列号（ISN），避免历史失效连接请求造成资源浪费。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：TCP 为什么是三次握手而不是两次？
+<strong>答案</strong>：</li>
+<li>两次握手只能确认<strong>客户端→服务端</strong>可达，无法确认<strong>服务端→客户端</strong>链路正常（服务端不知客户端能否收包）。</li>
+<li>三次握手让双方都确认彼此的收发能力，且同步初始序列号（ISN），避免历史失效连接请求造成资源浪费。
 <strong>解析</strong>：核心是确保"双向可达 + 序列号同步"。若两次，服务端过早分配资源，易被伪造 SYN 耗尽（SYN Flood 正是利用半连接）。
-<strong>考察知识点</strong>：双向确认、ISN 同步、SYN Flood、资源分配时机。</p>
+<strong>考察知识点</strong>：双向确认、ISN 同步、SYN Flood、资源分配时机。</li>
+</ul>
 <h3 id="day-42-http">Day 42 ｜ 一次完整 HTTP 请求过程<a class="headerlink" href="#day-42-http" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：从输入 URL 到页面返回，经历了什么？
-<strong>答案</strong>：
-1. DNS 解析（域名→IP，含缓存/递归查询）；
-2. TCP 三次握手建立连接（HTTPS 还要 TLS 握手）；
-3. 客户端发 HTTP 请求（方法/路径/头/Cookie）；
-4. 服务端处理并返回响应（状态码/头/体）；
-5. 浏览器解析渲染（HTML/CSS/JS），可能再发子资源请求；
-6. TCP 四次挥手（或复用长连接）。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：从输入 URL 到页面返回，经历了什么？
+<strong>答案</strong>：</li>
+<li>DNS 解析（域名→IP，含缓存/递归查询）；</li>
+<li>TCP 三次握手建立连接（HTTPS 还要 TLS 握手）；</li>
+<li>客户端发 HTTP 请求（方法/路径/头/Cookie）；</li>
+<li>服务端处理并返回响应（状态码/头/体）；</li>
+<li>浏览器解析渲染（HTML/CSS/JS），可能再发子资源请求；</li>
+<li>TCP 四次挥手（或复用长连接）。
 <strong>解析</strong>：长连接（HTTP/1.1 Keep-Alive、HTTP/2 多路复用）省去反复握手。HTTPS 多一层 TLS 握手（见 D45）。
-<strong>考察知识点</strong>：DNS→TCP→HTTP→渲染、长连接、HTTPS 差异。</p>
+<strong>考察知识点</strong>：DNS→TCP→HTTP→渲染、长连接、HTTPS 差异。</li>
+</ul>
 <h3 id="day-43-get-post">Day 43 ｜ GET 与 POST 区别<a class="headerlink" href="#day-43-get-post" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：GET 和 POST 有什么区别？
-<strong>答案</strong>：
-- GET 参数在 URL（可见、有长度限制、可被缓存/记录历史），用于获取；POST 在请求体（相对不可见、量大），用于提交。
-- 语义上 GET 幂等/安全（不应改服务器状态），POST 非幂等。
-- 实际都可传参、长度限制是浏览器/服务器约定而非协议硬限。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：GET 和 POST 有什么区别？
+<strong>答案</strong>：</li>
+<li>GET 参数在 URL（可见、有长度限制、可被缓存/记录历史），用于获取；POST 在请求体（相对不可见、量大），用于提交。</li>
+<li>语义上 GET 幂等/安全（不应改服务器状态），POST 非幂等。</li>
+<li>实际都可传参、长度限制是浏览器/服务器约定而非协议硬限。
 <strong>解析</strong>：安全/幂等是 REST 语义层面的关键区别，不是"POST 更安全"（明文仍可被抓包，需 HTTPS）。URL 参数更易泄露，敏感数据用 POST+HTTPS。
-<strong>考察知识点</strong>：幂等/安全、参数位置、长度、语义约定。</p>
+<strong>考察知识点</strong>：幂等/安全、参数位置、长度、语义约定。</li>
+</ul>
 <h3 id="day-44-cookie-session-httponly">Day 44 ｜ Cookie 与 Session 区别、HttpOnly<a class="headerlink" href="#day-44-cookie-session-httponly" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：Cookie 和 Session 的区别？HttpOnly 作用？
-<strong>答案</strong>：
-- <strong>Cookie</strong>：存客户端，随请求自动带，容量小（~4KB），可设过期。
-- <strong>Session</strong>：存服务端，用 SessionID（常在 Cookie）关联，安全、容量大。
-- <strong>HttpOnly</strong>：标记 Cookie 不可被 JS 读取，<code>document.cookie</code> 拿不到，缓解 XSS 盗 Cookie。
-- <strong>Secure</strong>：仅 HTTPS 传输；<strong>SameSite</strong>：防 CSRF 跨站携带。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：Cookie 和 Session 的区别？HttpOnly 作用？
+<strong>答案</strong>：</li>
+<li><strong>Cookie</strong>：存客户端，随请求自动带，容量小（~4KB），可设过期。</li>
+<li><strong>Session</strong>：存服务端，用 SessionID（常在 Cookie）关联，安全、容量大。</li>
+<li><strong>HttpOnly</strong>：标记 Cookie 不可被 JS 读取，<code>document.cookie</code> 拿不到，缓解 XSS 盗 Cookie。</li>
+<li><strong>Secure</strong>：仅 HTTPS 传输；<strong>SameSite</strong>：防 CSRF 跨站携带。
 <strong>解析</strong>：Session 依赖 Cookie 传递 ID。HttpOnly 不能阻止 XSS 发请求，但能阻止脚本读取令牌。配合 Secure/SameSite 才完整。
-<strong>考察知识点</strong>：客户端 vs 服务端、SessionID、HttpOnly/Secure/SameSite。</p>
+<strong>考察知识点</strong>：客户端 vs 服务端、SessionID、HttpOnly/Secure/SameSite。</li>
+</ul>
 <h3 id="day-45-https-http-ssltls">Day 45 ｜ HTTPS 与 HTTP 区别、SSL/TLS 握手<a class="headerlink" href="#day-45-https-http-ssltls" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：HTTPS 如何保证安全？TLS 握手过程？
-<strong>答案</strong>：
-- <strong>区别</strong>：HTTP 明文；HTTPS = HTTP over TLS，加密+身份认证+完整性。
-- <strong>握手（简化 RSA 版）</strong>：①ClientHello（支持的套件/随机数）②ServerHello+<strong>证书</strong>（含公钥）③客户端校验证书（CA 链/域名/有效期）④用公钥加密 premaster 发给服务端 ⑤双方算出对称会话密钥 ⑥加密通信。
-- 现代用 <strong>ECDHE</strong> 前向保密（临时密钥，泄露也不解密历史）。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：HTTPS 如何保证安全？TLS 握手过程？
+<strong>答案</strong>：</li>
+<li><strong>区别</strong>：HTTP 明文；HTTPS = HTTP over TLS，加密+身份认证+完整性。</li>
+<li><strong>握手（简化 RSA 版）</strong>：①ClientHello（支持的套件/随机数）②ServerHello+<strong>证书</strong>（含公钥）③客户端校验证书（CA 链/域名/有效期）④用公钥加密 premaster 发给服务端 ⑤双方算出对称会话密钥 ⑥加密通信。</li>
+<li>现代用 <strong>ECDHE</strong> 前向保密（临时密钥，泄露也不解密历史）。
 <strong>解析</strong>：核心三件事：证书防冒充（CA 体系）、非对称协商对称密钥（性能）、对称加密业务数据。前向保密让单次私钥泄露不影响历史会话。
-<strong>考察知识点</strong>：CA 体系、对称/非对称、ECDHE 前向保密、证书校验。</p>
+<strong>考察知识点</strong>：CA 体系、对称/非对称、ECDHE 前向保密、证书校验。</li>
+</ul>
 <h3 id="day-46-dns">Day 46 ｜ DNS 原理与解析过程<a class="headerlink" href="#day-46-dns" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：DNS 的作用与解析流程？
-<strong>答案</strong>：
-- <strong>作用</strong>：域名→IP 的分布式数据库（应用层，走 UDP 53，大包用 TCP）。
-- <strong>流程</strong>：浏览器缓存 → 本地 hosts → 本地 DNS（递归）→ 根 → 顶级域（.com）→ 权威 DNS → 返回 IP。
-- <strong>记录</strong>：A/AAAA、CNAME、MX、NS、TXT、PTR（反向）。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：DNS 的作用与解析流程？
+<strong>答案</strong>：</li>
+<li><strong>作用</strong>：域名→IP 的分布式数据库（应用层，走 UDP 53，大包用 TCP）。</li>
+<li><strong>流程</strong>：浏览器缓存 → 本地 hosts → 本地 DNS（递归）→ 根 → 顶级域（.com）→ 权威 DNS → 返回 IP。</li>
+<li><strong>记录</strong>：A/AAAA、CNAME、MX、NS、TXT、PTR（反向）。
 <strong>解析</strong>：递归查询由本地 DNS 代劳，迭代查询在各级服务器间。DNS 污染/劫持可用于钓鱼与流量劫持；DNS 也是资产测绘重要入口。
-<strong>考察知识点</strong>：递归/迭代、记录类型、缓存、DNS 劫持。</p>
+<strong>考察知识点</strong>：递归/迭代、记录类型、缓存、DNS 劫持。</li>
+</ul>
 <h3 id="day-47-arp-arp">Day 47 ｜ ARP 原理与 ARP 欺骗<a class="headerlink" href="#day-47-arp-arp" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：ARP 协议原理？ARP 欺骗是什么？
-<strong>答案</strong>：
-- <strong>原理</strong>：局域网内 IP→MAC 的地址解析，主机广播"谁有 IP x？"目标单播回 MAC；结果缓存于 ARP 表。
-- <strong>欺骗</strong>：攻击者在局域网伪造 ARP 应答，把自己 MAC 冒充网关/目标，实现中间人（截获/篡改流量）。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：ARP 协议原理？ARP 欺骗是什么？
+<strong>答案</strong>：</li>
+<li><strong>原理</strong>：局域网内 IP→MAC 的地址解析，主机广播"谁有 IP x？"目标单播回 MAC；结果缓存于 ARP 表。</li>
+<li><strong>欺骗</strong>：攻击者在局域网伪造 ARP 应答，把自己 MAC 冒充网关/目标，实现中间人（截获/篡改流量）。
 <strong>解析</strong>：ARP 无认证，故易被欺骗。防护：静态 ARP 绑定、DAI（动态 ARP 检测）、交换机端口安全、HTTPS/802.1X。
-<strong>考察知识点</strong>：IP↔MAC、广播/单播、中间人、DAI。</p>
+<strong>考察知识点</strong>：IP↔MAC、广播/单播、中间人、DAI。</li>
+</ul>
 <h3 id="day-48-nat">Day 48 ｜ 正向/反向代理区别、NAT<a class="headerlink" href="#day-48-nat" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：正向代理与反向代理的区别？NAT 是什么？
-<strong>答案</strong>：
-- <strong>正向代理</strong>：代表<strong>客户端</strong>访问外部（客户端配置，隐藏客户端，如科学上网/内网出网）。
-- <strong>反向代理</strong>：代表<strong>服务端</strong>接收请求（服务端部署，隐藏真实服务器，负载均衡/SSL 卸载/WAF，如 Nginx）。
-- <strong>NAT</strong>：网络地址转换，把内网私有 IP 映射为公网 IP（SNAT 出网、DNAT 端口映射），缓解 IPv4 不足并隐藏内网。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：正向代理与反向代理的区别？NAT 是什么？
+<strong>答案</strong>：</li>
+<li><strong>正向代理</strong>：代表<strong>客户端</strong>访问外部（客户端配置，隐藏客户端，如科学上网/内网出网）。</li>
+<li><strong>反向代理</strong>：代表<strong>服务端</strong>接收请求（服务端部署，隐藏真实服务器，负载均衡/SSL 卸载/WAF，如 Nginx）。</li>
+<li><strong>NAT</strong>：网络地址转换，把内网私有 IP 映射为公网 IP（SNAT 出网、DNAT 端口映射），缓解 IPv4 不足并隐藏内网。
 <strong>解析</strong>：正向"帮客户出去"，反向"帮服务器收"。NAT 使内网不可直连，是内网渗透需穿透的原因（见 D27）。
-<strong>考察知识点</strong>：代理方向、负载均衡、SNAT/DNAT、内网隐藏。</p>
+<strong>考察知识点</strong>：代理方向、负载均衡、SNAT/DNAT、内网隐藏。</li>
+</ul>
 <hr />
 <h1 id="_7">模块七　系统与中间件漏洞<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h1>
 <h3 id="day-49-redis">Day 49 ｜ Redis 未授权访问及利用<a class="headerlink" href="#day-49-redis" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：Redis 未授权访问有什么危害？如何利用与防御？
-<strong>答案</strong>：
-- <strong>危害</strong>：公网暴露且无密码，攻击者可读数据、写<strong>webshell</strong>（<code>config set dir /var/www</code> + <code>set xxx "&lt;?php...&gt;"</code> + <code>save</code>）、写 <strong>SSH 公钥</strong>免密登录、写 crontab 反弹 shell、主从复制 RCE（module/so）。
-- <strong>防御</strong>：<strong>设强密码</strong>（<code>requirepass</code>）、仅监听内网/127.0.0.1、改默认端口、以低权限运行、禁用危险命令（<code>FLUSHALL</code>/<code>CONFIG</code> 改名）、云安全组收紧。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：Redis 未授权访问有什么危害？如何利用与防御？
+<strong>答案</strong>：</li>
+<li><strong>危害</strong>：公网暴露且无密码，攻击者可读数据、写<strong>webshell</strong>（<code>config set dir /var/www</code> + <code>set xxx "&lt;?php...&gt;"</code> + <code>save</code>）、写 <strong>SSH 公钥</strong>免密登录、写 crontab 反弹 shell、主从复制 RCE（module/so）。</li>
+<li><strong>防御</strong>：<strong>设强密码</strong>（<code>requirepass</code>）、仅监听内网/127.0.0.1、改默认端口、以低权限运行、禁用危险命令（<code>FLUSHALL</code>/<code>CONFIG</code> 改名）、云安全组收紧。
 <strong>解析</strong>：Redis 是内网/公网最常见的"送 shell"服务。主从复制 RCE（CVE-2019 类）危害极大。低权限运行可阻断写文件路径。
-<strong>考察知识点</strong>：未授权、写 shell/公钥/cron、主从 RCE、requirepass。</p>
+<strong>考察知识点</strong>：未授权、写 shell/公钥/cron、主从 RCE、requirepass。</li>
+</ul>
 <h3 id="day-50-mysql">Day 50 ｜ MySQL 安全（口令/写文件/提权）<a class="headerlink" href="#day-50-mysql" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：MySQL 相关的安全点有哪些？
-<strong>答案</strong>：
-- 口令弱/空密码、默认端口暴露；口令存于 <code>mysql.user</code>，<code>authentication_string</code> 为加密值。
-- <strong>写文件</strong>：<code>into outfile</code> 受 <code>secure_file_priv</code> 与 File 权限限制（Day 2）。
-- <strong>提权</strong>：UDF 提权（写 .so/.dll 并 <code>create function</code>）、MOF 提权（Win）、<code>mysql_log</code> 写文件。
-- <strong>防御</strong>：强口令、最小权限、限制远程、关闭文件导出、升级版本。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：MySQL 相关的安全点有哪些？
+<strong>答案</strong>：</li>
+<li>口令弱/空密码、默认端口暴露；口令存于 <code>mysql.user</code>，<code>authentication_string</code> 为加密值。</li>
+<li><strong>写文件</strong>：<code>into outfile</code> 受 <code>secure_file_priv</code> 与 File 权限限制（Day 2）。</li>
+<li><strong>提权</strong>：UDF 提权（写 .so/.dll 并 <code>create function</code>）、MOF 提权（Win）、<code>mysql_log</code> 写文件。</li>
+<li><strong>防御</strong>：强口令、最小权限、限制远程、关闭文件导出、升级版本。
 <strong>解析</strong>：UDF 提权需能写插件目录且具 File 权限，老版本常见。现代 MySQL 默认 secure_file_priv 限制使写文件提权变难。
-<strong>考察知识点</strong>：secure_file_priv、UDF/MOF 提权、口令存储、最小权限。</p>
+<strong>考察知识点</strong>：secure_file_priv、UDF/MOF 提权、口令存储、最小权限。</li>
+</ul>
 <h3 id="day-51-tomcat-weblogic">Day 51 ｜ Tomcat / Weblogic 等中间件漏洞<a class="headerlink" href="#day-51-tomcat-weblogic" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：常见中间件/框架漏洞有哪些？
-<strong>答案</strong>：
-- <strong>Tomcat</strong>：PUT 上传（CVE-2017-12615，默认关）、弱口令 + 后台部署 war 包 getshell、AJP 文件读取（CVE-2020-1938）。
-- <strong>Weblogic</strong>：反序列化多条（XMLDecoder、T3/IIOP 反序列化 RCE）、后台部署。
-- <strong>Struts2</strong>：OGNL 表达式注入（S2-系列 RCE）。
-- <strong>Log4j</strong>：JNDI 注入（CVE-2021-44228，Log4Shell），<code>${jndi:ldap://}</code> 远程加载。
-- <strong>FastJson/Shiro</strong>：反序列化（见 Day 11）。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：常见中间件/框架漏洞有哪些？
+<strong>答案</strong>：</li>
+<li><strong>Tomcat</strong>：PUT 上传（CVE-2017-12615，默认关）、弱口令 + 后台部署 war 包 getshell、AJP 文件读取（CVE-2020-1938）。</li>
+<li><strong>Weblogic</strong>：反序列化多条（XMLDecoder、T3/IIOP 反序列化 RCE）、后台部署。</li>
+<li><strong>Struts2</strong>：OGNL 表达式注入（S2-系列 RCE）。</li>
+<li><strong>Log4j</strong>：JNDI 注入（CVE-2021-44228，Log4Shell），<code>${jndi:ldap://}</code> 远程加载。</li>
+<li><strong>FastJson/Shiro</strong>：反序列化（见 Day 11）。
 <strong>解析</strong>：中间件/框架历史洞是外网突破口首选。Log4Shell 因广泛依赖影响巨大，核心是 JNDI 远程加载可控。
-<strong>考察知识点</strong>：war 部署、反序列化链、Log4Shell、AJP。</p>
+<strong>考察知识点</strong>：war 部署、反序列化链、Log4Shell、AJP。</li>
+</ul>
 <h3 id="day-52-linux-windows">Day 52 ｜ Linux / Windows 安全加固要点<a class="headerlink" href="#day-52-linux-windows" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：系统安全加固一般做什么？
-<strong>答案</strong>：
-- <strong>Linux</strong>：停用不必要的服务/端口、SSH 禁 root 登录+密钥登录+改端口、防火墙（iptables/nftables）、文件权限最小化、定期补丁、审计（auditd）、日志集中。
-- <strong>Windows</strong>：关不必要的服务/共享、组策略加固、账户口令策略、UAC、补丁、EDR、限制管理员。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：系统安全加固一般做什么？
+<strong>答案</strong>：</li>
+<li><strong>Linux</strong>：停用不必要的服务/端口、SSH 禁 root 登录+密钥登录+改端口、防火墙（iptables/nftables）、文件权限最小化、定期补丁、审计（auditd）、日志集中。</li>
+<li><strong>Windows</strong>：关不必要的服务/共享、组策略加固、账户口令策略、UAC、补丁、EDR、限制管理员。
 <strong>解析</strong>：加固=最小化攻击面 + 纵深防御 + 可观测。靶机/生产都要"默认拒绝、按需开放"。
-<strong>考察知识点</strong>：最小权限、SSH 加固、补丁、组策略、EDR。</p>
+<strong>考察知识点</strong>：最小权限、SSH 加固、补丁、组策略、EDR。</li>
+</ul>
 <h3 id="day-53">Day 53 ｜ 常见端口与服务对应<a class="headerlink" href="#day-53" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：列举常见端口及对应服务。
-<strong>答案</strong>：
-- 21 FTP、22 SSH、23 Telnet、25 SMTP、53 DNS、80 HTTP、443 HTTPS、110 POP3、135/139/445 SMB、1433 MSSQL、1521 Oracle、3306 MySQL、3389 RDP、5432 PostgreSQL、6379 Redis、8080 Tomcat、9000/9200 等。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：列举常见端口及对应服务。
+<strong>答案</strong>：</li>
+<li>21 FTP、22 SSH、23 Telnet、25 SMTP、53 DNS、80 HTTP、443 HTTPS、110 POP3、135/139/445 SMB、1433 MSSQL、1521 Oracle、3306 MySQL、3389 RDP、5432 PostgreSQL、6379 Redis、8080 Tomcat、9000/9200 等。
 <strong>解析</strong>：端口是资产测绘与服务识别的基础。445（SMB）是 EternalBlue 入口，3389（RDP）易被爆破，6379/3306 未授权/弱口令是常见突破口。
-<strong>考察知识点</strong>：端口-服务映射、SMB/RDP/Redis、资产识别。</p>
+<strong>考察知识点</strong>：端口-服务映射、SMB/RDP/Redis、资产识别。</li>
+</ul>
 <hr />
 <h1 id="_8">模块八　安全基础·等保·法律法规·加密<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h1>
 <h3 id="day-54-20">Day 54 ｜ 等保 2.0 级别与要求<a class="headerlink" href="#day-54-20" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：信息安全等级保护（等保 2.0）分几级？基本要求？
-<strong>答案</strong>：
-- <strong>五级</strong>：第一级（自主保护）、第二级（指导保护）、第三级（监督保护）、第四级（强制保护）、第五级（专控保护）。
-- <strong>2.0 扩展</strong>：覆盖云计算/移动互联/物联网/工业控制/大数据；基本要求含<strong>安全技术</strong>（物理/网络/主机/应用/数据）与管理（制度/机构/人员/建设/运维）两大体系。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：信息安全等级保护（等保 2.0）分几级？基本要求？
+<strong>答案</strong>：</li>
+<li><strong>五级</strong>：第一级（自主保护）、第二级（指导保护）、第三级（监督保护）、第四级（强制保护）、第五级（专控保护）。</li>
+<li><strong>2.0 扩展</strong>：覆盖云计算/移动互联/物联网/工业控制/大数据；基本要求含<strong>安全技术</strong>（物理/网络/主机/应用/数据）与管理（制度/机构/人员/建设/运维）两大体系。
 <strong>解析</strong>：一般重要系统定级二级或三级，三级需每年测评。2.0 从"单系统"走向"多云多场景"，强调"一个中心、三重防护"。
-<strong>考察知识点</strong>：五级定义、2.0 扩展、技术+管理、三级测评。</p>
+<strong>考察知识点</strong>：五级定义、2.0 扩展、技术+管理、三级测评。</li>
+</ul>
 <h3 id="day-55">Day 55 ｜ 网络安全法 / 数据安全法要点<a class="headerlink" href="#day-55" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：《网络安全法》与《数据安全法》的核心要求？
-<strong>答案</strong>：
-- <strong>网安法</strong>：网络运营者落实等级保护、实名、日志留存≥6 个月、个人信息保护、关键信息基础设施重点保护；明确攻击/入侵/干扰网络的违法责任。
-- <strong>数据安全法</strong>：数据分类分级、重要数据保护、数据出境安全管理、数据处理活动的安全义务。
-- 还有《个人信息保护法》《密码法》构成合规体系。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：《网络安全法》与《数据安全法》的核心要求？
+<strong>答案</strong>：</li>
+<li><strong>网安法</strong>：网络运营者落实等级保护、实名、日志留存≥6 个月、个人信息保护、关键信息基础设施重点保护；明确攻击/入侵/干扰网络的违法责任。</li>
+<li><strong>数据安全法</strong>：数据分类分级、重要数据保护、数据出境安全管理、数据处理活动的安全义务。</li>
+<li>还有《个人信息保护法》《密码法》构成合规体系。
 <strong>解析</strong>：合规是安全底线。渗透测试须有授权，触碰上述红线即违法。面试答"遵守授权与法规、不越界"。
-<strong>考察知识点</strong>：等保义务、日志留存、数据分级、授权合法。</p>
+<strong>考察知识点</strong>：等保义务、日志留存、数据分级、授权合法。</li>
+</ul>
 <h3 id="day-56">Day 56 ｜ 对称/非对称加密、哈希、数字签名<a class="headerlink" href="#day-56" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：对称加密、非对称加密、哈希、数字签名分别是什么？
-<strong>答案</strong>：
-- <strong>对称加密</strong>：同密钥加解密（AES/DES/3DES），快，但密钥分发难。
-- <strong>非对称</strong>：公私钥对（RSA/ECC），公钥加密私钥解、私钥签名公钥验；慢，用于密钥协商/签名。
-- <strong>哈希</strong>：单向摘要（MD5/SHA），不可逆、定长，用于完整性校验（如密码加盐存储）。
-- <strong>数字签名</strong>：私钥对摘要加密，公钥验证，保证<strong>不可否认+完整性+来源</strong>。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：对称加密、非对称加密、哈希、数字签名分别是什么？
+<strong>答案</strong>：</li>
+<li><strong>对称加密</strong>：同密钥加解密（AES/DES/3DES），快，但密钥分发难。</li>
+<li><strong>非对称</strong>：公私钥对（RSA/ECC），公钥加密私钥解、私钥签名公钥验；慢，用于密钥协商/签名。</li>
+<li><strong>哈希</strong>：单向摘要（MD5/SHA），不可逆、定长，用于完整性校验（如密码加盐存储）。</li>
+<li><strong>数字签名</strong>：私钥对摘要加密，公钥验证，保证<strong>不可否认+完整性+来源</strong>。
 <strong>解析</strong>：混合加密（AES 传数据 + RSA 传密钥）兼顾效率与安全。MD5/SHA1 已不推荐用于安全场景（碰撞），密码用 bcrypt/argon2 加盐。
-<strong>考察知识点</strong>：对称 vs 非对称、哈希不可逆、签名、混合加密。</p>
+<strong>考察知识点</strong>：对称 vs 非对称、哈希不可逆、签名、混合加密。</li>
+</ul>
 <h3 id="day-57-ids-ips-waf">Day 57 ｜ IDS / IPS / WAF / 防火墙区别<a class="headerlink" href="#day-57-ids-ips-waf" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：IDS、IPS、WAF、防火墙各自职责？
-<strong>答案</strong>：
-- <strong>防火墙</strong>：基于规则控制网络访问（包过滤/状态检测/应用网关），工作在网络层/应用层，主要"防越界"。
-- <strong>IDS</strong>：入侵<strong>检测</strong>（旁路监听、告警，不阻断）。
-- <strong>IPS</strong>：入侵<strong>防御</strong>（串行部署、可阻断）。
-- <strong>WAF</strong>：Web 应用防火墙，针对 HTTP/HTTPS 应用层攻击（SQLi/XSS/上传等）过滤。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：IDS、IPS、WAF、防火墙各自职责？
+<strong>答案</strong>：</li>
+<li><strong>防火墙</strong>：基于规则控制网络访问（包过滤/状态检测/应用网关），工作在网络层/应用层，主要"防越界"。</li>
+<li><strong>IDS</strong>：入侵<strong>检测</strong>（旁路监听、告警，不阻断）。</li>
+<li><strong>IPS</strong>：入侵<strong>防御</strong>（串行部署、可阻断）。</li>
+<li><strong>WAF</strong>：Web 应用防火墙，针对 HTTP/HTTPS 应用层攻击（SQLi/XSS/上传等）过滤。
 <strong>解析</strong>：防火墙管"网络通断"，WAF 管"Web 请求内容"，IDS/IPS 管"入侵行为"。WAF 在应用层、IDS/IPS 在网络层更广泛。
-<strong>考察知识点</strong>：检测 vs 阻断、网络层 vs 应用层、WAF 定位。</p>
+<strong>考察知识点</strong>：检测 vs 阻断、网络层 vs 应用层、WAF 定位。</li>
+</ul>
 <h3 id="day-58">Day 58 ｜ 蜜罐技术<a class="headerlink" href="#day-58" title="Permanent link">&para;</a></h3>
-<p><strong>[ ] 题目</strong>：什么是蜜罐？有什么作用？
-<strong>答案</strong>：
-- <strong>定义</strong>：布置诱饵主机/服务/漏洞，主动吸引攻击者，用于<strong>检测、预警、溯源、研究</strong>攻击手法。
-- <strong>类型</strong>：低交互（模拟服务，安全）/高交互（真实系统，信息多但风险高）；网络蜜罐/主机蜜罐/蜜网。
-- <strong>作用</strong>：提前发现探测、拖延攻击、采集样本、辅助溯源反制（见 D38）。
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：什么是蜜罐？有什么作用？
+<strong>答案</strong>：</li>
+<li><strong>定义</strong>：布置诱饵主机/服务/漏洞，主动吸引攻击者，用于<strong>检测、预警、溯源、研究</strong>攻击手法。</li>
+<li><strong>类型</strong>：低交互（模拟服务，安全）/高交互（真实系统，信息多但风险高）；网络蜜罐/主机蜜罐/蜜网。</li>
+<li><strong>作用</strong>：提前发现探测、拖延攻击、采集样本、辅助溯源反制（见 D38）。
 <strong>解析</strong>：蜜罐是主动防御。高交互蜜罐需隔离，避免被用作跳板。护网中蜜罐/蜜饵常用于反制与溯源。
-<strong>考察知识点</strong>：诱捕、低/高交互、检测与溯源、隔离风险。</p>
+<strong>考察知识点</strong>：诱捕、低/高交互、检测与溯源、隔离风险。</li>
+</ul>
 <hr />
 <h1 id="_9">模块九　代码审计与开发安全<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h1>
 <h3 id="day-59-owasp-top-10-2017-2021">Day 59 ｜ ★★★★★ OWASP Top 10 2017 与 2021 对比<a class="headerlink" href="#day-59-owasp-top-10-2017-2021" title="Permanent link">&para;</a></h3>
@@ -4267,7 +4381,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 21, 2026 20:25:00 UTC"><span class="timeago" datetime="2026-09-21T20:25:00+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 21, 2026 20:25:00 UTC">2026-09-21</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 21, 2026 21:00:54 UTC"><span class="timeago" datetime="2026-09-21T21:00:54+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 21, 2026 21:00:54 UTC">2026-09-21</span>
   </span>
 
     
@@ -4360,14 +4474,6 @@
         <script src="../../../js/timeago.min.js"></script>
       
         <script src="../../../js/timeago_mkdocs_material.js"></script>
-      
-        <script src="../../../assets/js/extra.js"></script>
-      
-        <script src="../../../assets/js/encryption.js"></script>
-      
-        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-      
-        <script src="../../../asserts/js/hacker-theme.js"></script>
       
     
   </body>
