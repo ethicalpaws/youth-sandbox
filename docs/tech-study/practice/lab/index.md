@@ -5,7 +5,7 @@ completed_machines: 0
 in_progress_machines: 0
 not_started_machines: 4
 completion_rate: 0
-last_updated: 2026-09-22 04:05:39
+last_updated: 2026-09-22 05:27:34
 ---
 
 # 🎯 靶场训练场
@@ -62,4 +62,4 @@ last_updated: 2026-09-22 04:05:39
 - **VULNSTACK** (2026-09-22) : 0/1 靶场已完成
 
 ---
-*最后更新：2026-09-22 04:05:39 | 保持练习，持续进步 💪*
+*最后更新：2026-09-22 05:27:34 | 保持练习，持续进步 💪*

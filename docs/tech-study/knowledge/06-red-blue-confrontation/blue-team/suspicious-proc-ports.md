@@ -1,10 +1,10 @@
 ---
-title: 
-description: 
-tags: []
-status: 
-finish-date: 
-difficulty: 
+title: 查找可疑进程与端口
+description: Linux 运行时排查，涵盖进程树分析（ps auxf）、deleted 进程识别、/proc/<pid> 关键入口、端口与连接排查（ss/lsof）、连接状态含义与进程关联，将 IP/端口/PID/进程串成完整证据链
+tags: [应急响应, 进程排查, 端口排查, deleted进程, /proc, ss, lsof, 反弹Shell, IOC]
+status: 已完成
+finish-date: 2026-09-08
+difficulty: 困难
 ---
 
 # 查找可疑进程

@@ -7,7 +7,7 @@ completed: 5
 in_progress: 0
 not_started: 0
 completion_rate: 100
-last_updated: 2026-09-22 04:05:38
+last_updated: 2026-09-22 05:27:32
 ---
 
 # fastjson
@@ -37,4 +37,4 @@ last_updated: 2026-09-22 04:05:38
 | [Fastjson 基础知识](basic.md) | Fastjson 的核心功能（序列化/反序列化）、基本用法示例、@type 特性与安全风险、版本演化... | ✅ |
 
 ---
-*自动更新：2026-09-22 04:05:38
+*自动更新：2026-09-22 05:27:32

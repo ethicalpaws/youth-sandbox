@@ -1,10 +1,10 @@
 ---
-title: 
-description: 
-tags: []
-status: 
-finish-date: 
-difficulty: 
+title: 查找可疑文件
+description: Linux 应急响应中可疑文件的排查方法，涵盖隐藏文件与不可见字符识别、时间戳/inode/文件元数据排查（mtime vs ctime 识破伪造）、文件真实类型判断（file）与 strings 提取明文线索
+tags: [应急响应, 可疑文件, WebShell, 时间戳伪造, inode, file, strings, IOC]
+status: 已完成
+finish-date: 2026-07-17
+difficulty: 中等
 ---
 
 # 查找可疑文件

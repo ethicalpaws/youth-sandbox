@@ -1,11 +1,12 @@
 ---
-title: 
-description: 
-tags: []
-status: 
-finish-date: 
-difficulty: 
+title: 应急响应 IR 基础
+description: 应急响应的定义与六步流程（准备/检测/抑制/根除/恢复/总结）、入侵完整时间线、保护现场的黄金法则，以及应急排查所需的 CLI 基础（命令格式、管道与重定向）
+tags: [应急响应, IR, 六步流程, CLI, 管道, 重定向, 保护现场]
+status: 已完成
+finish-date: 2026-07-13
+difficulty: 简单
 ---
+
 # 应急响应 IR
 ## 什么是应急响应
 >应急响应（Incident Response, IR），就是当系统疑似被入侵后，按一套有章法的流程去确认是否真的出事、查清攻击者干了什么、把他赶出去、再恢复正常并防止重演的全过程。

@@ -178,9 +178,16 @@ nav:
       - 📋 每周检测:
           - 检测总览: tech-study/weekly-check/index.md
 
+      # ---------- 面试准备 ----------
       - 📚 面试准备:
-          - 每日一题快速版: tech-study/interview/Interview-Handbook-quickly.md
-          - 每日一题详解版: tech-study/interview/Interview-Handbook-deeply.md 
+          - 每日一题快速版: tech-study/interview-prep/Interview-Handbook-quickly.md
+          - 每日一题详解版: tech-study/interview-prep/Interview-Handbook-deeply.md 
+
+      # ---------- 军火库 ----------
+      - ⚔️ 军火库:
+          - 军火库总览: tech-study/arsenal/index.md
+          - 工具箱: tech-study/arsenal/tools/index.md
+          - 命令大全: tech-study/arsenal/commands/index.md
           
   # ==================== 青春记录 ====================
   -  青春记录:

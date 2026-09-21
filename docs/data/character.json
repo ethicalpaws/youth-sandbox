@@ -9,11 +9,11 @@
   },
   "auto": {
     "level": 5,
-    "current_exp": 362,
+    "current_exp": 352,
     "next_exp": 414,
-    "total_exp": 1435,
+    "total_exp": 1425,
     "stats": {
-      "notes_count": 122,
+      "notes_count": 121,
       "ctf_count": 0,
       "cve_count": 4,
       "src_count": 0,
@@ -39,7 +39,7 @@
       "penetration_test": 0.0,
       "lateral_movement": 0.0,
       "c2_framework": 0.0,
-      "blue_team": 0.0,
+      "blue_team": 25.0,
       "network_traffic": 66.0,
       "cryptography": 16.0
     },
@@ -72,15 +72,15 @@
           ]
         },
         {
-          "total": 9,
-          "max_daily": 4,
+          "total": 6,
+          "max_daily": 2,
           "days": [
             1,
             0,
             0,
             2,
             2,
-            4,
+            1,
             0
           ]
         },
@@ -163,8 +163,8 @@
           ]
         },
         {
-          "total": 19,
-          "max_daily": 9,
+          "total": 18,
+          "max_daily": 8,
           "days": [
             1,
             5,
@@ -172,7 +172,7 @@
             2,
             0,
             0,
-            9
+            8
           ]
         },
         {
@@ -267,39 +267,39 @@
           ]
         },
         {
-          "total": 3,
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 1,
           "max_daily": 1,
           "days": [
             0,
             0,
             0,
             1,
-            1,
-            1,
+            0,
+            0,
             0
           ]
         },
         {
-          "total": 2,
-          "max_daily": 1,
+          "total": 9,
+          "max_daily": 9,
           "days": [
             0,
             0,
             0,
-            1,
-            0,
-            1,
-            0
-          ]
-        },
-        {
-          "total": 2,
-          "max_daily": 2,
-          "days": [
-            0,
-            0,
-            0,
-            2,
+            9,
             0,
             0,
             0
@@ -722,11 +722,11 @@
           ]
         }
       ],
-      "total_notes": 122,
-      "active_days": 37,
+      "total_notes": 121,
+      "active_days": 33,
       "max_contrib": 43
     },
-    "last_update": "2026-09-22 04:05:47",
+    "last_update": "2026-09-22 05:27:42",
     "first_bug_awarded": true,
     "start_date": "2026-05-27"
   }

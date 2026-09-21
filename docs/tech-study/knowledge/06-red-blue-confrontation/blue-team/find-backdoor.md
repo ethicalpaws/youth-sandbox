@@ -1,10 +1,10 @@
 ---
-title: 
-description: 
-tags: []
-status: 
-finish-date: 
-difficulty: 
+title: Linux 后门排查
+description: Linux 入侵处置中的后门排查方法，涵盖账号后门与权限异常（UID 0 账号、SSH 公钥、sudoers 配置）、持久化与定时任务（cron/systemd/登录脚本）、LD_PRELOAD 与进程隐藏（hide.so 劫持原理与多工具交叉验证）
+tags: [后门排查, 入侵处置, 持久化, LD_PRELOAD, rootkit, 应急响应, Linux安全]
+status: 已完成
+finish-date: 2026-09-15
+difficulty: 困难
 ---
 
 # 后门排查

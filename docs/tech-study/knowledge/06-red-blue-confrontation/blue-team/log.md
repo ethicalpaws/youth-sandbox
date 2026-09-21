@@ -1,10 +1,10 @@
 ---
-title: 
-description: 
-tags: []
-status: 
-finish-date: 
-difficulty: 
+title: 日志排查
+description: 应急响应中的日志分析，涵盖 SSH 爆破与登录日志（auth.log 字段解析、last/lastb/w 命令）、Web 访问日志（access.log 字段拆解、Top IP/URL/状态码统计、时间线还原、攻击特征检索），以及 WebShell 文件与日志联合溯源
+tags: [应急响应, 日志排查, auth.log, access.log, SSH爆破, WebShell, 溯源, IOC]
+status: 已完成
+finish-date: 2026-09-10
+difficulty: 中等
 ---
 
 # 日志排查
