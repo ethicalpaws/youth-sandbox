@@ -3228,19 +3228,13 @@
 
 
 <h1 id="82-day">网络安全面试速答篇（每日一题 · 82 Day 版）<a class="headerlink" href="#82-day" title="Permanent link">&para;</a></h1>
-<blockquote>
-<p>面向 <strong>Web 渗透测试实习 / 护网 / 安全服务岗</strong> 的面试备考手册。
-由 <code>E:\tep_working\面试题</code> 下全部面试题合集整理去重而成，并整合 <code>Interview-Handbook.md</code> 与 <code>面试精华宝典.md</code> 双源，<strong>精选 82 道高频核心题</strong>，按"每日一题"编排。
-每题统一包含：<strong>题目 → 答案 → 解析 → 考察知识点</strong> 四部分。</p>
-</blockquote>
 <hr />
 <h2 id="_1">一、使用建议<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <ol>
 <li><strong>每日一题</strong>：按顺序每天吃透 1 题，先自己口述答案，再对照本文查漏补缺。</li>
 <li><strong>复习闭环</strong>：当天题 = 理解答案 + 看懂解析 + 复盘知识点；周末把本周 7 题串成知识网。</li>
 <li><strong>动手验证</strong>：凡涉及命令/ payload 的题（如 sqlmap、nmap、提权），请在授权环境（靶场/CTF/自己机器）实操一遍，面试能讲出"我做过"。</li>
-<li><strong>进度跟踪</strong>：在每题前 <code>[ ]</code> 打勾，或在文末"学习打卡表"记录日期。</li>
-<li><strong>深度补充</strong>：每题末尾用 <code>→ 详见精讲第 X 题</code> 提示深度内容，可在《面试精华宝典.md》中展开学习。</li>
+<li><strong>进度跟踪</strong>：在每题前 <code>[ ]</code> 打勾</li>
 </ol>
 <hr />
 <h2 id="day">二、分类速查（Day ↔ 模块）<a class="headerlink" href="#day" title="Permanent link">&para;</a></h2>
@@ -3319,77 +3313,91 @@
 <h1 id="web">模块一　Web 安全·常见漏洞原理与防护<a class="headerlink" href="#web" title="Permanent link">&para;</a></h1>
 <h3 id="day-1-sql">Day 1 ｜ SQL 注入的原理、分类与防护<a class="headerlink" href="#day-1-sql" title="Permanent link">&para;</a></h3>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：请说明 SQL 注入的原理、常见分类，以及防御手段。
-<strong>答案</strong>：</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：请说明 SQL 注入的原理、常见分类，以及防御手段。</li>
+</ul>
+<p><strong>答案</strong>：</p>
+<ul>
 <li><strong>原理</strong>：后端把用户输入直接拼接进 SQL 语句，未做校验/转义，导致用户输入被当作 SQL 代码执行，从而绕过逻辑、读取/篡改/删除数据。例：<code>select * from user where name='$name' and pw='$pw'</code>，输入 <code>pw = ' or '1'='1</code> 使条件恒真。</li>
 <li><strong>分类</strong>：按数据类型分数字型/字符型；按回显分联合查询、报错注入、布尔盲注、时间盲注、堆叠查询；按提交方式分 GET/POST/Cookie/HTTP 头注入。</li>
-<li><strong>防护</strong>：使用<strong>预编译（Prepared Statement / 参数化查询）</strong>；最小权限数据库账户；输入校验与白名单；ORM 框架；敏感操作加 WAF；错误回显关闭。
-<strong>解析</strong>：预编译是根本解法——SQL 语义与数据分离，参数永远作为值而非代码。WAF/过滤只是辅助，不能替代参数化。面试常追问"预编译就绝对安全吗？"——若仍用拼接（如 <code>order by $col</code>）或宽字节/二阶注入场景仍可能中招。
-<strong>考察知识点</strong>：SQL 语法、参数化查询、注入类型、纵深防御。</li>
+<li><strong>防护</strong>：使用<strong>预编译（Prepared Statement / 参数化查询）</strong>；最小权限数据库账户；输入校验与白名单；ORM 框架；敏感操作加 WAF；错误回显关闭。</li>
 </ul>
+<p><strong>解析</strong>：预编译是根本解法——SQL 语义与数据分离，参数永远作为值而非代码。WAF/过滤只是辅助，不能替代参数化。面试常追问"预编译就绝对安全吗？"——若仍用拼接（如 <code>order by $col</code>）或宽字节/二阶注入场景仍可能中招。</p>
+<p><strong>考察知识点</strong>：SQL 语法、参数化查询、注入类型、纵深防御。</p>
 <h3 id="day-2-sql-webshell">Day 2 ｜ SQL 注入写文件（webshell）的条件<a class="headerlink" href="#day-2-sql-webshell" title="Permanent link">&para;</a></h3>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：通过 MySQL 注入点直接写入一句话木马，需要哪些前提条件？
-<strong>答案</strong>：</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：通过 MySQL 注入点直接写入一句话木马，需要哪些前提条件？</li>
+</ul>
+<p><strong>答案</strong>：</p>
+<ol>
 <li>网站<strong>绝对路径</strong>已知（报错/phpinfo/读取配置文件得到）；</li>
 <li>当前数据库用户具备 <strong>File 权限</strong>（<code>select file_priv from mysql.user</code> 为 Y）；</li>
 <li><code>secure_file_priv</code> 为空（非 <code>NULL</code> 限制目录）；</li>
 <li><strong>写入口令</strong>对目标目录有写权限（通常 web 目录可写）；</li>
-<li>用 <code>select '&lt;?php @eval($_POST[1]);?&gt;' into outfile '/var/www/shell.php'</code> 导出。
-<strong>解析</strong>：<code>into outfile</code>/<code>into dumpfile</code> 受 <code>secure_file_priv</code> 严格限制（MySQL 5.6+ 默认 <code>NULL</code> 禁止导出）。<code>outfile</code> 会转义换行，<code>dumpfile</code> 不转义，写二进制用 dumpfile。若不能写文件，可改读文件（<code>load_file</code>）。
-<strong>考察知识点</strong>：MySQL 文件操作权限、secure_file_priv、getshell 路径。</li>
-</ul>
+<li>用 <code>select '&lt;?php @eval($_POST[1]);?&gt;' into outfile '/var/www/shell.php'</code> 导出。</li>
+</ol>
+<p><strong>解析</strong>：<code>into outfile</code>/<code>into dumpfile</code> 受 <code>secure_file_priv</code> 严格限制（MySQL 5.6+ 默认 <code>NULL</code> 禁止导出）。<code>outfile</code> 会转义换行，<code>dumpfile</code> 不转义，写二进制用 dumpfile。若不能写文件，可改读文件（<code>load_file</code>）。</p>
+<p><strong>考察知识点</strong>：MySQL 文件操作权限、secure_file_priv、getshell 路径。</p>
 <h3 id="day-3">Day 3 ｜ 盲注（布尔/时间）与报错注入<a class="headerlink" href="#day-3" title="Permanent link">&para;</a></h3>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：没有回显时如何注入？报错注入常用函数有哪些？
-<strong>答案</strong>：</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：没有回显时如何注入？报错注入常用函数有哪些？</li>
+</ul>
+<p><strong>答案</strong>：</p>
+<ul>
 <li><strong>布尔盲注</strong>：构造 <code>and 1=1</code> / <code>and 1=2</code>，根据页面真假差异逐位猜解（配合 <code>substr()</code>/<code>ascii()</code>/<code>length()</code>）。</li>
 <li><strong>时间盲注</strong>：无差异时用 <code>and sleep(5)</code> 或 <code>if(...,sleep(5),0)</code>、<code>benchmark()</code> 看响应时延。</li>
-<li><strong>报错注入</strong>：利用报错回显数据，如 <code>updatexml(1,concat(0x7e,(select version()),0x7e),1)</code>、<code>extractvalue()</code>、<code>floor(rand(0)*2)</code> 主键冲突、<code>exp()</code> 溢出。
-<strong>解析</strong>：盲注效率低，实战用 <code>sqlmap -technique=B/T</code> 自动化；报错注入依赖特定函数报错且版本相关（updatexml/extractvalue 在 MySQL 5.x 通用）。<code>floor(rand(0)*2)</code> 需 <code>group by</code> 与 <code>count(*)</code> 配合。
-<strong>考察知识点</strong>：盲注逻辑、报错函数、sqlmap 技术参数。</li>
+<li><strong>报错注入</strong>：利用报错回显数据，如 <code>updatexml(1,concat(0x7e,(select version()),0x7e),1)</code>、<code>extractvalue()</code>、<code>floor(rand(0)*2)</code> 主键冲突、<code>exp()</code> 溢出。</li>
 </ul>
+<p><strong>解析</strong>：盲注效率低，实战用 <code>sqlmap -technique=B/T</code> 自动化；报错注入依赖特定函数报错且版本相关（updatexml/extractvalue 在 MySQL 5.x 通用）。<code>floor(rand(0)*2)</code> 需 <code>group by</code> 与 <code>count(*)</code> 配合。</p>
+<p><strong>考察知识点</strong>：盲注逻辑、报错函数、sqlmap 技术参数。</p>
 <h3 id="day-4-xss">Day 4 ｜ XSS 类型与防御<a class="headerlink" href="#day-4-xss" title="Permanent link">&para;</a></h3>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：XSS 有哪几种类型？如何防御？
-<strong>答案</strong>：</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：XSS 有哪几种类型？如何防御？</li>
+</ul>
+<p><strong>答案</strong>：</p>
+<ul>
 <li><strong>存储型</strong>：恶意脚本存于数据库，用户访问时服务端返回并执行（危害最大，如留言/评论）。</li>
 <li><strong>反射型</strong>：payload 在 URL 中，服务端原样返回到页面（需诱导点击）。</li>
 <li><strong>DOM 型</strong>：前端 JS 直接操作 DOM（如 <code>location.hash</code>、<code>innerHTML</code>）造成，不经过服务端。</li>
-<li><strong>防御</strong>：输出<strong>编码/转义</strong>（HTML 实体、JS、URL 编码按需）；输入校验白名单；<code>HttpOnly</code> + <code>Secure</code> + <code>SameSite</code> Cookie；CSP 策略；富文本用白名单过滤器（如 DOMPurify）。
-<strong>解析</strong>：存储型危害最高（可盗 Cookie、蠕变、配合 CSRF）。DOM 型要在前端代码层面修（不要在 <code>.innerHTML</code>/<code>.html()</code> 直接拼用户输入）。CSP 是纵深防御而非万能。
-<strong>考察知识点</strong>：XSS 三类区别、输出编码、CSP、HttpOnly。</li>
+<li><strong>防御</strong>：输出<strong>编码/转义</strong>（HTML 实体、JS、URL 编码按需）；输入校验白名单；<code>HttpOnly</code> + <code>Secure</code> + <code>SameSite</code> Cookie；CSP 策略；富文本用白名单过滤器（如 DOMPurify）。</li>
 </ul>
+<p><strong>解析</strong>：存储型危害最高（可盗 Cookie、蠕变、配合 CSRF）。DOM 型要在前端代码层面修（不要在 <code>.innerHTML</code>/<code>.html()</code> 直接拼用户输入）。CSP 是纵深防御而非万能。</p>
+<p><strong>考察知识点</strong>：XSS 三类区别、输出编码、CSP、HttpOnly。</p>
 <h3 id="day-5-csrf-xss">Day 5 ｜ CSRF 原理与防御，与 XSS 区别<a class="headerlink" href="#day-5-csrf-xss" title="Permanent link">&para;</a></h3>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：CSRF 是什么？如何防护？它和 XSS 有何区别？
-<strong>答案</strong>：</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：CSRF 是什么？如何防护？它和 XSS 有何区别？</li>
+</ul>
+<p><strong>答案</strong>：</p>
+<ul>
 <li><strong>原理</strong>：攻击者诱导已登录用户浏览器，在用户不知情下向存在漏洞的站点发起<strong>伪造请求</strong>（利用浏览器自动带 Cookie 的特性），以用户身份执行操作（改密码/转账）。</li>
 <li><strong>防护</strong>：<strong>CSRF Token</strong>（服务端随机令牌，请求必须携带且校验）；校验 <code>Referer</code>/<code>Origin</code>；<code>SameSite=Strict/Lax</code> Cookie；重要操作加二次认证/验证码。</li>
-<li><strong>与 XSS 区别</strong>：XSS 利用"用户对站点的信任"（盗取/执行）；CSRF 利用"站点对用户的信任"（冒用身份）。XSS 可盗 Token，CSRF 无法读响应。
-<strong>解析</strong>：Token 必须随机、不可预测、绑定会话且一次一用；<code>SameSite=Lax</code> 已能挡多数跨站场景。RESTful 接口若用自定义头（如 <code>X-Requested-With</code>）也能增加 CSRF 难度（简单请求不跨域发自定义头）。
-<strong>考察知识点</strong>：CSRF 利用链、Token、SameSite、与 XSS 边界。</li>
+<li><strong>与 XSS 区别</strong>：XSS 利用"用户对站点的信任"（盗取/执行）；CSRF 利用"站点对用户的信任"（冒用身份）。XSS 可盗 Token，CSRF 无法读响应。</li>
 </ul>
+<p><strong>解析</strong>：Token 必须随机、不可预测、绑定会话且一次一用；<code>SameSite=Lax</code> 已能挡多数跨站场景。RESTful 接口若用自定义头（如 <code>X-Requested-With</code>）也能增加 CSRF 难度（简单请求不跨域发自定义头）。</p>
+<p><strong>考察知识点</strong>：CSRF 利用链、Token、SameSite、与 XSS 边界。</p>
 <h3 id="day-6-ssrf">Day 6 ｜ SSRF 原理、利用与防御<a class="headerlink" href="#day-6-ssrf" title="Permanent link">&para;</a></h3>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：SSRF 是什么？常见利用与防御？
-<strong>答案</strong>：</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：SSRF 是什么？常见利用与防御？</li>
+</ul>
+<p><strong>答案</strong>：</p>
+<ul>
 <li><strong>原理</strong>：服务端代用户发起请求，且 URL 由用户可控，攻击者可让服务器访问<strong>内网/本地</strong>资源（如 <code>http://127.0.0.1:6379</code>、<code>file:///etc/passwd</code>、<code>http://169.254.169.254/</code> 云元数据）。</li>
 <li><strong>利用</strong>：探测内网端口、攻击内网服务（Redis/MySQL）、读取本地文件、绕过授权访问云元数据（AK 泄露）、配合 Gopher 打内网协议。</li>
-<li><strong>防御</strong>：<strong>白名单</strong>协议（仅 http/https）与域名/IP；禁止访问内网与回环地址（正则过滤 <code>127.0.0.1</code>、<code>localhost</code>、<code>0.0.0.0</code>、十进制/八进制 IP 绕过需一并处理）；统一出网出口；需鉴权的内网服务加认证。
-<strong>解析</strong>：绕过手段多（DNS 重绑定、<code>xip.io</code>、进制转换、短网址），单纯黑名单不够，应做"解析后校验目标 IP 是否在内网"。这是云原生环境下的高危漏洞。
-<strong>考察知识点</strong>：SSRF 危害面、云元数据、DNS 重绑定、白名单校验。</li>
+<li><strong>防御</strong>：<strong>白名单</strong>协议（仅 http/https）与域名/IP；禁止访问内网与回环地址（正则过滤 <code>127.0.0.1</code>、<code>localhost</code>、<code>0.0.0.0</code>、十进制/八进制 IP 绕过需一并处理）；统一出网出口；需鉴权的内网服务加认证。</li>
 </ul>
+<p><strong>解析</strong>：绕过手段多（DNS 重绑定、<code>xip.io</code>、进制转换、短网址），单纯黑名单不够，应做"解析后校验目标 IP 是否在内网"。这是云原生环境下的高危漏洞。</p>
+<p><strong>考察知识点</strong>：SSRF 危害面、云元数据、DNS 重绑定、白名单校验。</p>
 <h3 id="day-7">Day 7 ｜ 命令执行 / 代码执行函数及防御<a class="headerlink" href="#day-7" title="Permanent link">&para;</a></h3>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：PHP/Java 中常见的命令执行、代码执行函数有哪些？如何防御？
-<strong>答案</strong>：</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：PHP/Java 中常见的命令执行、代码执行函数有哪些？如何防御？</li>
+</ul>
+<p><strong>答案</strong>：</p>
+<ul>
 <li><strong>PHP</strong>：命令执行 <code>system() exec() shell_exec() passthru() popen()</code>、<code>\</code>反引号`<code>；代码执行</code>eval() assert() preg_replace(/e) create_function()`。</li>
 <li><strong>Java</strong>：<code>Runtime.exec()</code>、<code>ProcessBuilder</code>、<code>Groovy/SpEL/Ognl</code> 表达式、<code>ScriptEngine</code>。</li>
-<li><strong>防御</strong>：禁用危险函数（<code>disable_functions</code>）；绝不拼接用户输入进命令/表达式；用白名单参数；白名单校验文件/命令；RASP 运行时防护。
-<strong>解析</strong>：<code>Runtime.exec()</code> 不支持 shell 重定向/管道，需经 <code>/bin/sh -c</code>。Java 表达式注入（SpEL/Ognl）常见于 Spring/Struts 历史洞。
-<strong>考察知识点</strong>：危险函数清单、命令注入与代码注入差异、disable_functions。</li>
+<li><strong>防御</strong>：禁用危险函数（<code>disable_functions</code>）；绝不拼接用户输入进命令/表达式；用白名单参数；白名单校验文件/命令；RASP 运行时防护。</li>
 </ul>
+<p><strong>解析</strong>：<code>Runtime.exec()</code> 不支持 shell 重定向/管道，需经 <code>/bin/sh -c</code>。Java 表达式注入（SpEL/Ognl）常见于 Spring/Struts 历史洞。</p>
+<p><strong>考察知识点</strong>：危险函数清单、命令注入与代码注入差异、disable_functions。</p>
 <h3 id="day-8">Day 8 ｜ 文件上传漏洞与绕过<a class="headerlink" href="#day-8" title="Permanent link">&para;</a></h3>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>题目</strong>：文件上传漏洞有哪些绕过方式？如何根本防御？
@@ -4523,7 +4531,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 21, 2026 21:43:05 UTC"><span class="timeago" datetime="2026-09-21T21:43:05+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 21, 2026 21:43:05 UTC">2026-09-21</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 21, 2026 21:51:30 UTC"><span class="timeago" datetime="2026-09-21T21:51:30+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 21, 2026 21:51:30 UTC">2026-09-21</span>
   </span>
 
     
@@ -4533,7 +4541,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 21, 2026 21:43:05 UTC"><span class="timeago" datetime="2026-09-21T21:43:05+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 21, 2026 21:43:05 UTC">2026-09-21</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 21, 2026 21:51:30 UTC"><span class="timeago" datetime="2026-09-21T21:51:30+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 21, 2026 21:51:30 UTC">2026-09-21</span>
   </span>
 
     
