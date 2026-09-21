@@ -48,18 +48,12 @@ repo_url: https://github.com/ethicalpaws/youth-sandbox
 repo_name: youth-sandbox
 edit_uri: blob/main/docs/
 
-# 全局 CSS
+# 全局 CSS（注意：你的目录是 asserts/ 不是 assets/）
 extra_css:
-  - assets/css/extra.css
-  - assets/css/home.css
+  - asserts/css/home.css              # 首页特效
   - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css
-  - asserts/css/hacker-theme.css      # 新增：黑客帝国风格
 # 全局 JS（会加载到所有页面）
-extra_javascript:
-  - assets/js/extra.js
-  - assets/js/encryption.js
-  - https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js
-  - asserts/js/hacker-theme.js        # 新增：黑客帝国特效
+# （已移除 hacker-theme.js,回归 Material 官方纯净风格）
 
 # 如果有需要延迟加载或条件加载的 JS
 # 可以在具体页面的 Markdown 中用 <script> 标签
