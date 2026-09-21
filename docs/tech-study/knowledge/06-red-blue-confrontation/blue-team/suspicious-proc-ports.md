@@ -7,156 +7,141 @@ finish-date:
 difficulty: 
 ---
 
-# 查找可疑文件
+# 查找可疑进程
+>从磁盘文件侧能够发现可疑样本，但攻击者的后门可能已经执行,甚至删掉磁盘文件后仍在内存里运行。因此需要进行运行时排查:进程在不在、从哪启动、由谁启动、是否还攥着已删除的文件。
 
-## 攻击者的隐藏手法
+## 进程树、deleted进程、/proc
 
-- 以.开头
+**关键命令**
 
-- 藏进隐藏目录
+- 用 ps aux / ps -ef / ps auxf 查看进程
 
-- 文件名添加空格开头
+- 用 lsof | grep deleted 找已删除仍运行的程序
 
-- 文件名添加不可见字符
+- 查 /proc/<pid> 的 exe/cmdline/cwd/environ
 
-- 伪造时间戳
+### ps aux / ps -ef：基础查看
 
-## 查找隐藏文件
->只用普通 ls 不足以排查入侵现场。查看 Web 目录时,至少要组合用 ls -a(看隐藏)、ls -lart(看时间)、cat -A(看不可见字符)。隐藏文件、空格文件名、不可见字符文件名、异常时间窗口,都是发现 WebShell 的第一批信号
+![](suspicious-proc-ports/2026-09-08-15-04-52.png)
+![](suspicious-proc-ports/2026-09-08-15-05-47.png)
 
-`ls -lart | cat -A`
-![](IR-basic/2026-07-13-15-01-41.png)
+| 字段 | 含义 | 排查价值 |
+|------|------|----------|
+| USER | 进程所属用户 | Web 用户启动的 shell/miner 高危 |
+| PID | 进程 ID | 后续查 `/proc/<pid>` |
+| PPID | 父进程 ID | 判断由 Web / SSH / cron / systemd 启动 |
+| CMD | 启动命令 | 是否伪装、是否有可疑参数 |
 
-- l:详细
+>www-data / apache / nginx / tomcat 这类 Web 用户启动的 bash / sh / python / perl / nc / curl / wget、矿机、未知 ELF,都要优先关注——正常情况下 Web 用户不该去跑这些。
 
-- a:显示隐藏
+### ps auxf：顺着进程树,揪出"谁启动了谁"
+![](suspicious-proc-ports/2026-09-08-15-10-19.png)
 
-- r:反向排序
+*:apache2 → sh -c → bash -i >& /dev/tcp/...。Web 服务进程下面挂着 bash 反弹 Shell,几乎可以确定是 WebShell 触发了命令执行。进程树最大的价值,就是一眼看出这种"不该有的父子关系"*
 
-- t:按时间排序
+### deleted 进程：删了文件,进程还在
+>攻击者常常先执行恶意程序、再删掉磁盘文件,想让你找不到样本。但 Linux 进程仍持有已删除文件的句柄,lsof 和 /proc 照样能看到 deleted 线索。
 
-- `cat -A`:显示不可见字符
-![](IR-basic/2026-07-13-15-05-12.png)
-###  IOC（失陷指标）清单
-```
-可疑文件：
-- /tmp/webshell_test/.shell/.shell.php
-- /tmp/webshell_test/.shell.php
-- /tmp/webshell_test/ shell.php
-- /tmp/webshell_test/​config.php
-- /tmp/webshell_test/​.config.php
+![](suspicious-proc-ports/2026-09-08-15-16-06.png)
+
+>Web 用户 / 低权限用户运行 deleted ELF,是高危入侵迹象——正常程序不会把自己的可执行文件删掉还继续跑。
+
+### /proc/<pid> 四个关键入口
+
+- /proc/<pid>/exe   进程实际可执行文件(deleted 也能看出来)
+
+- /proc/<pid>/cmdline   完整启动参数
+
+- /proc/<pid>/cwd   进程当前工作目录
+
+- /proc/<pid>/environ   环境变量,可能泄露路径 / 密钥 / 上下文
+
+>关键纪律:不要第一时间 kill 进程。先记录 PID、命令行、exe、cwd、网络连接、父进程——证据保全优先,处置在后。一 kill,内存里的现场就没了。
+
+### IOC清单
+
+可疑进程：
+
+- PID 1240 · www-data · bash -i · 父进程为反连 shell 1234
+
+- PID 1234 · www-data · /tmp/exec/shell (deleted) · bash -i /dev/tcp/192.168.1.1/4444
+
+- PID 1500 · www-data · /tmp/.minerd · 挖矿外连 pool.x:3333
 
 可疑原因：
-- 隐藏文件 / 隐藏目录
-- 文件名前导空格
-- 文件名包含不可见字符（零宽字符）
-- Web 目录中出现异常 PHP 文件
-- 时间戳异常（攻击时间窗 / 被伪造成很早）
 
-下一步：
-- 用 stat 检查真实时间戳
-- 用 file 判断真实文件类型
-- 用 grep / strings 检查文件内容
-```
+- Web/低权限用户启动 Shell 或未知 ELF
 
-## 时间戳、inode 与文件元数据排查
+- 进程文件已 deleted
 
->发现可疑文件以后,下一步看时间
->
->从 find 到 stat：判断可疑文件到底是什么时候出现的
->
->攻击者可能把 WebShell 的修改时间伪造成很早以前,让它假装"一直都在"
->
->应急响应不能只看文件名,还要看文件的元数据:修改时间、状态变化时间、创建时间和 inode。
-
-### inux 文件时间四兄弟
->.shell.php 的 Modify(mtime) 是 2020-02-01,但 Change(ctime) 却是 2025-11-29。
->
->内容修改时间很早,元数据变化时间很新 —— 这通常说明文件被 touch 伪造过时间。
-
-| 字段 | 含义 | 应急价值 |
-|------|------|----------|
-| Access / atime | 最后访问时间 | 可参考，但常被挂载策略影响，不太可靠 |
-| Modify / mtime | 文件内容最后修改时间 | 攻击者最常伪造的时间 |
-| Change / ctime | 文件元数据最后变化时间 | 普通 `touch` 改不动，排查价值最高 |
-| Birth | 文件创建时间 | 部分文件系统支持，可辅助识别假时间线 |
-
-### 文件查询命令
-
-#### find -mtime
->这条命令适合"刚发现入侵"时快速锁定最近被改动的文件。但要警惕:如果攻击者用 touch 把 mtime 伪造成很早,-mtime 就会漏掉真正的 WebShell——所以它不能单独用。
-
-示例：find ./ -type f -mtime 1
-
-- -mtime -1 最近24h
-
-- -type f 只看文件
-
-#### find -newermt查精确时间窗口
->-newermt 按具体日期查找,比 -mtime 更适合复盘某个攻击时间窗口。但全局查找会混进系统文件噪声——不能看到结果就判恶意,要结合目录位置、文件名、类型、时间窗口综合判断
-
-示例：find ./ -newermt "2020-02-01 00:00:00" ! -newermt "2020-02-01 23:59:59"
-
-#### stat：看完整元数据,识破伪造
->判断规则:mtime 很旧 + ctime 很新 = 高度怀疑 touch 时间戳伪造。
-
-示例：stat .shell.php
-```
-File: .shell.php 
-Size: 2097182 
-Access: 2020-02-01 11:52:50 +0000 
-Modify: 2020-02-01 11:52:50 +0000 ← 内容修改时间（看着很老） 
-Change: 2025-11-29 02:46:41 +0000 ← 元数据变化时间（其实很新！） Birth: -
-```
-![](find-suspicious-files/2026-07-17-22-18-27.png)
-
-*这里 Modify 停在 2020 年,Change 却是 2025 年——文件状态明明在 2025 年才变过,mtime 却谎称 2020,攻击者动了手脚*
-
-#### Birth time 与"改系统时间"造假
->更狡猾的造假是先把系统时间往回调,再创建文件,这样连 ctime 都跟着变早。
-
-示例：
-```
-timedatectl set-ntp false # 关掉网络对时  
-date -s "2020-01-01 12:00:00" # 把系统时间调回2020 
-touch time.c 
-stat time.c
-
-输出：Access/Modify/Change → 2020-01-01（全被骗） Birth → 2026-03-07（真实创建时间，露馅了）
-```
-
-*Birth time 不一定每个文件系统都支持,但只要支持,它能帮你识破"靠改系统时间制造的假时间线"——因为它记录的是文件系统层面的真实创建记录。*
-
-#### inode：文件的身份证
->文件名只是外号,inode 才是文件在文件系统里的身份证。文件可以改名,但 inode 不会因为改名而变。所以排查"被改名、移动、做了硬链接"的文件时,inode 很有用
-
-示例：
-```
-ls -i .shell.php            先拿到inode号
-find /tmp -inum <inode>     然后找出该inode对应的所有路径
-```
-
-*注意：改名不改inode*
-
-###  IOC（失陷指标）清单
-```
-可疑文件：
-- /tmp/webshell_test/.shell.php
-- /tmp/webshell_test/.shell/
-- /var/tmp/.shell/.shell.php
-
-时间异常：
-- .shell.php 的 Modify 为 2020-02-01
-- .shell.php 的 Change 为 2025-11-29
-- mtime 和 ctime 不一致，疑似 touch 伪造
-
-攻击时间窗口：
-- 文件表面 mtime 指向 2020-02-01
-- 实际状态变化更接近 2025-11-29
+- 父进程链指向 Web 服务或 cron
 
 下一步（后续章节）：
-- 用 file 判断真实文件类型
-- 用 strings / grep 检查文件内容
-- 结合 Web 日志确认是否被访问
+
+- 检查端口和外联连接
+
+- 检查启动来源日志
+
+- 保留样本和命令输出
+
+>进程排查的核心不是"看到陌生进程就杀",而是先还原:谁启动、从哪启动、执行了什么、是否 deleted、是否关联网络连接。证据记录完整后再处置
+
+## 端口、连接、进程关联
+>WebShell、反弹 Shell、矿机、远控,几乎都要监听端口或对外连接。端口排查的目标,就是把 IP、端口、PID、进程串成一条线。
+
+### ss -antlp：看监听和连接
+
+-a	所有连接	
+-l	仅监听
+-n	不解析域名/服务名	
+-p	显示进程
+-t	TCP
+
+![](suspicious-proc-ports/2026-09-08-16-02-29.png)
+
+>陌生高端口监听、Web 用户进程监听、对外 ESTABLISHED 到异常 IP,都需要进一步排查。注意:非 root 执行 netstat/ss 可能看不到 PID/程序名,需切到有权限账号或 sudo。
+
+### lsof -i：端口 ↔ 进程双向查 
+>$ lsof -i :8088 # 从端口查进程
+```
+ COMMAND PID USER FD TYPE NODE NAME shell 1234 www-data 3u IPv4 ... *:8088 (LISTEN) 
 ```
 
+>lsof 既能从端口查进程(lsof -i :8088),也能从进程查连接(lsof -p <pid> -i)。现场工具不全时,ss / netstat / lsof 三个都要会——不一定每台机器都装齐。
+
+### 连接状态含义
+
+| 状态 | 含义 | 排查意义 |
+|------|------|----------|
+| LISTEN | 本机在某端口监听等待连入 | 陌生高端口 / Web 用户监听 → 后门服务 |
+| ESTABLISHED | 已建立的双向连接 | 连到外部异常 IP → 反弹 / C2 / 矿池 |
+| TIME_WAIT | 连接刚关闭的收尾状态 | 一般正常，大量出现看业务 |
+
+| 可疑网络现象 | 可能含义 |
+|--------------|----------|
+| `www-data` 连外部 IP 高端口 | WebShell 反弹 |
+| `/tmp` 下 ELF 监听端口 | 后门服务 |
+| `bash`/`sh` 出现在网络连接进程里 | 高危 |
+| 大量外联未知 IP | 矿机 / 扫描 / C2 |
+| Redis/MySQL 对外开放 | 未授权 / 弱口令风险 |
+
+### IOC清单
+
+网络 IOC：
+- LISTEN 0.0.0.0:8088 · pid 1234 shell · www-data · /tmp/exec/shell
+
+- ESTAB 10.0.0.5 → 192.168.1.1:4444 · pid 1240 bash · www-data · 反弹Shell
+
+- ESTAB 10.0.0.5 → 203.0.113.9:3333 · pid 1500 .minerd · www-data · 矿池外连
+
+- LISTEN 0.0.0.0:6379 · pid 1100 redis · 对外开放（未授权风险）
+
+可疑原因：
+
+- Web/低权限用户进程存在网络连接
+
+- 连接远端 IP/端口异常
+
+- 进程路径位于 /tmp 或 Web 上传目录
+
+>端口排查不是只看"开了什么端口",而是把端口、连接、PID、进程路径、启动来源串起来。只有完成关联,才能判断它是正常服务还是后门通信

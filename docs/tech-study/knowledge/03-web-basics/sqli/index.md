@@ -5,7 +5,7 @@ status: ⬜
 finish_date: None
 note_path: sqli.md
 tags: ['sqli', 'sql-injection', '数据库注入']
-last_updated: 2026-07-21 00:24:26
+last_updated: 2026-09-22 04:05:36
 ---
 
 # SQL注入漏洞 - 笔记概述
@@ -24,11 +24,9 @@ last_updated: 2026-07-21 00:24:26
 3. [检测SQL注入漏洞](sqli.md#检测sql注入漏洞)
 4. [SQL注入示例](sqli.md#sql注入示例)
 5. [检查数据库](sqli.md#检查数据库)
-6. [联合查询](sqli.md#联合查询)
-7. [SQL盲注](sqli.md#sql盲注)
-8. [堆叠注入](sqli.md#堆叠注入)
-9. [如何防止SQL注入](sqli.md#如何防止sql注入)
-10. [SQL注入cheat sheet](sqli.md#sql注入cheat-sheet)
+6. [注入类型](sqli.md#注入类型)
+7. [如何防止SQL注入](sqli.md#如何防止sql注入)
+8. [SQL注入cheat sheet](sqli.md#sql注入cheat-sheet)
 
 ## 🔗 关联实战
 
@@ -45,4 +43,4 @@ last_updated: 2026-07-21 00:24:26
 暂无
 
 ---
-*自动更新：2026-07-21 00:24:26
+*自动更新：2026-09-22 04:05:36

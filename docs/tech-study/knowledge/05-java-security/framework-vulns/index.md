@@ -5,7 +5,7 @@ completed: 6
 in_progress: 0
 not_started: 0
 completion_rate: 100
-last_updated: 2026-07-21 00:24:30
+last_updated: 2026-09-22 04:05:38
 ---
 
 # 📚 框架漏洞
@@ -31,4 +31,4 @@ last_updated: 2026-07-21 00:24:30
 | [log4j2](log4j2/index.md) | 1 | 1 | 100% | ♻️ |
 
 ---
-*自动更新：2026-07-21 00:24:30
+*自动更新：2026-09-22 04:05:38

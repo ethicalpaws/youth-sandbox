@@ -1,11 +1,11 @@
 ---
-total_modules: 3
-total_questions: 6
+total_modules: 4
+total_questions: 7
 completed_questions: 4
 in_progress_questions: 0
-not_started_questions: 2
-completion_rate: 66
-last_updated: 2026-07-21 00:24:37
+not_started_questions: 3
+completion_rate: 57
+last_updated: 2026-09-22 04:05:39
 ---
 
 # 🎯 CTF 训练场
@@ -16,12 +16,12 @@ last_updated: 2026-07-21 00:24:37
 
 | 指标 | 数值 |
 |------|:----:|
-| 模块总数 | 3 |
-| 总题目数 | 6 |
+| 模块总数 | 4 |
+| 总题目数 | 7 |
 | ✅ 已解决 | 4 |
 | 🔄 进行中 | 0 |
-| ⬜ 未开始 | 2 |
-| 整体完成率 | ██████░░░░ 66% |
+| ⬜ 未开始 | 3 |
+| 整体完成率 | █████░░░░░ 57% |
 
 ## 📚 模块列表
 
@@ -29,6 +29,7 @@ last_updated: 2026-07-21 00:24:37
 |------|:------:|:------:|:------:|:----:|
 | MINIL | 5 | 4 | 80% | 🔄 |
 | BUUCTF | 0 | 0 | 0% | ⬜ |
+| SELF-SETUP | 1 | 0 | 0% | ⬜ |
 | WBS | 1 | 0 | 0% | ⬜ |
 
 ## 🔥 热门漏洞类型
@@ -82,12 +83,14 @@ last_updated: 2026-07-21 00:24:37
 |------|------|
 | MINIL | [miniL/](miniL/) |
 | BUUCTF | [BUUCTF/](BUUCTF/) |
+| SELF-SETUP | [self-setup/](self-setup/) |
 | WBS | [wbs/](wbs/) |
 
 ## 📝 近期更新
 
-- **MINIL** (2026-07-21) : 4/5 题已完成
-- **WBS** (2026-07-21) : 0/1 题已完成
+- **MINIL** (2026-09-22) : 4/5 题已完成
+- **SELF-SETUP** (2026-09-22) : 0/1 题已完成
+- **WBS** (2026-09-22) : 0/1 题已完成
 
 ---
-*最后更新：2026-07-21 00:24:37 | 保持练习，持续进步 💪*
+*最后更新：2026-09-22 04:05:39 | 保持练习，持续进步 💪*

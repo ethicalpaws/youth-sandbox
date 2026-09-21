@@ -1,30 +1,30 @@
 ---
 module_name: 🌐 内网渗透
 description: 🌐 内网渗透 学习笔记
-status: ♻️
-total_notes: 4
+status: 🔄
+total_notes: 5
 completed: 4
 in_progress: 0
-not_started: 0
-completion_rate: 100
-last_updated: 2026-07-21 00:24:32
+not_started: 1
+completion_rate: 80
+last_updated: 2026-09-22 04:05:38
 ---
 
 # 🌐 内网渗透
 
 > 🌐 内网渗透 学习笔记
 
-## 模块状态：♻️
+## 模块状态：🔄
 
 ## 📊 学习统计
 
 | 指标 | 数值 |
 |------|:----:|
-| 总笔记数 | 4 |
+| 总笔记数 | 5 |
 | ✅ 已完成 | 4 |
 | 🔄 进行中 | 0 |
-| ⬜ 未开始 | 0 |
-| 完成率 | ██████████ 100% |
+| ⬜ 未开始 | 1 |
+| 完成率 | ████████░░ 80% |
 
 ## 📖 学习内容
 
@@ -34,6 +34,7 @@ last_updated: 2026-07-21 00:24:32
 | [域环境搭建](environment/domain-setup.md) | Windows Server 2019域控搭建、Windows 10加入域、DNS配置、环境验证、快... | ✅ |
 | [Kerberos认证协议详解](kerberos/overview.md) | Kerberos认证流程、TGT/ST/PAC、黄金票据/白银票据、Kerberoasting、AS... | ✅ |
 | [Kerberos抓包分析](kerberos/wireshark-analysiss.md) | Kerberos认证抓包分析、AS-REQ/AS-REP/TGS-REQ/TGS-REP/AP-RE... | ✅ |
+| [information-collection](information-collection/information-collection.md) |  | ⬜ |
 
 ---
-*自动更新：2026-07-21 00:24:32
+*自动更新：2026-09-22 04:05:38

@@ -5,7 +5,7 @@ status: ✅
 finish_date: 2026-05-19
 note_path: file_upload.md
 tags: ['file-upload', 'webshell', '文件上传', '绕过技巧']
-last_updated: 2026-07-21 00:24:26
+last_updated: 2026-09-22 04:05:36
 ---
 
 # 文件上传漏洞 - 笔记概述
@@ -42,4 +42,4 @@ last_updated: 2026-07-21 00:24:26
 暂无
 
 ---
-*自动更新：2026-07-21 00:24:26
+*自动更新：2026-09-22 04:05:36

@@ -5,7 +5,7 @@ status: ✅
 finish_date: 2026-05-13
 note_path: access-control.md
 tags: ['access-control', 'idor', '越权', '垂直越权', '水平越权']
-last_updated: 2026-07-21 00:24:26
+last_updated: 2026-09-22 04:05:36
 ---
 
 # 访问控制漏洞 - 笔记概述
@@ -39,4 +39,4 @@ last_updated: 2026-07-21 00:24:26
 暂无
 
 ---
-*自动更新：2026-07-21 00:24:26
+*自动更新：2026-09-22 04:05:36
