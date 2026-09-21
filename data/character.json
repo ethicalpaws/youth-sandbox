@@ -9,11 +9,11 @@
   },
   "auto": {
     "level": 5,
-    "current_exp": 172,
+    "current_exp": 362,
     "next_exp": 414,
-    "total_exp": 1245,
+    "total_exp": 1435,
     "stats": {
-      "notes_count": 103,
+      "notes_count": 122,
       "ctf_count": 0,
       "cve_count": 4,
       "src_count": 0,
@@ -34,7 +34,7 @@
       "bypass_waf": 3.0,
       "code_review": 6.0,
       "internal_network": 12.0,
-      "pwn": 0.0,
+      "pwn": 25.0,
       "evasion": 0.0,
       "penetration_test": 0.0,
       "lateral_movement": 0.0,
@@ -72,15 +72,15 @@
           ]
         },
         {
-          "total": 12,
-          "max_daily": 6,
+          "total": 9,
+          "max_daily": 4,
           "days": [
             1,
             0,
             0,
-            3,
             2,
-            6,
+            2,
+            4,
             0
           ]
         },
@@ -98,11 +98,11 @@
           ]
         },
         {
-          "total": 50,
-          "max_daily": 46,
+          "total": 47,
+          "max_daily": 43,
           "days": [
             3,
-            46,
+            43,
             1,
             0,
             0,
@@ -124,13 +124,13 @@
           ]
         },
         {
-          "total": 10,
+          "total": 9,
           "max_daily": 6,
           "days": [
             0,
             0,
             6,
-            4,
+            3,
             0,
             0,
             0
@@ -163,11 +163,76 @@
           ]
         },
         {
-          "total": 9,
-          "max_daily": 8,
+          "total": 19,
+          "max_daily": 9,
           "days": [
             1,
-            8,
+            5,
+            2,
+            2,
+            0,
+            0,
+            9
+          ]
+        },
+        {
+          "total": 5,
+          "max_daily": 2,
+          "days": [
+            1,
+            0,
+            0,
+            1,
+            2,
+            1,
+            0
+          ]
+        },
+        {
+          "total": 1,
+          "max_daily": 1,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 0,
+          "max_daily": 0,
+          "days": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 1,
+          "max_daily": 1,
+          "days": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "total": 2,
+          "max_daily": 2,
+          "days": [
+            2,
+            0,
             0,
             0,
             0,
@@ -202,104 +267,39 @@
           ]
         },
         {
-          "total": 0,
-          "max_daily": 0,
+          "total": 3,
+          "max_daily": 1,
           "days": [
             0,
             0,
             0,
-            0,
-            0,
-            0,
+            1,
+            1,
+            1,
             0
           ]
         },
         {
-          "total": 0,
-          "max_daily": 0,
+          "total": 2,
+          "max_daily": 1,
           "days": [
             0,
             0,
             0,
+            1,
             0,
-            0,
-            0,
+            1,
             0
           ]
         },
         {
-          "total": 0,
-          "max_daily": 0,
+          "total": 2,
+          "max_daily": 2,
           "days": [
             0,
             0,
             0,
-            0,
-            0,
-            0,
-            0
-          ]
-        },
-        {
-          "total": 0,
-          "max_daily": 0,
-          "days": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ]
-        },
-        {
-          "total": 0,
-          "max_daily": 0,
-          "days": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ]
-        },
-        {
-          "total": 0,
-          "max_daily": 0,
-          "days": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ]
-        },
-        {
-          "total": 0,
-          "max_daily": 0,
-          "days": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ]
-        },
-        {
-          "total": 0,
-          "max_daily": 0,
-          "days": [
-            0,
-            0,
-            0,
-            0,
+            2,
             0,
             0,
             0
@@ -722,11 +722,11 @@
           ]
         }
       ],
-      "total_notes": 103,
-      "active_days": 21,
-      "max_contrib": 46
+      "total_notes": 122,
+      "active_days": 37,
+      "max_contrib": 43
     },
-    "last_update": "2026-07-12 22:44:33",
+    "last_update": "2026-09-22 04:05:47",
     "first_bug_awarded": true,
     "start_date": "2026-05-27"
   }

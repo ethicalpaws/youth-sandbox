@@ -1,0 +1,3510 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="安全学习笔记 × 青春记录 | 一个可以安全试错的环境">
+      
+      
+        <meta name="author" content="ethicalpaws">
+      
+      
+        <link rel="canonical" href="https://ethicalpaws.github.io/youth-sandbox/tech-study/knowledge/04-web-advanced/jwt/jwt/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>JWT - 青春沙盒</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../css/timeago.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/css/extra.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/css/home.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+      <link rel="stylesheet" href="../../../../../asserts/css/hacker-theme.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#jwt" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="青春沙盒" class="md-header__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            青春沙盒
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              JWT
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ethicalpaws/youth-sandbox" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    youth-sandbox
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  $技术学习
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../life/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  青春记录
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../bridge/novel/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  修桥工程
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../updates/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  动态推送
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../spiritual/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  精神食粮
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../about/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  关于本站
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../role-panel/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ❗️ 角色档案
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="青春沙盒" class="md-nav__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
+
+    </a>
+    青春沙盒
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ethicalpaws/youth-sandbox" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    youth-sandbox
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    $技术学习
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    $技术学习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📖 知识笔记
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📖 知识笔记
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01-foundation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01-基础知识
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../02-network-protocol-security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02-网络协议安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../03-web-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03-Web基础漏洞
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--🔄"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04-Web高级漏洞
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--⬜"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../05-java-security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05-Java安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../06-red-blue-confrontation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06-红蓝对抗
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../practice/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎯 实战练习
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🎯 实战练习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../practice/ctf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CTF训练
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../practice/cve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVE分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../practice/src/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SRC实战
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../weekly-check/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📋 每周检测
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📋 每周检测
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../life/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    青春记录
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    青春记录
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../life/study-plan/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 每周计划
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📝 每周计划
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/study-plan/summer-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    暑期计划
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--进行中"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/study-plan/week5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二阶段第一周
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--进行中"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/journal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📔 随笔日记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/struggles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💭 烦恼记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../life/wins/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎉 成就时刻
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🎉 成就时刻
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../life/reflections/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔄 思考记录
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🔄 思考记录
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/reflections/%E7%A0%B4%E9%A2%98%E4%B9%8B%E4%BD%99-%E4%BA%A6%E7%A0%B4%E5%BF%83%E9%9A%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ctf赛后复盘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/reflections/%E7%B3%BB%E7%BB%9F%E5%86%85%E9%83%A8%EF%BC%8C%E6%B8%85%E9%86%92%E8%BE%B9%E7%BC%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系统内部，清醒边缘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/reflections/%E6%A1%A5%E7%9A%84%E8%93%9D%E5%9B%BE%EF%BC%9A%E4%BB%8E%E7%AC%AC%E4%B8%80%E5%9D%97%E7%A0%96%E5%88%B0%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    桥的蓝图：从第一块砖到开源框架
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/reflections/%E4%BB%8E%E4%BF%AF%E8%A7%86%E5%88%B0%E5%B9%B3%E8%A7%86%EF%BC%9A%E4%B8%80%E4%BB%BD%E5%86%85%E5%BF%83%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    从俯视到平视：一份内心笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/reflections/%E4%BB%A5%E6%80%9D%E5%BC%80%E8%B7%AF%EF%BC%8C%E4%BB%A5%E8%B7%AF%E8%BD%BD%E5%85%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    以思开路，以路载光
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/reflections/LINK%E6%B5%AE%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LINK浮现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../life/family-letters/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💌 父母寄语
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    💌 父母寄语
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/family-letters/%E5%88%9D%E5%8D%87%E9%AB%98_%E7%88%B6%E4%BA%B2%E5%AF%84%E8%AF%AD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    初升高_父亲寄语
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/family-letters/%E6%88%90%E4%BA%BA%E7%A4%BC_%E7%88%B6%E6%AF%8D%E5%AF%84%E8%AF%AD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    成人礼_父母寄语
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../life/portrait/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🖼️ 个人画像
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🖼️ 个人画像
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/portrait/%E7%94%BB%E7%BA%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    画像师约定
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/portrait/%E8%A7%81%E5%B7%B1-%E7%83%9B%E7%85%A7-2026.7.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    烛照之作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    修桥工程
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    修桥工程
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../bridge/novel/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    《临风行》
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    《临风行》
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../bridge/novel/volume1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一卷
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../bridge/novel/volume2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二卷
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../bridge/novel/volume3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三卷
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../updates/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    动态推送
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    动态推送
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📦 全部动态
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../spiritual/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    精神食粮
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    精神食粮
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../spiritual/images/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🖼️ 照片
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🖼️ 照片
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../spiritual/music/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎵 音乐
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🎵 音乐
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../spiritual/sentences/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💬 句子
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    💬 句子
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../about/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于本站
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    关于本站
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/why/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    为什么建这个站
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../role-panel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ❗️ 角色档案
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#jwt_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        什么是JWT
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jwt_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JWT的格式
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jwt_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JWT认证流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jwt-vs-jwe-vs-jws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JWT vs JWE vs JWS
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jwt_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JWT攻击
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="JWT攻击">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jwt_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        什么是JWT攻击
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jwt_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JWT攻击的影响是什么
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jwt_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JWT攻击漏洞是如何产生的
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        接受任意签名
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        接受无签名token
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weak-secret-brute-force" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        弱密钥暴力破解 (Weak Secret Brute-Force)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#header-parameter-injections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        头部参数注入 (Header Parameter Injections)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="头部参数注入 (Header Parameter Injections)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jwk-json-web-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        jwk (JSON Web Key) 注入
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jku-jwk-set-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        jku (JWK Set URL) 注入
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kid-key-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kid (Key ID) 路径遍历与注入
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他可利用参数
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algorithm-confusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        算法混淆攻击 (Algorithm Confusion)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jwt_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何防止JWT攻击
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="jwt">JWT<a class="headerlink" href="#jwt" title="Permanent link">&para;</a></h1>
+<h2 id="jwt_1">什么是JWT<a class="headerlink" href="#jwt_1" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>JWT——JSON Web Token</p>
+</blockquote>
+<p>JSON 网页令牌(JWT)是一种标准化格式,用于在系统之间发送密码学签名的 JSON 数据。理论上它们可以包含任何类型的数据,但最常用于发送用户信息(“声明”),作为身份验证、会话处理和访问控制机制的一部分</p>
+<h2 id="jwt_2">JWT的格式<a class="headerlink" href="#jwt_2" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>JWT由三部分组成——header,payload,signature,由点号分隔</p>
+<p>JWT 的头部和有效载荷部分只是 base64编码的 JSON 对象</p>
+</blockquote>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>eyJraWQiOiI5MTM2ZGRiMy1jYjBhLTRhMTktYTA3ZS1lYWRmNWE0NGM4YjUiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJwb3J0c3dpZ2dlciIsImV4cCI6MTY0ODAzNzE2NCwibmFtZSI6IkNhcmxvcyBNb250b3lhIiwic3ViIjoiY2FybG9zIiwicm9sZSI6ImJsb2dfYXV0aG9yIiwiZW1haWwiOiJjYXJsb3NAY2FybG9zLW1vbnRveWEubmV0IiwiaWF0IjoxNTE2MjM5MDIyfQ.SYZBPIBg2CRjXAJ8vCER0LA_ENjII1JakvNQoP-Hw6GG1zfl4JyngsZReIfqRvIAEi5L4HV0q7_9qGhQZvy9ZdxEJbwTxRs_6Lb-fZTDpW6lKYNdMyjw45_alSCZ1fypsMWz_2mTpQzil0lOtps5Ei_z7mM7M8gCwe_AGpI53JxduQOaB5HkT5gVrv9cKu9CsW5MS6ZbqYXpGyOG5ehoxqm8DL5tFYaW3lB50ELxi0KsuTKEbD0t5BCl0aCR2MBJWAbN-xeLwEenaqBiwPVvKixYleeDQiBEIylFdNNIMviKRgXiYuAvMziVPbwSgkZVHeEdF5MQP1Oe2Spac-6IfA
+</span></code></pre></div>
+<ul>
+<li>
+<p>Header（头部）：声明了Token的类型（JWT）和签名算法（如HS256或RS256）。</p>
+</li>
+<li>
+<p>Payload（载荷）：这是核心信息区。服务器会把“用户ID”、“用户名”等非敏感信息放在这里。同时，它还会包含几个标准字段，其中最重要的是 exp（过期时间），用于控制Token的有效期。</p>
+</li>
+<li>
+<p>Signature（签名）：服务器将Header和Payload拼接后，用密钥（Secret）和指定的算法进行加密，生成一段字符串。这个签名是防篡改的关键。</p>
+<ul>
+<li>
+<p>由于签名直接来自令牌的其余部分,因此更改一个节点或有效载荷的字节会导致签名不匹配。</p>
+</li>
+<li>
+<p>在不知道服务器秘密签名密钥的情况下,不应能够为给定的头部或有效载荷生成正确的签名。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="jwt_3">JWT认证流程<a class="headerlink" href="#jwt_3" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>第一阶段：颁发Token（登录环节）</p>
+</li>
+<li>
+<p>用户发起登录请求：用户在客户端（如浏览器App）输入用户名和密码，通过HTTPS协议发送给服务器。</p>
+</li>
+<li>
+<p>服务器验证身份：服务器收到请求，查询数据库，验证用户名和密码是否匹配。</p>
+</li>
+<li>
+<p>生成JWT：验证通过后，服务器会创建一个JWT。</p>
+</li>
+<li>
+<p>返回Token给客户端：服务器将完整的JWT字符串发送给客户端。</p>
+</li>
+<li>
+<p>客户端存储Token：客户端（如浏览器的LocalStorage或Cookie）接收到JWT后，会将其保存起来，供后续请求使用。</p>
+</li>
+<li>
+<p>第二阶段：使用Token（访问资源环节）</p>
+</li>
+<li>
+<p>客户端携带Token发送请求：当用户要访问一个需要登录才能查看的页面或数据时，客户端会在HTTP请求的 Authorization 请求头中加上Token，格式通常是 Bearer <JWT字符串>。</p>
+</li>
+<li>
+<p>服务器拦截并验证Token：服务器的后端服务（或中间件）会拦截这个请求，并执行以下关键校验步骤：</p>
+<ul>
+<li>
+<p>格式校验：检查Header中是否有 Authorization 字段，以及Token是否以 Bearer 开头。</p>
+</li>
+<li>
+<p>结构解析：尝试将Token按点号拆分为三部分，如果不是三段，则直接拒绝。</p>
+</li>
+<li>
+<p>签名验真（最关键）：服务器用自己存储的密钥，对接收到的Header和Payload重新计算一次签名，并与Token自带的签名进行比对。</p>
+</li>
+<li>
+<p>若一致，说明Token在传输过程中未被篡改，且确实是由本服务器颁发的。</p>
+</li>
+<li>
+<p>若不一致，直接拒绝请求。</p>
+</li>
+<li>
+<p>有效期检查：解析Payload中的 exp（过期时间）字段，与当前服务器时间比较。如果当前时间已超过过期时间，则判定Token失效，返回401错误（未授权）。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>获取用户信息并处理业务：所有校验通过后，服务器会认为这个请求是可信的。此时，它会直接从Payload中取出用户ID等信息，而无需再去查询数据库。利用这些信息，服务器就能执行具体的业务逻辑（如查询该用户的订单、修改资料等）。</p>
+</li>
+<li>
+<p>返回响应结果：服务器将处理后的数据返回给客户端。</p>
+</li>
+</ul>
+<h2 id="jwt-vs-jwe-vs-jws">JWT vs JWE vs JWS<a class="headerlink" href="#jwt-vs-jwe-vs-jws" title="Permanent link">&para;</a></h2>
+<p>JWT 的规格实际上非常有限。它仅将信息(“权利声明”)定义为可以在双方之间传输的JSON对象。实际上,JWT 并未真正被用作独立实体。JWT 规范通过 JSON Web 签名(JWS)和 JSON Web 加密(JWE)规范来扩展,这些规范定义了实际实现 JWT 的具体方法。 </p>
+<p>换句话说,JWT通常是JWS或JWE。当人们使用“JWT”这个术语时,它们几乎总是指JWS。JWE 非常相似,只是令牌的实际内容是加密的,而不仅仅是编码的。 </p>
+<h2 id="jwt_4">JWT攻击<a class="headerlink" href="#jwt_4" title="Permanent link">&para;</a></h2>
+<h3 id="jwt_5">什么是JWT攻击<a class="headerlink" href="#jwt_5" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>JWT 攻击涉及用户向服务器发送修改后的 JWT,以实现恶意目标。通常,此目标是通过冒充另一位已经过身份验证的用户来绕过身份验证和访问控制。 </p>
+</blockquote>
+<h3 id="jwt_6">JWT攻击的影响是什么<a class="headerlink" href="#jwt_6" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>JWT攻击的影响通常很严重。如果攻击者能够创建具有任意值的有效token,他们可以升级自身权限或冒充其他用户,完全掌控账户。</p>
+</blockquote>
+<h3 id="jwt_7">JWT攻击漏洞是如何产生的<a class="headerlink" href="#jwt_7" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>JWT的签名没有得到正确验证。这使得攻击者能够篡改通过令牌有效载荷传递给应用程序的值。即使签名经过了可靠的验证,其是否真正可信,仍需在很大程度上依赖服务器的密钥,而密钥仍是一个秘密。如果该密钥以某种方式被泄露,或可能被猜测或被蛮力攻击,攻击者可以为任意令牌生成有效的签名,从而破坏整个机制。 </p>
+<p>服务器通常不会存储其发布的JWT的任何信息。相反,每个token都是完全独立的实体。这具有一些优点,但也带来了一个根本性问题——服务器实际上对令牌的原始内容,甚至对原始签名内容一无所知。因此,如果服务器无法正确验证签名,则无法阻止攻击者对令牌的其余部分进行任意更改。</p>
+</blockquote>
+<h3 id="_1">接受任意签名<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>JWT库通常提供一种用于验证令牌的方法,另一种则仅用于解码。例如,Node.js 库jsonwebtoken有verify()和decode()。</p>
+<p>然而有时,开发者会混淆这两种方法,只将传入的token传递给decode()方法，这实际上意味着应用程序完全无法验证签名。 </p>
+</blockquote>
+<p><strong>题目描述</strong>
+<img alt="" src="2026-07-24-09-30-47.png" /></p>
+<p><strong>解题过程</strong>
+<em>登录已有账号</em>
+<img alt="" src="2026-07-24-09-37-04.png" /></p>
+<p><em>抓包查看token</em>
+<img alt="" src="2026-07-24-09-38-15.png" /></p>
+<p><em>解码token</em>
+<img alt="" src="2026-07-24-09-40-09.png" /></p>
+<p><em>篡改token</em>
+<img alt="" src="2026-07-24-10-43-24.png" /></p>
+<p><em>携带伪造的token访问/admin</em>
+<img alt="" src="2026-07-24-10-43-08.png" /></p>
+<p><em>冒充admin执行恶意操作</em>
+<img alt="" src="2026-07-24-10-44-53.png" /></p>
+<h3 id="token">接受无签名token<a class="headerlink" href="#token" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>在JSON Web Token (JWT) 的上下文中，none是一个特殊的算法标识。如果服务器配置不当，接受了alg=none的令牌，攻击者就可以伪造任意身份，彻底绕过认证，这和WAF的检测规则是不同层面的安全问题。</p>
+<p>原理：JWT头部定义了签名算法alg。当alg被设为none时，JWT标准要求服务器不验证签名。如果服务器未禁用此算法，攻击者只需将头部alg改为none，篡改payload内容，并去掉签名部分（保留末尾的点.），即可构造一个"有效"令牌
+JWT 可以使用多种不同算法进行签名,但也可以保持无符号。在这种情况下,alg参数设置为none,由于这存在明显危险,服务器通常会拒绝没有签名的代币。然而,由于这种过滤依赖于字符串解析,有时可以使用经典的混淆技术绕过这些滤镜,例如混合大小写和编码</p>
+</blockquote>
+<p><strong>题目描述</strong></p>
+<p><img alt="" src="2026-08-09-09-56-26.png" /></p>
+<p><strong>解题过程</strong></p>
+<p><em>访问/admin接口</em></p>
+<p><img alt="" src="2026-08-09-10-10-41.png" /></p>
+<p><em>伪造无签名token</em></p>
+<p><img alt="" src="2026-08-09-10-16-37.png" /></p>
+<p><em>访问delete接口</em></p>
+<p><img alt="" src="2026-08-09-10-17-43.png" />
+<img alt="" src="2026-08-09-10-19-19.png" /></p>
+<h3 id="weak-secret-brute-force">弱密钥暴力破解 (Weak Secret Brute-Force)<a class="headerlink" href="#weak-secret-brute-force" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>原理：针对使用对称加密算法（如 HS256）的JWT，其安全性完全依赖于密钥（Secret）的强度。如果开发者使用了弱密钥（如 secret、password 或留空），攻击者就可以在本地进行高强度的离线计算。</p>
+<ul>
+<li>工具与技巧：</li>
+</ul>
+</blockquote>
+<ul>
+<li>
+<p>Hashcat模式：-m 16500 专门用于破解JWT。由于是本地运算，不受网络延迟限制，配合GPU可以在极短时间内跑完数亿级别的字典。</p>
+</li>
+<li>
+<p>规则扩展：除了固定字典，攻击者常结合 --rules 规则（如大小写变形、数字后缀）来爆破 admin、test 等变种。</p>
+</li>
+<li>
+<p>“字符级”暴力：若密钥极短（如单个字符），可完全不依赖字典，直接遍历ASCII码空间。</p>
+</li>
+<li>
+<p>hashcat.exe -a 0 =m 16500 <jwt> <wordlist> --show</p>
+</li>
+</ul>
+<p><strong>题目描述</strong></p>
+<p><img alt="" src="2026-08-09-11-20-54.png" /></p>
+<p><strong>解题过程</strong></p>
+<p><em>登录后抓包获取jwt</em></p>
+<p><img alt="" src="2026-08-09-11-26-38.png" /></p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>eyJraWQiOiJjNTdlZGFmZC0yOWYwLTRjZGMtOGQ3MS05YzgzODM2NzY5ZWQiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwb3J0c3dpZ2dlciIsImV4cCI6MTc4NjI0OTM2Niwic3ViIjoid2llbmVyIn0.ovUMepw6FdX4mT5BiXbq2gASOCp68D3hag6v3CuI6v4
+</span></code></pre></div>
+<em>hashcat暴力破解</em></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>hashcat.exe -a 0 -m 16500 &quot;eyJraWQiOiJjNTdlZGFmZC0yOWYwLTRjZGMtOGQ3MS05YzgzODM2NzY5ZWQiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwb3J0c3dpZ2dlciIsImV4cCI6MTc4NjI0OTM2Niwic3ViIjoid2llbmVyIn0.ovUMepw6FdX4mT5BiXbq2gASOCp68D3hag6v3CuI6v4&quot; E:\youth-sandbox\docs\tech-study\arsenal\wordlist\jwt.secrets.list.txt
+</span></code></pre></div>
+<p><img alt="" src="2026-08-09-11-31-50.png" /></p>
+<p><em>秘钥：secret1</em></p>
+<p><em>对秘钥进行base64编码</em></p>
+<p><img alt="" src="2026-08-09-11-44-43.png" /></p>
+<p><em>burp中新建秘钥</em></p>
+<p><img alt="" src="2026-08-09-11-46-51.png" /></p>
+<p><em>使用刚刚生成的秘钥签名伪造jwt</em></p>
+<p><img alt="" src="2026-08-09-11-48-33.png" /></p>
+<p><em>使用伪造的jwt访问/admin接口</em></p>
+<p><img alt="" src="2026-08-09-11-52-32.png" />
+<img alt="" src="2026-08-09-11-54-04.png" /></p>
+<h3 id="header-parameter-injections">头部参数注入 (Header Parameter Injections)<a class="headerlink" href="#header-parameter-injections" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>这是JWT攻击中最危险、变种最多的部分。其核心逻辑是：既然服务器要验证签名，那么我直接告诉服务器“用我的公钥来验证我的签名”</p>
+</blockquote>
+<h4 id="jwk-json-web-key">jwk (JSON Web Key) 注入<a class="headerlink" href="#jwk-json-web-key" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>机制：在头部直接嵌入一个完整的公钥对象。</p>
+<p>攻击动作：攻击者本地生成一对RSA密钥，用私钥签发恶意JWT，将公钥放入 jwk 头。若服务器信任该参数，则验证通过。</p>
+<p>进阶绕过：部分服务器只检查 jwk 是否存在而不验证来源，插件（如Burp的JWT Editor）能自动生成匹配的 kid 和签名，一键完成攻击。</p>
+</blockquote>
+<p><strong>示例</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>{
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    &quot;kid&quot;: &quot;ed2Nf8sb-sD6ng0-scs5390g-fFD8sfxG&quot;,
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    &quot;typ&quot;: &quot;JWT&quot;,
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    &quot;alg&quot;: &quot;RS256&quot;,
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    &quot;jwk&quot;: {
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        &quot;kty&quot;: &quot;RSA&quot;,
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>        &quot;e&quot;: &quot;AQAB&quot;,
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>        &quot;kid&quot;: &quot;ed2Nf8sb-sD6ng0-scs5390g-fFD8sfxG&quot;,
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>        &quot;n&quot;: &quot;yy1wpYmffgXBxhAUJzHHocCuJolwDqql75ZWuCQ_cb33K2vh9m&quot;
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    }
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>}
+</span></code></pre></div>
+<p><strong>题目描述</strong></p>
+<p><img alt="" src="2026-08-09-12-09-19.png" /></p>
+<p><strong>解题过程</strong></p>
+<p><em>生成新的RSA秘钥对</em></p>
+<p><img alt="" src="2026-08-09-12-28-58.png" /></p>
+<p><em>抓包伪造jwt</em></p>
+<p><img alt="" src="2026-08-09-12-10-05.png" /></p>
+<p><em>使用伪造的jwt访问/admin接口</em></p>
+<p><img alt="" src="2026-08-09-12-33-22.png" />
+<img alt="" src="2026-08-09-12-35-43.png" /></p>
+<h4 id="jku-jwk-set-url">jku (JWK Set URL) 注入<a class="headerlink" href="#jku-jwk-set-url" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>机制：服务器根据该URL去远程获取包含公钥的JSON文件。</p>
+<p>攻击路径：攻击者搭建一个公网服务，托管一个包含自己公钥的 jwks.json，将 jku 指向该地址。</p>
+</blockquote>
+<ul>
+<li>
+<p>绕过SSRF限制：即便服务器限制只能从 https://trusted.com 获取，攻击者也可以利用：</p>
+</li>
+<li>
+<p>开放重定向：https://trusted.com/redirect?url=evil.com</p>
+</li>
+<li>
+<p>URL解析差异：https://trusted.com@evil.com 或使用 \ 分隔符绕过正则匹配。</p>
+</li>
+</ul>
+<p><strong>题目描述</strong></p>
+<p><img alt="" src="2026-08-09-13-22-14.png" /></p>
+<p><strong>解题过程</strong></p>
+<p><em>新建秘钥对，复制公钥</em></p>
+<p><img alt="" src="2026-08-09-13-29-30.png" /></p>
+<p><em>在恶意服务器配置jwk集</em></p>
+<p><img alt="" src="2026-08-09-14-36-54.png" /></p>
+<p><em>伪造jwt，使用相同kid的jwk生成签名</em></p>
+<p><img alt="" src="2026-08-09-14-34-45.png" /></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>{
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>&quot;keys&quot;: [
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>{
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    &quot;kty&quot;: &quot;RSA&quot;,
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    &quot;e&quot;: &quot;AQAB&quot;,
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    &quot;kid&quot;: &quot;a855e9d9-d6ea-4575-9d4d-9557575fa4cd&quot;,
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    &quot;n&quot;: &quot;wNPibqDAETPCsh4Iq5QZqZvqJuTV8N66lnDMxIa5if0zWhs_EyosRFDSxN18mtkUpsXvLAwT-JfACHNEB1bj66NbdZoxEYvwljUHT8vBa-flhs4mwLrC0zEaYtsuHdrou5Q2Qb3co_V_7WEnKCmh9gs0KclJcVjS5c793tQ8QZILo0ZXVci_JR78MRasVSMOzSHX7d5cb5UKaIwmCdHQo99-mKHGWWjAdpDLM6aZn8aHzrAd6KIvm4WnLLIEkw6GnSnlKAQxwEc1uwfRRI4qYEDmzPgGDbl_9S6BOM9GMXgFa51sbkfNIPOSDiSyXRtv97PsFBOvaS8m1gMfhWASMQ&quot;
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>}
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>]
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>}
+</span></code></pre></div>
+<p><em>使用伪造的jwt访/admin接口</em></p>
+<p><img alt="" src="2026-08-09-14-34-06.png" />
+<img alt="" src="2026-08-09-14-36-42.png" /></p>
+<h4 id="kid-key-id">kid (Key ID) 路径遍历与注入<a class="headerlink" href="#kid-key-id" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>机制：kid 用于在服务器文件系统或数据库中查找密钥文件。</p>
+</blockquote>
+<p><strong>攻击手法</strong></p>
+<ul>
+<li>
+<p>文件读取攻击：若服务器存在路径遍历漏洞（如 ../../../../dev/null），且使用对称加密（HS256），则会发生“空密钥签名”的灾难性后果。同理，指向 /proc/self/environ 或日志文件也可能泄露密钥。</p>
+</li>
+<li>
+<p>SQL注入攻击：若 kid 用于查询数据库（如 SELECT key FROM keys WHERE kid='<input>'），攻击者可通过 ' OR 1=1 -- </p>
+</li>
+<li>
+<p>理论上可以用任何文件来执行,但最简单的方法之一就是使用/dev/null在大多数Linux系统中都存在。由于这是一个空文件,因此读取它返回一个空字符串。因此,使用空字符串签名令牌将获得有效的签名</p>
+</li>
+</ul>
+<p><strong>题目描述</strong></p>
+<p><img alt="" src="2026-08-09-15-27-21.png" /></p>
+<p><strong>解题过程</strong></p>
+<p><em>新建对称密钥伪造kid和k</em></p>
+<p><img alt="" src="2026-08-09-15-42-55.png" /></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>{
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    &quot;kty&quot;: &quot;oct&quot;,
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    &quot;kid&quot;: &quot;..\/..\/..\/..\/..\/..\/..\/..\/dev\/null&quot;,
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    &quot;k&quot;: &quot;&quot;
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>}
+</span></code></pre></div>
+<p><em>使用伪造的秘钥生成签名</em></p>
+<p><img alt="" src="2026-08-09-15-44-13.png" /></p>
+<p><em>使用伪造的jwt访问/admin接口</em></p>
+<p><img alt="" src="2026-08-09-15-44-49.png" />
+<img alt="" src="2026-08-09-15-45-29.png" /></p>
+<h4 id="_2">其他可利用参数<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>cty (Content Type)：如果将类型改为 application/x-java-serialized-object 或 text/xml，后端反序列化或XML解析器可能触发远程代码执行（RCE）或XXE（XML外部实体注入）攻击。</p>
+</li>
+<li>
+<p>x5c (X.509证书链)：类似于 jwk，传递证书而非公钥。历史上著名的漏洞（如CVE-2017-2800）利用该参数进行堆溢出攻击。</p>
+</li>
+</ul>
+<hr />
+<h3 id="algorithm-confusion">算法混淆攻击 (Algorithm Confusion)<a class="headerlink" href="#algorithm-confusion" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>原理：服务器本应使用非对称算法（RS256）验证签名（公钥解密，私钥加密）。但攻击者将头部 alg 改为对称算法（HS256），并尝试将公钥当作对称密钥来签名。</p>
+<p>关键条件：攻击者必须能获取到服务器的公钥（通常通过 /.well-known/jwks.json 获取）。当服务器试图用公钥（被误当成HMAC密钥）去验证攻击者用相同公钥签名的token时，验证会通过。</p>
+<p>变种：CVE-2026-22817（Hono框架）正是利用了这种非对称转对称的逻辑缺陷。</p>
+</blockquote>
+<p><strong>对称 vs 非对称算法对比</strong></p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>对称算法 (HS256)</th>
+<th>非对称算法 (RS256)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>密钥类型</td>
+<td>单一密钥（对称）</td>
+<td>公钥 + 私钥（非对称）</td>
+</tr>
+<tr>
+<td>签名方</td>
+<td>服务器（用密钥签名）</td>
+<td>服务器（用私钥签名）</td>
+</tr>
+<tr>
+<td>验证方</td>
+<td>服务器（用同一密钥验证）</td>
+<td>任何人（用公钥验证）</td>
+</tr>
+<tr>
+<td>密钥保密性</td>
+<td>必须绝对保密</td>
+<td>私钥保密，公钥公开</td>
+</tr>
+<tr>
+<td>攻击关键</td>
+<td>爆破弱密钥</td>
+<td>诱使服务器用公钥验证 HS256</td>
+</tr>
+</tbody>
+</table>
+<p><strong>完整攻击流程</strong></p>
+<p><em>Step 1: 获取服务器公钥</em></p>
+<ul>
+<li>
+<p>方式 A：标准 JWKS 端点</p>
+</li>
+<li>
+<p>方式 B：从 X.509 证书中提取</p>
+</li>
+<li>
+<p>方式 C：从多个 JWT 中推导</p>
+</li>
+</ul>
+<p><em>Step 2: 将公钥转换为 HMAC 兼容格式</em></p>
+<p><em>Step 3: 伪造 JWT</em></p>
+<p><em>Step 4: 使用公钥签名JWT</em></p>
+<p><strong>题目描述</strong></p>
+<p><img alt="" src="2026-08-09-14-56-20.png" /></p>
+<p><strong>解题过程</strong></p>
+<p><em>通过标准端点暴露公钥</em></p>
+<p><img alt="" src="2026-08-09-14-58-25.png" /></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span><span class="nt">&quot;keys&quot;</span><span class="p">:[{</span><span class="nt">&quot;kty&quot;</span><span class="p">:</span><span class="s2">&quot;RSA&quot;</span><span class="p">,</span><span class="nt">&quot;e&quot;</span><span class="p">:</span><span class="s2">&quot;AQAB&quot;</span><span class="p">,</span><span class="nt">&quot;use&quot;</span><span class="p">:</span><span class="s2">&quot;sig&quot;</span><span class="p">,</span><span class="nt">&quot;kid&quot;</span><span class="p">:</span><span class="s2">&quot;701e9483-362e-4ce9-aa72-bf11fa6f8670&quot;</span><span class="p">,</span><span class="nt">&quot;alg&quot;</span><span class="p">:</span><span class="s2">&quot;RS256&quot;</span><span class="p">,</span><span class="nt">&quot;n&quot;</span><span class="p">:</span><span class="s2">&quot;ySpgp58nh6fMXdKxnol2mSSMBGmb29o1qoOgOlBw5srM-2CTSZhHLTUmFYov5P9AOlHDP_HhFKwwdBu7-pls9WqaBKRSPbT3qLBuPovJxvH8pbMwjYjyEmNK0CwGYB4LC6o40V60R-nUqLPWZfXKG5Fo4vrbFHfmI8FZqhZWotat_YUZ03-5wB0ZSesmXCOf6tVgCkkMyaBBK8vMZwbvSuGHrnYa3o_BX204ccrlii0fUcjLr_ncT3xrRy8dVRHBWG2O_qJcH-TRblVCg9OMdsm87bTsHIxmev2J3H418Rtke-6VVTgNmiGJvQufmGORjpLRcDHWDPax0I7drSPc2w&quot;</span><span class="p">}]}</span>
+</span></code></pre></div>
+<p><em>将公钥转换为合适的格式</em></p>
+<ul>
+<li>新建RSA秘钥，将刚刚获得的服务器上的公钥复制上去</li>
+</ul>
+<p><img alt="" src="2026-08-09-15-03-52.png" /></p>
+<ul>
+<li>将刚刚新建的RSA公钥保存为PEM格式</li>
+</ul>
+<p><img alt="" src="2026-08-09-15-05-09.png" /></p>
+<ul>
+<li>将保存的PEM格式公钥进行base64编码</li>
+</ul>
+<p><img alt="" src="2026-08-09-15-15-02.png" /></p>
+<p><em>新建对称秘钥将k值替换为合适格式的公钥</em></p>
+<p><img alt="" src="2026-08-09-15-09-23.png" /></p>
+<p><em>伪造jwt算法，使用新建的对称密钥算法签名</em></p>
+<h2 id="jwt_8">如何防止JWT攻击<a class="headerlink" href="#jwt_8" title="Permanent link">&para;</a></h2>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 21, 2026 20:06:57 UTC"><span class="timeago" datetime="2026-09-21T20:06:57+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 21, 2026 20:06:57 UTC">2026-09-21</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 21, 2026 20:06:57 UTC"><span class="timeago" datetime="2026-09-21T20:06:57+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 21, 2026 20:06:57 UTC">2026-09-21</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 青春沙盒 - 记录技术，也记录青春
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/ethicalpaws" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://twitter.com/ethicalpaws" target="_blank" rel="noopener" title="Twitter" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.tracking", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../js/timeago.min.js"></script>
+      
+        <script src="../../../../../js/timeago_mkdocs_material.js"></script>
+      
+        <script src="../../../../../assets/js/extra.js"></script>
+      
+        <script src="../../../../../assets/js/encryption.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../../../../../asserts/js/hacker-theme.js"></script>
+      
+    
+  </body>
+</html>

