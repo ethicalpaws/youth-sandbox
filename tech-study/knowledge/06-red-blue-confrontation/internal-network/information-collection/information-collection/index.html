@@ -3093,13 +3093,41 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#whoami-all" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        whoami /all:用户身份信息
+        本地工作组信息收集
       
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        域内信息收集
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="域内信息收集">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        域内基本信息收集
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3192,10 +3220,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         查看可利用进程或访问端口
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        
       
     </span>
   </a>
@@ -3223,7 +3262,256 @@
 
 
 <h1 id="_1">信息收集<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<h2 id="whoami-all">whoami /all:用户身份信息<a class="headerlink" href="#whoami-all" title="Permanent link">&para;</a></h2>
+<h2 id="_2">本地工作组信息收集<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><strong>查询操作系统和版本信息</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>systeminfo | findstr /B /C:&quot;OS Name&quot; /C:&quot;OS Version&quot;
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>systeminfo| findstr /B /C:&quot;OS 名称&quot; /C:&quot;OS 版本&quot;
+</span></code></pre></div>
+    <img alt="" src="Cobalt-Strike/2026-09-26-14-43-32.png" /></p>
+</li>
+<li>
+<p><strong>查看系统体系结构</strong>
+    <code>`
+    echo %PROCESSOR_ARCHITECTURE%</code>
+    <img alt="" src="Cobalt-Strike/2026-09-26-14-45-06.png" /></p>
+</li>
+<li>
+<p><strong>查看安装的软件及版本</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>wmic product get name,version
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>powershell &quot;Get-WmiObject -class win32_product | Select-Object -Property name,version&quot;
+</span></code></pre></div></p>
+<p><img alt="" src="Cobalt-Strike/2026-09-26-14-46-58.png" /></p>
+</li>
+<li>
+<p><strong>本机正在运行的服务</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>wmic service list brief
+</span></code></pre></div>
+    <img alt="" src="Cobalt-Strike/2026-09-26-14-48-52.png" /></p>
+</li>
+<li>
+<p><strong>查看进程</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>tasklist
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>wmic process list brief
+</span></code></pre></div>
+    <img alt="" src="Cobalt-Strike/2026-09-26-14-49-57.png" />
+    <img alt="" src="Cobalt-Strike/2026-09-26-14-50-17.png" /></p>
+</li>
+<li>
+<p><strong>电脑启动程序</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>wmic startup get command,caption     
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-14-53-25.png" /></p>
+</li>
+<li>
+<p><strong>查看计划任务</strong>（如果出现无法加载列资源 输入：chcp 437）
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>schtasks /query /fo LIST /v
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-14-57-02.png" /></p>
+</li>
+<li>
+<p><strong>电脑开机时间</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>net statistics workstation
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-14-58-14.png" /></p>
+</li>
+<li>
+<p><strong>用户列表信息</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>net user
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>wmic useraccount get name ,SID
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-14-59-48.png" /></p>
+</li>
+<li>
+<p><strong>当前会话列表</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>net session
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-15-02-12.png" /></p>
+</li>
+<li>
+<p><strong>查询端口信息</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>netstat -ano
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-15-03-32.png" /></p>
+</li>
+<li>
+<p><strong>查询补丁信息</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>systeminfo
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>wmic qfe get Caption,Description,HotFixID,InstalledOn
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-15-05-37.png" />
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-15-04-53.png" /></p>
+</li>
+<li>
+<p><strong>查询杀软等信息</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>wmic /node:localhost /namespace:\\root\securitycenter2 path antivirusproduct get displayname /format:list
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>查询共享列表</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>net share
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>wmic share get name,path,status
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-15-09-55.png" /></p>
+</li>
+<li>
+<p><strong>查询路由信息</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>route print
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-15-11-08.png" /></p>
+</li>
+<li>
+<p><strong>查询防火墙是否开启</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>netsh firewall show state
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-15-12-43.png" /></p>
+</li>
+<li>
+<p><strong>关闭防火墙强</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a># Windows server 2003:     
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>netsh firewall set opmode disable
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>#Windows server 2003之后: 
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>netsh firewall set opmode disable 
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a># 或者 
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>netsh advfirewall set allprofiles state off
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-15-17-36.png" /></p>
+</li>
+<li>
+<p><strong>防火墙其他的命令</strong></p>
+</li>
+<li>
+<p>2003及之前的版本,允许指定的程序进行全部的连接
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>netsh firewall add allowedprogram c:\nc.exe &quot;allownc&quot; enable
+</span></code></pre></div></p>
+</li>
+<li>2003之后的版本，允许指定的程序进行全部的连接
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>netsh advfirewall firewall add rule name=&quot;pass nc&quot;dir=in action=allow program=&quot;C:\nc.exe&quot;
+</span></code></pre></div></li>
+<li>允许指定程序退出,命令如下
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>netsh advfirewall firewall add rule name=&quot;Allownc&quot; dir=out action=allow program=&quot;C: \nc.exe&quot;
+</span></code></pre></div></li>
+<li>
+<p>允许3389端口放行,命令如下
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>netsh advfirewall firewall add rule name=&quot;RemoteDesktop&quot; protocol=TCP dir=in localport=3389 action=allow
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>开启3389</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal&quot; &quot;Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /f
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-15-24-05.png" />
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-15-29-37.png" /></p>
+</li>
+<li>
+<p>关闭3389
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal&quot; &quot;Server /v fDenyTSConnections /t REG_DWORD /d  11111111 /f 
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-15-28-26.png" />
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-15-28-58.png" /></p>
+</li>
+<li>
+<p><strong>收集本机的WIFI密码信息</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>for /f &quot;skip=9 tokens=1,2 delims=:&quot; %i in (&#39;netsh wlan show profiles&#39;) do @echo %j | findstr -i -v echo | netsh wlan show profiles %j key=clear
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-15-32-37.png" /></p>
+</li>
+<li>
+<p><strong>查询RDP端口</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>reg query &quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp&quot; /V PortNumber
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-15-34-37.png" /></p>
+</li>
+<li>
+<p><strong>查询当前保存的凭据</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>cmdkey /l 
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-15-35-49.png" /></p>
+</li>
+<li>
+<p><strong>arp信息</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>arp -a
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-15-36-29.png" /></p>
+</li>
+<li>
+<p><strong>查询最近打开的文件</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>dir %APPDATA%\Microsoft\Windows\Recent
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-15-37-37.png" /></p>
+</li>
+<li>
+<p><strong>查询本地工作组</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>net localgroup
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-15-39-02.png" /></p>
+</li>
+<li>
+<p><strong>查询管理员组员信息</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>net localgroup administrators
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-15-40-17.png" /></p>
+</li>
+<li>
+<p><strong>查询RDP凭据</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>dir /a %userprofile%\AppData\Local\Microsoft\Credentials\*
+</span></code></pre></div>
+    <img alt="" src="../../../c2-framework/Cobalt-Strike/2026-09-26-15-41-53.png" /></p>
+</li>
+</ul>
+<h2 id="_3">域内信息收集<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="_4">域内基本信息收集<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>目标：搞清楚当前所处的是什么域？域控是谁？当前机器是什么角色？</p>
+<p>常用命令（在 CMD 或 PowerShell 中）：</p>
+<p>systeminfo：查看系统版本、补丁情况（判断是否存在提权漏洞）。</p>
+<p>whoami /all：查看当前用户权限、所属组（判断是普通用户还是管理员）。</p>
+<p>ipconfig /all：查看 DNS 服务器（DNS 通常指向域控）。</p>
+<p>net config workstation：查看当前登录的域、计算机名。</p>
+<p>net time /domain：非常实用，可以直接返回域控的时间，从而暴露域控的 IP 或主机名。</p>
+<p>渗透意义：这一步是为了确认你“在谁的家里”。</p>
+<ol>
+<li>定位域控的位置（找“大脑”）
+目标：找到域控（DC）的 IP 地址和主机名。域控是整个内网的“大脑”，拿下它就能控制整个域。</li>
+</ol>
+<p>常用方法：</p>
+<p>DNS 查询：nslookup -type=SRV _ldap._tcp.dc._msdcs.域名。这是最标准的方法，DNS 服务器会返回域控的 SRV 记录。</p>
+<p>NetBIOS 查询：nltest /dsgetdc:域名。</p>
+<p>端口扫描：扫描内网网段，开放 88（Kerberos）、389（LDAP）、445（SMB）、53（DNS） 端口的主机大概率是域控。</p>
+<p>环境变量：echo %LOGONSERVER%，查看当前机器登录的服务器。</p>
+<p>渗透意义：所有的高级攻击（如 DCSync、黄金票据）都需要你明确知道域控的 IP。</p>
+<ol>
+<li>获取域内用户（找“猎物”）
+目标：拿到域内所有用户的列表，为后续的密码喷洒（Password Spraying）或 Kerberoasting 做准备。</li>
+</ol>
+<p>常用命令（在域内机器上）：</p>
+<p>net user /domain：列出域内所有用户。</p>
+<p>net group "Domain Admins" /domain：重点，列出域管理员组的成员。</p>
+<p>net group "Domain Users" /domain：列出所有域用户。</p>
+<p>PowerShell 脚本：使用 PowerView.ps1 或 ADModule，可以更精细地查询用户属性（如最后登录时间、密码过期时间）。</p>
+<p>渗透意义：拿到用户列表后，就可以进行密码喷洒（用同一个弱密码去试所有用户），或者寻找有 SPN 的服务账户进行 Kerberoasting（参考你上一张图的 TGS-REP 攻击）。</p>
+<ol>
+<li>定位域管理员（找“终极BOSS”）
+目标：找出域管理员（Domain Admins）和企业管理员（Enterprise Admins）是谁，以及他们当前登录在哪台机器上。</li>
+</ol>
+<p>常用方法：</p>
+<p>命令行：net group "Domain Admins" /domain。</p>
+<p>PowerView：Get-NetGroupMember -GroupName "Domain Admins"。</p>
+<p>BloodHound：这是内网渗透的“神器”。通过收集域内的 ACL（访问控制列表）关系，BloodHound 可以画出攻击路径图，告诉你“谁有权访问谁”。比如，如果你控制的普通用户对某台机器有 AdminTo 权限，BloodHound 会直接标红。</p>
+<p>查找登录会话：net session 或 quser 可以查看当前机器上有哪些用户登录。如果域管登录了你所在的机器，你就能通过 Mimikatz 抓取他的凭据。</p>
+<p>渗透意义：“域管在哪里，攻击就打向哪里。” 拿下域管是内网渗透的终极目标。</p>
+<ol>
+<li>敏感数据定位（找“宝藏”）
+目标：在文件服务器、数据库、Web 配置文件中寻找明文密码、连接字符串、SSH 密钥、VPN 凭证等。</li>
+</ol>
+<p>常用方法：</p>
+<p>SMB 共享扫描：使用 SMBMap 或 CrackMapExec 扫描内网所有机器的共享目录。很多运维人员会把密码写在 IT共享、运维文档 里的 Excel 或 txt 文件中。</p>
+<p>Web 目录：在 Web 服务器上寻找 web.config、.env、application.properties 等配置文件。</p>
+<p>注册表：查找 HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon 下的 DefaultUserName 和 DefaultPassword（如果配置了自动登录）。</p>
+<p>组策略偏好（GPP）：在 SYSVOL 共享中查找 Groups.xml 文件。虽然微软已经打了补丁，但很多老旧内网依然存在，里面包含加密的本地管理员密码（AES 密钥是公开的）。</p>
+<p>渗透意义：这些“宝藏”往往能让你直接拿到高权限账户，免去复杂的提权过程。</p>
 <p><img alt="" src="2026-08-15-11-41-37.png" /></p>
 <p><strong>用户名和SID</strong></p>
 <p><code>用户名            SID                                          
@@ -3370,8 +3658,8 @@ god\administrator S-1-5-21-2952760202-1353902439-2381784089-500</code></p>
 <h2 id="ipconfig-all">ipconfig /all:网络配置信息<a class="headerlink" href="#ipconfig-all" title="Permanent link">&para;</a></h2>
 <p><strong>主机名和域名</strong></p>
 <p><img alt="" src="2026-08-15-12-27-37.png" /></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>主机名: stu1
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>DNS后缀: god.org
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>主机名: stu1
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>DNS后缀: god.org
 </span></code></pre></div>
 <p><strong>网络接口</strong></p>
 <p><img alt="" src="2026-08-15-12-27-00.png" /></p>
@@ -3408,15 +3696,15 @@ god\administrator S-1-5-21-2952760202-1353902439-2381784089-500</code></p>
 </blockquote>
 <p><strong>域控的 SRV 记录</strong></p>
 <p><img alt="" src="2026-08-15-12-41-13.png" /></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>记录名称: _ldap._tcp.Default-First-Site-Name._sites.god.org
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>记录类型: 33                        ← SRV 记录（服务定位记录）
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>SRV 记录  . . . . . . : owa.god.org
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>                        0          ← 优先级
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>                        100        ← 权重
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>                        389        ← 端口（LDAP 服务）
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>记录名称: owa.god.org
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>记录类型: 1                         ← A 记录
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>A (主机)记录: 192.168.52.138        ←  域控 IP！
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>记录名称: _ldap._tcp.Default-First-Site-Name._sites.god.org
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>记录类型: 33                        ← SRV 记录（服务定位记录）
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>SRV 记录  . . . . . . : owa.god.org
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>                        0          ← 优先级
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>                        100        ← 权重
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>                        389        ← 端口（LDAP 服务）
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>记录名称: owa.god.org
+</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>记录类型: 1                         ← A 记录
+</span><span id="__span-31-9"><a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>A (主机)记录: 192.168.52.138        ←  域控 IP！
 </span></code></pre></div>
 <p>如何判断这是域控？
 原理：域控制器必须向 DNS 注册 LDAP 服务的 SRV 记录，以便客户端（如本机）通过 ipconfig /displaydns 查询时能找到它。记录明确将 LDAP 服务指向了 owa.god.org。</p>
@@ -3429,18 +3717,19 @@ god\administrator S-1-5-21-2952760202-1353902439-2381784089-500</code></p>
 <h2 id="net-user-domain">net user /domain:查看域用户<a class="headerlink" href="#net-user-domain" title="Permanent link">&para;</a></h2>
 <h2 id="net-localgroup-administrators">net localgroup administrators:查看本地管理员组<a class="headerlink" href="#net-localgroup-administrators" title="Permanent link">&para;</a></h2>
 <p><img alt="" src="2026-08-15-16-35-28.png" />
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>## net view:查看局域网内其他主机名
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>## net view /domain:查看有几个域
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>## net group &quot;domain admins&quot; /domain:查看域管理员的名字
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>## net group &quot;domain computers&quot; /domain:查看域中的其他主机名
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>## net group &quot;domain controllers&quot; /domain:查看域控制器（可能有多台）
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>## net share ipc$:开启ipc共享
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>## net share c$:开启c盘共享
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>## net view:查看局域网内其他主机名
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>## net view /domain:查看有几个域
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>## net group &quot;domain admins&quot; /domain:查看域管理员的名字
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>## net group &quot;domain computers&quot; /domain:查看域中的其他主机名
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>## net group &quot;domain controllers&quot; /domain:查看域控制器（可能有多台）
+</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a>## net share ipc$:开启ipc共享
+</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a>## net share c$:开启c盘共享
 </span></code></pre></div></p>
-<h2 id="_2">查看可利用进程或访问端口<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h2 id="_5">查看可利用进程或访问端口<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <p><strong>netstat -ano | find "3389"</strong></p>
+<h2 id="_6"><a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
 
 
 

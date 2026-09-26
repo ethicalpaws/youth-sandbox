@@ -3211,7 +3211,52 @@
   <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        树
+        信任关系解读
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="信任关系解读">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        单向信任
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        双向信任
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内部信任
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        外部信任
       
     </span>
   </a>
@@ -3222,9 +3267,14 @@
     </nav>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#_10" class="md-nav__link">
     <span class="md-ellipsis">
       
         常用命令
@@ -3235,7 +3285,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_11" class="md-nav__link">
     <span class="md-ellipsis">
       
         小结
@@ -3486,8 +3536,22 @@
   - 管理独立：各地 IT 团队需要互不干扰地管理本地资源。
   - 避免单一故障点：一个域出问题（如误删 OU），不会影响整个公司。
 <strong>解决方案</strong>：将网络拆分成多个域，形成树和森林。</p>
-<h3 id="_5">树<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
-<h2 id="_6">常用命令<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h3 id="_5">信任关系解读<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>信任关系分为可传递的和不可传递的
+<img alt="" src="2026-09-24-15-57-30.png" /></p>
+</blockquote>
+<h4 id="_6">单向信任<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<p><img alt="" src="2026-09-24-15-59-01.png" /></p>
+<h4 id="_7">双向信任<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
+<p>林(域树)中的所有域信任都是双向的、可传递的信任。创建新的子域时，系统将在新的子域和父域之间自动创建双向可传递信任。在双向信任中，域A信任域B，并且域B信任域A。这表示可以在两个域之间双向传递身份验证请求。</p>
+<h4 id="_8">内部信任<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
+<p>内部信任是指在同一个林中域之间的信任关系，这种信任关系是可传递的
+<img alt="" src="2026-09-24-16-03-08.png" /></p>
+<h4 id="_9">外部信任<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h4>
+<p>内部信任是指在不同林之间域的信任关系，这种信任关系是单向或双向不可传递的
+<img alt="" src="2026-09-24-16-03-46.png" /></p>
+<h2 id="_10">常用命令<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
 <ol>
 <li>
 <p><code>whoami</code>
@@ -3523,7 +3587,7 @@
 7. <code>net group "Domain Controllers" /domain</code>
    查看域内所有域控制器
    <img alt="" src="2026-06-05-11-30-08.png" /> </p>
-<h2 id="_7">小结<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<h2 id="_11">小结<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
 
 
 

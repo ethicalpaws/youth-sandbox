@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="SQL注入原理、联合查询、报错注入、布尔盲注、时间盲注、堆叠注入">
+        <meta name="description" content="SQL 注入漏洞的原理与危害、漏洞检测方法（可控位置/多场景/探测手法）、注入类型详解（联合查询/布尔盲注/报错注入/时间盲注/堆叠注入）、多数据库 payload 差异，以及预编译参数化等防御方案">
       
       
         <meta name="author" content="ethicalpaws">
@@ -25,7 +25,7 @@
     
     
       
-        <title>SQL注入漏洞 - 笔记概述 - 青春沙盒</title>
+        <title>SQL注入基础 - 笔记概述 - 青春沙盒</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              SQL注入漏洞 - 笔记概述
+              SQL注入基础 - 笔记概述
             
           </span>
         </div>
@@ -3184,25 +3184,22 @@
   
 
 
-<h1 id="sql-">SQL注入漏洞 - 笔记概述<a class="headerlink" href="#sql-" title="Permanent link">&para;</a></h1>
+<h1 id="sql-">SQL注入基础 - 笔记概述<a class="headerlink" href="#sql-" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p>SQL注入原理、联合查询、报错注入、布尔盲注、时间盲注、堆叠注入</p>
+<p>SQL 注入漏洞的原理与危害、漏洞检测方法（可控位置/多场景/探测手法）、注入类型详解（联合查询/布尔盲注/报错注入/时间盲注/堆叠注入）、多数据库 payload 差异，以及预编译参数化等防御方案</p>
 </blockquote>
 <h2 id="_1">📊 统计<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>完成情况</strong>：⬜</li>
-<li><strong>完成日期</strong>：None</li>
+<li><strong>完成情况</strong>：✅</li>
+<li><strong>完成日期</strong>：2026-09-22</li>
 </ul>
 <h2 id="_2">📖 笔记目录<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ol>
 <li><a href="sqli/#什么是sql注入">什么是SQL注入</a></li>
 <li><a href="sqli/#sql注入的影响">SQL注入的影响</a></li>
-<li><a href="sqli/#检测sql注入漏洞">检测SQL注入漏洞</a></li>
-<li><a href="sqli/#sql注入示例">SQL注入示例</a></li>
-<li><a href="sqli/#检查数据库">检查数据库</a></li>
+<li><a href="sqli/#如何检测sql注入漏洞">如何检测SQL注入漏洞</a></li>
 <li><a href="sqli/#注入类型">注入类型</a></li>
 <li><a href="sqli/#如何防止sql注入">如何防止SQL注入</a></li>
-<li><a href="sqli/#sql注入cheat-sheet">SQL注入cheat sheet</a></li>
 </ol>
 <h2 id="_3">🔗 关联实战<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <h3 id="ctf">CTF题目<a class="headerlink" href="#ctf" title="Permanent link">&para;</a></h3>
@@ -3212,7 +3209,7 @@
 <h3 id="cve">CVE漏洞<a class="headerlink" href="#cve" title="Permanent link">&para;</a></h3>
 <p>暂无</p>
 <hr />
-<p>*自动更新：2026-09-22 05:27:30</p>
+<p>*自动更新：2026-09-27 01:20:49</p>
 
 
 

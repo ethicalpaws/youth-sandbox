@@ -3127,10 +3127,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#windows-10" class="md-nav__link">
+  <a href="#web01windows-10" class="md-nav__link">
     <span class="md-ellipsis">
       
-        加入域成员（Windows 10）
+        加入域成员web01（Windows 10）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#web02windows-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        加入域成员web02（Windows 10）同上
       
     </span>
   </a>
@@ -3158,17 +3169,6 @@
     <span class="md-ellipsis">
       
         网络拓扑
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        快照备份
       
     </span>
   </a>
@@ -3230,12 +3230,19 @@
 <td><code>192.168.162.10</code></td>
 </tr>
 <tr>
-<td>域成员IP</td>
+<td>域成员1IP</td>
 <td><code>192.168.162.20</code></td>
+</tr>
+<tr>
+<td>域成员2IP</td>
+<td><code>192.168.162.30</code></td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
 </tr>
 </tbody>
 </table>
-<hr />
 <h2 id="_3">搭建步骤<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <h3 id="windows-server-2019">安装域控（Windows Server 2019）<a class="headerlink" href="#windows-server-2019" title="Permanent link">&para;</a></h3>
 <ol>
@@ -3249,6 +3256,9 @@
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a> 备用DNS：   8.8.8.8
 </span></code></pre></div>
    <img alt="" src="2026-06-02-19-01-05.png" /> </li>
+<li>改计算机名称为DC01（为了方便好记）
+   <img alt="" src="2026-09-25-00-40-33.png" />
+   改完后重启</li>
 <li>安装Active Directory域服务</li>
 <li>打开服务器管理器</li>
 <li>点击右上角"管理" → "添加角色和功能"</li>
@@ -3272,11 +3282,10 @@
    <img alt="" src="2026-06-02-20-09-22.png" /></li>
 <li>创建域管理员 
    <img alt="" src="2026-06-02-20-39-50.png" /> </li>
-<li>创建测试域用户
-   <img alt="" src="2026-06-02-20-38-50.png" /> 
-   <img alt="" src="2026-06-02-20-41-18.png" /></li>
+<li>创建测试域用户testuser
+   <img alt="" src="2026-09-25-01-04-47.png" /></li>
 </ol>
-<h3 id="windows-10">加入域成员（Windows 10）<a class="headerlink" href="#windows-10" title="Permanent link">&para;</a></h3>
+<h3 id="web01windows-10">加入域成员web01（Windows 10）<a class="headerlink" href="#web01windows-10" title="Permanent link">&para;</a></h3>
 <ol>
 <li>安装Windows 10</li>
 <li>配置DNS
@@ -3289,7 +3298,7 @@
    手动配置ip<code>192.168.162.20</code>
    <img alt="" src="2026-06-04-05-13-29.png" /></li>
 <li>加入域
-   <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a> 右键&quot;此电脑&quot; → 属性 → 更改设置
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a> 右键&quot;此电脑&quot; → 属性 → 高级系统设置
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a> → 计算机名选项卡 → 更改
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a> → 隶属于：域 → 输入 lab.com
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a> → 输入域管理员凭证(用 lab\Administrator 和密码认证)
@@ -3299,26 +3308,33 @@
    使用域账户testuser登录
    <img alt="" src="2026-06-02-22-34-50.png" /></li>
 </ol>
+<h3 id="web02windows-10">加入域成员web02（Windows 10）同上<a class="headerlink" href="#web02windows-10" title="Permanent link">&para;</a></h3>
+<p>DNS&amp;&amp;IP
+   <img alt="" src="2026-09-25-00-56-54.png" />
+   计算机改名&amp;&amp;加入域
+   <img alt="" src="2026-09-25-01-00-06.png" />
+   使用域账户zs登录
+   <img alt="" src="2026-09-25-01-11-20.png" /></p>
 <h3 id="_4">验证环境<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
 <ol>
 <li>域成员能否解析域控<code>ping dc01.lab.com</code>【可以】
-   <img alt="" src="2026-06-02-22-08-19.png" /></li>
+   <img alt="" src="2026-06-02-22-08-19.png" />
+   <img alt="" src="2026-09-25-01-10-35.png" /></li>
 <li>能否用域用户登录 
    登录域用户testuser成功
-   <img alt="" src="2026-06-02-21-57-01.png" /> </li>
+   <img alt="" src="2026-06-02-21-57-01.png" /> 
+   登录域用户zs成功
+   <img alt="" src="2026-09-25-01-11-13.png" /></li>
 <li>查看当前域为lab
-   <img alt="" src="2026-06-02-22-37-16.png" /> </li>
+   <img alt="" src="2026-06-02-22-37-16.png" /> 
+   <img alt="" src="2026-09-25-01-11-48.png" /></li>
 <li>域控上查看域成员 
-   <img alt="" src="2026-06-02-22-36-01.png" /></li>
+   <img alt="" src="2026-06-02-22-36-01.png" />
+   <img alt="" src="2026-09-25-01-12-19.png" /></li>
 </ol>
 <h2 id="_5">网络拓扑<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
-<p><img alt="" src="2026-06-04-12-33-29.png" />
-<a href="../small-net-topology.drawio">最小域环境网络拓扑图</a></p>
-<h2 id="_6">快照备份<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
-<p>DC01
-<img alt="" src="2026-06-02-22-40-46.png" />
-web01
-<img alt="" src="2026-06-02-22-39-16.png" /></p>
+<p><img alt="域环境网络拓扑图" src="2026-09-25-01-12-52.png" />
+<a href="../small-net-topology.drawio">域环境网络拓扑图</a></p>
 
 
 
