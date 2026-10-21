@@ -3476,42 +3476,38 @@ async function loadRolePanel() {
             ? auto.skill_meta
             : Object.keys(skills).map(key => ({ key, name: key, icon: '🔹', weight: 0, max: 100 }));
 
-        // 头衔映射
-        function getTitleByLevel(level) {
-            if (level <= 10) return "安全萌新";
-            if (level <= 15) return "脚本小子";
-            if (level <= 20) return "漏洞猎人";
-            if (level <= 25) return "安全专家";
-            if (level <= 30) return "攻防大师";
-            if (level <= 35) return "红队精英";
-            if (level <= 40) return "安全研究员";
-            if (level <= 45) return "守护者";
-            return "传奇黑客";
-        }
-
-        // 头衔进阶路线：人工头衔作为当前起点，其后接等级头衔
+        // 头衔进阶路线：单一晋升轴，等级达到节点即获得对应头衔
         const levelTitles = [
-            { level: 10, name: "安全萌新" },
-            { level: 15, name: "脚本小子" },
-            { level: 20, name: "漏洞猎人" },
-            { level: 25, name: "安全专家" },
-            { level: 30, name: "攻防大师" },
-            { level: 35, name: "红队精英" },
+            { level: 1, name: "安全学徒" },
+            { level: 5, name: "脚本小子" },
+            { level: 20, name: "漏洞猎手" },
+            { level: 25, name: "渗透测试员" },
+            { level: 30, name: "红队工程师" },
+            { level: 35, name: "攻防专家" },
             { level: 40, name: "安全研究员" },
-            { level: 45, name: "守护者" },
+            { level: 45, name: "安全架构师" },
             { level: 50, name: "传奇黑客" }
         ];
+
+        // 按等级取头衔；未达到首个节点时使用起始头衔
+        function getTitleByLevel(level) {
+            let title = levelTitles[0].name;
+            for (const item of levelTitles) {
+                if (level >= item.level) title = item.name;
+            }
+            return title;
+        }
         const titleRoad = [];
         if (manual.title && !levelTitles.some(item => item.name === manual.title)) {
             titleRoad.push({ level: auto.level, name: manual.title });
         }
         titleRoad.push(...levelTitles);
 
-        let currentIndex = titleRoad.length - 1;
+        // 当前头衔 = 已达到的最后一个节点
+        let currentIndex = 0;
         for (let i = 0; i < titleRoad.length; i++) {
-            if (auto.level <= titleRoad[i].level) {
+            if (titleRoad[i].level <= auto.level) {
                 currentIndex = i;
-                break;
             }
         }
 
@@ -3529,8 +3525,10 @@ async function loadRolePanel() {
             0
         ));
 
-        // manual.title 是人工设定的头衔，等级头衔仅作为兜底
-        const currentTitle = manual.title || getTitleByLevel(auto.level);
+        // 当前头衔跟随路线图；manual.title 仅在没有可用节点时兜底
+        const currentTitle = titleRoad[currentIndex]?.name
+            || manual.title
+            || getTitleByLevel(auto.level);
         const expPercent = (auto.current_exp / auto.next_exp * 100).toFixed(1);
 
         // 属性面板 - 由脚本按 config.yaml 权重计算
