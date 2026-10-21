@@ -758,7 +758,7 @@
     
   
   
-    <span class="md-status md-status--⬜"></span>
+    <span class="md-status md-status--🔄"></span>
   
 
   
@@ -3694,6 +3694,7 @@ async function loadRolePanel() {
             `📝 笔记 ${stats.notes_count || 0}`,
             `🚩 CTF ${stats.ctf_count || 0}`,
             `🐞 CVE ${stats.cve_count || 0}`,
+            `🎯 Lab ${stats.lab_count || 0}`,
             daysSinceJoin ? `📅 第 ${daysSinceJoin} 天` : ''
         ].filter(Boolean);
 

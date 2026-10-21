@@ -9,14 +9,16 @@
   },
   "auto": {
     "level": 7,
-    "current_exp": 2,
+    "current_exp": 224.5,
     "next_exp": 595,
-    "total_exp": 1985,
+    "total_exp": 2207.5,
     "stats": {
-      "notes_count": 155,
-      "ctf_count": 5,
+      "notes_count": 160,
+      "knowledge_completed": 111,
+      "knowledge_in_progress": 3,
+      "ctf_count": 4,
       "cve_count": 7,
-      "src_count": 0,
+      "lab_count": 4,
       "weekly_scores": [
         95,
         93,
@@ -24,9 +26,9 @@
       ]
     },
     "skills": {
-      "web_security": 75.0,
-      "web_advanced": 0.0,
-      "java_security": 75.0,
+      "web_security": 77.0,
+      "web_advanced": 15.0,
+      "java_security": 77.0,
       "server_side": 10.0,
       "internal_network": 61.1,
       "lateral_movement": 20.0,
@@ -40,8 +42,9 @@
       "cryptography": 16.0,
       "ctf_ability": 8.0,
       "cve_analysis": 14.0,
+      "lab": 20.0,
       "code_review": 6.0,
-      "programming": 24.4,
+      "programming": 7.0,
       "bypass_waf": 3.0
     },
     "skill_meta": [
@@ -63,7 +66,7 @@
         "key": "java_security",
         "name": "Java安全",
         "icon": "☕",
-        "weight": 150,
+        "weight": 100,
         "max": 100
       },
       {
@@ -77,7 +80,7 @@
         "key": "internal_network",
         "name": "内网渗透",
         "icon": "🕸️",
-        "weight": 100,
+        "weight": 150,
         "max": 100
       },
       {
@@ -147,14 +150,21 @@
         "key": "ctf_ability",
         "name": "CTF能力",
         "icon": "🏆",
-        "weight": 70,
+        "weight": 120,
         "max": 100
       },
       {
         "key": "cve_analysis",
         "name": "CVE分析",
         "icon": "🐞",
-        "weight": 80,
+        "weight": 120,
+        "max": 100
+      },
+      {
+        "key": "lab",
+        "name": "靶场实战",
+        "icon": "🎯",
+        "weight": 120,
         "max": 100
       },
       {
@@ -166,7 +176,7 @@
       },
       {
         "key": "programming",
-        "name": "编程能力",
+        "name": "脚本能力",
         "icon": "💻",
         "weight": 60,
         "max": 100
@@ -182,39 +192,34 @@
     "attributes": [
       {
         "name": "🎯 信息收集",
-        "value": 57.0,
+        "value": 42.8,
         "max": 100.0
       },
       {
         "name": "🔓 漏洞挖掘",
-        "value": 9.8,
-        "max": 100.0
-      },
-      {
-        "name": "💣 利用开发",
-        "value": 48.9,
+        "value": 35.1,
         "max": 100.0
       },
       {
         "name": "🛡️ 绕过技巧",
-        "value": 18.3,
+        "value": 14.9,
         "max": 100.0
       },
       {
         "name": "⚔️ 攻防对抗",
-        "value": 28.8,
+        "value": 27.5,
         "max": 100.0
       }
     ],
     "radar": [
       {
         "name": "Web安全",
-        "value": 75.0,
+        "value": 92.0,
         "max": 100.0
       },
       {
         "name": "Java安全",
-        "value": 75.0,
+        "value": 77.0,
         "max": 100.0
       },
       {
@@ -224,7 +229,7 @@
       },
       {
         "name": "内网渗透",
-        "value": 61.1,
+        "value": 81.1,
         "max": 100.0
       },
       {
@@ -238,7 +243,7 @@
         "max": 100.0
       },
       {
-        "name": "HVV蓝队",
+        "name": "蓝队与应急",
         "value": 40.0,
         "max": 100.0
       },
@@ -248,7 +253,7 @@
         "max": 100.0
       },
       {
-        "name": "网络流量",
+        "name": "网络与协议",
         "value": 66.0,
         "max": 100.0
       },
@@ -430,11 +435,11 @@
           ]
         },
         {
-          "total": 1,
-          "max_daily": 1,
+          "total": 0,
+          "max_daily": 0,
           "days": [
             0,
-            1,
+            0,
             0,
             0,
             0,
@@ -560,15 +565,15 @@
           ]
         },
         {
-          "total": 12,
-          "max_daily": 4,
+          "total": 18,
+          "max_daily": 10,
           "days": [
             0,
             1,
             0,
             4,
             3,
-            4,
+            10,
             0
           ]
         },
@@ -937,12 +942,11 @@
           ]
         }
       ],
-      "total_notes": 155,
-      "active_days": 47,
+      "total_notes": 160,
+      "active_days": 46,
       "max_contrib": 35
     },
-    "last_update": "2026-10-22 05:13:33",
-    "first_bug_awarded": true,
+    "last_update": "2026-10-22 06:05:02",
     "start_date": "2026-05-27"
   }
 }

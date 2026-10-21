@@ -6,13 +6,13 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="安全学习笔记 × 青春记录 | 一个可以安全试错的环境">
+        <meta name="description" content="输入十六进制密钥和数据，计算 HMAC-MD5 值，并尝试提取 NTLM TargetInfo 中可读信息的 Python 脚本">
       
       
         <meta name="author" content="ethicalpaws">
       
       
-        <link rel="canonical" href="https://ethicalpaws.github.io/youth-sandbox/tech-study/practice/lab/ulab/internal-network/pentest-red2/pentest-red1/">
+        <link rel="canonical" href="https://ethicalpaws.github.io/youth-sandbox/tech-study/knowledge/01-foundation/programming/python/HMAC-md5/">
       
       
       
@@ -20,19 +20,19 @@
         
       
       
-      <link rel="icon" href="../../../../../../../assets/images/favicon.png">
+      <link rel="icon" href="../../../../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>渗透测试红队靶场1 - 青春沙盒</title>
+        <title>HMAC-MD5 算法计算脚本 - 青春沙盒</title>
       
     
     
-      <link rel="stylesheet" href="../../../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../../../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,13 +51,13 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../../../css/timeago.css">
+      <link rel="stylesheet" href="../../../../../../css/timeago.css">
     
-      <link rel="stylesheet" href="../../../../../../../asserts/css/home.css">
+      <link rel="stylesheet" href="../../../../../../asserts/css/home.css">
     
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <script>__md_scope=new URL("../../../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1" class="md-skip">
+        <a href="#hmac-md5" class="md-skip">
           Skip to content
         </a>
       
@@ -96,7 +96,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../../../../.." title="青春沙盒" class="md-header__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+    <a href="../../../../../.." title="青春沙盒" class="md-header__button md-logo" aria-label="青春沙盒" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              渗透测试红队靶场1
+              HMAC-MD5 算法计算脚本
             
           </span>
         </div>
@@ -234,7 +234,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../../.." class="md-tabs__link">
+      <a href="../../../../../.." class="md-tabs__link">
         
   
   
@@ -255,7 +255,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../../" class="md-tabs__link">
+        <a href="../../../../../" class="md-tabs__link">
           
   
   
@@ -277,7 +277,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../../../life/" class="md-tabs__link">
+        <a href="../../../../../../life/" class="md-tabs__link">
           
   
   
@@ -306,7 +306,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../../../bridge/novel/" class="md-tabs__link">
+        <a href="../../../../../../bridge/novel/" class="md-tabs__link">
           
   
   
@@ -331,7 +331,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../../../updates/" class="md-tabs__link">
+        <a href="../../../../../../updates/" class="md-tabs__link">
           
   
   
@@ -353,7 +353,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../../../spiritual/" class="md-tabs__link">
+        <a href="../../../../../../spiritual/" class="md-tabs__link">
           
   
   
@@ -375,7 +375,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../../../../about/" class="md-tabs__link">
+        <a href="../../../../../../about/" class="md-tabs__link">
           
   
   
@@ -395,7 +395,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../../../role-panel/" class="md-tabs__link">
+      <a href="../../../../../../role-panel/" class="md-tabs__link">
         
   
   
@@ -430,7 +430,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../../../../.." title="青春沙盒" class="md-nav__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+    <a href="../../../../../.." title="青春沙盒" class="md-nav__button md-logo" aria-label="青春沙盒" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
@@ -460,7 +460,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../.." class="md-nav__link">
+      <a href="../../../../../.." class="md-nav__link">
         
   
   
@@ -520,7 +520,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../../" class="md-nav__link ">
+            <a href="../../../../../" class="md-nav__link ">
               
   
   
@@ -605,7 +605,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../../knowledge/" class="md-nav__link ">
+            <a href="../../../../" class="md-nav__link ">
               
   
   
@@ -649,7 +649,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../knowledge/01-foundation/" class="md-nav__link">
+      <a href="../../../" class="md-nav__link">
         
   
   
@@ -677,7 +677,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../knowledge/02-network-protocol-security/" class="md-nav__link">
+      <a href="../../../../02-network-protocol-security/" class="md-nav__link">
         
   
   
@@ -705,7 +705,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../knowledge/03-web-basics/" class="md-nav__link">
+      <a href="../../../../03-web-basics/" class="md-nav__link">
         
   
   
@@ -740,7 +740,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../knowledge/04-web-advanced/" class="md-nav__link">
+      <a href="../../../../04-web-advanced/" class="md-nav__link">
         
   
   
@@ -757,7 +757,7 @@
     
   
   
-    <span class="md-status md-status--⬜"></span>
+    <span class="md-status md-status--🔄"></span>
   
 
   
@@ -775,7 +775,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../knowledge/05-java-security/" class="md-nav__link">
+      <a href="../../../../05-java-security/" class="md-nav__link">
         
   
   
@@ -803,7 +803,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../knowledge/06-red-blue-confrontation/" class="md-nav__link">
+      <a href="../../../../06-red-blue-confrontation/" class="md-nav__link">
         
   
   
@@ -831,7 +831,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../knowledge/07-server-side-component-security/" class="md-nav__link">
+      <a href="../../../../07-server-side-component-security/" class="md-nav__link">
         
   
   
@@ -859,7 +859,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../knowledge/08-software-system-security/" class="md-nav__link">
+      <a href="../../../../08-software-system-security/" class="md-nav__link">
         
   
   
@@ -926,7 +926,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../" class="md-nav__link ">
+            <a href="../../../../../practice/" class="md-nav__link ">
               
   
   
@@ -970,7 +970,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../ctf/" class="md-nav__link">
+      <a href="../../../../../practice/ctf/" class="md-nav__link">
         
   
   
@@ -998,7 +998,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../cve/" class="md-nav__link">
+      <a href="../../../../../practice/cve/" class="md-nav__link">
         
   
   
@@ -1026,7 +1026,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../" class="md-nav__link">
+      <a href="../../../../../practice/lab/" class="md-nav__link">
         
   
   
@@ -1087,7 +1087,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../../weekly-check/" class="md-nav__link ">
+            <a href="../../../../../weekly-check/" class="md-nav__link ">
               
   
   
@@ -1163,7 +1163,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../../arsenal/" class="md-nav__link ">
+            <a href="../../../../../arsenal/" class="md-nav__link ">
               
   
   
@@ -1207,7 +1207,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../arsenal/tools/" class="md-nav__link">
+      <a href="../../../../../arsenal/tools/" class="md-nav__link">
         
   
   
@@ -1235,7 +1235,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../arsenal/commands/" class="md-nav__link">
+      <a href="../../../../../arsenal/commands/" class="md-nav__link">
         
   
   
@@ -1317,7 +1317,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../../../life/" class="md-nav__link ">
+            <a href="../../../../../../life/" class="md-nav__link ">
               
   
   
@@ -1390,7 +1390,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../../../life/study-plan/" class="md-nav__link ">
+            <a href="../../../../../../life/study-plan/" class="md-nav__link ">
               
   
   
@@ -1434,7 +1434,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../../life/study-plan/summer-plan/" class="md-nav__link">
+      <a href="../../../../../../life/study-plan/summer-plan/" class="md-nav__link">
         
   
   
@@ -1469,7 +1469,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../../life/study-plan/week5/" class="md-nav__link">
+      <a href="../../../../../../life/study-plan/week5/" class="md-nav__link">
         
   
   
@@ -1512,7 +1512,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../../life/journal/" class="md-nav__link">
+      <a href="../../../../../../life/journal/" class="md-nav__link">
         
   
   
@@ -1540,7 +1540,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../../life/struggles/" class="md-nav__link">
+      <a href="../../../../../../life/struggles/" class="md-nav__link">
         
   
   
@@ -1593,7 +1593,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../../../life/wins/" class="md-nav__link ">
+            <a href="../../../../../../life/wins/" class="md-nav__link ">
               
   
   
@@ -1677,7 +1677,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../../../life/reflections/" class="md-nav__link ">
+            <a href="../../../../../../life/reflections/" class="md-nav__link ">
               
   
   
@@ -1721,7 +1721,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../../life/reflections/%E7%A0%B4%E9%A2%98%E4%B9%8B%E4%BD%99-%E4%BA%A6%E7%A0%B4%E5%BF%83%E9%9A%9C/" class="md-nav__link">
+      <a href="../../../../../../life/reflections/%E7%A0%B4%E9%A2%98%E4%B9%8B%E4%BD%99-%E4%BA%A6%E7%A0%B4%E5%BF%83%E9%9A%9C/" class="md-nav__link">
         
   
   
@@ -1749,7 +1749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../../life/reflections/%E7%B3%BB%E7%BB%9F%E5%86%85%E9%83%A8%EF%BC%8C%E6%B8%85%E9%86%92%E8%BE%B9%E7%BC%98/" class="md-nav__link">
+      <a href="../../../../../../life/reflections/%E7%B3%BB%E7%BB%9F%E5%86%85%E9%83%A8%EF%BC%8C%E6%B8%85%E9%86%92%E8%BE%B9%E7%BC%98/" class="md-nav__link">
         
   
   
@@ -1777,7 +1777,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../../life/reflections/%E6%A1%A5%E7%9A%84%E8%93%9D%E5%9B%BE%EF%BC%9A%E4%BB%8E%E7%AC%AC%E4%B8%80%E5%9D%97%E7%A0%96%E5%88%B0%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/" class="md-nav__link">
+      <a href="../../../../../../life/reflections/%E6%A1%A5%E7%9A%84%E8%93%9D%E5%9B%BE%EF%BC%9A%E4%BB%8E%E7%AC%AC%E4%B8%80%E5%9D%97%E7%A0%96%E5%88%B0%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/" class="md-nav__link">
         
   
   
@@ -1805,7 +1805,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../../life/reflections/%E4%BB%8E%E4%BF%AF%E8%A7%86%E5%88%B0%E5%B9%B3%E8%A7%86%EF%BC%9A%E4%B8%80%E4%BB%BD%E5%86%85%E5%BF%83%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+      <a href="../../../../../../life/reflections/%E4%BB%8E%E4%BF%AF%E8%A7%86%E5%88%B0%E5%B9%B3%E8%A7%86%EF%BC%9A%E4%B8%80%E4%BB%BD%E5%86%85%E5%BF%83%E7%AC%94%E8%AE%B0/" class="md-nav__link">
         
   
   
@@ -1833,7 +1833,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../../life/reflections/%E4%BB%A5%E6%80%9D%E5%BC%80%E8%B7%AF%EF%BC%8C%E4%BB%A5%E8%B7%AF%E8%BD%BD%E5%85%89/" class="md-nav__link">
+      <a href="../../../../../../life/reflections/%E4%BB%A5%E6%80%9D%E5%BC%80%E8%B7%AF%EF%BC%8C%E4%BB%A5%E8%B7%AF%E8%BD%BD%E5%85%89/" class="md-nav__link">
         
   
   
@@ -1861,7 +1861,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../../life/reflections/LINK%E6%B5%AE%E7%8E%B0/" class="md-nav__link">
+      <a href="../../../../../../life/reflections/LINK%E6%B5%AE%E7%8E%B0/" class="md-nav__link">
         
   
   
@@ -1926,7 +1926,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../../../life/family-letters/" class="md-nav__link ">
+            <a href="../../../../../../life/family-letters/" class="md-nav__link ">
               
   
   
@@ -1970,7 +1970,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../../life/family-letters/%E5%88%9D%E5%8D%87%E9%AB%98_%E7%88%B6%E4%BA%B2%E5%AF%84%E8%AF%AD/" class="md-nav__link">
+      <a href="../../../../../../life/family-letters/%E5%88%9D%E5%8D%87%E9%AB%98_%E7%88%B6%E4%BA%B2%E5%AF%84%E8%AF%AD/" class="md-nav__link">
         
   
   
@@ -1998,7 +1998,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../../life/family-letters/%E6%88%90%E4%BA%BA%E7%A4%BC_%E7%88%B6%E6%AF%8D%E5%AF%84%E8%AF%AD/" class="md-nav__link">
+      <a href="../../../../../../life/family-letters/%E6%88%90%E4%BA%BA%E7%A4%BC_%E7%88%B6%E6%AF%8D%E5%AF%84%E8%AF%AD/" class="md-nav__link">
         
   
   
@@ -2063,7 +2063,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../../../life/portrait/" class="md-nav__link ">
+            <a href="../../../../../../life/portrait/" class="md-nav__link ">
               
   
   
@@ -2107,7 +2107,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../../life/portrait/%E7%94%BB%E7%BA%A6/" class="md-nav__link">
+      <a href="../../../../../../life/portrait/%E7%94%BB%E7%BA%A6/" class="md-nav__link">
         
   
   
@@ -2135,7 +2135,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../../life/portrait/%E8%A7%81%E5%B7%B1-%E7%83%9B%E7%85%A7-2026.7.2/" class="md-nav__link">
+      <a href="../../../../../../life/portrait/%E8%A7%81%E5%B7%B1-%E7%83%9B%E7%85%A7-2026.7.2/" class="md-nav__link">
         
   
   
@@ -2267,7 +2267,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../../../bridge/novel/" class="md-nav__link ">
+            <a href="../../../../../../bridge/novel/" class="md-nav__link ">
               
   
   
@@ -2311,7 +2311,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../../bridge/novel/volume1/" class="md-nav__link">
+      <a href="../../../../../../bridge/novel/volume1/" class="md-nav__link">
         
   
   
@@ -2339,7 +2339,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../../bridge/novel/volume2/" class="md-nav__link">
+      <a href="../../../../../../bridge/novel/volume2/" class="md-nav__link">
         
   
   
@@ -2367,7 +2367,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../../bridge/novel/volume3/" class="md-nav__link">
+      <a href="../../../../../../bridge/novel/volume3/" class="md-nav__link">
         
   
   
@@ -2437,7 +2437,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../../../updates/" class="md-nav__link ">
+            <a href="../../../../../../updates/" class="md-nav__link ">
               
   
   
@@ -2481,7 +2481,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../.." class="md-nav__link">
+      <a href="../../../../../.." class="md-nav__link">
         
   
   
@@ -2547,7 +2547,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../../../spiritual/" class="md-nav__link ">
+            <a href="../../../../../../spiritual/" class="md-nav__link ">
               
   
   
@@ -2616,7 +2616,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../../../spiritual/images/" class="md-nav__link ">
+            <a href="../../../../../../spiritual/images/" class="md-nav__link ">
               
   
   
@@ -2688,7 +2688,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../../../spiritual/music/" class="md-nav__link ">
+            <a href="../../../../../../spiritual/music/" class="md-nav__link ">
               
   
   
@@ -2760,7 +2760,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../../../spiritual/sentences/" class="md-nav__link ">
+            <a href="../../../../../../spiritual/sentences/" class="md-nav__link ">
               
   
   
@@ -2841,7 +2841,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../../../../about/" class="md-nav__link ">
+            <a href="../../../../../../about/" class="md-nav__link ">
               
   
   
@@ -2885,7 +2885,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../../about/why/" class="md-nav__link">
+      <a href="../../../../../../about/why/" class="md-nav__link">
         
   
   
@@ -2920,7 +2920,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../../../role-panel/" class="md-nav__link">
+      <a href="../../../../../../role-panel/" class="md-nav__link">
         
   
   
@@ -2960,53 +2960,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        环境搭建
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="环境搭建">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        网络拓扑
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -3025,10 +2978,49 @@
   
 
 
-<h1 id="1">渗透测试红队靶场1<a class="headerlink" href="#1" title="Permanent link">&para;</a></h1>
-<h2 id="_1">环境搭建<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<h3 id="_2">网络拓扑<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
-<h3 id="_3"><a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<h1 id="hmac-md5">HMAC-md5 算法加密脚本<a class="headerlink" href="#hmac-md5" title="Permanent link">&para;</a></h1>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">hmac</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">binascii</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="c1"># 1. 获取密钥</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">key_hex</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;请输入16字节的十六进制密钥: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">key_hex</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">32</span><span class="p">:</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;错误：密钥必须是32位十六进制字符串（16字节）&quot;</span><span class="p">)</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        <span class="k">return</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">key</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="n">key_hex</span><span class="p">)</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="c1"># 2. 获取待加密数据</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">data_hex</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;请输入待加密的十六进制数据: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_hex</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;错误：十六进制数据长度必须是偶数&quot;</span><span class="p">)</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>        <span class="k">return</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="n">data_bytes</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="n">data_hex</span><span class="p">)</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    <span class="c1"># 3. 直接对二进制数据进行 HMAC-MD5 计算</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="n">hmac_md5</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">data_bytes</span><span class="p">,</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">)</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="n">result_hex</span> <span class="o">=</span> <span class="n">hmac_md5</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[+] HMAC-MD5 结果 (Hex): </span><span class="si">{</span><span class="n">result_hex</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="c1"># 4. 尝试提取并解码可读部分（仅用于分析，不影响计算结果）</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[*] 尝试提取可读信息（跳过前28字节头部）...&quot;</span><span class="p">)</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>        <span class="c1"># NTLM TargetInfo 的头部通常是 28 字节，后面是 AV_Pairs</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>        <span class="c1"># 我们尝试从第 28 字节开始解码</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>        <span class="n">payload</span> <span class="o">=</span> <span class="n">data_bytes</span><span class="p">[</span><span class="mi">28</span><span class="p">:]</span> 
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>        <span class="c1"># 使用 errors=&#39;ignore&#39; 忽略无法解码的二进制部分</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>        <span class="n">plaintext</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-16-le&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>        <span class="c1"># 过滤掉不可打印字符</span>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>        <span class="n">readable</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">plaintext</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isprintable</span><span class="p">())</span>
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    可读字符串: </span><span class="si">{</span><span class="n">readable</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;    提取失败: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>    <span class="n">main</span><span class="p">()</span>
+</span></code></pre></div>
 
 
 
@@ -3051,7 +3043,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 21, 2026 21:09:42 UTC"><span class="timeago" datetime="2026-10-21T21:09:42+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 21, 2026 21:09:42 UTC">2026-10-21</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 21, 2026 22:08:04 UTC"><span class="timeago" datetime="2026-10-21T22:08:04+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 21, 2026 22:08:04 UTC">2026-10-21</span>
   </span>
 
     
@@ -3061,7 +3053,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 21, 2026 21:09:42 UTC"><span class="timeago" datetime="2026-10-21T21:09:42+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 21, 2026 21:09:42 UTC">2026-10-21</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 21, 2026 22:08:04 UTC"><span class="timeago" datetime="2026-10-21T22:08:04+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 21, 2026 22:08:04 UTC">2026-10-21</span>
   </span>
 
     
@@ -3136,14 +3128,14 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.tracking", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.tracking", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="../../../../../../../js/timeago.min.js"></script>
+        <script src="../../../../../../js/timeago.min.js"></script>
       
-        <script src="../../../../../../../js/timeago_mkdocs_material.js"></script>
+        <script src="../../../../../../js/timeago_mkdocs_material.js"></script>
       
     
   </body>
