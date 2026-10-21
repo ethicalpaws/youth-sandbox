@@ -182,6 +182,23 @@ body.role-panel-page .game-panel {
     text-align: center;
 }
 
+.quick-stats {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+}
+
+.quick-stats span {
+    font-size: 0.65rem;
+    color: #ffccaa;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 170, 0, 0.2);
+    border-radius: 12px;
+    padding: 2px 8px;
+}
+
 .title-road {
     margin-top: 0.75rem;
     padding: 0.5rem;
@@ -452,20 +469,26 @@ async function loadRolePanel() {
     const container = document.getElementById('role-panel-root');
     
     try {
+        // 相对当前页面解析，兼容 GitHub Pages 子路径与本地 mkdocs serve
+        const dataBase = new URL('../data/', window.location.href);
         const [charRes, quotesRes] = await Promise.all([
-            fetch('/youth-sandbox/data/character.json'),
-            fetch('/youth-sandbox/data/quotes.json')
+            fetch(new URL('character.json', dataBase)),
+            fetch(new URL('quotes.json', dataBase)).catch(() => null)
         ]);
         
         if (!charRes.ok) throw new Error('角色数据加载失败: ' + charRes.status);
-        if (!quotesRes.ok) throw new Error('语录数据加载失败: ' + quotesRes.status);
         
         const charData = await charRes.json();
-        const quotesData = await quotesRes.json();
+        const quotesData = (quotesRes && quotesRes.ok) ? await quotesRes.json() : {};
         
         const auto = charData.auto;
         const manual = charData.manual;
         const skills = auto.skills || {};
+        
+        // 技能展示信息由 update_character_data.py 从 config.yaml 生成
+        const skillMeta = (auto.skill_meta && auto.skill_meta.length)
+            ? auto.skill_meta
+            : Object.keys(skills).map(key => ({ key, name: key, icon: '🔹', weight: 0, max: 100 }));
         
         // 头衔映射
         function getTitleByLevel(level) {
@@ -480,8 +503,8 @@ async function loadRolePanel() {
             return "传奇黑客";
         }
         
-        // 头衔进阶路线
-        const titleRoad = [
+        // 头衔进阶路线：人工头衔作为当前起点，其后接等级头衔
+        const levelTitles = [
             { level: 10, name: "安全萌新" },
             { level: 15, name: "脚本小子" },
             { level: 20, name: "漏洞猎人" },
@@ -492,8 +515,13 @@ async function loadRolePanel() {
             { level: 45, name: "守护者" },
             { level: 50, name: "传奇黑客" }
         ];
+        const titleRoad = [];
+        if (manual.title && !levelTitles.some(item => item.name === manual.title)) {
+            titleRoad.push({ level: auto.level, name: manual.title });
+        }
+        titleRoad.push(...levelTitles);
         
-        let currentIndex = 0;
+        let currentIndex = titleRoad.length - 1;
         for (let i = 0; i < titleRoad.length; i++) {
             if (auto.level <= titleRoad[i].level) {
                 currentIndex = i;
@@ -509,70 +537,28 @@ async function loadRolePanel() {
             if (i < titleRoad.length - 1) roadHtml += ' → ';
         }
         
-        // 战力计算 - 包含所有16项能力
-        const combatPower = Math.floor(
-            (skills.web_security || 0) * 80 +
-            (skills.web_advanced || 0) * 80 +
-            (skills.java_security || 0) * 150 +
-            (skills.ctf_ability || 0) * 70 +
-            (skills.cve_analysis || 0) * 80 +
-            (skills.programming || 0) * 60 +
-            (skills.bypass_waf || 0) * 100 +
-            (skills.code_review || 0) * 90 +
-            (skills.internal_network || 0) * 100 +
-            (skills.pwn || 0) * 120 +
-            (skills.evasion || 0) * 80 +
-            (skills.lateral_movement || 0) * 90 +
-            (skills.c2_framework || 0) * 90 +
-            (skills.blue_team || 0) * 70 +
-            (skills.network_traffic || 0) * 60 +
-            (skills.cryptography || 0) * 50
-        );
+        // 战力计算 - 权重与技能列表均来自 config.yaml
+        const combatPower = Math.floor(skillMeta.reduce(
+            (sum, skill) => sum + (skills[skill.key] || 0) * (skill.weight || 0),
+            0
+        ));
         
-        const currentTitle = getTitleByLevel(auto.level);
+        // manual.title 是人工设定的头衔，等级头衔仅作为兜底
+        const currentTitle = manual.title || getTitleByLevel(auto.level);
         const expPercent = (auto.current_exp / auto.next_exp * 100).toFixed(1);
         
-        // 属性面板
-        const rpgAttrs = [
-            { 
-                name: "🎯 信息收集", 
-                value: (skills.web_security || 0) * 0.7 + (skills.code_review || 0) * 0.3, 
-                max: 100 
-            },
-            { 
-                name: "🔓 漏洞挖掘", 
-                value: (skills.web_advanced || 0) * 0.15 + (skills.src_dig || 0) * 0.4 + (skills.cve_analysis || 0) * 0.3 + (skills.cryptography || 0) * 0.15, 
-                max: 100 
-            },
-            { 
-                name: "💣 利用开发", 
-                value: (skills.ctf_ability || 0) * 0.3 + (skills.java_security || 0) * 0.3 + (skills.programming || 0) * 0.3 + (skills.cryptography || 0) * 0.1, 
-                max: 100 
-            },
-            { 
-                name: "🛡️ 绕过技巧", 
-                value: (skills.web_security || 0) * 0.3 + (skills.ctf_ability || 0) * 0.4 + (skills.bypass_waf || 0) * 0.3, 
-                max: 100 
-            },
-            { 
-                name: "⚔️ 攻防对抗", 
-                value: (skills.network_traffic || 0) * 0.1 + (skills.c2_framework || 0) * 0.2 + (skills.lateral_movement || 0) * 0.3 + (skills.evasion || 0) * 0.1 + (skills.internal_network || 0) * 0.3, 
-                max: 100 
-            }
-        ];
+        // 属性面板 - 由脚本按 config.yaml 权重计算
+        const rpgAttrs = auto.attributes || [];
         
-        // 雷达图数据
-        const radarLabels = ['Web安全', 'Java安全', 'CTF能力', 'CVE分析', '编程能力', '绕WAF', '内网渗透', '二进制安全'];
-        const radarValues = [
-            (skills.web_security || 0) + (skills.web_advanced || 0),
-            skills.java_security || 0,
-            skills.ctf_ability || 0,
-            skills.cve_analysis || 0,
-            skills.programming || 0,
-            skills.bypass_waf || 0,
-            skills.internal_network || 0,
-            skills.pwn || 0
-        ];
+        // 雷达图数据 - 由脚本按 config.yaml 轴定义聚合
+        const radarData = (auto.radar && auto.radar.length)
+            ? auto.radar
+            : skillMeta.slice(0, 8).map(skill => ({
+                name: skill.name,
+                value: skills[skill.key] || 0
+            }));
+        const radarLabels = radarData.map(item => item.name);
+        const radarValues = radarData.map(item => item.value);
         
         // 动态计算雷达图最大值
         let maxValue = Math.max(...radarValues);
@@ -587,25 +573,13 @@ async function loadRolePanel() {
         else if (maxValue > 20) radarMax = 30;
         else radarMax = 20;
         
-        // 技能树 - 16项能力
-        const skillTree = [
-            { name: "Web基础", value: skills.web_security || 0, icon: "🌐", max: 100 },
-            { name: "Web高级", value: skills.web_advanced || 0, icon: "⚡", max: 100 },
-            { name: "Java安全", value: skills.java_security || 0, icon: "☕", max: 100 },
-            { name: "CTF能力", value: skills.ctf_ability || 0, icon: "🏆", max: 100 },
-            { name: "CVE分析", value: skills.cve_analysis || 0, icon: "🐞", max: 100 },
-            { name: "编程能力", value: skills.programming || 0, icon: "💻", max: 100 },
-            { name: "绕WAF", value: skills.bypass_waf || 0, icon: "🛡️", max: 100 },
-            { name: "代码审计", value: skills.code_review || 0, icon: "🔍", max: 100 },
-            { name: "内网渗透", value: skills.internal_network || 0, icon: "🌐", max: 100 },
-            { name: "二进制安全", value: skills.pwn || 0, icon: "⚙️", max: 100 },
-            { name: "免杀能力", value: skills.evasion || 0, icon: "🎭", max: 100 },
-            { name: "横向移动", value: skills.lateral_movement || 0, icon: "🔄", max: 100 },
-            { name: "C2框架", value: skills.c2_framework || 0, icon: "📡", max: 100 },
-            { name: "蓝队防御", value: skills.blue_team || 0, icon: "🛡️", max: 100 },
-            { name: "网络流量", value: skills.network_traffic || 0, icon: "📊", max: 100 },
-            { name: "密码学", value: skills.cryptography || 0, icon: "🔐", max: 100 }
-        ];
+        // 技能树 - 顺序、名称、图标与上限均来自 character.json
+        const skillTree = skillMeta.map(skill => ({
+            name: skill.name,
+            value: skills[skill.key] || 0,
+            icon: skill.icon || '🔹',
+            max: skill.max || 100
+        }));
         
         // 生成技能树 HTML
         const skillsHtml = skillTree.map(skill => {
@@ -629,7 +603,7 @@ async function loadRolePanel() {
         // 热力图数据
         const heatmapData = auto.heatmap || { weeks: [] };
         const weeksData = heatmapData.weeks || [];
-        const weeklyScores = auto.stats.weekly_scores || [];
+        const weeklyScores = (auto.stats || {}).weekly_scores || [];
 
         function getWeekActivityLevel(weekDays, weekIndex) {
             let totalNotes = 0;
@@ -676,20 +650,22 @@ async function loadRolePanel() {
         const randomQuote = tips[Math.floor(Math.random() * tips.length)];
         
         // 生成属性面板 HTML
-        const attrsHtml = rpgAttrs.map(attr => {
-            const percent = (attr.value / attr.max * 100).toFixed(1);
-            return `
-                <div class="attr-item">
-                    <div class="attr-header">
-                        <span>${attr.name}</span>
-                        <span>${attr.value.toFixed(1)}</span>
+        const attrsHtml = rpgAttrs.length > 0
+            ? rpgAttrs.map(attr => {
+                const percent = (attr.value / attr.max * 100).toFixed(1);
+                return `
+                    <div class="attr-item">
+                        <div class="attr-header">
+                            <span>${attr.name}</span>
+                            <span>${attr.value.toFixed(1)}</span>
+                        </div>
+                        <div class="attr-bar">
+                            <div class="attr-fill" data-width="${percent}%"></div>
+                        </div>
                     </div>
-                    <div class="attr-bar">
-                        <div class="attr-fill" data-width="${percent}%"></div>
-                    </div>
-                </div>
-            `;
-        }).join('');
+                `;
+            }).join('')
+            : '<div style="color:#886666; text-align:center; padding:0.5rem;">暂无属性数据</div>';
         
         // 生成成就 HTML
         const achievementsHtml = achievements.length > 0 
@@ -710,10 +686,30 @@ async function loadRolePanel() {
             }).join('')
             : '<div style="color:#886666; text-align:center; padding:0.5rem;">暂无成就，继续努力！</div>';
         
-        // 头像处理
-        const avatarHtml = manual.avatar && (manual.avatar.startsWith('/') || manual.avatar.startsWith('http'))
-            ? `<img src="${manual.avatar}" alt="avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`
+        // 头像处理：/youth-sandbox/ 是站点绝对路径，本地预览时转换为相对路径
+        function resolveAsset(path) {
+            if (!path) return '';
+            if (path.startsWith('http')) return path;
+            if (path.startsWith('/youth-sandbox/')) return '../' + path.slice('/youth-sandbox/'.length);
+            return path;
+        }
+        const avatarSrc = resolveAsset(manual.avatar);
+        const avatarHtml = avatarSrc
+            ? `<img src="${avatarSrc}" alt="avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`
             : `<span style="font-size: 3rem;">${manual.avatar || '🐕'}</span>`;
+        
+        // 战绩摘要
+        const stats = auto.stats || {};
+        const joinDate = manual.join_date ? new Date(manual.join_date + 'T00:00:00') : null;
+        const daysSinceJoin = joinDate && !isNaN(joinDate.getTime())
+            ? Math.max(1, Math.floor((Date.now() - joinDate.getTime()) / 86400000) + 1)
+            : null;
+        const quickStats = [
+            `📝 笔记 ${stats.notes_count || 0}`,
+            `🚩 CTF ${stats.ctf_count || 0}`,
+            `🐞 CVE ${stats.cve_count || 0}`,
+            daysSinceJoin ? `📅 第 ${daysSinceJoin} 天` : ''
+        ].filter(Boolean);
 
         const panelHtml = `
             <div class="game-panel">
@@ -732,6 +728,7 @@ async function loadRolePanel() {
                         </div>
                     </div>
                     <div class="motto">"${manual.motto || '路漫漫其修远兮'}"</div>
+                    <div class="quick-stats">${quickStats.map(item => `<span>${item}</span>`).join('')}</div>
                     <div class="title-road">📈 进阶路线：${roadHtml}</div>
                 </div>
                 <div class="game-content">

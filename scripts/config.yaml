@@ -351,91 +351,109 @@ practice:
     template: "src"
 
 # ==================== 角色面板配置 ====================
+# 技能顺序即角色面板技能树的显示顺序；label/icon/weight 会随 character.json 输出。
 character:
   skills:
     web_security:
+      label: Web基础
+      icon: "🌐"
+      weight: 80
       source: "knowledge/03-web-basics/index.md"
       field: "completed"
       multiplier: 15
       max: 100
     web_advanced:
+      label: Web高级
+      icon: "⚡"
+      weight: 80
       source: "knowledge/04-web-advanced/index.md"
       field: "completed"
       multiplier: 15
       max: 100
     java_security:
+      label: Java安全
+      icon: "☕"
+      weight: 150
       source: "knowledge/05-java-security/index.md"
       field: "completed"
       multiplier: 5
       max: 100
-    ctf_ability:
-      source: "practice/ctf/index.md"
-      field: "completed_questions"
-      multiplier: 2
-      max: 100
-    cve_analysis:
-      source: "practice/cve/index.md"
-      field: "analyzed"
-      multiplier: 2
-      max: 100
-    src_dig:
-      source: "practice/src/index.md"
-      field: "completed_targets"
-      multiplier: 1
-      max: 100
-    programming:
-      source: "knowledge/01-foundation/programming/index.md"
-      field: "total_notes"
-      formula: "value + code_attachments/30"
-      max: 100
-    bypass_waf:
-      source: "knowledge/01-foundation/bypass-waf/index.md"
+    server_side:
+      label: 服务端组件
+      icon: "🧩"
+      weight: 70
+      source: "knowledge/07-server-side-component-security/index.md"
       field: "completed"
-      formula: "(value + practice_related) * 3"
-      practice_keywords: ["bypass", "waf", "绕过", "waf-bypass"]
-      max: 100
-    code_review:
-      source_type: "code_attachments"
-      source: "sources"
-      multiplier: 2
+      multiplier: 5
       max: 100
     internal_network:
+      label: 内网渗透
+      icon: "🕸️"
+      weight: 100
       source: "knowledge/06-red-blue-confrontation/internal-network/index.md"
       field: "completed"
       multiplier: 3
       max: 100
-    pwn:
-      source: "knowledge/06-red-blue-confrontation/pwn/index.md"
+    lateral_movement:
+      label: 横向移动
+      icon: "🔄"
+      weight: 90
+      source: "knowledge/06-red-blue-confrontation/internal-network/lateral-movement/index.md"
       field: "completed"
       multiplier: 5
       max: 100
-    evasion:
-      source: "knowledge/06-red-blue-confrontation/evasion/index.md"
+    privesc:
+      label: 权限提升
+      icon: "⬆️"
+      weight: 100
+      source: "knowledge/06-red-blue-confrontation/PrivEsc/index.md"
       field: "completed"
-      multiplier: 3
+      multiplier: 5
       max: 100
-    penetration_test:
-      source: "knowledge/06-red-blue-confrontation/penetration-test/index.md"
-      field: "completed"
-      extra_field: "in_progress"
-      formula: "completed*5 + in_progress*3"
-      max: 100
-    lateral_movement:
-      source: "knowledge/06-red-blue-confrontation/lateral-movement/index.md"
+    persistence:
+      label: 权限维持
+      icon: "🔒"
+      weight: 90
+      source: "knowledge/06-red-blue-confrontation/persistence/index.md"
       field: "completed"
       multiplier: 5
       max: 100
     c2_framework:
+      label: C2框架
+      icon: "🎯"
+      weight: 90
       source: "knowledge/06-red-blue-confrontation/c2-framework/index.md"
       field: "completed"
       multiplier: 5
       max: 100
-    blue_team:
-      source: "knowledge/06-red-blue-confrontation/blue-team/index.md"
+    evasion:
+      label: 免杀绕过
+      icon: "👻"
+      weight: 80
+      source: "knowledge/06-red-blue-confrontation/evasion/index.md"
+      field: "completed"
+      multiplier: 3
+      max: 100
+    hvv:
+      label: HVV蓝队
+      icon: "🛡️"
+      weight: 70
+      source: "knowledge/06-red-blue-confrontation/hvv/index.md"
+      field: "completed"
+      multiplier: 5
+      max: 100
+    pwn:
+      label: 二进制安全
+      icon: "💥"
+      weight: 120
+      source: "knowledge/08-software-system-security/index.md"
       field: "completed"
       multiplier: 5
       max: 100
     network_traffic:
+      label: 网络流量
+      icon: "📊"
+      weight: 60
       source: "knowledge/02-network-protocol-security/network-basics/index.md"
       field: "completed"
       extra_source: "knowledge/02-network-protocol-security/network-attack/index.md"
@@ -443,7 +461,87 @@ character:
       formula: "value*5 + extra*10"
       max: 100
     cryptography:
+      label: 密码学
+      icon: "🔐"
+      weight: 50
       source: "knowledge/01-foundation/cryptography/index.md"
       field: "total_notes"
       multiplier: 8
       max: 100
+    ctf_ability:
+      label: CTF能力
+      icon: "🏆"
+      weight: 70
+      source: "practice/ctf/index.md"
+      field: "completed_questions"
+      multiplier: 2
+      max: 100
+    cve_analysis:
+      label: CVE分析
+      icon: "🐞"
+      weight: 80
+      source: "practice/cve/index.md"
+      field: "analyzed"
+      multiplier: 2
+      max: 100
+    code_review:
+      label: 代码审计
+      icon: "🔍"
+      weight: 90
+      source_type: "code_attachments"
+      source: "sources"
+      multiplier: 2
+      max: 100
+    programming:
+      label: 编程能力
+      icon: "💻"
+      weight: 60
+      source: "knowledge/01-foundation/programming/index.md"
+      field: "total_notes"
+      formula: "value + code_attachments/30"
+      max: 100
+    bypass_waf:
+      label: 绕WAF
+      icon: "🧱"
+      weight: 100
+      source: "knowledge/01-foundation/bypass-waf/index.md"
+      field: "completed"
+      formula: "(value + practice_related) * 3"
+      practice_keywords: ["bypass", "waf", "绕过", "waf-bypass"]
+      max: 100
+
+  # 雷达图轴：每个轴可聚合多个技能，脚本会把计算结果写入 auto.radar
+  radar:
+    - name: Web安全
+      skills: [web_security, web_advanced]
+    - name: Java安全
+      skills: [java_security]
+    - name: 服务端组件
+      skills: [server_side]
+    - name: 内网渗透
+      skills: [internal_network]
+    - name: 提权与维持
+      skills: [privesc, persistence]
+    - name: C2与免杀
+      skills: [c2_framework, evasion]
+    - name: HVV蓝队
+      skills: [hvv]
+    - name: 二进制安全
+      skills: [pwn]
+    - name: 网络流量
+      skills: [network_traffic]
+    - name: 密码学
+      skills: [cryptography]
+
+  # RPG 属性：权重和技能均来自上面的 skills，脚本会把计算结果写入 auto.attributes
+  attributes:
+    - name: "🎯 信息收集"
+      weights: {web_security: 0.5, code_review: 0.2, internal_network: 0.3}
+    - name: "🔓 漏洞挖掘"
+      weights: {web_advanced: 0.2, server_side: 0.2, cve_analysis: 0.3, ctf_ability: 0.15, cryptography: 0.15}
+    - name: "💣 利用开发"
+      weights: {pwn: 0.3, java_security: 0.25, programming: 0.2, ctf_ability: 0.15, cryptography: 0.1}
+    - name: "🛡️ 绕过技巧"
+      weights: {web_security: 0.2, bypass_waf: 0.3, evasion: 0.2, ctf_ability: 0.3}
+    - name: "⚔️ 攻防对抗"
+      weights: {internal_network: 0.25, lateral_movement: 0.15, privesc: 0.15, persistence: 0.1, c2_framework: 0.1, evasion: 0.1, hvv: 0.1, network_traffic: 0.05}

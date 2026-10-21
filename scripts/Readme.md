@@ -180,6 +180,9 @@ achievement: 中等猎手 # 成就（可选）
     | `total_exp` | 笔记数×10 + CTF×20 + CVE×40 + SRC×50 + 周测经验 |
     | `notes_count` | 扫描 knowledge/ + practice/ + weekly-check/ 所有笔记 |
     | `skills` | 从各模块 index.md 的统计字段计算 |
+    | `skill_meta` | 从 `config.yaml` 的 `character.skills` 生成技能名称、图标、战力权重与显示顺序 |
+    | `attributes` | 按 `character.attributes` 的权重聚合 RPG 属性 |
+    | `radar` | 按 `character.radar` 的技能聚合雷达图轴 |
     | `heatmap` | 扫描所有笔记文件的修改时间 |
 
 5. 学习计划文件 life/study-plan/weekX.md

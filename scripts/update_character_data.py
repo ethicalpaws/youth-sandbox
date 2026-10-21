@@ -230,6 +230,48 @@ def scan_skills_from_config(skills_config: Dict) -> Dict[str, float]:
             skills[skill_name] = 0
     return skills
 
+def build_skill_meta(skills_config: Dict) -> List[Dict]:
+    """把技能展示信息写入 character.json，避免前端硬编码技能列表"""
+    meta = []
+    for key, cfg in skills_config.items():
+        meta.append({
+            "key": key,
+            "name": cfg.get("label", key),
+            "icon": cfg.get("icon", "🔹"),
+            "weight": cfg.get("weight", 0),
+            "max": cfg.get("max", 100),
+        })
+    return meta
+
+def build_attributes(attributes_config: List[Dict], skills: Dict[str, float]) -> List[Dict]:
+    """按配置权重聚合 RPG 属性"""
+    result = []
+    for item in attributes_config or []:
+        weights = item.get("weights", {}) or {}
+        value = sum(float(skills.get(key, 0)) * float(weight)
+                    for key, weight in weights.items())
+        max_value = float(item.get("max", 100))
+        result.append({
+            "name": item.get("name", ""),
+            "value": round(min(value, max_value), 1),
+            "max": max_value,
+        })
+    return result
+
+def build_radar(radar_config: List[Dict], skills: Dict[str, float]) -> List[Dict]:
+    """按配置聚合雷达图轴"""
+    result = []
+    for item in radar_config or []:
+        keys = item.get("skills", []) or []
+        value = sum(float(skills.get(key, 0)) for key in keys)
+        max_value = float(item.get("max", 100))
+        result.append({
+            "name": item.get("name", ""),
+            "value": round(min(value, max_value), 1),
+            "max": max_value,
+        })
+    return result
+
 # ==================== 经验值统计 ====================
 
 def scan_notes_count() -> int:
@@ -459,6 +501,9 @@ def main(dry_run: bool = False):
             "weekly_scores": week_scores
         },
         "skills": skills,
+        "skill_meta": build_skill_meta(skills_config),
+        "attributes": build_attributes(char_config.get("attributes", []), skills),
+        "radar": build_radar(char_config.get("radar", []), skills),
         "heatmap": heatmap,
         "last_update": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "first_bug_awarded": first_bug,
