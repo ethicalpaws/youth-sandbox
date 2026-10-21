@@ -9,11 +9,11 @@
   },
   "auto": {
     "level": 7,
-    "current_exp": 12,
+    "current_exp": 2,
     "next_exp": 595,
-    "total_exp": 1995,
+    "total_exp": 1985,
     "stats": {
-      "notes_count": 156,
+      "notes_count": 155,
       "ctf_count": 5,
       "cve_count": 7,
       "src_count": 0,
@@ -287,7 +287,7 @@
           ]
         },
         {
-          "total": 4,
+          "total": 3,
           "max_daily": 2,
           "days": [
             1,
@@ -295,7 +295,7 @@
             0,
             0,
             2,
-            1,
+            0,
             0
           ]
         },
@@ -937,11 +937,11 @@
           ]
         }
       ],
-      "total_notes": 156,
-      "active_days": 48,
+      "total_notes": 155,
+      "active_days": 47,
       "max_contrib": 35
     },
-    "last_update": "2026-10-22 05:09:51",
+    "last_update": "2026-10-22 05:13:33",
     "first_bug_awarded": true,
     "start_date": "2026-05-27"
   }
