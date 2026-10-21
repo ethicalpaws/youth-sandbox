@@ -1,0 +1,3760 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="操作系统内存布局、变量存储、程序加载/寻址与可执行文件结构">
+      
+      
+        <meta name="author" content="ethicalpaws">
+      
+      
+        <link rel="canonical" href="https://ethicalpaws.github.io/youth-sandbox/tech-study/knowledge/08-software-system-security/basic/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E5%8E%9F%E7%90%86/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>计算机存储空间原理 - 青春沙盒</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../css/timeago.css">
+    
+      <link rel="stylesheet" href="../../../../../asserts/css/home.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="青春沙盒" class="md-header__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            青春沙盒
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              计算机存储空间原理
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ethicalpaws/youth-sandbox" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    youth-sandbox
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  $技术学习
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../life/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  青春记录
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../bridge/novel/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  修桥工程
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../updates/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  动态推送
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../spiritual/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  精神食粮
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../about/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  关于本站
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../role-panel/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ❗️ 角色档案
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="青春沙盒" class="md-nav__button md-logo" aria-label="青春沙盒" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 20q-2.28 0-3.89-1.57Q1 16.85 1 14.58q0-1.95 1.17-3.48 1.18-1.53 3.08-1.95.63-2.3 2.5-3.72Q9.63 4 12 4q2.93 0 4.96 2.04Q19 8.07 19 11q1.73.2 2.86 1.5 1.14 1.28 1.14 3 0 1.88-1.31 3.19T18.5 20Z"/></svg>
+
+    </a>
+    青春沙盒
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ethicalpaws/youth-sandbox" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    youth-sandbox
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    $技术学习
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    $技术学习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📖 知识笔记
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📖 知识笔记
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01-foundation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01-基础知识
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../02-network-protocol-security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02-网络协议安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../03-web-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03-Web基础漏洞
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--🔄"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../04-web-advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04-Web高级漏洞
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--⬜"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../05-java-security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05-Java安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../06-red-blue-confrontation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06-红蓝对抗
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../07-server-side-component-security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07-中间件安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08-软件与系统安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../practice/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎯 实战练习
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🎯 实战练习
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../practice/ctf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CTF训练
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../practice/cve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVE分析
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../practice/lab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lab靶场练习
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../weekly-check/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📋 每周检测
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📋 每周检测
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../arsenal/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ⚔️ 军火库
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ⚔️ 军火库
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../arsenal/tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    工具箱
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../arsenal/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    命令大全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../life/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    青春记录
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    青春记录
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../life/study-plan/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📝 每周计划
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    📝 每周计划
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/study-plan/summer-plan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    暑期计划
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--进行中"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/study-plan/week5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二阶段第一周
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--进行中"></span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/journal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📔 随笔日记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/struggles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💭 烦恼记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../life/wins/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎉 成就时刻
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🎉 成就时刻
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../life/reflections/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔄 思考记录
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🔄 思考记录
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/reflections/%E7%A0%B4%E9%A2%98%E4%B9%8B%E4%BD%99-%E4%BA%A6%E7%A0%B4%E5%BF%83%E9%9A%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ctf赛后复盘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/reflections/%E7%B3%BB%E7%BB%9F%E5%86%85%E9%83%A8%EF%BC%8C%E6%B8%85%E9%86%92%E8%BE%B9%E7%BC%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    系统内部，清醒边缘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/reflections/%E6%A1%A5%E7%9A%84%E8%93%9D%E5%9B%BE%EF%BC%9A%E4%BB%8E%E7%AC%AC%E4%B8%80%E5%9D%97%E7%A0%96%E5%88%B0%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    桥的蓝图：从第一块砖到开源框架
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/reflections/%E4%BB%8E%E4%BF%AF%E8%A7%86%E5%88%B0%E5%B9%B3%E8%A7%86%EF%BC%9A%E4%B8%80%E4%BB%BD%E5%86%85%E5%BF%83%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    从俯视到平视：一份内心笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/reflections/%E4%BB%A5%E6%80%9D%E5%BC%80%E8%B7%AF%EF%BC%8C%E4%BB%A5%E8%B7%AF%E8%BD%BD%E5%85%89/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    以思开路，以路载光
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/reflections/LINK%E6%B5%AE%E7%8E%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LINK浮现
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../life/family-letters/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💌 父母寄语
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    💌 父母寄语
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/family-letters/%E5%88%9D%E5%8D%87%E9%AB%98_%E7%88%B6%E4%BA%B2%E5%AF%84%E8%AF%AD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    初升高_父亲寄语
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/family-letters/%E6%88%90%E4%BA%BA%E7%A4%BC_%E7%88%B6%E6%AF%8D%E5%AF%84%E8%AF%AD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    成人礼_父母寄语
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../life/portrait/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🖼️ 个人画像
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🖼️ 个人画像
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/portrait/%E7%94%BB%E7%BA%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    画像师约定
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../life/portrait/%E8%A7%81%E5%B7%B1-%E7%83%9B%E7%85%A7-2026.7.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    烛照之作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    修桥工程
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    修桥工程
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../bridge/novel/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    《临风行》
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    《临风行》
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../bridge/novel/volume1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一卷
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../bridge/novel/volume2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二卷
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../bridge/novel/volume3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三卷
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../updates/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    动态推送
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    动态推送
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📦 全部动态
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../spiritual/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    精神食粮
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    精神食粮
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../spiritual/images/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🖼️ 照片
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🖼️ 照片
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../spiritual/music/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🎵 音乐
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🎵 音乐
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../spiritual/sentences/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💬 句子
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    💬 句子
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../about/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于本站
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    关于本站
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../about/why/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    为什么建这个站
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../role-panel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ❗️ 角色档案
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        典型操作系统的内存布局
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        内存中变量存储的例子
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        软件的加载
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        软件的寻址
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        可执行文件
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rowhammer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rowhammer攻击
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kartograph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kartograph（地图透视）
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="_1">计算机存储空间原理<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>操作系统层面：以Linux和32位为例
+底层：x86体系结构为例</p>
+</blockquote>
+<h2 id="_2">典型操作系统的内存布局<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p><strong>进程 —— 软件在操作系统中的基本形态</strong></p>
+<ul>
+<li>具有独立的地址空间</li>
+<li>掌握着软件执行时所需要的所有资源（或资源的位置）</li>
+</ul>
+<p><strong>32位操作系统的地址空间：最大4GB（2的32次方）</strong></p>
+<ul>
+<li>用户空间——0-3GB</li>
+<li>内核空间——3-4GB（独立于所有进程的用户空间）</li>
+</ul>
+<p><strong>32位 Linux 操作系统下的虚拟内存布局（Virtual Memory Layout）</strong></p>
+<p><img alt="" src="2026-10-07-13-34-18.png" /></p>
+<ul>
+<li>
+<p>User Space (用户空间，3GB)：</p>
+</li>
+<li>
+<p>范围：0x00000000 到 0xBFFFFFFF（图中标识为 3G，即 PAGE_OFFSET）。</p>
+</li>
+<li>
+<p>这是普通应用程序（进程）运行的地方。每个进程都有自己独立的 3GB 用户空间，互相隔离。</p>
+</li>
+<li>
+<p>Kernel Space (内核空间，1GB)：</p>
+</li>
+<li>
+<p>范围：0xC0000000 到 0xFFFFFFFF。</p>
+</li>
+<li>
+<p>这是操作系统内核运行的地方。所有进程共享这 1GB 的内核空间。</p>
+</li>
+<li>
+<p>图中标注了内核空间内部的细分：</p>
+</li>
+<li>
+<p>Kernel Image &amp; Mem_map: 从 3G+16M 开始，存放内核代码和物理内存映射表。</p>
+</li>
+<li>Vmalloc Area / Ioremap Area: 用于内核动态分配内存和映射硬件 I/O 空间。</li>
+<li>Persistent Kernel Mapping: 持久内核映射区。</li>
+<li>
+<p>Temporary Kernel Mapping: 临时内核映射区（如 kmap），范围从 FIXADDR_START 到 4G。图中标注 High Memory = 128M，这是32位系统为了解决无法直接映射所有物理内存而引入的“高端内存”概念。</p>
+</li>
+<li>
+<p>用户空间详细布局 (User Space Detailed Layout)，从低地址（底部）到高地址（顶部），依次是：</p>
+</li>
+<li>
+<p>Text Segment (代码段)：</p>
+<ul>
+<li>权限： 只读/可执行 (Read/Execute)。</li>
+<li>内容： 存放程序编译后的机器指令（二进制镜像）。</li>
+<li>来源： 从磁盘上的可执行文件中加载。</li>
+<li>在 Linux 中，默认起始地址通常是 0x08048000。</li>
+</ul>
+</li>
+<li>
+<p>Data Segment (数据段)：</p>
+<ul>
+<li>权限： 可读/可写 (Read/Write)。</li>
+<li>内容： 存放已初始化的全局变量和静态局部变量。</li>
+<li>例子： static char *pszUserName = "wangbing";</li>
+<li>来源： 从磁盘上的可执行文件中加载。</li>
+</ul>
+</li>
+<li>
+<p>BSS Segment (BSS段)：</p>
+<ul>
+<li>权限： 可读/可写 (Read/Write)。</li>
+<li>内容： 存放未初始化的全局变量和静态局部变量。</li>
+<li>例子： static char *pszUserName;</li>
+<li>特点： 为了减小可执行文件体积，BSS段在磁盘文件中不占用实际空间，加载到内存时由系统（execve）自动全部清零（Filled with zero by execve(2)）。</li>
+<li>注：Data 和 BSS 段之间通常紧挨着，图中有 end_data 和 start_data 等边界标记。</li>
+</ul>
+</li>
+<li>
+<p>Heap (堆)：</p>
+<ul>
+<li>权限： 可读/可写。</li>
+<li>方向： 向上增长 (grows up)（向高地址方向）。</li>
+<li>内容： 用于程序运行时动态分配的内存。</li>
+<li>相关系统调用： 通过 malloc() / free() 申请和释放，底层通过 brk() 系统调用移动 program break 指针来扩展或收缩堆的大小。</li>
+</ul>
+</li>
+<li>
+<p>Memory Mapping Segment (内存映射段 / 文件映射与匿名映射区)：</p>
+<ul>
+<li>权限： 视具体映射而定（通常是可读/可写/可执行）。</li>
+<li>
+<p>内容：</p>
+</li>
+<li>
+<p>文件映射： 将磁盘文件直接映射到内存，例如动态链接库（如 /lib/libc.so）。</p>
+</li>
+<li>
+<p>匿名映射： 不关联具体文件的内存，常用于大块内存分配（如 malloc 超过一定阈值时底层会调用 mmap）或进程间通信（共享内存）。</p>
+</li>
+<li>
+<p>相关系统调用： mmap()。</p>
+</li>
+<li>随机偏移： 图中标注了 Random mmap offset，这是 ASLR（地址空间布局随机化）安全机制的一部分。</li>
+</ul>
+</li>
+<li>
+<p>Stack (栈)：</p>
+<ul>
+<li>权限： 可读/可写。</li>
+<li>方向： 向下增长 (grows down)（向低地址方向）。</li>
+<li>内容： 存放函数的局部变量、函数参数、返回地址等。函数的调用和返回对应着栈帧的压入和弹出。</li>
+<li>大小限制： 图中标注了 RLIMIT_STACK(e.g.8MB)，默认情况下栈的大小是有限制的（通常是 8MB），如果递归太深会导致栈溢出（Stack Overflow）。</li>
+<li>随机偏移： 同样有 Random stack offset 用于安全防护。</li>
+</ul>
+</li>
+<li>
+<p>最高地址处 (顶部)：</p>
+<ul>
+<li>Command-line arguments (命令行参数)： 如 main(int argc, char** argv) 接收的参数。</li>
+<li>Environment Variables (环境变量)： 如 PATH, HOME 等。</li>
+<li>栈的顶部紧挨着这些参数和环境变量。</li>
+</ul>
+</li>
+</ul>
+<p><img alt="" src="2026-10-09-09-01-09.png" /></p>
+<p><strong>分段的意义</strong></p>
+<ol>
+<li>缓存命中率高 (High Cache Hit Rate)</li>
+<li>
+<p>局部性原理 (Principle of Locality)： 程序在执行时具有空间局部性和时间局部性。比如，代码段中的指令往往是顺序执行的，数据段中的变量也往往会被频繁访问。</p>
+</li>
+<li>
+<p>分离的好处： 如果不分段，代码和数据混杂在一起，CPU 的缓存（L1/L2 Cache）可能会把正在执行的指令旁边的无用数据也加载进来，导致缓存污染，降低命中率。通过分段，将频繁访问的指令（代码段）和频繁访问的数据（数据段）在物理或逻辑上分离开来，可以让缓存更有效地缓存当前需要的部分。</p>
+</li>
+<li>
+<p>共享与隔离： 多个进程可以共享同一个代码段（例如多个进程运行同一个程序，如 bash）。如果代码段是只读的，并且被缓存，那么其他运行相同程序的进程可以直接从缓存中读取，极大地提高了缓存利用率。</p>
+</li>
+<li>
+<p>访问控制 (Access Control)</p>
+</li>
+<li>
+<p>这是分段在现代操作系统中最核心的安全意义。不同的段有不同的读写执行权限，这从硬件层面防止了程序破坏自身或其他程序的数据。</p>
+<ul>
+<li>代码段 (Text Segment)： 权限是 只读、可执行 (Read/Execute)。程序只能读取并执行里面的指令，不能修改。这防止了程序在运行中意外或恶意地篡改自己的指令。</li>
+<li>数据段 (Data Segment) 和 BSS 段： 权限是 可读、可写 (Read/Write)，但通常不可执行。这存放的是全局变量。如果黑客通过缓冲区溢出将恶意代码写入数据段，CPU 会因为该段没有“可执行”权限而拒绝执行，从而触发段错误（Segmentation Fault），阻止攻击。</li>
+<li>栈 (Stack) 和 堆 (Heap)： 同样是可读可写的，通常不可执行（现代系统有 NX 位保护）。</li>
+<li>内核空间 (Kernel Space)： 用户程序完全无权访问。如果用户程序试图访问 0xC0000000 以上的地址，硬件会直接拦截并报错。</li>
+</ul>
+</li>
+</ol>
+<p><strong>ASLR (地址空间布局随机化)</strong></p>
+<ul>
+<li>Random stack offset：栈底不是固定的，每次运行都会随机偏移。</li>
+<li>Random mmap offset：内存映射区的基址是随机的。</li>
+<li>Random brk offset：堆的起始地址（start_brk）也是随机的。</li>
+</ul>
+<p>这是现代操作系统重要的安全机制，防止黑客利用固定地址进行攻击。</p>
+<h2 id="_3">内存中变量存储的例子<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p><img alt="" src="2026-10-08-03-50-33.png" /></p>
+<ol>
+<li>
+<p><strong>全局变量与静态变量（位于低地址：数据段 / BSS 段）</strong>
+   这些变量在程序启动时就已经分配好了内存，直到程序结束才释放。</p>
+</li>
+<li>
+<p>第 1 行：int a = 0; // 全局初始化区</p>
+<ul>
+<li>解析： 这是一个全局变量，并且赋了初值 0。它会被存放在 .data 段（数据段）。</li>
+</ul>
+</li>
+<li>
+<p>第 2 行：char *p1; // 全局未初始化区</p>
+<ul>
+<li>解析： 这是一个全局变量，但没有赋初值。它会被存放在 .bss 段（BSS 段）。操作系统在加载程序时，会自动把 BSS 段全部清零，所以 p1 初始值是 NULL。</li>
+</ul>
+</li>
+<li>
+<p>第 9 行：static int c = 0; // 全局（静态）初始化区</p>
+<ul>
+<li>解析： static 关键字把 c 变成了静态局部变量。虽然它写在 main 函数里面，但它的生命周期和全局变量一样长，也存放在 .data 段（数据段），而不是栈上。</li>
+</ul>
+</li>
+<li>
+<p>函数内部的局部变量（位于高地址：栈）
+   main 函数开始执行时，系统会在栈（Stack）上为它开辟一块栈帧（Stack Frame），用来存放函数内的局部自动变量。栈是向下增长的。</p>
+</li>
+<li>
+<p>第 5 行：int b; // 栈</p>
+<ul>
+<li>解析： 普通的局部变量，在栈上分配。</li>
+</ul>
+</li>
+<li>
+<p>第 6 行：`char s[] = "abc"; // 栈</p>
+<ul>
+<li>解析： s 是一个数组。数组名 s 代表数组首地址，它在栈上分配了 4 个字节的空间（'a', 'b', 'c', '\0'），并把这四个字符拷贝到栈里。所以字符串内容在栈上。</li>
+</ul>
+</li>
+<li>
+<p>第 7 行：`char p2; // 栈</p>
+<ul>
+<li>解析： 这是一个普通的局部指针变量。指针变量 p2 本身存放在栈上。</li>
+</ul>
+</li>
+<li>
+<p>第 8 行：`char p3 = "123456"; // p3在栈上，123456\0在常量区</p>
+<ul>
+<li>解析：指针变量 p3 本身是在栈上分配的（占 4 字节）。但是，字符串 "123456\0" 作为一个字符串字面量，它被存储在 .rodata 段（只读数据段 / 常量区），*p3指向"123456\0"在 .rodata 段上的位置</li>
+<li>这行代码的意思是：把常量区 "123456\0" 的首地址赋值给栈上的指针变量 p3。也就是说，p3 指向了常量区。</li>
+</ul>
+</li>
+<li>
+<p>动态分配的内存（位于中间：堆）</p>
+</li>
+<li>
+<p>第 10 行：p1 = (char*)malloc(10);</p>
+<ul>
+<li>解析： malloc 函数在堆（Heap）上申请了 10 个字节的内存。堆是向上增长的。这 10 个字节的地址被赋给了全局指针 p1。</li>
+</ul>
+</li>
+<li>
+<p>第 11 行：p2 = (char*)malloc(20);</p>
+<ul>
+<li>解析： 同理，在堆上申请了 20 个字节，地址赋给了栈上的指针 p2。</li>
+</ul>
+</li>
+<li>
+<p>字符串拷贝与编译器优化（第 12 行）</p>
+</li>
+<li>
+<p>第 12 行：strcpy(p1, "123456");</p>
+<ul>
+<li>
+<p>解析： 这行代码把常量区里的字符串 "123456"，拷贝到了 p1 指向的堆内存中。</p>
+</li>
+<li>
+<p>“编译器可能会将它与p3所指的‘123456’优化成一个地方”</p>
+</li>
+<li>
+<p>解释： 在代码里，第 8 行和第 12 行都写了 "123456"。为了节省空间，现代编译器（如 GCC）通常会把这两个完全相同的字符串字面量合并。也就是说，常量区里只存一份 "123456\0"，p3 指向它，strcpy 也从它那里拷贝。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="_4">软件的加载<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p><strong>操作系统创建进程的步骤</strong></p>
+<p>通常发生在 fork() 创建子进程或者 execve() 加载并执行一个新程序时</p>
+<ol>
+<li>创建虚拟内存空间来容纳一个进程
+   含义： 当操作系统决定运行一个程序时，它首先需要为该程序“圈地”。在 32 位系统中，就是分配那 3GB 的用户虚拟地址空间（0x00000000 到 0xBFFFFFFF）。</li>
+</ol>
+<p>底层机制： 操作系统会为该进程创建一个页表（Page Table）和内存描述符（Linux 中是 mm_struct）。此时，只是建立了虚拟地址的“管辖范围”，物理内存并没有马上全部分配。这是虚拟内存的核心——延迟分配（Lazy Allocation）。只有等到程序真正读写某块内存时，才会触发缺页异常（Page Fault），操作系统才会分配实际的物理内存页。</p>
+<p>意义： 让每个进程都认为自己独占整个内存，实现了进程间的地址空间隔离。</p>
+<ol>
+<li>建立虚拟内存地址与可执行文件的映射关系表（根据文件头）
+   含义： 程序在磁盘上是一个可执行文件（如 Linux 下的 ELF 文件）。操作系统需要读取这个文件的文件头（File Header），从中解析出代码段（.text）、数据段（.data）等信息。</li>
+</ol>
+<p>底层机制： 这一步不会把整个文件读取到物理内存中，而是建立内存映射（Memory Mapping）。操作系统会设置页表，将虚拟地址空间中的代码段、数据段映射到磁盘上可执行文件的对应位置。</p>
+<p>延迟加载（Demand Paging）： 只有当 CPU 真正去执行某条指令时，如果发现该指令对应的虚拟内存页还没有加载到物理内存，就会触发缺页中断，操作系统再去磁盘把那一页读进内存。</p>
+<p>意义： 极大节省了物理内存，加快了程序启动速度。多个进程如果运行同一个程序（比如打开多个终端），它们的代码段可以共享同一块物理内存。</p>
+<ol>
+<li>初始化栈空间、堆空间
+   含义： 映射好代码和数据后，还需要为程序运行时的动态部分做准备。</li>
+</ol>
+<p>初始化栈（Stack）：</p>
+<div class="language-text highlight"><pre><span></span><code>  操作系统会在虚拟内存的高地址区域（靠近 3GB 边界下方）分配栈空间。
+
+  关键动作： 将命令行参数（argv）和环境变量（envp）压入栈中。同时，设置好栈指针寄存器（如 x86 的 ESP/RSP），让程序启动后能立即找到这些参数。
+
+  这里也会应用 Random stack offset（随机栈偏移），以增强安全性（ASLR）
+</code></pre></div>
+<p>初始化堆（Heap）：</p>
+<div class="language-text highlight"><pre><span></span><code>  在数据段（BSS）的上方预留堆的起始地址。此时通常不会分配实际的物理内存，只是设置好 start_brk 指针。
+
+  当程序调用 malloc() 时，堆才会向上增长（grows up）。
+</code></pre></div>
+<p><strong>虚拟地址空间看上去并不够用，如何解决</strong></p>
+<ol>
+<li>“copy on write” (写时复制)</li>
+</ol>
+<p>场景： 当使用 fork() 系统调用创建子进程时，操作系统不会立刻把父进程的所有物理内存复制一份给子进程。</p>
+<p>机制： 操作系统让父进程和子进程共享同一份物理内存页，并将这些页标记为只读。此时，父子进程的虚拟地址不同，但映射到同一块物理内存。</p>
+<p>触发复制： 当父进程或子进程试图修改（写入）这些共享的内存页时，CPU 会触发一个保护异常（缺页中断的一种）。此时，操作系统才会真正分配一块新的物理内存，把原数据复制过去，然后让修改的一方指向新的内存。</p>
+<p>好处： 极大地节省了物理内存，并且让 fork() 操作变得极其快速（因为不需要立刻复制大量数据）。只有当真正发生写入时，才进行复制。</p>
+<ol>
+<li>多级页表查询 + 缺页中断</li>
+<li>
+<p>多级页表查询（Multi-level Page Tables）：</p>
+<p>在 32 位系统中，如果将 4GB 空间按 4KB 分页，需要 
+  2的20次方个页表项。如果只用单级页表，这个页表本身就占 4MB 内存。如果每个进程都分配 4MB 页表，100 个进程就吃掉 400MB 物理内存，这太浪费了。</p>
+<p>解决： 采用多级页表（如两级或三级）。只有真正用到的虚拟地址区域，才会分配对应的页表项。大部分虚拟地址空间是空的，对应的页表项就不存在，从而极大地节省了页表本身占用的内存。</p>
+</li>
+<li>
+<p>缺页中断（Page Fault）：</p>
+<p>这是虚拟内存得以实现的基石。</p>
+<p>当程序访问一个虚拟地址时，硬件（MMU）会去查页表。如果发现该页不在物理内存中（或者没有权限），就会触发一个缺页中断。</p>
+<p>操作系统接管中断，负责把缺失的页面从磁盘（交换分区或可执行文件）加载到物理内存中，然后更新页表，让程序继续执行。</p>
+<p>结合上述的“延迟加载”：程序启动时，代码和数据并没有全部加载进内存，只有真正执行到某一行代码时，如果它不在内存，才会触发缺页中断把它加载进来。</p>
+</li>
+</ol>
+<h2 id="_5">软件的寻址<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p><img alt="" src="2026-10-08-01-49-34.png" /></p>
+<ol>
+<li>
+<p>虚拟地址是“假”的：程序里用的地址（如 0x0804A000）只是虚拟坐标，CPU 真正去内存条拿数据用的是物理地址。</p>
+</li>
+<li>
+<p>为了省内存：如果用“单级页表”，为了映射 4GB 空间，必须强制分配一个 4MB 的大数组，极度浪费。所以采用“二级页表”按需分配。</p>
+</li>
+</ol>
+<p><strong>完整寻址过程</strong></p>
+<ul>
+<li>
+<p>起点：CPU 从 CR3 寄存器里拿到页目录（总目录）的物理基址。</p>
+</li>
+<li>
+<p>第一步：用虚拟地址的前 10 位，在页目录里找到对应的页目录项 (PD entry)。这个条目里存的是页表（分目录）的物理基址。</p>
+</li>
+<li>
+<p>第二步：用虚拟地址的中间 10 位，在这个页表里找到对应的页表项 (PT entry)。这个条目里存的是物理内存页的物理基址。</p>
+</li>
+<li>
+<p>终点：用虚拟地址的最后 12 位（页内偏移量），加上刚拿到的物理页基址，得到最终物理地址。</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>虚拟地址 (32位)   CR3中存放的页目录基址
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>      │                  |
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>      |                页目录
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>      |                  +
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>      ├── 前10位 ──&gt;   偏移地址   ——&gt; 页表基址
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>      │                                 +
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>      ├── 中10位    ──────────────&gt;   偏移地址  ──&gt;  物理页基址
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>      │                                                 +
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>      └── 后12位      ───────────────────────&gt;      偏移地址   ──&gt;   数据真实物理地址
+</span></code></pre></div>
+<p><strong>核心</strong></p>
+<ul>
+<li>
+<p>地址切分：10位 + 10位 + 12位 = 32位。（寻址空间依然是 4GB，没有变大！）</p>
+</li>
+<li>
+<p>页目录和页表都是 4KB</p>
+</li>
+<li>
+<p>省内存的灵魂：“总目录必须有，页表按需再建。用到哪就建哪，不用全都不管。”</p>
+</li>
+<li>
+<p>每个进程必须有一个 4KB 的总目录。</p>
+</li>
+<li>
+<p>如果只用到 2 个区，就只建 2 个 4KB 的页表，总共占 12KB，而不是单级页表的 4MB</p>
+</li>
+</ul>
+<h2 id="_6">可执行文件<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<p><strong>问题：共享代码</strong></p>
+<ul>
+<li>不同的软件可能会使用同样的代码模块</li>
+<li>软件往往需要用到操作系统提供的执行功能</li>
+</ul>
+<p><strong>解决方案：可链接的可执行文件</strong></p>
+<ul>
+<li>将重复利用率很高的代码模块构造成共享库<ul>
+<li>工程师们把那些大家都用得上的通用代码（比如 printf、网络通信、图形界面）提前写好、编译好，打包成一个个独立的文件。</li>
+<li>在 Windows 里这叫 .dll 文件</li>
+<li>在 Linux 里这叫 .so（Shared Object）文件（比如最常见的 libc.so）</li>
+</ul>
+</li>
+<li>软件通过与共享库链接使用这些代码<ul>
+<li>比如：程序员在写 QQ 的时候，不需要把 printf 的代码抄一遍。只需要在代码里写一句“我要用共享库里的 printf”。在编译或运行时，操作系统会把 QQ 和共享库“链接”在一起。</li>
+</ul>
+</li>
+<li>共享库放在内存的Memory Mapping Segment（内存映射段）<ul>
+<li>当程序启动，加载 .so 或 .dll 文件时，操作系统就是通过 mmap（内存映射） 技术，把这些共享库的文件直接映射到进程的内存映射段里的。</li>
+</ul>
+</li>
+<li>多级页表如何实现“物理内存共享”<ul>
+<li>假设你的电脑同时运行了 QQ 和微信，它们都需要用到标准的 C 语言库（libc.so）。</li>
+<li>物理内存中： 只有一份 libc.so 的代码。</li>
+<li>虚拟内存中： QQ 和微信有各自的页目录和页表。操作系统通过修改它们各自的页表项 (PT entry)，让它们指向物理内存中同一块 libc.so 的物理页。</li>
+<li>结果： 无论 QQ 和微信眼里 libc.so 的虚拟地址是否相同（通常由于 ASLR 它们甚至可能不同），只要顺着各自的多级页表查下去，最终拿到的是同一个物理内存地址。</li>
+<li>这就实现了物理内存的高效复用。</li>
+</ul>
+</li>
+</ul>
+<p><strong>可用于代码共享的常见可执行格式</strong></p>
+<ul>
+<li>
+<p>Executable &amp; Linkable Format (ELF) —— Linux 系统</p>
+<ul>
+<li>这是 Linux（以及很多类 Unix 系统）下的标准格式。不仅普通的可执行程序（比如 /bin/ls）是 ELF 格式，前面提到的共享库（.so 文件）、甚至编译过程中的目标文件（.o 文件）也是 ELF 格式。</li>
+</ul>
+</li>
+<li>
+<p>Portable Executable (PE) —— Windows 系列</p>
+<ul>
+<li>这是 Windows 系统下的标准格式。常见的 .exe（可执行文件）和 .dll（动态链接库）都是 PE 格式。它的设计参考了早期的格式，但名字里带个 "Portable"（可移植）是因为它最初是为了支持多种 CPU 架构（如 x86、ARM）而设计的。</li>
+</ul>
+</li>
+<li>
+<p><strong>注</strong>：虽然名字不同，但它们在底层设计思想上是非常相似的，都包含了文件头、代码段、数据段、重定位表等信息。</p>
+</li>
+</ul>
+<p><strong>特点</strong></p>
+<ul>
+<li>
+<p>承担多个角色（程序本身，多种类型的共享库）</p>
+<ul>
+<li>同一个文件格式（比如 ELF），既可以是一个可以直接运行的主程序（比如你写的 main.c 编译出来的程序），也可以是一个共享库（供别的程序调用，比如 libc.so）。</li>
+<li>区别在 ELF 的文件头（Header）里有一个字段叫 e_type。</li>
+<li>如果是 ET_EXEC，说明这是一个“可执行程序”，入口点明确，可以直接运行。</li>
+<li>
+<p>如果是 ET_DYN，说明这是一个“共享对象”（动态库），它本身不能直接运行，必须被其他程序加载。</p>
+</li>
+<li>
+<p>意义： 这种设计非常灵活。程序员可以用同一种工具链（编译器、链接器）来生成程序或库，操作系统也能用同一套逻辑来加载它们。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>地址空间可以被重定位（relocation）</p>
+<ul>
+<li>为什么需要重定位</li>
+<li>假设在写程序时调用了一个共享库里的函数 printf。但在编译时，并不知道操作系统会把这个共享库加载到虚拟内存的哪个具体地址（因为前面说过，为了安全，内存映射区的基址是带随机偏移的——ASLR）。</li>
+<li>
+<p>如果代码里写死了“跳到 0x400000 执行 printf”，但操作系统实际把库加载到了 0x800000，程序就会崩溃。</p>
+</li>
+<li>
+<p>什么是重定位</p>
+</li>
+<li>可执行文件里包含了一张“重定位表”（Relocation Table）。</li>
+<li>当操作系统加载这个程序（或共享库）到内存时，会读取这张表。它告诉操作系统：“嘿，我在代码里写了个占位符，等你真正把我放进内存时，根据我实际所在的地址，帮我把代码里所有调用外部函数的地方，都改成正确的物理地址或虚拟地址。”</li>
+<li>这也就是为什么我们在讲 Memory Mapping Segment 时，说动态库是通过 mmap 映射进来的。因为用了 mmap 和多级页表，每个进程都可以认为自己的共享库放在了固定的位置（比如都用 0x400000），然后通过各自不同的页表，映射到物理内存中同一份共享库。这就是“重定位”配合“多级页表”实现的</li>
+</ul>
+</li>
+</ul>
+<p><img alt="" src="2026-10-08-02-26-23.png" /></p>
+<p>一个程序从源代码变成能在内存里跑的进程，要经历两个阶段：</p>
+<p><strong>链接阶段（编译时）</strong>： 编译器把你的代码变成 .o 文件，链接器把这些 .o 文件和库拼装成一个可执行文件。这个阶段关心的是代码和数据的分类。</p>
+<p><strong>执行阶段（运行时）</strong>： 操作系统加载器把这个可执行文件读取到内存中，准备运行。这个阶段关心的是权限（哪里可读、哪里可执行）和加载位置。</p>
+<p>为了同时满足这两个阶段的需求，ELF 文件在内部巧妙地安排了数据。链接视图和执行视图其实就是从文件的不同位置、用不同的“地图”去解读同一堆数据。</p>
+<ul>
+<li>
+<p>链接视图（Linking View）—— 按“节（Section）”划分</p>
+<ul>
+<li>这是给链接器（Linker）看的，主要存在于磁盘上的文件中。</li>
+<li>ELF 头部（必备）： 文件的身份证，记录了这个文件是 32 位还是 64 位、是哪种 CPU 架构、程序的入口地址在哪等基本信息。</li>
+<li>程序头部表（可选）： 在链接视图里它是可选（通常会有，但主要是为了执行视图准备的）。</li>
+<li>节区 1 到 节区 n（Sections）： 这是链接视图的核心。它把文件切成了很多细碎的“节”。比如：</li>
+<li>.text（代码节）</li>
+<li>.data（已初始化数据节）</li>
+<li>.bss（未初始化数据节）</li>
+<li>.symtab（符号表，记录函数名和变量名）</li>
+<li>.rel.text（重定位表，用来记录哪里需要在运行时修改地址）</li>
+<li>链接器就是根据这些“节”来合并代码、解决函数调用的。</li>
+<li>节区头部表（Section Header Table，必备）： 这是一份目录，告诉链接器：“你去找 .text 节，它在文件的第 100 个字节开始，长度是多少”。没有它，链接器就找不到各个节。</li>
+<li></li>
+</ul>
+</li>
+<li>
+<p>执行视图（Execution View）—— 按“段（Segment）”划分</p>
+<ul>
+<li>这是给操作系统加载器（Loader）看的，主要体现在程序运行时的内存中。</li>
+<li>ELF 头部（必备）： 同样存在。</li>
+<li>程序头部表（必备）： 这是执行视图的核心。它告诉操作系统加载器：“磁盘上的哪些数据应该被映射到内存的哪个虚拟地址，并且赋予什么权限（可读/可写/可执行）”。</li>
+<li>段 1、段 2（Segments）： 这是执行视图的核心单位。</li>
+<li>一个“段”通常包含了好几个“节”。</li>
+<li>例如，代码段（Code Segment） 可能包含了 .text 节和 .rodata（只读数据）节，因为在内存里它们都具有“只读、可执行”的权限，可以合并在一起加载。</li>
+<li>数据段（Data Segment） 可能包含了 .data 节和 .bss 节，因为它们都需要“可读、可写”权限。</li>
+<li>节区头部表（可选）： 在程序运行时，加载器主要靠“程序头部表”工作。但节区头部表有时也会留在内存里，方便程序在运行时进行动态链接（比如查找函数符号）。</li>
+</ul>
+</li>
+<li>
+<p>ELF中与共享代码链接有关的重要section</p>
+<ul>
+<li>符号表</li>
+<li>字符串表</li>
+<li>重定位表</li>
+<li>程序头部</li>
+</ul>
+</li>
+</ul>
+<h2 id="rowhammer">rowhammer攻击<a class="headerlink" href="#rowhammer" title="Permanent link">&para;</a></h2>
+<ol>
+<li>攻击原理：
+   由于内存颗粒制造得越来越小，cell 之间的距离越来越近。如果在极短的时间内，极其频繁地（比如每秒几十万次）去读取某一行内存（比如 Row 1），这个高频的电流开关动作，会产生电磁干扰，导致相邻的行（比如 Row 0 和 Row 2）里的电容发生漏电。</li>
+</ol>
+<p>就像在一堵薄墙的一边疯狂敲锤子（Rowhammer 名字的由来），墙另一边的画（相邻行的数据）可能会被震掉下来。</p>
+<ol>
+<li>导致的结果：</li>
+</ol>
+<p>相邻行里的某个 bit，原本是 1，因为受到干扰漏电，变成了 0。</p>
+<p>这叫做位翻转（Bit Flip）。</p>
+<p>最可怕的是，这种翻转是硬件层面的，不需要任何软件漏洞，也不需要程序有 Bug，纯粹是物理攻击。</p>
+<ol>
+<li>攻击者的利用方式（提权）：
+   黑客会写一个恶意程序，在内存里精确定位到某个关键区域（比如操作系统的页表，或者某个程序的权限校验位），然后不断锤击它相邻的行。</li>
+</ol>
+<p>如果黑客能让页表里的某个物理地址指向内核空间，他就能读写内核数据。</p>
+<p>如果黑客能翻转一个进程的 UID（用户ID）里的某个 bit，把自己的普通用户权限（比如 UID=1000）翻转为管理员权限（比如 UID=0，即 root），他就成功攻破了系统。</p>
+<ol>
+<li>
+<p>防御措施
+   因为 Rowhammer 是硬件物理缺陷，软件很难完全防御，目前主要有几种应对方式：</p>
+<ul>
+<li>
+<p>硬件层面： 内存厂商引入 ECC（纠错内存），能发现并纠正单比特翻转。或者在内存颗粒内部加入逻辑，检测到频繁访问某一行时，主动去刷新相邻行（如 DDR4 的 TRR 技术）。</p>
+</li>
+<li>
+<p>软件层面： 操作系统内核修改内存分配策略，避免把关键数据（如页表）放在容易被攻击的物理行附近。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="kartograph">Kartograph（地图透视）<a class="headerlink" href="#kartograph" title="Permanent link">&para;</a></h2>
+<ol>
+<li>核心原理（为什么外挂能透视？）</li>
+</ol>
+<p>游戏的妥协（为了流畅）： 现代网络游戏（比如 FPS 射击游戏或 MOBA 游戏）为了保证你玩游戏时不卡顿，通常会“预加载”地图里的所有信息。也就是说，哪怕敌人躲在墙后面你看不见，游戏客户端为了保证他一旦露头就能立刻显示，其实早就把他的坐标、血量、装备等数据下载到了你的电脑内存里。</p>
+<p>外挂的窃取： 作弊程序就像一个“小偷”，它潜入你电脑的内存里，把这些原本被墙壁遮挡、但实际存在本地的数据偷出来，然后画在你的屏幕上。这就实现了“无视视野遮挡的全图透视”。</p>
+<ol>
+<li>作弊的四个步骤</li>
+<li>
+<p>内存结构（找到数据的“仓库”）</p>
+<ul>
+<li>游戏把地图上所有实体（玩家、NPC、道具）的坐标、状态等信息，集中存放在一块连续的、结构化的内存区域（通常是一个大数组或链表）中。</li>
+<li>外挂作者知道这些数据肯定是按规律排布的，这是利用的前提。</li>
+</ul>
+</li>
+<li>
+<p>特征扫描（找到数据的“钥匙”）</p>
+<ul>
+<li>外挂工具会利用“特征码匹配”。</li>
+<li>比如，它知道玩家实体的结构大概是：[名字字符串][血量][X坐标][Y坐标]。</li>
+<li>外挂会去内存里搜索符合这个特征（比如搜索特定的血量数值或坐标范围）的地址。这个过程通常被称为“找基址”。</li>
+</ul>
+</li>
+<li>
+<p>读取坐标（偷取数据）</p>
+<ul>
+<li>一旦定位到了存放玩家数据的数组基址，外挂就能顺着偏移量，直接读取里面最核心的信息，比如三维坐标（X, Y, Z）、阵营（是敌人还是队友）、血量等。</li>
+<li>关键点： 这一步绕过了游戏逻辑层的验证。它不通过游戏正常的渲染管线去拿数据，而是直接读内存。</li>
+</ul>
+</li>
+<li>
+<p>绘制透视（把数据变成画面）</p>
+<ul>
+<li>读到了敌人的三维坐标后，外挂程序会调用一套数学公式（通常是世界坐标转屏幕坐标，即 World-to-Screen），计算出敌人在你当前视角下应该出现在屏幕的哪个像素位置。</li>
+<li>然后，外挂直接在你的游戏画面上强制渲染一个方框、骷髅头或者血条。这个绘制层是盖在游戏之上的，实现了无视障碍物的“透视”效果。</li>
+</ul>
+</li>
+<li>
+<p>总结</p>
+</li>
+</ol>
+<p>源头：本地内存预加载。 —— 游戏为了降低延迟，把全图数据放本地，这是漏洞的根源。</p>
+<p>手段：内存特征码匹配。 —— 外挂通过扫描特征，快速定位数据的藏身之处。</p>
+<p>结果：强制渲染透视。 —— 绕过游戏正常的视野判定，在屏幕上画图，实现监控。</p>
+<ol>
+<li>
+<p>游戏厂商如何反制这种外挂</p>
+</li>
+<li>
+<p>数据加密： 游戏把存在本地内存里的坐标加密。外挂读到的是一串乱码，需要解密才能用。</p>
+</li>
+<li>
+<p>服务器校验（战争迷雾）： 也就是“视野外数据不下发”。游戏服务器只把玩家视野范围内的数据发给你的客户端。但这对网络延迟要求极高，且难以实现真正的“预加载”。</p>
+</li>
+<li>
+<p>反作弊系统（如 EAC, BE, VAC）： 检测内存中是否有非法程序在读取游戏进程，或者检测是否有未知的 DLL 被注入到游戏进程中。</p>
+</li>
+<li>
+<p>内存混淆： 不断改变数据在内存里的存放位置，让外挂的“特征码”失效。</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 21, 2026 17:46:10 UTC"><span class="timeago" datetime="2026-10-21T17:46:10+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 21, 2026 17:46:10 UTC">2026-10-21</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 21, 2026 17:46:10 UTC"><span class="timeago" datetime="2026-10-21T17:46:10+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 21, 2026 17:46:10 UTC">2026-10-21</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2026 青春沙盒 - 记录技术，也记录青春
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/ethicalpaws" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://twitter.com/ethicalpaws" target="_blank" rel="noopener" title="Twitter" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "navigation.tracking", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../../../js/timeago.min.js"></script>
+      
+        <script src="../../../../../js/timeago_mkdocs_material.js"></script>
+      
+    
+  </body>
+</html>
