@@ -153,8 +153,11 @@ nav:
           # 06 红蓝对抗
           - 06-红蓝对抗: tech-study/knowledge/06-red-blue-confrontation/index.md
 
-          # 07 AI安全
-          - 07-AI安全: tech-study/knowledge/07-ai-security/index.md
+          # 07 中间件安全
+          - 07-中间件安全: tech-study/knowledge/07-server-side-component-security/index.md
+
+          # 08 软件与系统安全
+          - 08-软件与系统安全: tech-study/knowledge/08-software-system-security/index.md
 
       # ---------- 实战练习 ----------
       
@@ -167,9 +170,6 @@ nav:
           # CVE分析
           - CVE分析: tech-study/practice/cve/index.md
               
-          # SRC实战
-          - SRC实战: tech-study/practice/src/index.md
-
           # lab靶场练习
           - lab靶场练习: tech-study/practice/lab/index.md
 
@@ -178,11 +178,7 @@ nav:
       - 📋 每周检测:
           - 检测总览: tech-study/weekly-check/index.md
 
-      # ---------- 面试准备 ----------
-      - 📚 面试准备:
-          - 每日一题快速版: tech-study/interview-prep/Interview-Handbook-quickly.md
-          - 每日一题详解版: tech-study/interview-prep/Interview-Handbook-deeply.md 
-
+     
       # ---------- 军火库 ----------
       - ⚔️ 军火库:
           - 军火库总览: tech-study/arsenal/index.md

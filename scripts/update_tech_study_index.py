@@ -19,8 +19,12 @@ if sys.platform == 'win32':
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, SCRIPT_DIR)
+
+from common import PROJECT_ROOT
+
 # ==================== 配置 ====================
-PROJECT_ROOT = r"E:\youth-sandbox\docs"
 TECH_STUDY_PATH = os.path.join(PROJECT_ROOT, "tech-study")
 INDEX_PATH = os.path.join(TECH_STUDY_PATH, "index.md")
 
@@ -174,7 +178,7 @@ def generate_tech_study_index(dry_run: bool = False) -> None:
 | 板块 | 说明 | 统计 |
 |------|------|:----:|
 | [📖 知识笔记]({knowledge_link}) | 网络安全知识体系，从基础到进阶 | {knowledge_stats} |
-| [🎯 实战练习]({practice_link}) | CTF、CVE、SRC 实战记录 | {practice_stats} |
+| [🎯 实战练习]({practice_link}) | CTF、CVE、Lab 实战记录 | {practice_stats} |
 | [📋 每周检测]({weekly_link}) | 每周学习成果自测 | {weekly_stats} |
 
 ## 📊 统计

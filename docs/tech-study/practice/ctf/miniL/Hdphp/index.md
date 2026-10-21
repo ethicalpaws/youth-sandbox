@@ -9,6 +9,7 @@ level: ⭐⭐⭐
 achievement: 困难猎手
 weakness: 本地文件包含
 finish-date: 2026-05-26
+last_updated: 2026-06-07 02:31:20
 ---
 
 # 🗡️ 狩猎记录 · Hdphp
@@ -50,6 +51,8 @@ Nginx临时文件 + /proc/self/fd/ + 路径规范化LFI
 ### 🔗 关联档案
 
 [📖 详细战报 →](Hdphp_wp.md)
+
+
 
 ---
 

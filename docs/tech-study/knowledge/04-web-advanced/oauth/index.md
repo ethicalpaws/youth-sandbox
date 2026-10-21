@@ -1,16 +1,16 @@
 ---
-module_name: oauth
-description: 
+module_name: 身份验证（Authentication）是什么？
+description: 待补充
 status: ⬜
 finish_date: 
 note_path: oauth.md
 tags: []
-last_updated: 2026-09-22 05:27:31
+last_updated: 2026-10-22 01:04:35
 ---
 
-# oauth - 笔记概述
+# 身份验证（Authentication）是什么？ - 笔记概述
 
-> 
+> 待补充
 
 ## 📊 统计
 
@@ -25,6 +25,8 @@ last_updated: 2026-09-22 05:27:31
 4. [身份验证漏洞是如何产生的？](oauth.md#身份验证漏洞是如何产生的)
 5. [漏洞的危害有多大？](oauth.md#漏洞的危害有多大)
 6. [身份认证漏洞](oauth.md#身份认证漏洞)
+
+
 
 ## 🔗 关联实战
 
@@ -41,4 +43,4 @@ last_updated: 2026-09-22 05:27:31
 暂无
 
 ---
-*自动更新：2026-09-22 05:27:31
+*自动更新：2026-10-22 01:04:35

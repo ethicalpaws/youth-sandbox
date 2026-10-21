@@ -5,7 +5,7 @@ status: ✅
 finish_date: 2026-05-13
 note_path: access-control.md
 tags: ['access-control', 'idor', '越权', '垂直越权', '水平越权']
-last_updated: 2026-09-22 05:27:30
+last_updated: 2026-10-22 01:04:34
 ---
 
 # 访问控制漏洞 - 笔记概述
@@ -24,6 +24,8 @@ last_updated: 2026-09-22 05:27:30
 3. [越权访问示例](access-control.md#越权访问示例)
 4. [如何防御](access-control.md#如何防御)
 
+
+
 ## 🔗 关联实战
 
 ### CTF题目
@@ -39,4 +41,4 @@ last_updated: 2026-09-22 05:27:30
 暂无
 
 ---
-*自动更新：2026-09-22 05:27:30
+*自动更新：2026-10-22 01:04:34

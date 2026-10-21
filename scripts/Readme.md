@@ -7,7 +7,7 @@
 本脚本集用于自动更新 `youth-sandbox/docs` 项目中的各类索引文件，包括：
 
 - **知识笔记索引** (`knowledge/`) - 各章节的模块级和章节级索引
-- **实战练习索引** (`practice/`) - CTF、CVE、Lab、SRC 的索引
+- **实战练习索引** (`practice/`) - CTF、CVE、Lab（SRC 可选）的索引
 - **每周检测索引** (`weekly-check/`) - 周报和检测记录索引
 - **角色数据** (`data/character.json`) - 自动统计经验和能力值
 - **总览页面** (`tech-study/index.md`) - 技术学习总览
@@ -31,6 +31,7 @@ python run_all.py
 ## 📁 脚本列表
 核心模块
 - common.py	公共函数模块（配置、Front Matter 解析、进度条等）
+- chapter_utils.py	多层级章节（如 08）的模块/笔记表格生成工具
 - run_all.py	统一入口脚本，按依赖顺序运行所有脚本
 - config.yaml	全局配置文件
 - Practice 板块（实战练习）
@@ -43,12 +44,16 @@ python run_all.py
 | `update_cve_notes.py` | 题目级 | 生成 CVE 每个漏洞的 index.md |
 | `update_cve_chapter.py` | 章节级 | 生成 CVE 总览 index.md |
 | `update_lab_notes.py` | 题目级 | 生成 Lab 每个靶场的 index.md |
-| `update_lab_modules.py` | 模块级 | 生成 Lab 模块的 index.md |
+| `update_lab_modules.py` | 模块级 | 生成 Lab 模块的 index.md（支持 `平台/分类/靶场` 多级结构） |
 | `update_lab_chapter.py` | 章节级 | 生成 Lab 总览 index.md |
 | `update_src_notes.py` | 题目级 | 生成 SRC 每个目标的 index.md |
 | `update_src_modules.py` | 模块级 | 生成 SRC 模块的 index.md |
 | `update_src_chapter.py` | 章节级 | 生成 SRC 总览 index.md |
 | `update_practice_index.py` | 总览 | 生成 practice/index.md |
+
+> `practice/src` 不存在时，`run_all.py` 会自动跳过三个 `update_src_*.py`；重新创建该目录后无需改脚本即可恢复执行。
+
+> Lab 支持两种层级：`lab/<平台>/<靶场>/` 与 `lab/<平台>/<分类>/<靶场>/`。`update_lab_modules.py` 会递归发现真正包含笔记的靶场目录，并为分类目录（如 `ulab/internal-network/`、`ulab/IR/`）自动生成汇总 `index.md`。
 
 ## Knowledge 板块（知识笔记）
 
@@ -62,9 +67,12 @@ python run_all.py
 | `update_jndi_injection.py` | 更新 jndi-injection 模块 |
 | `update_memory_shell.py` | 更新 memory-shell 模块 |
 | `update_framework_vulns.py` | 更新 framework-vulns 模块 |
-| `update_redblue_module.py` | 更新红蓝对抗模块级索引 |
-| `update_redblue_chapter.py` | 更新红蓝对抗章节级索引 |
-| `update_knowledge_index.py` | 更新 knowledge/index.md |
+| `update_redblue_module.py` | 递归更新红蓝对抗模块/子模块索引（如 `internal-network/tools/credential-attack/`） |
+| `update_redblue_chapter.py` | 更新红蓝对抗章节级索引（副标题按实际模块生成） |
+| `update_server_side_chapter.py` | 更新 07-server-side-component-security 章节 |
+| `update_software_security_modules.py` | 递归更新 08 各层模块索引 |
+| `update_software_security_chapter.py` | 更新 08-software-system-security 章节 |
+| `update_knowledge_index.py` | 更新 knowledge/index.md（自动发现 NN-* 章节） |
 
 ## 其他板块
 

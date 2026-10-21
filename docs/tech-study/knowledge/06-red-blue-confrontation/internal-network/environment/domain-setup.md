@@ -18,8 +18,8 @@ difficulty: 中等
 | 攻击机 | Kali Linux |
 | 域名 | `lab.com` |
 | 域控IP | `192.168.162.10` |
-| 域成员IP | `192.168.162.20` |
-
+| 域成员1IP | `192.168.162.20` |
+| 域成员2IP | `192.168.162.30` |
 ---
 
 ## 搭建步骤
@@ -35,17 +35,20 @@ difficulty: 中等
     备用DNS：   8.8.8.8
    ```
    ![](domain-setup/2026-06-02-19-01-05.png) 
-3. 安装Active Directory域服务
+3. 改计算机名称为DC01（为了方便好记）
+   ![](domain-setup/2026-09-25-00-40-33.png)
+   改完后重启
+4. 安装Active Directory域服务
    1. 打开服务器管理器
    2. 点击右上角"管理" → "添加角色和功能"
    3. 到"服务器角色"这一步：
       - 勾选 Active Directory域服务
       - 勾选 DNS服务器（会弹出依赖功能提示，点击"添加功能"）
     ![](domain-setup/2026-06-02-19-33-30.png) 
-4. 提升为域控，新建域`lab.com`
+5. 提升为域控，新建域`lab.com`
    ![](domain-setup/2026-06-02-20-04-04.png) 
    配置完成后重启
-5. 验证域控是否正常
+6. 验证域控是否正常
    ```cmd
    # 查看当前域名
    whoami
@@ -55,12 +58,11 @@ difficulty: 中等
    net user /domain
    ``` 
    ![](domain-setup/2026-06-02-20-09-22.png)
-6. 创建域管理员 
+7. 创建域管理员 
    ![](domain-setup/2026-06-02-20-39-50.png) 
-7. 创建测试域用户
-   ![](domain-setup/2026-06-02-20-38-50.png) 
-   ![](domain-setup/2026-06-02-20-41-18.png)
-### 加入域成员（Windows 10）
+8. 创建测试域用户testuser
+   ![](domain-setup/2026-09-25-01-04-47.png)
+### 加入域成员web01（Windows 10）
 1. 安装Windows 10
 2. 配置DNS
    ```
@@ -74,7 +76,7 @@ difficulty: 中等
    ![](domain-setup/2026-06-04-05-13-29.png)
 3. 加入域
    ```
-    右键"此电脑" → 属性 → 更改设置
+    右键"此电脑" → 属性 → 高级系统设置
     → 计算机名选项卡 → 更改
     → 隶属于：域 → 输入 lab.com
     → 输入域管理员凭证(用 lab\Administrator 和密码认证)
@@ -83,21 +85,31 @@ difficulty: 中等
    ![](domain-setup/2026-06-02-21-43-54.png) 
    使用域账户testuser登录
    ![](domain-setup/2026-06-02-22-34-50.png)
+### 加入域成员web02（Windows 10）同上
+   DNS&&IP
+   ![](domain-setup/2026-09-25-00-56-54.png)
+   计算机改名&&加入域
+   ![](domain-setup/2026-09-25-01-00-06.png)
+   使用域账户zs登录
+   ![](domain-setup/2026-09-25-01-11-20.png)
 ### 验证环境
 1. 域成员能否解析域控`ping dc01.lab.com`【可以】
    ![](domain-setup/2026-06-02-22-08-19.png)
+   ![](domain-setup/2026-09-25-01-10-35.png)
 2. 能否用域用户登录 
    登录域用户testuser成功
    ![](domain-setup/2026-06-02-21-57-01.png) 
+   登录域用户zs成功
+   ![](domain-setup/2026-09-25-01-11-13.png)
 3. 查看当前域为lab
    ![](domain-setup/2026-06-02-22-37-16.png) 
+   ![](domain-setup/2026-09-25-01-11-48.png)
 4. 域控上查看域成员 
    ![](domain-setup/2026-06-02-22-36-01.png)
+   ![](domain-setup/2026-09-25-01-12-19.png)
+   
 ## 网络拓扑
-![](domain-setup/2026-06-04-12-33-29.png)
-[最小域环境网络拓扑图](./small-net-topology.drawio)
-## 快照备份
-DC01
-![](domain-setup/2026-06-02-22-40-46.png)
-web01
-![](domain-setup/2026-06-02-22-39-16.png)
+![域环境网络拓扑图](domain-setup/2026-09-25-01-12-52.png)
+[域环境网络拓扑图](./small-net-topology.drawio)
+
+

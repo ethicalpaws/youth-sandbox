@@ -1,11 +1,11 @@
 ---
-total_modules: 4
-total_machines: 4
-completed_machines: 0
-in_progress_machines: 0
-not_started_machines: 4
-completion_rate: 0
-last_updated: 2026-09-22 05:27:34
+total_modules: 3
+total_machines: 6
+completed_machines: 4
+in_progress_machines: 1
+not_started_machines: 1
+completion_rate: 66
+last_updated: 2026-10-22 01:35:52
 ---
 
 # 🎯 靶场训练场
@@ -16,21 +16,20 @@ last_updated: 2026-09-22 05:27:34
 
 | 指标 | 数值 |
 |------|:----:|
-| 模块总数 | 4 |
-| 总靶场数 | 4 |
-| ✅ 已攻略 | 0 |
-| 🔄 攻略中 | 0 |
-| ⬜ 未开始 | 4 |
-| 整体完成率 | ░░░░░░░░░░ 0% |
+| 模块总数 | 3 |
+| 总靶场数 | 6 |
+| ✅ 已攻略 | 4 |
+| 🔄 攻略中 | 1 |
+| ⬜ 未开始 | 1 |
+| 整体完成率 | ██████░░░░ 66% |
 
 ## 📚 模块列表
 
 | 模块 | 靶场数 | 已攻略 | 完成率 | 状态 |
 |------|:------:|:------:|:------:|:----:|
-| TRYMEHACK | 1 | 0 | 0% | ⬜ |
-| ULAB | 1 | 0 | 0% | ⬜ |
-| VULNHUB | 1 | 0 | 0% | ⬜ |
-| VULNSTACK | 1 | 0 | 0% | ⬜ |
+| 自建环境靶场集 | 2 | 2 | 100% | ✅ |
+| ULab 靶场集 | 2 | 1 | 50% | 🔄 |
+| VulnStack 靶场集 | 2 | 1 | 50% | 🔄 |
 
 ## 💡 渗透建议
 
@@ -49,17 +48,15 @@ last_updated: 2026-09-22 05:27:34
 
 | 模块 | 链接 |
 |------|------|
-| TRYMEHACK | [TryMeHack/](TryMeHack/) |
-| ULAB | [ulab/](ulab/) |
-| VULNHUB | [Vulnhub/](Vulnhub/) |
-| VULNSTACK | [vulnstack/](vulnstack/) |
+| 自建环境靶场集 | [selfsetup/](selfsetup/) |
+| ULab 靶场集 | [ulab/](ulab/) |
+| VulnStack 靶场集 | [vulnstack/](vulnstack/) |
 
 ## 📝 近期更新
 
-- **TRYMEHACK** (2026-09-22) : 0/1 靶场已完成
-- **ULAB** (2026-09-22) : 0/1 靶场已完成
-- **VULNHUB** (2026-09-22) : 0/1 靶场已完成
-- **VULNSTACK** (2026-09-22) : 0/1 靶场已完成
+- **自建环境靶场集** (2026-10-22) : 2/2 靶场已完成
+- **ULab 靶场集** (2026-10-22) : 1/2 靶场已完成
+- **VulnStack 靶场集** (2026-10-22) : 1/2 靶场已完成
 
 ---
-*最后更新：2026-09-22 05:27:34 | 保持练习，持续进步 💪*
+*最后更新：2026-10-22 01:35:52 | 保持练习，持续进步 💪*

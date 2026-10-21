@@ -1,6 +1,6 @@
 ---
-knowledge_notes: 96
-last_updated: 2026-09-22 05:27:34
+knowledge_notes: 129
+last_updated: 2026-10-22 02:44:08
 ---
 
 # 📖 知识笔记
@@ -9,30 +9,37 @@ last_updated: 2026-09-22 05:27:34
 
 ## 📚 章节列表
 
-### [🔰 01-基础知识](01-foundation/)
-编程语言、操作系统基础、WAF绕过
+### [🔰 基础知识](01-foundation/)
+编程语言、操作系统基础、WAF绕过（6 篇笔记）
 
-### [🌐 02-网络协议安全](02-network-protocol-security/)
-ARP欺骗、ICMP攻击、TCP攻击、防火墙、VPN隧道
+### [🌐 网络协议安全](02-network-protocol-security/)
+ARP欺骗、ICMP攻击、TCP攻击、防火墙、VPN隧道（10 篇笔记）
 
-### [🎯 03-Web基础漏洞](03-web-basics/)
-XSS、CSRF、SQL注入、SSRF、XXE、命令注入、文件上传、越权、信息泄露
+### [🎯 Web基础漏洞](03-web-basics/)
+XSS、CSRF、SQL注入、SSRF、XXE、命令注入、文件上传、越权、信息泄露（10 篇笔记）
 
-### [⚡ 04-Web高级漏洞](04-web-advanced/)
-SSTI、原型链污染、API安全
+### [⚡ Web高级漏洞](04-web-advanced/)
+SSTI、原型链污染、API安全（5 篇笔记）
 
-### [☕ 05-Java安全](05-java-security/)
-Java反序列化、JNDI注入、内存马、框架漏洞
+### [☕ Java安全](05-java-security/)
+Java反序列化、JNDI注入、内存马、框架漏洞（30 篇笔记）
 
-### [🔴🟦 06-红蓝对抗](06-red-blue-confrontation/)
-渗透测试、内网渗透、C2框架、免杀绕过、蓝队防御
+### [🔴🟦 红蓝对抗](06-red-blue-confrontation/)
+权限提升 · C2框架 · 免杀与绕过 · HVV 攻防演练 · 内网渗透 · 权限维持（45 篇笔记）
+
+### [🧩 服务端组件安全](07-server-side-component-security/)
+Apache、Nginx、Tomcat、PHP、Node.js、Java Web 等组件安全（2 篇笔记）
+
+### [💥 软件系统安全](08-software-system-security/)
+缓冲区溢出、栈/堆利用、防御机制、Fuzzing（21 篇笔记）
 
 ---
 
 ## 📊 统计
 
-- **知识笔记数**：96
-- **最后更新**：2026-09-22 05:27:34
+- **章节数**：8
+- **知识笔记数**：129
+- **最后更新**：2026-10-22 02:44:08
 
 ---
 
@@ -46,21 +53,4 @@ Java反序列化、JNDI注入、内存马、框架漏洞
 
 ---
 
-## 🎯 学习目标
-
-- [ ] 掌握 OWASP Top 10 核心漏洞
-- [ ] 精通 Java 安全（反序列化、内存马）
-- [ ] 完成内网渗透全流程实践
-- [ ] 积累 50+ CTF WriteUp
-- [ ] 挖掘 10+ SRC 漏洞
-
----
-
-## 📝 近期计划
-
-- 🔄 复习 CC 链，整理对比笔记
-- 📖 学习域渗透（Kerberos、黄金票据）
-- ✍️ 完善 memory-shell 模块
-
----
 *保持热爱，持续学习 🚀*

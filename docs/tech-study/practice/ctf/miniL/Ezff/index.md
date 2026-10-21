@@ -9,6 +9,7 @@ level: ⭐⭐
 achievement: 反序列化猎手
 weakness: Fastjson反序列化
 finish-date: 2026-05-28
+last_updated: 2026-06-23 13:50:15
 ---
 
 # 🗡️ 狩猎记录 · Ezff
@@ -49,6 +50,8 @@ Fastjson 反序列化漏洞利用
 ### 🔗 关联档案
 
 [📖 详细战报 →](Ezff_wp.md)
+
+
 
 ---
 

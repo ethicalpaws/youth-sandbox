@@ -15,8 +15,10 @@ sys.path.insert(0, SCRIPT_DIR)
 
 from common import (
     logger, load_config, parse_front_matter, read_metadata,
-    get_status_emoji, get_difficulty_config, get_current_date,
-    safe_write, need_update
+    get_status_emoji, get_difficulty_config, get_current_date, get_file_mtime,
+    safe_write, need_update,
+    get_meta, normalize_status, get_note_title,
+    list_note_files, choose_primary_note, build_other_notes_table
 )
 
 # ==================== 配置 ====================
@@ -34,6 +36,7 @@ cvss: {cvss}
 cve_id: {cve_id}
 affected_versions: {affected_versions}
 publish_date: {publish_date}
+last_updated: {last_updated}
 ---
 
 # 🛡️ 漏洞分析 · {title}
@@ -74,6 +77,8 @@ publish_date: {publish_date}
 ### 🔗 关联档案
 
 [📖 详细分析 →]({note_file})
+
+{other_notes}
 
 ---
 
@@ -124,54 +129,49 @@ def get_risk_level(difficulty: str, cvss: str) -> str:
     
     return risk_map.get(difficulty, '中危')
 
-def generate_index_for_note(note_dir: str, note_file: str, dry_run: bool = False) -> bool:
-    """生成单个 CVE 笔记的 index.md"""
+def generate_index_for_note(note_dir: str, note_file: str, note_files: list,
+                            dry_run: bool = False) -> bool:
+    """生成单个 CVE 目录的 index.md（支持同一目录多篇分析笔记）"""
     note_path = os.path.join(note_dir, note_file)
     index_path = os.path.join(note_dir, 'index.md')
-    
+
     logger.info(f"处理: {note_path}")
-    
+
     try:
         with open(note_path, 'r', encoding='utf-8') as f:
             content = f.read()
     except Exception as e:
         logger.warning(f"  读取失败: {e}")
         return False
-    
-    metadata, _ = parse_front_matter(content)
-    
-    if not metadata:
-        logger.warning(f"  跳过：无 Front Matter")
-        return False
-    
-    title = metadata.get('title')
-    if not title:
-        title = os.path.basename(note_dir)
-    
-    description = metadata.get('description', '')
-    tags = metadata.get('tags', [])
-    status_cn = metadata.get('status', '未开始')
-    finish_date = metadata.get('finish-date', datetime.now().strftime("%Y-%m-%d"))
-    difficulty = metadata.get('difficulty', '中等')
-    cvss = metadata.get('cvss', '待补充')
-    cve_id = metadata.get('cve_id', os.path.basename(note_dir))
-    affected_versions = metadata.get('affected_versions', '待补充')
-    publish_date = metadata.get('publish_date', '待补充')
-    weakness = metadata.get('weakness', tags[0] if tags else '待补充')
-    
-    # 获取配置
+
+    metadata, rest = parse_front_matter(content)
+
+    # 无 Front Matter 时不再跳过，使用标题/目录名兜底
+    title = get_note_title(metadata, rest, os.path.basename(note_dir))
+    description = get_meta(metadata, 'description', '待补充')
+    tags = get_meta(metadata, 'tags', [])
+    status_cn = normalize_status(get_meta(metadata, 'status', '未开始'))
+    finish_date = get_meta(metadata, 'finish-date', '')
+    difficulty = get_meta(metadata, 'difficulty', '中等')
+    cvss = get_meta(metadata, 'cvss', '待补充')
+    cve_id = get_meta(metadata, 'cve_id', os.path.basename(note_dir))
+    affected_versions = get_meta(metadata, 'affected_versions', '待补充')
+    publish_date = get_meta(metadata, 'publish_date', '待补充')
+    weakness = get_meta(metadata, 'weakness', tags[0] if tags else '待补充')
+
     diff_conf = get_difficulty_conf(difficulty)
-    exp = metadata.get('exp', diff_conf.get('exp', 20))
-    level = metadata.get('level', diff_conf.get('level', '⭐⭐'))
-    achievement = metadata.get('achievement', diff_conf.get('achievement', '中等猎手'))
-    
+    exp = get_meta(metadata, 'exp', diff_conf.get('exp', 20))
+    level = get_meta(metadata, 'level', diff_conf.get('level', '⭐⭐'))
+    achievement = get_meta(metadata, 'achievement', diff_conf.get('achievement', '中等猎手'))
+
     status_emoji = get_status_emoji(status_cn)
-    status_display = f"{status_emoji} **已分析**" if status_cn == '已完成' else f"{status_emoji} **分析中**"
+    status_label = {'已完成': '已分析', '进行中': '分析中', '未开始': '未开始'}[status_cn]
+    status_display = f"{status_emoji} **{status_label}**"
     risk_level = get_risk_level(difficulty, cvss)
-    
-    # 提取修复方案
+
     fix_suggestion = extract_section(content, '修复方案')
-    
+    other_notes = build_other_notes_table(note_dir, note_files, note_file)
+
     index_content = CVE_TEMPLATE.format(
         title=title,
         description=description,
@@ -182,6 +182,7 @@ def generate_index_for_note(note_dir: str, note_file: str, dry_run: bool = False
         cve_id=cve_id,
         affected_versions=affected_versions,
         publish_date=publish_date,
+        last_updated=get_file_mtime(note_path),
         weakness=weakness,
         risk_level=risk_level,
         exp=exp,
@@ -190,9 +191,10 @@ def generate_index_for_note(note_dir: str, note_file: str, dry_run: bool = False
         status_display=status_display,
         fix_suggestion=fix_suggestion,
         note_file=note_file,
+        other_notes=other_notes,
         finish_date=finish_date
     )
-    
+
     return safe_write(index_path, index_content, dry_run)
 
 def scan_and_update(dry_run: bool = False) -> None:
@@ -214,13 +216,13 @@ def scan_and_update(dry_run: bool = False) -> None:
         if root == CVE_PATH:
             continue
         
-        note_files = [f for f in files if f.endswith('.md') and f != 'index.md']
+        note_files = list_note_files(root)
         if not note_files:
             continue
-        
-        note_file = note_files[0]
-        
-        if generate_index_for_note(root, note_file, dry_run):
+
+        note_file = choose_primary_note(root, note_files)
+
+        if generate_index_for_note(root, note_file, note_files, dry_run):
             success_count += 1
         else:
             skip_count += 1

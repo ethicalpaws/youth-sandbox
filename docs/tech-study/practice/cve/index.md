@@ -1,10 +1,10 @@
 ---
 total_cves: 8
-analyzed: 4
-in_progress: 0
-not_started: 4
-completion_rate: 50
-last_updated: 2026-09-22 05:27:33
+analyzed: 7
+in_progress: 1
+not_started: 0
+completion_rate: 87
+last_updated: 2026-10-22 01:35:43
 ---
 
 # 🐞 CVE 漏洞分析
@@ -16,23 +16,23 @@ last_updated: 2026-09-22 05:27:33
 | 指标 | 数值 |
 |------|:----:|
 | CVE总数 | 8 |
-| ✅ 已分析 | 4 |
-| 🔄 分析中 | 0 |
-| ⬜ 未开始 | 4 |
-| 完成率 | █████░░░░░ 50% |
+| ✅ 已分析 | 7 |
+| 🔄 分析中 | 1 |
+| ⬜ 未开始 | 0 |
+| 完成率 | ████████░░ 87% |
 
 ## 📋 漏洞列表
 
 | CVE编号 | 漏洞描述 | 危害等级 | 难度 | 状态 |
 |---------|---------|:----:|:----:|:----:|
+| CVE-2017-18349 | Fastjson 1.2.24 反序列化漏洞复现：JNDI 注入、RMI/LDAP 利用与完整攻击链 | 严重 | 中等 | ✅ |
 | CVE-2021-44228 | Log4j2 JNDI注入漏洞，可远程代码执行 | 严重 | 中等 | ✅ |
 | CVE-2016-4437 | Shiro反序列化漏洞，AES硬编码密钥导致RCE | 高危 | 中等 | ✅ |
+| CVE-2022-22965 | Spring Framework 数据绑定漏洞（CVE-2022-22965）：利用 class.m... | 严重 | 困难 | ✅ |
 | WebLogic-CVE-2017-10271 | WebLogic XMLDecoder反序列化漏洞，可远程代码执行 | 中危 | 中等 | ✅ |
 | CVE-2021-2109 | WebLogic JNDI注入漏洞，可远程代码执行 | 高危 | 困难 | ✅ |
-| Fastjson-CVE-2017-18349 | None | 中危 | None | ⬜ |
-| Spring4Shell-CVE-2022-22965 | None | 中危 | None | ⬜ |
-| SpringBootActuator-CVE-2026-22731 |  | 中危 | 中等 | ⬜ |
-| WebLogic-CVE-2023-21839 | None | 中危 | None | ⬜ |
+| CVE-2020-1472 | Netlogon 认证绕过漏洞（CVE-2020-1472）：清空域控机器账户密码并通过 DCSyn... | 严重 | 困难 | ✅ |
+| CVE-2023-21839 | WebLogic ForeignOpaqueReference JNDI 注入漏洞复现（内容待补充） | 高危 | 中等 | 🔄 |
 
 ## 🔥 漏洞类型分布
 
@@ -57,18 +57,22 @@ last_updated: 2026-09-22 05:27:33
 
 | CVE | 链接 |
 |------|------|
+| CVE-2017-18349 | [Fastjson-CVE-2017-18349/](Fastjson-CVE-2017-18349/) |
 | CVE-2021-44228 | [Log4Shell-CVE-2021-44228/](Log4Shell-CVE-2021-44228/) |
 | CVE-2016-4437 | [Shiro550-CVE-2016-4437/](Shiro550-CVE-2016-4437/) |
+| CVE-2022-22965 | [Spring4Shell-CVE-2022-22965/](Spring4Shell-CVE-2022-22965/) |
 | WebLogic-CVE-2017-10271 | [WebLogic-CVE-2017-10271/](WebLogic-CVE-2017-10271/) |
 | CVE-2021-2109 | [WebLogic-CVE-2021-2109/](WebLogic-CVE-2021-2109/) |
-| Fastjson-CVE-2017-18349 | [Fastjson-CVE-2017-18349/](Fastjson-CVE-2017-18349/) |
-| Spring4Shell-CVE-2022-22965 | [Spring4Shell-CVE-2022-22965/](Spring4Shell-CVE-2022-22965/) |
-| SpringBootActuator-CVE-2026-22731 | [SpringBootActuator-CVE-2026-22731/](SpringBootActuator-CVE-2026-22731/) |
-| WebLogic-CVE-2023-21839 | [WebLogic-CVE-2023-21839/](WebLogic-CVE-2023-21839/) |
+| CVE-2020-1472 | [Zerologon-CVE-2020/](Zerologon-CVE-2020/) |
+| CVE-2023-21839 | [WebLogic-CVE-2023-21839/](WebLogic-CVE-2023-21839/) |
 
 ## 📝 近期更新
 
-- 暂无更新记录
+- **CVE-2020-1472** (2026-10-22) : ✅
+- **CVE-2022-22965** (2026-07-14) : ✅
+- **CVE-2017-18349** (2026-06-30) : ✅
+- **CVE-2021-44228** (2026-06-29) : ✅
+- **CVE-2023-21839** (2026-06-23) : 🔄
 
 ---
-*最后更新：2026-09-22 05:27:33 | 持续学习，深度思考 💪*
+*最后更新：2026-10-22 01:35:43 | 持续学习，深度思考 💪*

@@ -14,7 +14,8 @@ sys.path.insert(0, SCRIPT_DIR)
 
 from common import (
     logger, load_config, read_index_metadata, get_current_time,
-    safe_write, progress_bar, to_str
+    safe_write, progress_bar, to_str,
+    get_meta, normalize_status, get_status_emoji, is_real_dir
 )
 
 # ==================== 配置 ====================
@@ -84,15 +85,6 @@ last_updated: {last_updated}
 *最后更新：{last_updated} | 持续学习，深度思考 💪*
 '''
 
-def normalize_status(status_raw):
-    """将各种格式的状态统一为标准中文"""
-    if status_raw in ['✅', '已完成', '完成']:
-        return '已完成'
-    elif status_raw in ['🔄', '进行中', '分析中']:
-        return '进行中'
-    else:
-        return '未开始'
-
 def get_risk_level(difficulty: str, cvss: str) -> str:
     """根据难度和CVSS评分获取危害等级"""
     risk_map = {'简单': '低危', '中等': '中危', '困难': '高危', '专家': '严重'}
@@ -124,9 +116,8 @@ def generate_cve_chapter(dry_run: bool = False) -> None:
         logger.error(f"路径不存在: {CVE_PATH}")
         return
     
-    cve_dirs = [d for d in os.listdir(CVE_PATH)
-                if os.path.isdir(os.path.join(CVE_PATH, d))
-                and not d.startswith('.')]
+    cve_dirs = [d for d in sorted(os.listdir(CVE_PATH))
+                if is_real_dir(os.path.join(CVE_PATH, d))]
     
     if not cve_dirs:
         logger.warning("未找到任何 CVE 目录")
@@ -139,25 +130,22 @@ def generate_cve_chapter(dry_run: bool = False) -> None:
         cve_dir = os.path.join(CVE_PATH, name)
         metadata = read_index_metadata(cve_dir)
         
-        title = metadata.get('title', name)
-        description = metadata.get('description', '')
-        status_raw = metadata.get('status', '未开始')
-        status_cn = normalize_status(status_raw)
-        difficulty = metadata.get('difficulty', '中等')
-        cvss = metadata.get('cvss', '')
-        cve_id = metadata.get('cve_id', name)
-        weakness = metadata.get('weakness', '')
-        last_updated = to_str(metadata.get('last_updated', ''))
-        
+        title = get_meta(metadata, 'title', name)
+        description = get_meta(metadata, 'description', '')
+        status_cn = normalize_status(get_meta(metadata, 'status', '未开始'))
+        difficulty = get_meta(metadata, 'difficulty', '中等')
+        cvss = get_meta(metadata, 'cvss', '')
+        cve_id = get_meta(metadata, 'cve_id', name)
+        weakness = get_meta(metadata, 'weakness', '')
+        last_updated = to_str(get_meta(metadata, 'last_updated', ''))
+
         if weakness:
             type_count[weakness] = type_count.get(weakness, 0) + 1
         else:
             type_count['其他'] = type_count.get('其他', 0) + 1
-        
+
         risk_level = get_risk_level(difficulty, cvss)
-        
-        status_map = {'已完成': '✅', '进行中': '🔄', '未开始': '⬜'}
-        status_icon = status_map.get(status_cn, '⬜')
+        status_icon = get_status_emoji(status_cn)
         
         cves_data.append({
             'name': name,

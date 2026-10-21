@@ -1,3 +1,12 @@
+---
+title: 知识笔记索引（旧副本）
+description: 疑似误拷贝的 knowledge 总览页，内容与免杀主题无关，待重写
+tags: [误拷贝, 待重写]
+status: 进行中
+finish-date: 2026-05-28
+difficulty: 简单
+---
+
 # 📖 知识笔记
 
 > 网络安全知识体系，从基础到进阶。

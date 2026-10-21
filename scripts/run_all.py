@@ -25,17 +25,22 @@ sys.path.insert(0, SCRIPT_DIR)
 
 # 导入公共模块
 try:
-    from common import logger, set_log_level, get_current_time
+    from common import logger, set_log_level, get_current_time, get_practice_path
     HAS_COMMON = True
 except ImportError:
     HAS_COMMON = False
     import logging
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
     logger = logging.getLogger(__name__)
-    
+
     def get_current_time():
         from datetime import datetime
         return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    def get_practice_path():
+        return r"E:\youth-sandbox\docs\tech-study\practice"
+
+PRACTICE_PATH = get_practice_path()
 
 # ==================== 脚本分类 ====================
 
@@ -69,6 +74,9 @@ SCRIPT_CATEGORIES: Dict[str, List[str]] = {
         "update_framework_vulns.py",
         "update_redblue_module.py",
         "update_redblue_chapter.py",
+        "update_server_side_chapter.py",
+        "update_software_security_modules.py",
+        "update_software_security_chapter.py",
         "update_knowledge_index.py",
     ],
     "java": [
@@ -91,6 +99,16 @@ SCRIPT_CATEGORIES: Dict[str, List[str]] = {
     "network": ["update_network_chapter.py"],
     "foundation": ["update_foundation_chapter.py"],
     "redblue": ["update_redblue_module.py", "update_redblue_chapter.py"],
+    "server": ["update_server_side_chapter.py"],
+    "software": [
+        "update_software_security_modules.py",
+        "update_software_security_chapter.py",
+    ],
+    "component": [
+        "update_server_side_chapter.py",
+        "update_software_security_modules.py",
+        "update_software_security_chapter.py",
+    ],
     "cve": ["update_cve_notes.py", "update_cve_chapter.py"],
     "ctf": ["update_ctf_notes.py", "update_ctf_modules.py", "update_ctf_chapter.py"],
     "lab": ["update_lab_notes.py", "update_lab_modules.py", "update_lab_chapter.py"],
@@ -119,7 +137,10 @@ EXECUTION_ORDER: List[str] = [
     "update_redblue_module.py",
     "update_java_chapter.py",
     "update_redblue_chapter.py",
-    
+    "update_server_side_chapter.py",
+    "update_software_security_modules.py",
+    "update_software_security_chapter.py",
+
     # 3. Practice 模块级
     "update_ctf_modules.py",
     "update_lab_modules.py",
@@ -131,26 +152,40 @@ EXECUTION_ORDER: List[str] = [
     "update_lab_chapter.py",
     "update_src_chapter.py",
     
-    # 5. 总览和角色
+    # 5. 总览和角色（角色数据先于 tech-study 总览生成，避免读取到上一轮数据）
     "update_practice_index.py",
     "update_knowledge_index.py",
-    "update_tech_study_index.py",
     "update_character_data.py",
+    "update_tech_study_index.py",
     
     # 6. 周报和学习计划
     "update_weekly_all.py",
     "update_study_plan_index.py",
 ]
 
+def is_script_applicable(script: str) -> bool:
+    """
+    判断脚本是否适用于当前目录结构。
+
+    practice/src 被删除后，三个 SRC 脚本不再执行；如果以后重新创建
+    src 目录，它们会自动恢复运行。
+    """
+    if script.startswith("update_src_") and not os.path.isdir(
+        os.path.join(PRACTICE_PATH, "src")
+    ):
+        return False
+    return True
+
 def get_all_scripts() -> List[str]:
     """获取所有可用的脚本文件"""
     all_scripts = set()
     for scripts in SCRIPT_CATEGORIES.values():
         all_scripts.update(scripts)
-    
+
     existing = []
     for script in sorted(all_scripts):
-        if os.path.exists(os.path.join(SCRIPT_DIR, script)):
+        if (os.path.exists(os.path.join(SCRIPT_DIR, script))
+                and is_script_applicable(script)):
             existing.append(script)
     return existing
 
@@ -163,8 +198,13 @@ def list_scripts() -> None:
     for category, scripts in SCRIPT_CATEGORIES.items():
         print(f"\n[{category.upper()}]")
         for script in scripts:
-            exists = "YES" if os.path.exists(os.path.join(SCRIPT_DIR, script)) else "NO"
-            print(f"  [{exists}] {script}")
+            if not os.path.exists(os.path.join(SCRIPT_DIR, script)):
+                status = "NO"
+            elif not is_script_applicable(script):
+                status = "SKIP"
+            else:
+                status = "YES"
+            print(f"  [{status}] {script}")
     
     print("\n" + "=" * 60)
     print(f"总计: {len(get_all_scripts())} 个脚本可用")
@@ -270,14 +310,16 @@ def main():
             
     elif args.category:
         scripts_to_run = [s for s in SCRIPT_CATEGORIES.get(args.category, [])
-                         if os.path.exists(os.path.join(SCRIPT_DIR, s))]
+                         if os.path.exists(os.path.join(SCRIPT_DIR, s))
+                         and is_script_applicable(s)]
         if not scripts_to_run:
             logger.error(f"板块 '{args.category}' 中没有可用脚本")
             sys.exit(1)
     else:
         # 按依赖顺序运行所有脚本
         scripts_to_run = [s for s in EXECUTION_ORDER
-                         if os.path.exists(os.path.join(SCRIPT_DIR, s))]
+                         if os.path.exists(os.path.join(SCRIPT_DIR, s))
+                         and is_script_applicable(s)]
     
     if not scripts_to_run:
         logger.error("未找到要运行的脚本")

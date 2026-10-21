@@ -5,7 +5,7 @@ status: ✅
 finish_date: 2026-04-17
 note_path: csrf.md
 tags: ['csrf', 'xsrf', '跨站请求伪造', '会话劫持']
-last_updated: 2026-09-22 05:27:30
+last_updated: 2026-10-22 01:04:34
 ---
 
 # CSRF跨站请求伪造 - 笔记概述
@@ -27,6 +27,8 @@ last_updated: 2026-09-22 05:27:30
 6. [实验总结](csrf.md#实验总结)
 7. [XSS&&CSRF](csrf.md#xsscsrf)
 
+
+
 ## 🔗 关联实战
 
 ### CTF题目
@@ -42,4 +44,4 @@ last_updated: 2026-09-22 05:27:30
 暂无
 
 ---
-*自动更新：2026-09-22 05:27:30
+*自动更新：2026-10-22 01:04:34

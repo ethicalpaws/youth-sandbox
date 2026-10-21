@@ -9,6 +9,7 @@ level: ⭐⭐
 achievement: 中等猎手
 weakness: 命令注入
 finish-date: 2026-05-22
+last_updated: 2026-06-07 02:31:08
 ---
 
 # 🗡️ 狩猎记录 · EzPing
@@ -49,6 +50,8 @@ finish-date: 2026-05-22
 ### 🔗 关联档案
 
 [📖 详细战报 →](EzPing_wp.md)
+
+
 
 ---
 

@@ -3,7 +3,7 @@ total_modules: 5
 total_notes: 5
 completed: 0
 status: ⬜
-last_updated: 2026-09-22 05:27:31
+last_updated: 2026-10-22 01:04:35
 ---
 
 # ⚡ Web高级漏洞
@@ -16,10 +16,10 @@ last_updated: 2026-09-22 05:27:31
 
 | 模块 | 说明 | 状态 |
 |------|------|:----:|
-| [None](api-test/) | 待补充 | ⬜ |
-| [jwt](jwt/) | 待补充 | ⬜ |
-| [oauth](oauth/) | 待补充 | ⬜ |
-| [prototype-pollution](prototype-pollution/) | 待补充 | ⬜ |
+| [API测试](api-test/) | 待补充 | ⬜ |
+| [JWT](jwt/) | 待补充 | ⬜ |
+| [身份验证（Authentication）是什么？](oauth/) | 待补充 | ⬜ |
+| [原型链污染](prototype-pollution/) | 待补充 | ⬜ |
 | [ssti](ssti/) | 待补充 | ⬜ |
 
 ## 📊 学习进度
@@ -60,4 +60,4 @@ last_updated: 2026-09-22 05:27:31
 - [ ] 完成 3 个模块 → 🏆 Web高级精通
 
 ---
-*最后更新：2026-09-22 05:27:31 | 状态自动同步*
+*最后更新：2026-10-22 01:04:35 | 状态自动同步*

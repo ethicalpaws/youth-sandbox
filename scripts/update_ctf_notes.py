@@ -16,8 +16,10 @@ sys.path.insert(0, SCRIPT_DIR)
 # 导入公共模块
 from common import (
     logger, load_config, parse_front_matter, read_metadata,
-    get_status_emoji, get_difficulty_config, get_current_date,
-    safe_write, need_update, setup_from_args
+    get_status_emoji, get_difficulty_config, get_current_date, get_file_mtime,
+    safe_write, need_update, setup_from_args,
+    get_meta, normalize_status, get_note_title,
+    list_note_files, choose_primary_note, build_other_notes_table
 )
 
 # ==================== 配置 ====================
@@ -36,6 +38,7 @@ level: {level}
 achievement: {achievement}
 weakness: {weakness}
 finish-date: {finish_date}
+last_updated: {last_updated}
 ---
 
 # 🗡️ 狩猎记录 · {title}
@@ -74,6 +77,8 @@ finish-date: {finish_date}
 
 [📖 详细战报 →]({note_file})
 
+{other_notes}
+
 ---
 
 <span style="animation: blink 1s step-end infinite; text-shadow: 0 0 5px #ff4500, 0 0 10px #ff0000;">🏴‍☠️</span> **QUEST COMPLETE** · {finish_date}
@@ -91,54 +96,45 @@ def get_difficulty_conf(difficulty: str) -> dict:
     diff_config = get_difficulty_config()
     return diff_config.get(difficulty, {'exp': 20, 'level': '⭐⭐', 'achievement': '中等猎手'})
 
-def generate_index_for_note(note_dir: str, note_file: str, dry_run: bool = False) -> bool:
-    """生成单个笔记的 index.md（逻辑与原脚本完全一致）"""
+def generate_index_for_note(note_dir: str, note_file: str, note_files: list,
+                            dry_run: bool = False) -> bool:
+    """生成单个题目目录的 index.md（支持同一目录多篇笔记）"""
     note_path = os.path.join(note_dir, note_file)
     index_path = os.path.join(note_dir, 'index.md')
-    
+
     logger.info(f"处理: {note_path}")
-    
+
     try:
         with open(note_path, 'r', encoding='utf-8') as f:
             content = f.read()
     except Exception as e:
         logger.warning(f"  读取失败: {e}")
         return False
-    
-    if not content.startswith('---'):
-        logger.warning(f"  跳过：无 Front Matter")
-        return False
-    
-    metadata, _ = parse_front_matter(content)
-    
-    if not metadata:
-        logger.warning(f"  跳过：Front Matter 解析失败")
-        return False
-    
-    title = metadata.get('title')
-    if not title:
-        logger.warning(f"  跳过：缺少 title 字段")
-        return False
-    
-    # 提取字段（与原脚本完全一致）
-    description = metadata.get('description', '')
-    tags = metadata.get('tags', [])
-    status_cn = metadata.get('status', '未开始')
-    finish_date = metadata.get('finish-date', datetime.now().strftime("%Y-%m-%d"))
-    difficulty = metadata.get('difficulty', '中等')
-    weakness = metadata.get('weakness', tags[0] if tags else '待补充')
-    key_points = metadata.get('key_points', '待补充')
-    
-    # 获取配置（与原脚本逻辑一致）
+
+    metadata, rest = parse_front_matter(content)
+
+    # 无 Front Matter 时用标题/文件名兜底，不再直接跳过
+    title = get_note_title(metadata, rest, os.path.splitext(note_file)[0])
+
+    # 提取字段（null / 空字符串统一走默认值）
+    description = get_meta(metadata, 'description', '待补充')
+    tags = get_meta(metadata, 'tags', [])
+    status_cn = normalize_status(get_meta(metadata, 'status', '未开始'))
+    finish_date = get_meta(metadata, 'finish-date', '')
+    difficulty = get_meta(metadata, 'difficulty', '中等')
+    weakness = get_meta(metadata, 'weakness', tags[0] if tags else '待补充')
+    key_points = get_meta(metadata, 'key_points', '待补充')
+
     diff_conf = get_difficulty_conf(difficulty)
-    exp = metadata.get('exp', diff_conf.get('exp', 20))
-    level = metadata.get('level', diff_conf.get('level', '⭐⭐'))
-    achievement = metadata.get('achievement', diff_conf.get('achievement', '中等猎手'))
-    
+    exp = get_meta(metadata, 'exp', diff_conf.get('exp', 20))
+    level = get_meta(metadata, 'level', diff_conf.get('level', '⭐⭐'))
+    achievement = get_meta(metadata, 'achievement', diff_conf.get('achievement', '中等猎手'))
+
     status_emoji = get_status_emoji(status_cn)
-    status_display = f"{status_emoji} **已讨伐**" if status_cn == '已完成' else f"{status_emoji} **进行中**"
-    
-    # 生成内容（与原脚本完全一致）
+    status_label = {'已完成': '已讨伐', '进行中': '进行中', '未开始': '未开始'}[status_cn]
+    status_display = f"{status_emoji} **{status_label}**"
+    other_notes = build_other_notes_table(note_dir, note_files, note_file)
+
     index_content = INDEX_TEMPLATE.format(
         title=title,
         description=description,
@@ -150,11 +146,13 @@ def generate_index_for_note(note_dir: str, note_file: str, dry_run: bool = False
         achievement=achievement,
         weakness=weakness,
         finish_date=finish_date,
+        last_updated=get_file_mtime(note_path),
         status_display=status_display,
         key_points=key_points,
-        note_file=note_file
+        note_file=note_file,
+        other_notes=other_notes
     )
-    
+
     return safe_write(index_path, index_content, dry_run)
 
 def scan_and_update(dry_run: bool = False) -> None:
@@ -176,17 +174,14 @@ def scan_and_update(dry_run: bool = False) -> None:
         if root == CTF_PATH:
             continue
         
-        # 查找笔记文件（与原脚本逻辑一致）
-        note_files = [f for f in files if f.endswith('_wp.md')]
-        if not note_files:
-            note_files = [f for f in files if f.endswith('.md') and f != 'index.md']
-        
+        note_files = list_note_files(root)
         if not note_files:
             continue
-        
-        note_file = note_files[0]
-        
-        if generate_index_for_note(root, note_file, dry_run):
+
+        # 多笔记目录：优先有 title/status 的笔记，其次 *_wp.md，最后按文件名
+        note_file = choose_primary_note(root, note_files)
+
+        if generate_index_for_note(root, note_file, note_files, dry_run):
             success_count += 1
         else:
             skip_count += 1

@@ -13,7 +13,7 @@ sys.path.insert(0, SCRIPT_DIR)
 
 from common import (
     logger, load_config, read_index_metadata, get_current_time,
-    safe_write, progress_bar, to_str
+    safe_write, progress_bar, to_str, get_meta
 )
 
 # ==================== 配置 ====================
@@ -117,7 +117,8 @@ def generate_lab_chapter(dry_run: bool = False) -> None:
         
         modules_data.append({
             'name': name,
-            'title': name.upper(),
+            # 模块 index.md 由 update_lab_modules.py 生成，优先使用其中文标题
+            'title': get_meta(metadata, 'title', name.upper()),
             'total': total,
             'completed': completed,
             'completion_rate': completion_rate,

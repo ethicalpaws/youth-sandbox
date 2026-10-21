@@ -13,7 +13,8 @@ sys.path.insert(0, SCRIPT_DIR)
 
 from common import (
     logger, load_config, read_index_metadata, get_current_time,
-    safe_write, progress_bar, to_str
+    safe_write, progress_bar, to_str,
+    get_meta, normalize_status, get_status_emoji, is_real_dir
 )
 
 # ==================== 配置 ====================
@@ -86,15 +87,6 @@ last_updated: {last_updated}
 *最后更新：{last_updated} | 持续挖洞，积累经验 💪*
 '''
 
-def normalize_status(status_raw):
-    """将各种格式的状态统一为标准中文"""
-    if status_raw in ['✅', '已完成']:
-        return '已完成'
-    elif status_raw in ['🔄', '进行中']:
-        return '进行中'
-    else:
-        return '未开始'
-
 def get_level_from_difficulty(difficulty: str, level: str) -> str:
     """获取危害等级（星级）"""
     if level:
@@ -105,12 +97,9 @@ def get_level_from_difficulty(difficulty: str, level: str) -> str:
 def generate_module_index(module_path: str, module_name: str, dry_run: bool = False) -> bool:
     """生成单个模块的 index.md"""
     logger.info(f"\n处理模块: {module_name}")
-    
-    status_map = load_config().get('status_map', {})
-    
-    targets = [d for d in os.listdir(module_path)
-               if os.path.isdir(os.path.join(module_path, d))
-               and not d.startswith('.')]
+
+    targets = [d for d in sorted(os.listdir(module_path))
+               if is_real_dir(os.path.join(module_path, d))]
     
     if not targets:
         logger.warning(f"  跳过：无目标目录")
@@ -127,16 +116,15 @@ def generate_module_index(module_path: str, module_name: str, dry_run: bool = Fa
         target_dir = os.path.join(module_path, name)
         metadata = read_index_metadata(target_dir)
         
-        title = metadata.get('title', name)
-        status_raw = metadata.get('status', '未开始')
-        status_cn = normalize_status(status_raw)
-        difficulty = metadata.get('difficulty', '中等')
-        weakness = metadata.get('weakness', '待补充')
-        level = metadata.get('level', '')
-        bounty = metadata.get('bounty', 0)
-        last_updated = to_str(metadata.get('last_updated', ''))
-        
-        status_icon = status_map.get(status_raw, '⬜')
+        title = get_meta(metadata, 'title', name)
+        status_cn = normalize_status(get_meta(metadata, 'status', '未开始'))
+        difficulty = get_meta(metadata, 'difficulty', '中等')
+        weakness = get_meta(metadata, 'weakness', '待补充')
+        level = get_meta(metadata, 'level', '')
+        bounty = get_meta(metadata, 'bounty', 0)
+        last_updated = to_str(get_meta(metadata, 'last_updated', ''))
+
+        status_icon = get_status_emoji(status_cn)
         
         # 统计等级分布
         level_star = get_level_from_difficulty(difficulty, level)
@@ -233,9 +221,8 @@ def scan_and_update(dry_run: bool = False) -> None:
         logger.error(f"路径不存在: {SRC_PATH}")
         return
     
-    modules = [d for d in os.listdir(SRC_PATH)
-               if os.path.isdir(os.path.join(SRC_PATH, d))
-               and not d.startswith('.')]
+    modules = [d for d in sorted(os.listdir(SRC_PATH))
+               if is_real_dir(os.path.join(SRC_PATH, d))]
     
     if not modules:
         logger.warning("未找到任何模块")

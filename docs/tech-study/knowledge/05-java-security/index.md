@@ -1,11 +1,11 @@
 ---
 total_modules: 6
-total_notes: 29
-completed: 23
+total_notes: 30
+completed: 24
 in_progress: 0
-not_started: 0
-completion_rate: 79
-last_updated: 2026-09-22 05:27:32
+not_started: 6
+completion_rate: 80
+last_updated: 2026-10-22 01:04:37
 ---
 
 # ☕ Java安全
@@ -18,23 +18,23 @@ last_updated: 2026-09-22 05:27:32
 
 | 模块 | 笔记数 | 已完成 | 完成率 | 状态 |
 |------|:------:|:------:|:------:|:----:|
-| [El Injection](EL-injection/) | 1 | 1 | 100% | ♻️ |
-| [Framework Vulns](framework-vulns/) | 6 | 6 | 100% | ⬜ |
-| [Java Deserialization](java-deserialization/) | 10 | 10 | 100% | ♻️ |
-| [Java Web](Java-Web/) | 0 | 0 | 0% | ⬜ |
-| [Jndi Injection](jndi-injection/) | 2 | 2 | 100% | ♻️ |
-| [Memory Shell](memory-shell/) | 10 | 4 | 40% | 🔄 |
+| [EL 表达式注入](EL-injection/) | 1 | 1 | 100% | ♻️ |
+| [Java Web](Java-Web/) | 1 | 1 | 100% | ♻️ |
+| [框架漏洞](framework-vulns/) | 6 | 6 | 100% | ♻️ |
+| [Java 反序列化](java-deserialization/) | 10 | 10 | 100% | ♻️ |
+| [JNDI 注入](jndi-injection/) | 2 | 2 | 100% | ♻️ |
+| [内存马](memory-shell/) | 10 | 4 | 40% | 🔄 |
 
 ## 📊 学习进度
 
 | 指标 | 数值 |
 |------|:----:|
 | 总模块数 | 6 |
-| 总笔记数 | 29 |
-| ✅ 已完成笔记 | 23 |
+| 总笔记数 | 30 |
+| ✅ 已完成笔记 | 24 |
 | 🔄 进行中 | 0 |
-| ⬜ 未开始 | 0 |
-| 整体完成率 | ███████░░░ 79% |
+| ⬜ 未开始 | 6 |
+| 整体完成率 | ████████░░ 80% |
 
 ## 🎯 学习路线（建议顺序）
 
@@ -63,4 +63,4 @@ last_updated: 2026-09-22 05:27:32
 - [ ] 完成 10 个模块 → 🏆 Java安全精通
 
 ---
-*最后更新：2026-09-22 05:27:32 | 状态自动同步*
+*最后更新：2026-10-22 01:04:37 | 状态自动同步*

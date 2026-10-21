@@ -2,12 +2,12 @@
 module_name: 🌐 内网渗透
 description: 🌐 内网渗透 学习笔记
 status: 🔄
-total_notes: 5
-completed: 4
-in_progress: 0
-not_started: 1
-completion_rate: 80
-last_updated: 2026-09-22 05:27:32
+total_notes: 30
+completed: 21
+in_progress: 3
+not_started: 6
+completion_rate: 70
+last_updated: 2026-10-22 02:43:48
 ---
 
 # 🌐 内网渗透
@@ -20,21 +20,29 @@ last_updated: 2026-09-22 05:27:32
 
 | 指标 | 数值 |
 |------|:----:|
-| 总笔记数 | 5 |
-| ✅ 已完成 | 4 |
-| 🔄 进行中 | 0 |
-| ⬜ 未开始 | 1 |
-| 完成率 | ████████░░ 80% |
+| 总笔记数 | 30 |
+| ✅ 已完成 | 21 |
+| 🔄 进行中 | 3 |
+| ⬜ 未开始 | 6 |
+| 完成率 | ███████░░░ 70% |
+
+## 📦 子模块
+
+| 子模块 | 笔记数 | 已完成 | 完成率 | 状态 |
+|--------|:------:|:------:|:------:|:----:|
+| [📘 AD 基础](ad-basics/) | 1 | 1 | 100% | ♻️ |
+| [🔐 认证协议](authentication-protocol/) | 4 | 4 | 100% | ♻️ |
+| [🧪 环境搭建](environment/) | 1 | 1 | 100% | ♻️ |
+| [🔎 信息收集](information-collection/) | 1 | 1 | 100% | ♻️ |
+| [🔄 横向移动](lateral-movement/) | 6 | 4 | 66% | 🔄 |
+| [🗝️ 密码抓取](password-capture/) | 2 | 2 | 100% | ♻️ |
+| [🔀 代理隧道](proxy-tunnel/) | 3 | 3 | 100% | ♻️ |
+| [🔧 工具使用](tools/) | 11 | 4 | 36% | 🔄 |
+| [👤 用户权限](user-permissions/) | 1 | 1 | 100% | ♻️ |
 
 ## 📖 学习内容
 
-| 笔记 | 描述 | 状态 |
-|------|------|:----:|
-| [Active Directory基础](ad-basics/ad-basics.md) | Windows域、Active Directory、OU、安全组、组策略、树/森林/信任关系、常用域... | ✅ |
-| [域环境搭建](environment/domain-setup.md) | Windows Server 2019域控搭建、Windows 10加入域、DNS配置、环境验证、快... | ✅ |
-| [Kerberos认证协议详解](kerberos/overview.md) | Kerberos认证流程、TGT/ST/PAC、黄金票据/白银票据、Kerberoasting、AS... | ✅ |
-| [Kerberos抓包分析](kerberos/wireshark-analysiss.md) | Kerberos认证抓包分析、AS-REQ/AS-REP/TGS-REQ/TGS-REP/AP-RE... | ✅ |
-| [information-collection](information-collection/information-collection.md) |  | ⬜ |
+_当前目录暂无直接笔记，请查看上方子模块。_
 
 ---
-*自动更新：2026-09-22 05:27:32
+*自动更新：2026-10-22 02:43:48

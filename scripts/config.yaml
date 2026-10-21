@@ -307,7 +307,7 @@ java_security:
 # ==================== 06-red-blue-confrontation 章节 ====================
 red_blue_chapter:
   title: "🔴🟦 红蓝对抗"
-  description: "渗透测试、内网渗透、C2框架、免杀绕过"
+  description: "权限提升、C2框架、免杀绕过、HVV、内网渗透、权限维持"
   learning_route:
     - "**渗透测试**：信息收集、漏洞利用、权限维持"
     - "**内网渗透**：域渗透、横向移动、权限提升"

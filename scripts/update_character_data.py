@@ -14,6 +14,11 @@ import yaml
 from datetime import datetime, timedelta
 from typing import Dict, List, Tuple, Any
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, SCRIPT_DIR)
+
+from common import PROJECT_ROOT, get_meta, safe_int
+
 # 修复 Windows 控制台编码
 if sys.platform == 'win32':
     import io
@@ -21,10 +26,9 @@ if sys.platform == 'win32':
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 # ==================== 配置 ====================
-PROJECT_ROOT = r"E:\youth-sandbox\docs"
 DATA_DIR = os.path.join(PROJECT_ROOT, "data")
 CHARACTER_FILE = os.path.join(DATA_DIR, "character.json")
-CONFIG_FILE = os.path.join(os.path.dirname(__file__), "config.yaml")
+CONFIG_FILE = os.path.join(SCRIPT_DIR, "config.yaml")
 
 TECH_STUDY_PATH = os.path.join(PROJECT_ROOT, "tech-study")
 KNOWLEDGE_PATH = os.path.join(TECH_STUDY_PATH, "knowledge")
@@ -96,8 +100,10 @@ def scan_practice_related(keywords: List[str]) -> int:
             continue
         for index_file in glob.glob(os.path.join(base_path, '**', 'index.md'), recursive=True):
             metadata = read_index_metadata(index_file)
-            tags = metadata.get('tags', [])
-            if any(tag.lower() in keywords_lower for tag in tags):
+            tags = get_meta(metadata, 'tags', []) or []
+            if isinstance(tags, str):
+                tags = [tags]
+            if any(str(tag).lower() in keywords_lower for tag in tags):
                 count += 1
     
     return count
@@ -166,26 +172,18 @@ def get_skill_value(skill_config: Dict) -> float:
             metadata = read_index_metadata(full_path)
             
             field = skill_config.get('field', 'completed')
-            base_value = metadata.get(field, 0)
-            if not isinstance(base_value, (int, float)):
-                base_value = 0
-            
+            base_value = safe_int(get_meta(metadata, field, 0))
+
             extra_field = skill_config.get('extra_field', '')
-            extra_value = 0
-            if extra_field:
-                extra_value = metadata.get(extra_field, 0)
-                if not isinstance(extra_value, (int, float)):
-                    extra_value = 0
-            
+            extra_value = safe_int(get_meta(metadata, extra_field, 0)) if extra_field else 0
+
             extra_source = skill_config.get('extra_source', '')
             extra_source_value = 0
             if extra_source:
                 extra_full_path = os.path.join(PROJECT_ROOT, "tech-study", extra_source)
                 extra_metadata = read_index_metadata(extra_full_path)
                 extra_source_field = skill_config.get('extra_field', 'completed')
-                extra_source_value = extra_metadata.get(extra_source_field, 0)
-                if not isinstance(extra_source_value, (int, float)):
-                    extra_source_value = 0
+                extra_source_value = safe_int(get_meta(extra_metadata, extra_source_field, 0))
             
             code_attachments = scan_code_attachments()
             practice_keywords = skill_config.get('practice_keywords', [])
@@ -244,23 +242,23 @@ def scan_notes_count() -> int:
     # 1. 扫描 knowledge 目录
     if os.path.exists(KNOWLEDGE_PATH):
         for md_file in glob.glob(os.path.join(KNOWLEDGE_PATH, "**", "*.md"), recursive=True):
-            if os.path.basename(md_file) != "index.md":
+            if os.path.isfile(md_file) and os.path.basename(md_file) != "index.md":
                 count += 1
         print(f"   knowledge 笔记: {count}")
-    
+
     # 2. 扫描 practice 目录（CTF、CVE、Lab、SRC 的 WriteUp）
     practice_start = count
     if os.path.exists(PRACTICE_PATH):
         for md_file in glob.glob(os.path.join(PRACTICE_PATH, "**", "*.md"), recursive=True):
-            if os.path.basename(md_file) != "index.md":
+            if os.path.isfile(md_file) and os.path.basename(md_file) != "index.md":
                 count += 1
         print(f"   practice 笔记: {count - practice_start}")
-    
+
     # 3. 扫描 weekly-check 目录（周报）
     weekly_start = count
     if os.path.exists(WEEKLY_PATH):
         for md_file in glob.glob(os.path.join(WEEKLY_PATH, "**", "*.md"), recursive=True):
-            if os.path.basename(md_file) != "index.md":
+            if os.path.isfile(md_file) and os.path.basename(md_file) != "index.md":
                 count += 1
         print(f"   weekly 笔记: {count - weekly_start}")
     
@@ -270,21 +268,21 @@ def scan_ctf_xp() -> Tuple[int, int]:
     """统计 CTF 题目数量和经验值"""
     index_path = os.path.join(PRACTICE_PATH, "ctf", "index.md")
     metadata = read_index_metadata(index_path)
-    total = metadata.get('total', 0)
+    total = safe_int(get_meta(metadata, 'total_questions', 0))
     return total, total * 20
 
 def scan_cve_xp() -> Tuple[int, int]:
     """统计 CVE 数量和经验值"""
     index_path = os.path.join(PRACTICE_PATH, "cve", "index.md")
     metadata = read_index_metadata(index_path)
-    analyzed = metadata.get('analyzed', 0)
+    analyzed = safe_int(get_meta(metadata, 'analyzed', 0))
     return analyzed, analyzed * 40
 
 def scan_src_xp(first_bug_awarded: bool) -> Tuple[int, int, bool, bool]:
     """统计 SRC 数量和经验值"""
     index_path = os.path.join(PRACTICE_PATH, "src", "index.md")
     metadata = read_index_metadata(index_path)
-    count = metadata.get('completed_targets', 0)
+    count = safe_int(get_meta(metadata, 'completed_targets', 0))
     total_xp = count * 50
     trigger_first = False
     if count > 0 and not first_bug_awarded:
@@ -327,7 +325,7 @@ def scan_heatmap_data() -> Dict:
         if not os.path.exists(base_path):
             continue
         for md_file in glob.glob(os.path.join(base_path, "**", "*.md"), recursive=True):
-            if os.path.basename(md_file) == "index.md":
+            if not os.path.isfile(md_file) or os.path.basename(md_file) == "index.md":
                 continue
             mtime = os.path.getmtime(md_file)
             date = datetime.fromtimestamp(mtime).strftime("%Y-%m-%d")
@@ -383,9 +381,10 @@ def load_manual_data() -> Dict:
             pass
     return default
 
-def main():
+def main(dry_run: bool = False):
     print("=" * 60)
     print("[角色数据] 更新脚本")
+    print(f"模式: {'DRY RUN' if dry_run else '实际运行'}")
     print("=" * 60)
     
     config = load_config()
@@ -466,12 +465,20 @@ def main():
         "start_date": manual.get("join_date", "2026-05-09"),
     }
     
-    os.makedirs(DATA_DIR, exist_ok=True)
-    with open(CHARACTER_FILE, 'w', encoding='utf-8') as f:
-        json.dump({"manual": manual, "auto": auto}, f, ensure_ascii=False, indent=2)
-    
-    print(f"\n[完成] 已保存: {CHARACTER_FILE}")
+    payload = {"manual": manual, "auto": auto}
+    if dry_run:
+        print("\n[DRY RUN] 未写入文件，内容如下：")
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+    else:
+        os.makedirs(DATA_DIR, exist_ok=True)
+        with open(CHARACTER_FILE, 'w', encoding='utf-8') as f:
+            json.dump(payload, f, ensure_ascii=False, indent=2)
+        print(f"\n[完成] 已保存: {CHARACTER_FILE}")
     print("=" * 60)
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--dry-run", action="store_true", help="模拟运行，不写入文件")
+    args = parser.parse_args()
+    main(args.dry_run or os.environ.get("DRY_RUN", "0") == "1")

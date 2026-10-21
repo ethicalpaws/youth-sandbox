@@ -13,17 +13,36 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SCRIPT_DIR)
 
 from common import (
-    logger, load_config, read_metadata, get_current_time,
-    safe_write, progress_bar, format_completion, get_annual_goal
+    logger, read_metadata, get_current_time,
+    safe_write, progress_bar, format_completion, get_annual_goal,
+    get_practice_path, get_meta, safe_int
 )
 
 # ==================== 配置 ====================
-PROJECT_ROOT = r"E:\youth-sandbox\docs"
-PRACTICE_PATH = os.path.join(PROJECT_ROOT, "tech-study", "practice")
+PRACTICE_PATH = get_practice_path()
 
+# 章节展示顺序；实际运行时只处理目录存在的章节
 CHAPTERS = ['ctf', 'cve', 'lab', 'src']
 CHAPTER_ICONS = {'ctf': '🏆', 'cve': '🛡️', 'lab': '🧪', 'src': '🎯'}
 CHAPTER_NAMES = {'ctf': 'CTF', 'cve': 'CVE', 'lab': 'Lab', 'src': 'SRC'}
+
+# 各章节 index.md 实际使用的字段名
+CHAPTER_FIELDS = {
+    'ctf': ('total_questions', 'completed_questions',
+            'in_progress_questions', 'not_started_questions'),
+    'cve': ('total_cves', 'analyzed', 'in_progress', 'not_started'),
+    'lab': ('total_machines', 'completed_machines',
+            'in_progress_machines', 'not_started_machines'),
+    'src': ('total_targets', 'completed_targets',
+            'in_progress_targets', 'not_started_targets'),
+}
+
+def get_existing_chapters() -> list:
+    """返回实际存在目录的章节，避免引用已删除章节（如 src）"""
+    return [
+        chapter for chapter in CHAPTERS
+        if os.path.isdir(os.path.join(PRACTICE_PATH, chapter))
+    ]
 
 def read_chapter_metadata(chapter_path: str) -> dict:
     """读取章节的 index.md 的 Front Matter"""
@@ -79,24 +98,24 @@ def get_bounty_message() -> str:
     ]
     return random.choice(messages)
 
-def get_recent_activities(chapter_data: dict) -> list:
+def get_recent_activities(chapter_data: dict, chapters: list) -> list:
     """生成近期动态列表"""
     activities = []
-    for chapter in CHAPTERS:
+    for chapter in chapters:
         last_updated = chapter_data[chapter].get('last_updated', '')
         if last_updated:
             if isinstance(last_updated, datetime):
                 last_updated_str = last_updated.strftime("%Y-%m-%d")
             else:
                 last_updated_str = str(last_updated)[:10]
-            
+
             icon = CHAPTER_ICONS[chapter]
             name = CHAPTER_NAMES[chapter]
             total = chapter_data[chapter]['total']
             completed = chapter_data[chapter]['completed']
-            
+
             activities.append(f"- {icon} **{name}** 最后更新：{last_updated_str} ({completed}/{total})")
-    
+
     activities.sort(reverse=True)
     return activities[:5]
 
@@ -107,43 +126,43 @@ def generate_practice_index(dry_run: bool = False) -> None:
     logger.info("=" * 60)
     logger.info(f"路径: {PRACTICE_PATH}")
     logger.info(f"模式: {'DRY RUN' if dry_run else '实际运行'}")
-    
+
     if not os.path.exists(PRACTICE_PATH):
         logger.error(f"路径不存在: {PRACTICE_PATH}")
         return
-    
-    config = load_config()
+
+    chapters = get_existing_chapters()
+    if not chapters:
+        logger.error("未找到任何实战章节目录")
+        return
+
+    logger.info(f"包含章节: {', '.join(chapters)}")
+
     annual_goal = get_annual_goal()
     target_bounty = annual_goal.get('target_bounty', 100000)
-    
+
     chapter_data = {}
     total_all = 0
     completed_all = 0
     in_progress_all = 0
     not_started_all = 0
     total_bounty = 0
-    
-    for chapter in CHAPTERS:
+
+    for chapter in chapters:
         chapter_path = os.path.join(PRACTICE_PATH, chapter)
         metadata = read_chapter_metadata(chapter_path)
-        
-        if chapter == 'src':
-            total = metadata.get('total_targets', 0)
-            completed = metadata.get('completed_targets', 0)
-            in_progress = metadata.get('in_progress_targets', 0)
-            not_started = metadata.get('not_started_targets', 0)
-            bounty = metadata.get('total_bounty', 0)
-            total_bounty += bounty
-        else:
-            total = metadata.get('total', 0)
-            completed = metadata.get('completed', 0)
-            in_progress = metadata.get('in_progress', 0)
-            not_started = metadata.get('not_started', 0)
-            bounty = 0
-        
+
+        total_key, completed_key, in_progress_key, not_started_key = CHAPTER_FIELDS[chapter]
+        total = safe_int(get_meta(metadata, total_key, 0))
+        completed = safe_int(get_meta(metadata, completed_key, 0))
+        in_progress = safe_int(get_meta(metadata, in_progress_key, 0))
+        not_started = safe_int(get_meta(metadata, not_started_key, 0))
+        bounty = safe_int(get_meta(metadata, 'total_bounty', 0)) if chapter == 'src' else 0
+        total_bounty += bounty
+
         completion_rate = int(completed / total * 100) if total > 0 else 0
-        last_updated = metadata.get('last_updated', '')
-        
+        last_updated = get_meta(metadata, 'last_updated', '')
+
         chapter_data[chapter] = {
             'total': total,
             'completed': completed,
@@ -153,30 +172,41 @@ def generate_practice_index(dry_run: bool = False) -> None:
             'bounty': bounty,
             'last_updated': last_updated
         }
-        
+
         total_all += total
         completed_all += completed
         in_progress_all += in_progress
         not_started_all += not_started
-    
+
     completion_rate = int(completed_all / total_all * 100) if total_all > 0 else 0
     progress = progress_bar(completion_rate)
-    bounty_progress = progress_bar(int(total_bounty / target_bounty * 100)) if target_bounty > 0 else "░░░░░░░░░░ 0%"
-    
+    has_src = 'src' in chapters
+    bounty_progress = (
+        progress_bar(int(total_bounty / target_bounty * 100))
+        if has_src and target_bounty > 0 else "░░░░░░░░░░ 0%"
+    )
+
     # 生成板块表格
     rows = []
-    for chapter in CHAPTERS:
+    for chapter in chapters:
         data = chapter_data[chapter]
         rate = data['completion_rate']
         status_icon = get_status_icon(rate)
         icon = CHAPTER_ICONS[chapter]
         name = CHAPTER_NAMES[chapter]
         rows.append(f"| {icon} {name} | {data['total']} | {data['completed']} | {rate}% | {status_icon} |")
-    
+
+    # 生成快速入口
+    quick_links = "\n".join(
+        f"| {CHAPTER_ICONS[chapter]} {CHAPTER_NAMES[chapter]} | "
+        f"[{chapter}/]({chapter}/) |"
+        for chapter in chapters
+    )
+
     # 生成近期动态
-    recent_activities = get_recent_activities(chapter_data)
+    recent_activities = get_recent_activities(chapter_data, chapters)
     recent_activities_str = "\n".join(recent_activities) if recent_activities else "- 暂无更新记录"
-    
+
     # 计算连胜天数（简单逻辑）
     def get_streak(last_updated):
         if not last_updated:
@@ -190,32 +220,54 @@ def generate_practice_index(dry_run: bool = False) -> None:
             return max(0, 7 - days) if days < 7 else 0
         except:
             return 0
-    
-    ctf_streak = get_streak(chapter_data['ctf'].get('last_updated', ''))
-    src_streak = get_streak(chapter_data['src'].get('last_updated', ''))
-    
+
+    ctf_streak = get_streak(chapter_data['ctf'].get('last_updated', '')) if 'ctf' in chapters else 0
+    src_streak = get_streak(chapter_data['src'].get('last_updated', '')) if has_src else 0
+
+    streak_lines = [f"- CTF 连续解题：{ctf_streak} 天"]
+    if has_src:
+        streak_lines.append(f"- SRC 连续提交：{src_streak} 天")
+
+    # SRC 章节被删除时不再渲染相关区块
+    src_section = ""
+    if has_src:
+        src_section = f"""## 💰 SRC 战果
+
+| 指标 | 数值 | 目标 |
+|------|:----:|:----:|
+| 累计奖金 | 💰 {total_bounty} 元 | 🏆 {target_bounty} 元 |
+| 完成度 | {bounty_progress} | {get_bounty_motivation(total_bounty, target_bounty)} |
+
+> {get_bounty_message()}
+
+"""
+
     last_updated = get_current_time()
-    
+
+    # 只输出实际存在章节的统计字段
+    front_matter_lines = []
+    for chapter in chapters:
+        front_matter_lines.append(f"total_{chapter}: {chapter_data[chapter]['total']}")
+    front_matter_lines.append(f"total_all: {total_all}")
+    for chapter in chapters:
+        front_matter_lines.append(f"completed_{chapter}: {chapter_data[chapter]['completed']}")
+    front_matter_lines.append(f"completed_all: {completed_all}")
+    if has_src:
+        front_matter_lines.append(f"total_bounty: {total_bounty}")
+    front_matter_lines.append(f"completion_rate: {completion_rate}")
+    front_matter_lines.append(f"last_updated: {last_updated}")
+    front_matter = "\n".join(front_matter_lines)
+
+    summary_desc = " · ".join(CHAPTER_NAMES[chapter] for chapter in chapters)
+
     # 构建内容
     content = f"""---
-total_ctf: {chapter_data['ctf']['total']}
-total_cve: {chapter_data['cve']['total']}
-total_lab: {chapter_data['lab']['total']}
-total_src: {chapter_data['src']['total']}
-total_all: {total_all}
-completed_ctf: {chapter_data['ctf']['completed']}
-completed_cve: {chapter_data['cve']['completed']}
-completed_lab: {chapter_data['lab']['completed']}
-completed_src: {chapter_data['src']['completed']}
-completed_all: {completed_all}
-total_bounty: {total_bounty}
-completion_rate: {completion_rate}
-last_updated: {last_updated}
+{front_matter}
 ---
 
 # 🎯 实战训练场
 
-> CTF · CVE · Lab · SRC 实战记录汇总
+> {summary_desc} 实战记录汇总
 
 ## 📊 总览
 
@@ -233,19 +285,9 @@ last_updated: {last_updated}
 |------|:----:|:------:|:------:|:----:|
 {chr(10).join(rows)}
 
-## 💰 SRC 战果
+{src_section}## 🔥 当前连胜
 
-| 指标 | 数值 | 目标 |
-|------|:----:|:----:|
-| 累计奖金 | 💰 {total_bounty} 元 | 🏆 {target_bounty} 元 |
-| 完成度 | {bounty_progress} | {get_bounty_motivation(total_bounty, target_bounty)} |
-
-> {get_bounty_message()}
-
-## 🔥 当前连胜
-
-- CTF 连续解题：{ctf_streak} 天
-- SRC 连续提交：{src_streak} 天
+{chr(10).join(streak_lines)}
 
 ## 📈 近期动态
 
@@ -255,23 +297,21 @@ last_updated: {last_updated}
 
 | 板块 | 链接 |
 |------|------|
-| 🏆 CTF | [ctf/](ctf/) |
-| 🛡️ CVE | [cve/](cve/) |
-| 🧪 Lab | [lab/](lab/) |
-| 🎯 SRC | [src/](src/) |
+{quick_links}
 
 ---
 *最后更新：{last_updated} | 保持热爱，持续输出 🚀*
 """
-    
+
     output_path = os.path.join(PRACTICE_PATH, 'index.md')
-    
+
     if safe_write(output_path, content, dry_run):
         logger.info(f"✅ 已生成: {output_path}")
         logger.info(f"   总题目/目标: {total_all}")
         logger.info(f"   已完成: {completed_all}, 完成率: {completion_rate}%")
-        logger.info(f"   SRC累计奖金: {total_bounty} 元")
-    
+        if has_src:
+            logger.info(f"   SRC累计奖金: {total_bounty} 元")
+
     logger.info("=" * 60)
 
 if __name__ == "__main__":
@@ -280,6 +320,6 @@ if __name__ == "__main__":
     parser.add_argument("--dry-run", action="store_true", help="模拟运行")
     parser.add_argument("--verbose", "-v", action="store_true", help="详细输出")
     args = parser.parse_args()
-    
+
     dry_run = args.dry_run or os.environ.get("DRY_RUN", "0") == "1"
     generate_practice_index(dry_run)

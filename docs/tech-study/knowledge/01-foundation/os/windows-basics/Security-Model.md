@@ -2,7 +2,7 @@
 title: Windows安全模型
 description: SID、访问令牌、安全描述符、DACL、ACE、权限与特权、UAC
 tags: [windows, security, sid, token, uac, 权限]
-status: 进行中
+status: 已完成
 finish-date: 2026-06-01
 difficulty: 中等
 ---

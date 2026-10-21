@@ -14,8 +14,10 @@ sys.path.insert(0, SCRIPT_DIR)
 
 from common import (
     logger, load_config, parse_front_matter, read_metadata,
-    get_status_emoji, get_difficulty_config, get_current_date,
-    safe_write, need_update
+    get_status_emoji, get_difficulty_config, get_current_date, get_file_mtime,
+    safe_write, need_update,
+    get_meta, normalize_status, get_note_title,
+    list_note_files, choose_primary_note, build_other_notes_table
 )
 
 # ==================== 配置 ====================
@@ -35,6 +37,7 @@ bounty: {bounty}
 info_gathering: {info_gathering}
 discovery: {discovery}
 exploit: {exploit}
+last_updated: {last_updated}
 ---
 
 # 🎯 漏洞挖掘 · {title}
@@ -83,6 +86,8 @@ exploit: {exploit}
 
 [📖 详细报告 →]({note_file})
 
+{other_notes}
+
 ---
 
 <span style="animation: blink 1s step-end infinite; text-shadow: 0 0 5px #ff6600, 0 0 10px #ff3300;">🎯</span> **VULN FOUND** · {finish_date}
@@ -100,51 +105,46 @@ def get_difficulty_conf(difficulty: str) -> dict:
     diff_config = get_difficulty_config()
     return diff_config.get(difficulty, {'exp': 20, 'level': '⭐⭐', 'achievement': '中等猎手'})
 
-def generate_index_for_note(note_dir: str, note_file: str, dry_run: bool = False) -> bool:
-    """生成单个 SRC 笔记的 index.md"""
+def generate_index_for_note(note_dir: str, note_file: str, note_files: list,
+                            dry_run: bool = False) -> bool:
+    """生成单个 SRC 目标目录的 index.md（支持多篇笔记）"""
     note_path = os.path.join(note_dir, note_file)
     index_path = os.path.join(note_dir, 'index.md')
-    
+
     logger.info(f"处理: {note_path}")
-    
+
     try:
         with open(note_path, 'r', encoding='utf-8') as f:
             content = f.read()
     except Exception as e:
         logger.warning(f"  读取失败: {e}")
         return False
-    
-    metadata, _ = parse_front_matter(content)
-    
-    if not metadata:
-        logger.warning(f"  跳过：无 Front Matter")
-        return False
-    
-    title = metadata.get('title')
-    if not title:
-        title = os.path.basename(note_dir)
-    
-    description = metadata.get('description', '')
-    tags = metadata.get('tags', [])
-    status_cn = metadata.get('status', '未开始')
-    finish_date = metadata.get('finish-date', datetime.now().strftime("%Y-%m-%d"))
-    difficulty = metadata.get('difficulty', '中等')
-    platform = metadata.get('platform', '未知')
-    weakness = metadata.get('weakness', tags[0] if tags else '待补充')
-    bounty = metadata.get('bounty', 0)
-    info_gathering = metadata.get('info_gathering', '待补充')
-    discovery = metadata.get('discovery', '待补充')
-    exploit = metadata.get('exploit', '待补充')
-    
-    # 获取配置
+
+    metadata, rest = parse_front_matter(content)
+
+    title = get_note_title(metadata, rest, os.path.basename(note_dir))
+    description = get_meta(metadata, 'description', '待补充')
+    tags = get_meta(metadata, 'tags', [])
+    status_cn = normalize_status(get_meta(metadata, 'status', '未开始'))
+    finish_date = get_meta(metadata, 'finish-date', '')
+    difficulty = get_meta(metadata, 'difficulty', '中等')
+    platform = get_meta(metadata, 'platform', '未知')
+    weakness = get_meta(metadata, 'weakness', tags[0] if tags else '待补充')
+    bounty = get_meta(metadata, 'bounty', 0)
+    info_gathering = get_meta(metadata, 'info_gathering', '待补充')
+    discovery = get_meta(metadata, 'discovery', '待补充')
+    exploit = get_meta(metadata, 'exploit', '待补充')
+
     diff_conf = get_difficulty_conf(difficulty)
-    exp = metadata.get('exp', diff_conf.get('exp', 20))
-    level = metadata.get('level', diff_conf.get('level', '⭐⭐'))
-    achievement = metadata.get('achievement', diff_conf.get('achievement', '中等猎手'))
-    
+    exp = get_meta(metadata, 'exp', diff_conf.get('exp', 20))
+    level = get_meta(metadata, 'level', diff_conf.get('level', '⭐⭐'))
+    achievement = get_meta(metadata, 'achievement', diff_conf.get('achievement', '中等猎手'))
+
     status_emoji = get_status_emoji(status_cn)
-    status_display = f"{status_emoji} **已发现**" if status_cn == '已完成' else f"{status_emoji} **挖掘中**"
-    
+    status_label = {'已完成': '已发现', '进行中': '挖掘中', '未开始': '未开始'}[status_cn]
+    status_display = f"{status_emoji} **{status_label}**"
+    other_notes = build_other_notes_table(note_dir, note_files, note_file)
+
     index_content = SRC_TEMPLATE.format(
         title=title,
         description=description,
@@ -162,9 +162,11 @@ def generate_index_for_note(note_dir: str, note_file: str, dry_run: bool = False
         achievement=achievement,
         status_display=status_display,
         note_file=note_file,
-        finish_date=finish_date
+        other_notes=other_notes,
+        finish_date=finish_date,
+        last_updated=get_file_mtime(note_path)
     )
-    
+
     return safe_write(index_path, index_content, dry_run)
 
 def scan_and_update(dry_run: bool = False) -> None:
@@ -186,13 +188,13 @@ def scan_and_update(dry_run: bool = False) -> None:
         if root == SRC_PATH:
             continue
         
-        note_files = [f for f in files if f.endswith('.md') and f != 'index.md']
+        note_files = list_note_files(root)
         if not note_files:
             continue
-        
-        note_file = note_files[0]
-        
-        if generate_index_for_note(root, note_file, dry_run):
+
+        note_file = choose_primary_note(root, note_files)
+
+        if generate_index_for_note(root, note_file, note_files, dry_run):
             success_count += 1
         else:
             skip_count += 1

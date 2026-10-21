@@ -1,16 +1,16 @@
 ---
-module_name: prototype-pollution
-description: 
+module_name: 原型链污染
+description: 待补充
 status: ⬜
 finish_date: 
 note_path: prototype_pollution.md
 tags: []
-last_updated: 2026-09-22 05:27:31
+last_updated: 2026-10-22 01:04:35
 ---
 
-# prototype-pollution - 笔记概述
+# 原型链污染 - 笔记概述
 
-> 
+> 待补充
 
 ## 📊 统计
 
@@ -24,6 +24,8 @@ last_updated: 2026-09-22 05:27:31
 3. [客户端原型污染](prototype_pollution.md#客户端原型污染)
 4. [服务端原型污染](prototype_pollution.md#服务端原型污染)
 5. [如何防止漏洞](prototype_pollution.md#如何防止漏洞)
+
+
 
 ## 🔗 关联实战
 
@@ -40,4 +42,4 @@ last_updated: 2026-09-22 05:27:31
 暂无
 
 ---
-*自动更新：2026-09-22 05:27:31
+*自动更新：2026-10-22 01:04:35

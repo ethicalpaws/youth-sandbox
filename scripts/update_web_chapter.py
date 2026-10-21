@@ -18,7 +18,10 @@ from common import (
     logger, load_config, parse_front_matter, read_metadata,
     get_status_emoji, get_current_time, safe_write, need_update,
     get_knowledge_path, get_practice_path, progress_bar,
-    scan_practice_related, generate_practice_table
+    scan_practice_related, generate_practice_table,
+    get_meta, normalize_status, list_note_files,
+    choose_primary_note, build_other_notes_table, is_real_dir,
+    get_note_title
 )
 
 # ==================== 配置 ====================
@@ -48,6 +51,8 @@ last_updated: {last_updated}
 ## 📖 笔记目录
 
 {toc}
+
+{other_notes}
 
 ## 🔗 关联实战
 
@@ -84,75 +89,79 @@ def generate_toc(headers: list, note_path: str) -> str:
     return "\n".join(lines)
 
 def update_module_index(module_dir: str, module_name: str, tag_mapping: dict, dry_run: bool = False) -> dict:
-    """更新单个模块的 index.md"""
+    """更新单个模块的 index.md（支持同一模块目录下多篇笔记）"""
     logger.info(f"  处理模块: {module_name}")
-    
-    md_files = [f for f in os.listdir(module_dir) if f.endswith('.md') and f != 'index.md']
-    if not md_files:
+
+    note_files = list_note_files(module_dir)
+    if not note_files:
         logger.warning(f"    跳过：未找到笔记文件")
         return None
-    
-    note_file = md_files[0]
+
+    note_file = choose_primary_note(module_dir, note_files)
     note_path = os.path.join(module_dir, note_file)
-    
+
     with open(note_path, 'r', encoding='utf-8') as f:
         note_content = f.read()
-    
+
     metadata, rest_content = parse_front_matter(note_content)
-    
-    title = metadata.get('title', module_name)
-    description = metadata.get('description', '')
-    finish_date = metadata.get('finish-date', '')
-    tags = metadata.get('tags', [])
-    status_cn = metadata.get('status', '未开始')
-    
+
+    title = get_note_title(metadata, rest_content, module_name)
+    description = get_meta(metadata, 'description', '')
+    description_display = description or '待补充'
+    finish_date = get_meta(metadata, 'finish-date', '')
+    tags = get_meta(metadata, 'tags', [])
+    status_cn = normalize_status(get_meta(metadata, 'status', '未开始'))
+
     module_status = get_status_emoji(status_cn)
-    
+
     headers = extract_headers(rest_content)
     toc = generate_toc(headers, note_file)
-    
+    other_notes = build_other_notes_table(module_dir, note_files, note_file)
+
     practice_items = scan_practice_related(PRACTICE_PATH, tag_mapping.get(module_name, []))
-    
+
     ctf_table, ctf_count = generate_practice_table(practice_items['ctf'], 'ctf')
     lab_table, lab_count = generate_practice_table(practice_items['lab'], 'lab')
     cve_table, cve_count = generate_practice_table(practice_items['cve'], 'cve')
-    
-    logger.info(f"      关联 CTF: {ctf_count}, Lab: {lab_count}, CVE: {cve_count}")
-    
+
+    logger.info(f"      笔记: {len(note_files)}, 关联 CTF: {ctf_count}, Lab: {lab_count}, CVE: {cve_count}")
+
     update_time = get_current_time()
-    
+
     content = MODULE_TEMPLATE.format(
         module_name=title,
-        description=description,
+        description=description_display,
         module_status=module_status,
         finish_date=finish_date,
         note_path=note_file,
         tags=str(tags),
         last_updated=update_time,
         toc=toc,
+        other_notes=other_notes,
         ctf_table=ctf_table,
         lab_table=lab_table,
         cve_table=cve_table,
         update_time=update_time
     )
-    
+
     index_path = os.path.join(module_dir, 'index.md')
-    
+
     if safe_write(index_path, content, dry_run):
-        logger.info(f"    ✅ 已生成模块 index.md (状态: {module_status})")
-    
+        logger.info(f"    ✅ 已生成模块 index.md (笔记: {len(note_files)}, 状态: {module_status})")
+
     return {
         'name': module_name,
         'title': title,
         'description': description,
         'status': module_status,
-        'finish_date': finish_date
+        'finish_date': finish_date,
+        'note_count': len(note_files)
     }
 
 def update_chapter_index(chapter_path: str, modules_data: list, chapter_config: dict, dry_run: bool = False) -> None:
     """更新章节级 index.md"""
     total = len(modules_data)
-    total_notes = len(modules_data)
+    total_notes = sum(m.get('note_count', 1) for m in modules_data)
     
     title = chapter_config.get('title', 'Web漏洞')
     description = chapter_config.get('description', '')
@@ -284,10 +293,18 @@ def process_chapter(chapter_path: str, chapter_key: str, dry_run: bool = False) 
         logger.error(f"\n路径不存在: {chapter_path}")
         return
     
-    modules = [d for d in os.listdir(chapter_path)
-               if os.path.isdir(os.path.join(chapter_path, d))
-               and not d.startswith('.')]
-    
+    modules = [d for d in sorted(os.listdir(chapter_path))
+               if is_real_dir(os.path.join(chapter_path, d))]
+
+    ignored = [
+        d for d in sorted(os.listdir(chapter_path))
+        if os.path.isdir(os.path.join(chapter_path, d))
+        and d not in modules
+        and not d.startswith('.')
+    ]
+    if ignored:
+        logger.warning(f"忽略异常/空目录: {ignored}（以 .md 结尾或没有 Markdown 笔记）")
+
     logger.info(f"\n发现 {len(modules)} 个模块: {modules}")
     logger.info("\n开始更新模块...")
     

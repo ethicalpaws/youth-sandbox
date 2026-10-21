@@ -1,14 +1,15 @@
 ---
 title: EzDomain
-description: 待补充
-tags: []
+description: EzDomain 域渗透题目 WriteUp（解题内容待补充）
+tags: ['CTF', '域渗透']
 status: ⬜
 difficulty: 中等
 exp: 20
 level: ⭐⭐
 achievement: 中等猎手
-weakness: 待补充
-finish-date: None
+weakness: 域渗透
+finish-date: 
+last_updated: 2026-06-07 02:32:48
 ---
 
 # 🗡️ 狩猎记录 · EzDomain
@@ -20,9 +21,9 @@ finish-date: None
 | 属性 | 数值 |
 |------|------|
 | `名称` | **EzDomain** |
-| `弱点` | 待补充 |
+| `弱点` | 域渗透 |
 | `威胁等级` | ⭐⭐ |
-| `状态` | ⬜ **进行中** |
+| `状态` | ⬜ **未开始** |
 
 ### 🏆 战利品
 
@@ -35,12 +36,11 @@ finish-date: None
 
 ### 📜 任务简报
 
-待补充
+EzDomain 域渗透题目 WriteUp（解题内容待补充）
 
 ### ⚡ 攻略要点
 
 待补充
-
 
 ---
 
@@ -48,9 +48,11 @@ finish-date: None
 
 [📖 详细战报 →](EzDomain_wp.md)
 
+
+
 ---
 
-<span style="animation: blink 1s step-end infinite; text-shadow: 0 0 5px #ff4500, 0 0 10px #ff0000;">🏴‍☠️</span> **QUEST COMPLETE** · None
+<span style="animation: blink 1s step-end infinite; text-shadow: 0 0 5px #ff4500, 0 0 10px #ff0000;">🏴‍☠️</span> **QUEST COMPLETE** · 
 
 <style>
 @keyframes blink {

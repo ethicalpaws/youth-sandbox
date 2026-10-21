@@ -1,16 +1,16 @@
 ---
-module_name: jwt
-description: 
+module_name: JWT
+description: 待补充
 status: ⬜
 finish_date: 
 note_path: jwt.md
 tags: []
-last_updated: 2026-09-22 05:27:31
+last_updated: 2026-10-22 01:04:35
 ---
 
-# jwt - 笔记概述
+# JWT - 笔记概述
 
-> 
+> 待补充
 
 ## 📊 统计
 
@@ -25,6 +25,8 @@ last_updated: 2026-09-22 05:27:31
 4. [JWT vs JWE vs JWS](jwt.md#jwt-vs-jwe-vs-jws)
 5. [JWT攻击](jwt.md#jwt攻击)
 6. [如何防止JWT攻击](jwt.md#如何防止jwt攻击)
+
+
 
 ## 🔗 关联实战
 
@@ -41,4 +43,4 @@ last_updated: 2026-09-22 05:27:31
 暂无
 
 ---
-*自动更新：2026-09-22 05:27:31
+*自动更新：2026-10-22 01:04:35
