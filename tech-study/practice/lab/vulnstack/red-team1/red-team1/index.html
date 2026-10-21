@@ -3082,6 +3082,45 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        遇到的问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="遇到的问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#web" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        web打点时死活扫不出有用的目录或文件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3122,15 +3161,110 @@
 <p><div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>nmap -sS -Pn --min-rate 1000 -p- 192.168.111.20    
 </span></code></pre></div>
 <img alt="" src="2026-10-22-00-24-52.png" /></p>
+<p>80端口开放http服务，可能存在web漏洞
+445端口开放smb服务，可能存在永恒之蓝漏洞
+3306端口开放mysql服务，可能存在空口令/弱口令连接漏洞
+135端口开放rpc服务，可以来信息收集</p>
+</li>
+<li>
+<p><strong>SMB 与 RPC 空会话深度枚举</strong></p>
+</li>
+<li>
+<p>自动化综合枚举
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>enum4linux-ng -A 192.168.111.20
+</span></code></pre></div>
+    <img alt="" src="2026-10-22-03-19-45.png" /></p>
+</li>
+<li>
+<p><strong>列出共享</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>smbclient -N -L //192.168.111.20/
+</span></code></pre></div>
+    <img alt="" src="2026-10-22-03-23-24.png" /></p>
+<p>匿名空会话虽然能连上，但 enumdomusers 等关键查询全被 STATUS_ACCESS_DENIED 拒绝，且共享为 0。说明靶机虽然配置了空会话，但权限极低，无法直接获取域用户列表。</p>
+</li>
+<li>
+<p>有效信息汇总
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>domain：god.org
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>该主机名：STU1
+</span></code></pre></div></p>
 </li>
 </ul>
 <h3 id="_4">漏洞探测<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>msf探测永恒之蓝</strong>
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>msfconsole
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>use exploit/windows/smb/ms17_010_eternalblue
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>set RHOSTS 192.168.111.20
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>run
+</span></code></pre></div>
+  <img alt="" src="2026-10-22-02-52-38.png" />
+  存在漏洞但无法获得会话</p>
+</li>
+<li>
+<p><strong>尝试匿名/弱口令直连mysql</strong></p>
+</li>
+</ul>
+<p>3306 端口直接暴露在内网中，常见配置错误通常是 root 空口令或弱口令。
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>mysql -h 192.168.111.20 -u root -p
+</span></code></pre></div>
+  输入回车测试是否为空口令；
+  如果失败，尝试少量常见弱口令（如 root、123456、testing 等）
+  <img alt="" src="2026-10-22-03-14-18.png" />
+  MySQL 因来源 IP 限制无法连接</p>
+<ul>
+<li>
+<p><strong>web服务漏洞探测</strong></p>
+</li>
+<li>
+<p>浏览器访问
+    <img alt="" src="2026-10-22-03-32-12.png" />
+    发现是phpinfo界面
+    <strong>关键信息</strong>
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>网站绝对路径  C:/phpStudy/WWW
+</span></code></pre></div></p>
+</li>
+<li>
+<p>目录扫描
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>dirsearch -u http://192.168.111.20 --wordlists= /usr/share/wordlists/dirb/common.txt
+</span></code></pre></div>
+    <img alt="" src="2026-10-22-03-40-44.png" /></p>
+<p>下载并解压beifen.rar文件夹，发现一个网站目录yxcms
+<img alt="" src="2026-10-22-03-41-36.png" />
+  - 尝试访问/yxcms
+<img alt="" src="2026-10-22-03-44-44.png" />
+访问成功并发现信息泄露
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>后台地址：http://192.168.111.20/yxcms/index.php?r=admin
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>用户名：admin
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>密码：123456
+</span></code></pre></div>
+  - 登录后台
+<img alt="" src="2026-10-22-04-18-51.png" />
+不知道为什么一直显示验证码错误只能换个思路</p>
+</li>
+<li>
+<p>访问/phpmyAdmin
+    <img alt="" src="2026-10-22-04-20-48.png" /></p>
+<p>尝试弱口令</p>
+</li>
+</ul>
 <h3 id="_5">漏洞利用<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
 <h2 id="_6">隧道搭建<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
 <h2 id="_7">内网渗透<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
 <h2 id="_8">横向移动<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
 <h2 id="_9">持久化<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
 <h2 id="_10">痕迹清理<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<h2 id="_11">遇到的问题<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<h3 id="web">web打点时死活扫不出有用的目录或文件<a class="headerlink" href="#web" title="Permanent link">&para;</a></h3>
+<p><strong>原因</strong></p>
+<p>后来我看网上的wp发现应该有一个beifen.rar文件，但是我的爆破文件里面没有这个条目导致没扫出来</p>
+<p><strong>解决方法</strong></p>
+<ul>
+<li>使用更大更全的爆破文件</li>
+<li>手动尝试一些可能的备份文件名或路径名等，如（beifen.rar）</li>
+</ul>
+<h3 id="_12"><a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<p><img alt="" src="2026-10-22-04-22-33.png" /></p>
 
 
 
@@ -3153,7 +3287,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 21, 2026 20:11:15 UTC"><span class="timeago" datetime="2026-09-21T20:11:15+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 21, 2026 20:11:15 UTC">2026-09-21</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 21, 2026 21:09:42 UTC"><span class="timeago" datetime="2026-10-21T21:09:42+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 21, 2026 21:09:42 UTC">2026-10-21</span>
   </span>
 
     

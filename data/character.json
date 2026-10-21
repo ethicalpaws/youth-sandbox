@@ -9,11 +9,11 @@
   },
   "auto": {
     "level": 7,
-    "current_exp": 2,
+    "current_exp": 12,
     "next_exp": 595,
-    "total_exp": 1985,
+    "total_exp": 1995,
     "stats": {
-      "notes_count": 155,
+      "notes_count": 156,
       "ctf_count": 5,
       "cve_count": 7,
       "src_count": 0,
@@ -27,22 +27,237 @@
       "web_security": 75.0,
       "web_advanced": 0.0,
       "java_security": 75.0,
+      "server_side": 10.0,
+      "internal_network": 61.1,
+      "lateral_movement": 20.0,
+      "privesc": 5.0,
+      "persistence": 10.0,
+      "c2_framework": 15.0,
+      "evasion": 0.0,
+      "hvv": 40.0,
+      "pwn": 75.0,
+      "network_traffic": 66.0,
+      "cryptography": 16.0,
       "ctf_ability": 8.0,
       "cve_analysis": 14.0,
-      "src_dig": 0.0,
-      "programming": 24.4,
-      "bypass_waf": 3.0,
       "code_review": 6.0,
-      "internal_network": 61.1,
-      "pwn": 0.0,
-      "evasion": 0.0,
-      "penetration_test": 0.0,
-      "lateral_movement": 0.0,
-      "c2_framework": 15.0,
-      "blue_team": 0.0,
-      "network_traffic": 66.0,
-      "cryptography": 16.0
+      "programming": 24.4,
+      "bypass_waf": 3.0
     },
+    "skill_meta": [
+      {
+        "key": "web_security",
+        "name": "Web基础",
+        "icon": "🌐",
+        "weight": 80,
+        "max": 100
+      },
+      {
+        "key": "web_advanced",
+        "name": "Web高级",
+        "icon": "⚡",
+        "weight": 80,
+        "max": 100
+      },
+      {
+        "key": "java_security",
+        "name": "Java安全",
+        "icon": "☕",
+        "weight": 150,
+        "max": 100
+      },
+      {
+        "key": "server_side",
+        "name": "服务端组件",
+        "icon": "🧩",
+        "weight": 70,
+        "max": 100
+      },
+      {
+        "key": "internal_network",
+        "name": "内网渗透",
+        "icon": "🕸️",
+        "weight": 100,
+        "max": 100
+      },
+      {
+        "key": "lateral_movement",
+        "name": "横向移动",
+        "icon": "🔄",
+        "weight": 90,
+        "max": 100
+      },
+      {
+        "key": "privesc",
+        "name": "权限提升",
+        "icon": "⬆️",
+        "weight": 100,
+        "max": 100
+      },
+      {
+        "key": "persistence",
+        "name": "权限维持",
+        "icon": "🔒",
+        "weight": 90,
+        "max": 100
+      },
+      {
+        "key": "c2_framework",
+        "name": "C2框架",
+        "icon": "🎯",
+        "weight": 90,
+        "max": 100
+      },
+      {
+        "key": "evasion",
+        "name": "免杀绕过",
+        "icon": "👻",
+        "weight": 80,
+        "max": 100
+      },
+      {
+        "key": "hvv",
+        "name": "HVV蓝队",
+        "icon": "🛡️",
+        "weight": 70,
+        "max": 100
+      },
+      {
+        "key": "pwn",
+        "name": "二进制安全",
+        "icon": "💥",
+        "weight": 120,
+        "max": 100
+      },
+      {
+        "key": "network_traffic",
+        "name": "网络流量",
+        "icon": "📊",
+        "weight": 60,
+        "max": 100
+      },
+      {
+        "key": "cryptography",
+        "name": "密码学",
+        "icon": "🔐",
+        "weight": 50,
+        "max": 100
+      },
+      {
+        "key": "ctf_ability",
+        "name": "CTF能力",
+        "icon": "🏆",
+        "weight": 70,
+        "max": 100
+      },
+      {
+        "key": "cve_analysis",
+        "name": "CVE分析",
+        "icon": "🐞",
+        "weight": 80,
+        "max": 100
+      },
+      {
+        "key": "code_review",
+        "name": "代码审计",
+        "icon": "🔍",
+        "weight": 90,
+        "max": 100
+      },
+      {
+        "key": "programming",
+        "name": "编程能力",
+        "icon": "💻",
+        "weight": 60,
+        "max": 100
+      },
+      {
+        "key": "bypass_waf",
+        "name": "绕WAF",
+        "icon": "🧱",
+        "weight": 100,
+        "max": 100
+      }
+    ],
+    "attributes": [
+      {
+        "name": "🎯 信息收集",
+        "value": 57.0,
+        "max": 100.0
+      },
+      {
+        "name": "🔓 漏洞挖掘",
+        "value": 9.8,
+        "max": 100.0
+      },
+      {
+        "name": "💣 利用开发",
+        "value": 48.9,
+        "max": 100.0
+      },
+      {
+        "name": "🛡️ 绕过技巧",
+        "value": 18.3,
+        "max": 100.0
+      },
+      {
+        "name": "⚔️ 攻防对抗",
+        "value": 28.8,
+        "max": 100.0
+      }
+    ],
+    "radar": [
+      {
+        "name": "Web安全",
+        "value": 75.0,
+        "max": 100.0
+      },
+      {
+        "name": "Java安全",
+        "value": 75.0,
+        "max": 100.0
+      },
+      {
+        "name": "服务端组件",
+        "value": 10.0,
+        "max": 100.0
+      },
+      {
+        "name": "内网渗透",
+        "value": 61.1,
+        "max": 100.0
+      },
+      {
+        "name": "提权与维持",
+        "value": 15.0,
+        "max": 100.0
+      },
+      {
+        "name": "C2与免杀",
+        "value": 15.0,
+        "max": 100.0
+      },
+      {
+        "name": "HVV蓝队",
+        "value": 40.0,
+        "max": 100.0
+      },
+      {
+        "name": "二进制安全",
+        "value": 75.0,
+        "max": 100.0
+      },
+      {
+        "name": "网络流量",
+        "value": 66.0,
+        "max": 100.0
+      },
+      {
+        "name": "密码学",
+        "value": 16.0,
+        "max": 100.0
+      }
+    ],
     "heatmap": {
       "weeks": [
         {
@@ -345,7 +560,7 @@
           ]
         },
         {
-          "total": 11,
+          "total": 12,
           "max_daily": 4,
           "days": [
             0,
@@ -353,7 +568,7 @@
             0,
             4,
             3,
-            3,
+            4,
             0
           ]
         },
@@ -722,11 +937,11 @@
           ]
         }
       ],
-      "total_notes": 155,
+      "total_notes": 156,
       "active_days": 48,
       "max_contrib": 35
     },
-    "last_update": "2026-10-22 01:35:59",
+    "last_update": "2026-10-22 05:09:51",
     "first_bug_awarded": true,
     "start_date": "2026-05-27"
   }
