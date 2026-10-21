@@ -26,10 +26,8 @@
       ]
     },
     "skills": {
-      "web_security": 77.0,
-      "web_advanced": 15.0,
+      "web_security": 79.5,
       "java_security": 77.0,
-      "server_side": 10.0,
       "internal_network": 61.1,
       "lateral_movement": 20.0,
       "privesc": 5.0,
@@ -42,7 +40,6 @@
       "cryptography": 16.0,
       "ctf_ability": 8.0,
       "cve_analysis": 14.0,
-      "lab": 20.0,
       "code_review": 6.0,
       "programming": 7.0,
       "bypass_waf": 3.0
@@ -50,15 +47,8 @@
     "skill_meta": [
       {
         "key": "web_security",
-        "name": "Web基础",
+        "name": "Web安全",
         "icon": "🌐",
-        "weight": 80,
-        "max": 100
-      },
-      {
-        "key": "web_advanced",
-        "name": "Web高级",
-        "icon": "⚡",
         "weight": 80,
         "max": 100
       },
@@ -67,13 +57,6 @@
         "name": "Java安全",
         "icon": "☕",
         "weight": 100,
-        "max": 100
-      },
-      {
-        "key": "server_side",
-        "name": "服务端组件",
-        "icon": "🧩",
-        "weight": 70,
         "max": 100
       },
       {
@@ -161,13 +144,6 @@
         "max": 100
       },
       {
-        "key": "lab",
-        "name": "靶场实战",
-        "icon": "🎯",
-        "weight": 120,
-        "max": 100
-      },
-      {
         "key": "code_review",
         "name": "代码审计",
         "icon": "🔍",
@@ -192,39 +168,34 @@
     "attributes": [
       {
         "name": "🎯 信息收集",
-        "value": 42.8,
+        "value": 57.7,
         "max": 100.0
       },
       {
-        "name": "🔓 漏洞挖掘",
-        "value": 35.1,
+        "name": "🔓 漏洞复现",
+        "value": 52.0,
         "max": 100.0
       },
       {
         "name": "🛡️ 绕过技巧",
-        "value": 14.9,
+        "value": 21.9,
         "max": 100.0
       },
       {
         "name": "⚔️ 攻防对抗",
-        "value": 27.5,
+        "value": 28.4,
         "max": 100.0
       }
     ],
     "radar": [
       {
         "name": "Web安全",
-        "value": 92.0,
+        "value": 79.5,
         "max": 100.0
       },
       {
         "name": "Java安全",
         "value": 77.0,
-        "max": 100.0
-      },
-      {
-        "name": "服务端组件",
-        "value": 10.0,
         "max": 100.0
       },
       {
@@ -946,7 +917,7 @@
       "active_days": 46,
       "max_contrib": 35
     },
-    "last_update": "2026-10-22 06:05:02",
+    "last_update": "2026-10-22 06:21:20",
     "start_date": "2026-05-27"
   }
 }
